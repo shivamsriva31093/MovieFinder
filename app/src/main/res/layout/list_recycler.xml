@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/item_image"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:paddingTop="8dp"
+        android:scaleType="centerCrop"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@android:color/white"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_marginStart="85dp"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:text="Arrival"
+        android:layout_marginEnd="30dp"
+        android:textSize="25sp"
+        android:gravity="start|center_vertical"
+        android:typeface="normal"
+        />
+    <TextView
+        android:id="@+id/rating"
+
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:text="8.5 IMDb"
+        android:layout_alignParentRight="true"
+        android:textSize="25sp"
+        android:gravity="start|center_vertical"
+        android:typeface="normal"
+        />
+    <TextView
+        android:id="@+id/genre"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="85dp"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:text="Mystery, Drama, Sci-fi"
+        android:layout_marginEnd="30dp"
+        android:textSize="17sp"
+        android:gravity="start|center_vertical"
+        android:typeface="normal"
+        />
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:background="#00ffffff"
+        android:layout_alignParentEnd="true"
+        android:scaleType="centerCrop"
+        />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.25dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/darker_gray" />
+</RelativeLayout>
