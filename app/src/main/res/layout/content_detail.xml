@@ -45,12 +45,21 @@
             android:layout_toRightOf="@id/imdb"
 
             android:text="8.5/10" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_below="@+id/plot"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/darker_gray"
+                android:layout_alignParentBottom="true"
+                 />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/plotview"
-            android:layout_below="@+id/ratingsview">
+            android:layout_below="@+id/genreview">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,17 +77,25 @@
             android:textSize="15sp"
             android:layout_margin="15dp"
             android:text="@string/large_text" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_below="@+id/rating"
+                android:background="@android:color/darker_gray"
+                android:layout_alignParentBottom="true"
+                />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/genreview"
-            android:layout_below="@+id/plotview">
+            android:layout_below="@+id/ratingsview">
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/tag"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/tagimage"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -90,6 +107,14 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
                 android:text="Mystery, Sci-fi" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_below="@+id/genre"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/darker_gray"
+                android:layout_alignParentBottom="true"
+                />
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
