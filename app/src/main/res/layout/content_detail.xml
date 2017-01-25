@@ -6,14 +6,18 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="task.application.com.moviefinder.view.DetailActivity"
+    android:backgroundTintMode="multiply"
     tools:showIn="@layout/activity_detail">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        >
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/ratingsview"
+            android:layout_below="@+id/genreview"
             android:layout_height="match_parent">
 
         <ImageView
@@ -27,69 +31,95 @@
             android:layout_toEndOf="@+id/imdb" />
 
         <ImageView
-            android:layout_width="45dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="24dp"
             android:src="@drawable/imdb"
             android:id="@+id/imdb"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="27dp"
             android:scaleType="centerCrop"
             android:layout_marginLeft="15dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/plot"
+            android:id="@+id/imdbrating"
             android:textSize="20dp"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="18dp"
             android:layout_toRightOf="@id/imdb"
+            android:text="8.5"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rtrating"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="18dp"
+                android:layout_toRightOf="@id/imageView"
+                android:text="79%"/>
 
-            android:text="8.5/10" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_below="@+id/plot"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@android:color/darker_gray"
-                android:layout_alignParentBottom="true"
-                 />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/releaseview"
+            android:layout_below="@+id/ratingsview">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/releasetitle"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:text="Release Date"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/releasedate"
+            android:layout_height="wrap_content"
+            android:typeface="sans"
+            android:layout_below="@id/releasetitle"
+            android:textSize="15sp"
+            android:layout_margin="15dp"
+            android:text="25th February, 2017" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="2dp"-->
+                <!--android:layout_below="@+id/rating1"-->
+                <!--android:background="@android:color/darker_gray"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--/>-->
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/plotview"
-            android:layout_below="@+id/genreview">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/plottitle"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="25sp"
-            android:text="Plot"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/rating"
-            android:layout_height="wrap_content"
-            android:typeface="sans"
-            android:layout_below="@id/plottitle"
-            android:textSize="15sp"
-            android:layout_margin="15dp"
-            android:text="@string/large_text" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_below="@+id/rating"
-                android:background="@android:color/darker_gray"
-                android:layout_alignParentBottom="true"
-                />
+            android:layout_below="@+id/releaseview">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/plottitle"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:text="Plot"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/plotdate"
+                android:layout_height="wrap_content"
+                android:typeface="sans"
+                android:layout_below="@id/plottitle"
+                android:textSize="15sp"
+                android:layout_margin="15dp"
+                android:text="@string/large_text" />
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/genreview"
-            android:layout_below="@+id/ratingsview">
+            >
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -107,14 +137,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
                 android:text="Mystery, Sci-fi" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_below="@+id/genre"
-                android:layout_marginTop="15dp"
-                android:background="@android:color/darker_gray"
-                android:layout_alignParentBottom="true"
-                />
+
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
