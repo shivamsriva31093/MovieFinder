@@ -46,9 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="100dp"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
                     android:text="ARRIVAL"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:typeface="normal" />
 
                 <TextView
@@ -56,8 +55,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="15dp"
+                    android:layout_marginTop="45dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="25dp"
                     android:text="2016"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="14sp"
@@ -71,7 +71,8 @@
                     android:layout_below="@+id/title"
                     android:layout_marginLeft="100dp"
                     android:text="Movie"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
+                    android:textAllCaps="true"
                     android:textColor="@android:color/holo_blue_dark"
                     android:typeface="normal" />
 

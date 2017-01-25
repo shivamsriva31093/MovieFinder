@@ -13,6 +13,8 @@ public class Result {
     private String genre;
     private String type;
     private String year;
+    private String imdbId;
+    private String imageUrl;
     public Result(){
 
     }
@@ -32,6 +34,22 @@ public class Result {
     public String getTitle(){
 
         return title;
+    }
+    public void setImageUrl(String url){
+        this.imageUrl = url;
+
+    }
+    public String getImageUrl(){
+
+        return imageUrl;
+    }
+    public void setImdbId(String id){
+        this.imdbId = id;
+
+    }
+    public String getImdbId(){
+
+        return imdbId;
     }
     public void setYear(String year){
         this.year = year;

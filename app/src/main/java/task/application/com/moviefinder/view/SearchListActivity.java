@@ -26,7 +26,7 @@ public class SearchListActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recView);
         linearLayoutManager = new LinearLayoutManager(this);
 
-        new MakeConnection("http://www.omdbapi.com/?s=godfather&y=1991&plot=full&r=json"){
+        new MakeConnection("http://www.omdbapi.com/?s=godfather&plot=full&r=json"){
             @Override
             protected void onPostExecute(JSONObject distanceMatrixJson) {
             JSONObject jsonObject = distanceMatrixJson;
