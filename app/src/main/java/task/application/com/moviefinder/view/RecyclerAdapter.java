@@ -126,7 +126,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             // Similarly we set the resources for header view
             //v.icon.setImageResource(imagedata);
-            v.header.setText("11 Search Results for Godfather");
+            v.header.setText(data.size()+" results returned");
 
         }
 
