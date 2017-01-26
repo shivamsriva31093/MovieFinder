@@ -1,7 +1,9 @@
 package task.application.com.moviefinder.model;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONObject;
 
@@ -13,6 +15,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+
+import task.application.com.moviefinder.view.DetailActivity;
+import task.application.com.moviefinder.view.RecyclerAdapter;
 
 /**
  * Created by shashank on 1/24/2017.

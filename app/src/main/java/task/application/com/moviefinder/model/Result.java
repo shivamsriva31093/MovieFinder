@@ -6,9 +6,9 @@ package task.application.com.moviefinder.model;
 
 public class Result {
     private String title;
-    private double imdRating;
+    private String imdRating;
     private String plot;
-    private double rtRating;
+    private String rtRating;
     private String releaseDate;
     private String genre;
     private String type;
@@ -18,7 +18,7 @@ public class Result {
     public Result(){
 
     }
-    public Result(String title,String plot,String releaseDate,String genre,double imdRating,double rtRating){
+    public Result(String title,String plot,String releaseDate,String genre,String imdRating,String rtRating){
         this.title = title;
         this.plot = plot;
         this.releaseDate = releaseDate;
@@ -67,18 +67,18 @@ public class Result {
 
         return type;
     }
-    public void setImdRating(double imdRating){
+    public void setImdRating(String imdRating){
         this.imdRating = imdRating;
 
     }
-    public double getImdRating(){
+    public String getImdRating(){
 
         return imdRating;
     }
-    public void setRtRating(double rtRating){
+    public void setRtRating(String rtRating){
         this.rtRating = rtRating;
     }
-    public double getRtRating(){
+    public String getRtRating(){
 
         return rtRating;
     }

@@ -5,4 +5,9 @@
     <string name="large_text">
         "When mysterious spacecraft touch down across the globe, an elite team - led by expert linguist Louise Banks - is brought together to investigate. As mankind teeters on the verge of global war, Banks and the team race against time for answers - and to find them, she will take a chance that could threaten her life, and quite possibly humanity."
     </string>
+    <string-array name="searchbox_extra_options">
+        <item>Movies</item>
+        <item>TV</item>
+    </string-array>
+    <string name="search_movies_or_tv_shows">Search Movies or Tv Shows</string>
 </resources>

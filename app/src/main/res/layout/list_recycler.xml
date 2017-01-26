@@ -19,7 +19,6 @@
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view1"
             android:layout_width="match_parent"
-
             android:layout_height="100dp"
             card_view:cardElevation="5dp">
 
@@ -44,7 +43,7 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginLeft="95dp"
                     android:layout_marginTop="10dp"
                     android:text="ARRIVAL"
                     android:textSize="18sp"
@@ -59,7 +58,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="25dp"
                     android:text="2016"
-                    android:textColor="@android:color/holo_green_dark"
+                    android:textColor="@android:color/holo_blue_light"
                     android:textSize="14sp"
                     android:typeface="normal" />
 
@@ -69,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginLeft="95dp"
                     android:text="Movie"
                     android:textSize="13sp"
                     android:textAllCaps="true"
@@ -83,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/type"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginLeft="95dp"
                     android:layout_marginTop="7dp"
                     android:text="Click to view details"
                     android:textSize="13sp"
@@ -94,7 +93,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/rating"
                     android:background="@android:color/darker_gray" />
 
 

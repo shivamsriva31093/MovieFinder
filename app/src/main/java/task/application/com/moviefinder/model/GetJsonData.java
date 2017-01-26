@@ -24,6 +24,11 @@ public class GetJsonData {
         String genre = jsonObject.optString("Genre");
         return genre;
     }
+    public String getImageUrl(){
+        String imageUrl = jsonObject.optString("Poster");
+        return imageUrl;
+    }
+
     public String getImdbRating(){
         String imdbrating = jsonObject.optString("imdbRating");
         return imdbrating;

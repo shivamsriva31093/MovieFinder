@@ -4,139 +4,153 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTintMode="multiply"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="task.application.com.moviefinder.view.DetailActivity"
-    android:backgroundTintMode="multiply"
     tools:showIn="@layout/activity_detail">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        >
+        android:background="@android:color/white">
+
         <RelativeLayout
-            android:layout_width="match_parent"
             android:id="@+id/ratingsview"
-            android:layout_below="@+id/genreview"
-            android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="25dp"
-            android:src="@drawable/rt"
-            android:id="@+id/imageView"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="150dp"
-            android:layout_toEndOf="@+id/imdb" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="24dp"
-            android:src="@drawable/imdb"
-            android:id="@+id/imdb"
-            android:layout_marginTop="27dp"
-            android:scaleType="centerCrop"
-            android:layout_marginLeft="15dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imdbrating"
-            android:textSize="20dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="18dp"
-            android:layout_toRightOf="@id/imdb"
-            android:text="8.5"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rtrating"
-                android:textSize="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="18dp"
-                android:layout_toRightOf="@id/imageView"
-                android:text="79%"/>
-
-        </RelativeLayout>
-        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/releaseview"
-            android:layout_below="@+id/ratingsview">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/releasetitle"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="20sp"
-            android:textColor="@android:color/holo_blue_dark"
-            android:text="Release Date"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/releasedate"
-            android:layout_height="wrap_content"
-            android:typeface="sans"
-            android:layout_below="@id/releasetitle"
-            android:textSize="15sp"
-            android:layout_margin="15dp"
-            android:text="25th February, 2017" />
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="2dp"-->
-                <!--android:layout_below="@+id/rating1"-->
-                <!--android:background="@android:color/darker_gray"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--/>-->
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/plotview"
-            android:layout_below="@+id/releaseview">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/plottitle"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="15dp"
-                android:textSize="20sp"
-                android:textColor="@android:color/holo_blue_dark"
-                android:text="Plot"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:id="@+id/plotdate"
-                android:layout_height="wrap_content"
-                android:typeface="sans"
-                android:layout_below="@id/plottitle"
-                android:textSize="15sp"
-                android:layout_margin="15dp"
-                android:text="@string/large_text" />
+            android:layout_below="@+id/genreview">
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/genreview"
-            >
             <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/imdb"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rt" />
+
+            <ImageView
+                android:id="@+id/imdb"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/tag"
+                android:layout_height="24dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="17dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/imdb" />
+
+            <TextView
+                android:id="@+id/imdbrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@id/imdb"
+                android:text="8.5"
+                android:textSize="18dp" />
+            <TextView
+                android:id="@+id/imdbvotes"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="bottom"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/imdbrating"
+                android:text="8500 votes"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/rtrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/imageView"
+                android:text="79% fresh"
+                android:textSize="17dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/releaseview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ratingsview">
+
+            <TextView
+                android:id="@+id/releasetitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:id="@+id/tagimage"/>
+                android:text="Release Date"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp" />
+
             <TextView
+                android:id="@+id/releasedate"
                 android:layout_width="wrap_content"
-                android:id="@+id/genre"
                 android:layout_height="wrap_content"
-                android:typeface="sans"
-                android:layout_below="@id/tagimage"
+                android:layout_below="@id/releasetitle"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="25th February, 2017"
                 android:textSize="15sp"
+                android:typeface="sans" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/plotview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/releaseview">
+
+            <TextView
+                android:id="@+id/plottitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="Plot"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/plotdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/plottitle"
+                android:layout_margin="15dp"
+                android:text="@string/large_text"
+                android:textSize="15sp"
+                android:typeface="sans" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/genreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/tagimage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/tag" />
+
+            <TextView
+                android:id="@+id/genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tagimage"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
-                android:text="Mystery, Sci-fi" />
+                android:text="Mystery, Sci-fi"
+                android:textSize="15sp"
+                android:typeface="sans" />
 
         </RelativeLayout>
     </RelativeLayout>
