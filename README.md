@@ -1,4 +1,9 @@
 #MOVIE FINDER ANDROID APP
+
+**APK DOWNLOAD LINK**
+
+https://drive.google.com/open?id=0B8qXQhwx3SYwdlRZTDRsSjBhQmc
+
  **FEATURES**
 
  - Functionality to search either movie or TV shows based on user's selection
@@ -18,6 +23,29 @@ Simple to use
  - Target SDK Version- 24
  - Architecture incorporated as suggested by Android guidelines
  - Maintainable code
+
+ ***Build Tools Version***
+
+ - 25.0.2
+
+
+ ***API used***
+
+ -  Omdb API
+
+ ***Android libraries***
+ - App Compat
+ - CardView, RecyclerView
+ - Constraint Layout
+ - Design Library
+ - Progress Bar( com.victor:lib:1.0.4 )
+ -
+ ***Third party libraries***
+ - Picasso
+ - CircleImageView( de.hdodenhof:circleimageview:2.1.0 )
+ - Progress Bar( com.victor:lib:1.0.4 )
+
+
 
 
 
