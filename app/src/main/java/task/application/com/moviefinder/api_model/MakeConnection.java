@@ -1,9 +1,6 @@
-package task.application.com.moviefinder.model;
+package task.application.com.moviefinder.api_model;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
 
 import org.json.JSONObject;
 
@@ -15,9 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
-import task.application.com.moviefinder.view.DetailActivity;
-import task.application.com.moviefinder.view.RecyclerAdapter;
 
 /**
  * Created by shashank on 1/24/2017.
@@ -31,6 +25,7 @@ import task.application.com.moviefinder.view.RecyclerAdapter;
         private BufferedReader reader;
         private String jsonStr;
         private JSONObject error;
+        private static final String INVALID = "invalidjson";
 
 
         public MakeConnection(String url) {
@@ -67,8 +62,8 @@ import task.application.com.moviefinder.view.RecyclerAdapter;
                 URL url = new URL(urls);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
+                urlConnection.setConnectTimeout(7000);
                 urlConnection.connect();
-                Log.d(TAG, "JSON Connected");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -98,7 +93,7 @@ import task.application.com.moviefinder.view.RecyclerAdapter;
                 if (jsonObject != null)
                     return jsonObject;
                 else
-                    error = new JSONObject("Invalid JSON");
+                    error = new JSONObject(INVALID);
 
             } catch (Exception e) {
                 e.printStackTrace();

@@ -8,6 +8,7 @@
     <string-array name="searchbox_extra_options">
         <item>Movies</item>
         <item>TV</item>
+        <item>All</item>
     </string-array>
     <string name="search_movies_or_tv_shows">Search Movies or Tv Shows</string>
 </resources>

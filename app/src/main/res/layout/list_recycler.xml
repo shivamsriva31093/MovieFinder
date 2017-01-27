@@ -35,9 +35,9 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/arrival"
-                    app:civ_border_color="@android:color/white"
-                    app:civ_border_width="2dp" />
+                    android:src="@drawable/clapperboard1"
+                    app:civ_border_color="@android:color/darker_gray"
+                    app:civ_border_width="0.25dp" />
 
                 <TextView
                     android:id="@+id/title"
@@ -58,7 +58,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="25dp"
                     android:text="2016"
-                    android:textColor="@android:color/holo_blue_light"
+                    android:textColor="@android:color/holo_blue_dark"
                     android:textSize="14sp"
                     android:typeface="normal" />
 

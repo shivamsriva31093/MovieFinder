@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.model;
+package task.application.com.moviefinder.api_model;
 
 /**
  * Created by shashank on 1/24/2017.
@@ -15,6 +15,9 @@ public class Result {
     private String year;
     private String imdbId;
     private String imageUrl;
+    private String imdbVotes;
+    private String director;
+    private String actors;
     public Result(){
 
     }
@@ -35,6 +38,23 @@ public class Result {
 
         return title;
     }
+    public void setDirector(String director){
+        this.director = director;
+
+    }
+    public String getDirector(){
+
+        return director;
+    }
+    public void setActors(String actors){
+        this.actors = actors;
+
+    }
+    public String getActors(){
+
+        return actors;
+    }
+
     public void setImageUrl(String url){
         this.imageUrl = url;
 
@@ -74,6 +94,14 @@ public class Result {
     public String getImdRating(){
 
         return imdRating;
+    }
+    public void setImdVotes(String imdbvotes){
+        this.imdbVotes = imdbvotes;
+
+    }
+    public String getImdbVotes(){
+
+        return imdbVotes;
     }
     public void setRtRating(String rtRating){
         this.rtRating = rtRating;

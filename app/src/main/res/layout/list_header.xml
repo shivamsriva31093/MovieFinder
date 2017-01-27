@@ -6,6 +6,8 @@
     android:gravity="left"
     android:layout_height="35dp"
     android:text="hgss"
+    android:paddingTop="7dp"
+    android:paddingLeft="15dp"
     android:textSize="16dp">
 
 </TextView>

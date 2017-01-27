@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:id="@+id/detail_view_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="task.application.com.moviefinder.activities.DetailActivity"
+    tools:showIn="@layout/activity_detail">
+
+    <RelativeLayout
+        android:id="@+id/ratingsview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/genreview">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="45dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@+id/imdb"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rt" />
+
+        <ImageView
+            android:id="@+id/imdb"
+            android:layout_width="30dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="17dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/imdb" />
+
+        <TextView
+            android:id="@+id/imdbrating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@id/imdb"
+            android:textSize="18dp" />
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/star"
+            android:src="@drawable/star"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/imdbrating"/>
+        <TextView
+            android:id="@+id/imdbvotes"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="bottom"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/star"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/rtrating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="17dp"
+            android:layout_toRightOf="@id/imageView"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="17dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/releaseview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ratingsview">
+
+        <TextView
+            android:id="@+id/releasetitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Release Date"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/releasedate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/releasetitle"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:typeface="sans" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/releasedate"
+            android:background="@color/cardview_dark_background" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plotview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/releaseview">
+
+        <TextView
+            android:id="@+id/plottitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Plot"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/plot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/plottitle"
+            android:layout_margin="15dp"
+            android:textSize="15sp"
+            android:typeface="sans" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/genreview"
+        android:layout_below="@+id/castview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/tagimage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/tag" />
+
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tagimage"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:textSize="15sp"
+            android:typeface="sans" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/castview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/casttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Cast"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/directorview"
+            android:layout_below="@+id/directorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/year"
+            android:layout_toRightOf="@+id/casttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@android:color/holo_blue_dark"
+            />
+        <TextView
+            android:id="@+id/directorTitle"
+            android:layout_below="@+id/casttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Director"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="18sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/actorTitle"
+            android:layout_below="@+id/directorview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_green_dark"
+            android:text="Actors"
+            android:textSize="18sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/actorview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/actorTitle"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:textSize="15sp"
+            android:typeface="sans" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/actorview"
+            android:background="@color/cardview_dark_background" />
+
+    </RelativeLayout>
+</RelativeLayout>

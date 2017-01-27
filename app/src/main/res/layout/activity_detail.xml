@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="task.application.com.moviefinder.view.DetailActivity">
+    tools:context="task.application.com.moviefinder.activities.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -27,13 +27,14 @@
                 android:id="@+id/detailimage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/lala"/>
+                android:scaleType="centerCrop"
+                android:padding="100dp"
+                android:src="@drawable/clapperboard"
+                tools:ignore="ContentDescription" />
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:title="LA LA LAND"
+                android:layout_height="60dp"
                 app:subtitle="2016"
                 app:subtitleTextAppearance="@color/colorPrimaryDark"
                 app:layout_collapseMode="pin"
@@ -48,6 +49,33 @@
 
 
 
-    <include layout="@layout/content_detail" />
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTintMode="multiply"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_parent">
+
+            <include layout="@layout/content_detail_prime"
+                android:id="@+id/include_detail_view"
+                android:visibility="visible"/>
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/progressView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                app:indicatorName="BallScaleIndicator"
+                app:indicatorColor="@color/colorPrimary"/>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
