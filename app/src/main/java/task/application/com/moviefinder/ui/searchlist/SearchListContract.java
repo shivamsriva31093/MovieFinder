@@ -9,10 +9,17 @@ import task.application.com.moviefinder.ui.base.BaseView;
 
 public interface SearchListContract  {
     interface View extends BaseView<Presenter> {
-
+        void showSearchList();
+        void showItemDetailsUi();
+        void showLoadingIndicator(boolean show);
+        void showNoResults();
+        void showLoadingResultsError();
     }
 
     interface Presenter extends BasePresenter {
-
+        void searchByKeyword(String keyword);
+        void clearRecyclerView();
+        void setFilteringType(String filteringType);
+        String getFilteringType();
     }
 }
