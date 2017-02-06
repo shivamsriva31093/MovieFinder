@@ -5,7 +5,7 @@
     android:background="@android:color/white"
     android:id="@+id/detail_view_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context="task.application.com.moviefinder.activities.DetailActivity"
+    tools:context="task.application.com.moviefinder.view.DetailActivity"
     tools:showIn="@layout/activity_detail">
 
     <RelativeLayout

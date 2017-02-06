@@ -1,12 +1,12 @@
-package task.application.com.moviefinder.activities;
+package task.application.com.moviefinder.view;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,11 +31,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.api_model.MakeConnection;
-import task.application.com.moviefinder.api_model.Result;
-import task.application.com.moviefinder.api_model.SearchListData;
-import task.application.com.moviefinder.api_model.URLify;
-import task.application.com.moviefinder.activities.util.RecyclerAdapter;
+import task.application.com.moviefinder.model.MakeConnection;
+import task.application.com.moviefinder.model.Result;
+import task.application.com.moviefinder.model.SearchListData;
+import task.application.com.moviefinder.model.URLify;
+import task.application.com.moviefinder.util.RecyclerAdapter;
 
 public class SearchListActivity extends AppCompatActivity {
 

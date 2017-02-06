@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.api_model;
+package task.application.com.moviefinder.model;
 
 import android.content.Context;
 import android.support.v7.widget.Toolbar;

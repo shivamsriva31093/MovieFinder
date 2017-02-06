@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.activities;
+package task.application.com.moviefinder.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,10 +30,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.api_model.MakeConnection;
-import task.application.com.moviefinder.api_model.Result;
-import task.application.com.moviefinder.api_model.SearchListData;
-import task.application.com.moviefinder.api_model.URLify;
+import task.application.com.moviefinder.model.MakeConnection;
+import task.application.com.moviefinder.model.Result;
+import task.application.com.moviefinder.model.SearchListData;
+import task.application.com.moviefinder.model.URLify;
 
 public class SearchActivity extends AppCompatActivity {
 

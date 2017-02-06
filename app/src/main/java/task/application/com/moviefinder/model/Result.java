@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.api_model;
+package task.application.com.moviefinder.model;
 
 /**
  * Created by shashank on 1/24/2017.

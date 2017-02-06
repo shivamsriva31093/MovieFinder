@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.activities.util;
+package task.application.com.moviefinder.util;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.api_model.Result;
+import task.application.com.moviefinder.model.Result;
 
 /**
  * Created by shashank on 1/25/2017.

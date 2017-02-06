@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.activities;
+package task.application.com.moviefinder.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import com.wang.avi.AVLoadingIndicatorView;
 import org.json.JSONObject;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.api_model.DetailData;
-import task.application.com.moviefinder.api_model.MakeConnection;
-import task.application.com.moviefinder.api_model.Result;
-import task.application.com.moviefinder.api_model.URLify;
+import task.application.com.moviefinder.model.DetailData;
+import task.application.com.moviefinder.model.MakeConnection;
+import task.application.com.moviefinder.model.Result;
+import task.application.com.moviefinder.model.URLify;
 
 public class DetailActivity extends AppCompatActivity {
 

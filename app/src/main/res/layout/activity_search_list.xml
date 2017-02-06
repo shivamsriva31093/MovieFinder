@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SearchListActivity">
+    tools:context=".view.SearchListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="task.application.com.moviefinder.activities.SearchListActivity">
+        tools:context="task.application.com.moviefinder.view.SearchListActivity">
 
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/recView"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:backgroundTintMode="multiply"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="task.application.com.moviefinder.activities.DetailActivity"
+    tools:context="task.application.com.moviefinder.view.DetailActivity"
     tools:showIn="@layout/activity_detail">
 
     <RelativeLayout
