@@ -1,5 +1,6 @@
 package task.application.com.moviefinder.ui.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.searchlist.SearchListActivity;
 import task.application.com.moviefinder.util.Util;
 
 /**
@@ -145,6 +147,11 @@ public class SearchFragment extends Fragment implements SearchContract.View{
     @Override
     public void showSearchListUi(ArrayList<MovieDb> movieDbs) {
         Log.d("test", movieDbs.size()+"");
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("searchList", movieDbs);
+        Intent intent = new Intent(getActivity(), SearchListActivity.class);
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
     }
 
     @Override

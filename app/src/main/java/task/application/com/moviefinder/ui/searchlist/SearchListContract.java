@@ -1,5 +1,8 @@
 package task.application.com.moviefinder.ui.searchlist;
 
+import java.util.ArrayList;
+
+import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.ui.base.BasePresenter;
 import task.application.com.moviefinder.ui.base.BaseView;
 
@@ -9,7 +12,7 @@ import task.application.com.moviefinder.ui.base.BaseView;
 
 public interface SearchListContract  {
     interface View extends BaseView<Presenter> {
-        void showSearchList();
+        void showSearchList(ArrayList<MovieDb> movieDbs);
         void showItemDetailsUi();
         void showLoadingIndicator(boolean show);
         void showNoResults();

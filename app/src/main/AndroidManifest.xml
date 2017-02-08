@@ -20,7 +20,7 @@
 
         </activity>
 
-        <activity android:name=".view.SearchListActivity"
+        <activity android:name=".ui.searchlist.SearchListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
