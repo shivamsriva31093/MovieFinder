@@ -4,10 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +34,9 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     private static final String TAG = SearchListFragment.class.getName();
     private static final String SEARCH_LIST = "searchList";
-    private static int  SEARCH_FRAG_COUNT = 0;
+
     private ArrayList<MovieDb> resultList;
+    private OnReplaceFragmentListener listener;
 
     private SearchListContract.Presenter presenter;
     private FrameLayout recyclerViewParent;
@@ -66,11 +65,9 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             if(!savedInstanceState.isEmpty()) {
                 resultList = (ArrayList<MovieDb>) savedInstanceState.getSerializable(SEARCH_LIST);
             }
-        }
-        if(getArguments()!=null && !getArguments().isEmpty()) {
+        } else if (getArguments() != null && !getArguments().isEmpty()) {
             resultList = (ArrayList<MovieDb>) getArguments().getSerializable(SEARCH_LIST);
         }
-        Log.d("test", SEARCH_FRAG_COUNT+"");
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.activity_search_list);
         progressView = (NewtonCradleLoading) fragmentContainer.findViewById(R.id.progressView);
         recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, itemClickListener);
@@ -115,13 +112,25 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     };
 
     @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            listener = (SearchListActivity) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString() + "must implement " +
+                    "OnReplaceFragmentInterface");
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public void showSearchList(ArrayList<MovieDb> movieDbs) {
 //        recyclerViewAdapter.replaceData(movieDbs);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment fragment = SearchListFragment.newInstance(movieDbs);
-        transaction.replace(fragmentContainer.getId(), fragment);
-        transaction.addToBackStack(SEARCH_FRAG_COUNT++ +"");
-        transaction.commit();
+        listener.replaceFragment(movieDbs);
     }
 
     @Override
@@ -277,5 +286,8 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         void onItemClick(View view, MovieDb item);
     }
 
+    public interface OnReplaceFragmentListener {
+        void replaceFragment(ArrayList<MovieDb> movieDbs);
+    }
 
 }
