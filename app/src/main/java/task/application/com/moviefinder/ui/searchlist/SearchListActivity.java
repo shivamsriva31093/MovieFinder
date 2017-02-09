@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,8 +17,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
+import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.util.Util;
 
@@ -25,7 +30,7 @@ import task.application.com.moviefinder.util.Util;
  * Created by sHIVAM on 2/6/2017.
  */
 
-public class SearchListActivity extends AppCompatActivity {
+public class SearchListActivity extends AppCompatActivity implements SearchListFragment.OnReplaceFragmentListener {
 
     private static final String TAG = SearchListActivity.class.getName();
     private static final String LIST_FRAG_TAG = "searchlist_frag";
@@ -35,12 +40,14 @@ public class SearchListActivity extends AppCompatActivity {
     private static final String BUNDLE = "bundle";
     private static final String SEARCH = "Search";
 
+    private static int SEARCH_FRAG_COUNT = 0;
+
     private SearchListContract.Presenter presenter;
     private TextInputLayout searchBox;
     private EditText searchTerm;
     private Spinner moreOptions;
     private ImageButton searchAction;
-
+    private RelativeLayout fragmentContainer;
     private Bundle intentBundle;
 
     private CharSequence searchQuery;
@@ -68,7 +75,7 @@ public class SearchListActivity extends AppCompatActivity {
                     R.id.activity_search_list, LIST_FRAG_TAG);
         }
         presenter = new SearchListPresenter(fragment);
-
+        fragmentContainer = (RelativeLayout) findViewById(R.id.activity_search_list);
         setUpSearchBox();
     }
 
@@ -188,5 +195,15 @@ public class SearchListActivity extends AppCompatActivity {
         else {
             getSupportFragmentManager().popBackStack();
         }
+    }
+
+    @Override
+    public void replaceFragment(ArrayList<MovieDb> movieDbs) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs);
+        presenter = new SearchListPresenter(fragment);
+        transaction.replace(fragmentContainer.getId(), fragment);
+        transaction.addToBackStack(SEARCH_FRAG_COUNT++ + "");
+        transaction.commit();
     }
 }
