@@ -62,9 +62,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/detail_parent">
 
-            <include layout="@layout/content_detail_prime"
-                android:id="@+id/include_detail_view"
-                android:visibility="visible"/>
 
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/progressView"

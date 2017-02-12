@@ -18,7 +18,7 @@
             android:id="@+id/imageView"
             android:layout_width="45dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="180dp"
+            android:layout_marginStart="180dp"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@+id/imdb"
             android:scaleType="centerCrop"
@@ -28,7 +28,7 @@
             android:id="@+id/imdb"
             android:layout_width="30dp"
             android:layout_height="24dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="17dp"
             android:scaleType="centerCrop"
             android:src="@drawable/imdb" />
@@ -37,26 +37,26 @@
             android:id="@+id/imdbrating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="16dp"
-            android:layout_toRightOf="@id/imdb"
-            android:textSize="18dp" />
+            android:layout_toEndOf="@id/imdb"
+            android:textSize="18sp" />
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:id="@+id/star"
             android:src="@drawable/star"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/imdbrating"/>
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/imdbrating" />
         <TextView
             android:id="@+id/imdbvotes"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="bottom"
             android:layout_marginTop="15dp"
-            android:layout_toRightOf="@id/star"
+            android:layout_toEndOf="@id/star"
             android:textSize="12sp" />
 
         <TextView
@@ -158,6 +158,7 @@
             android:typeface="sans" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/castview"
         android:layout_width="match_parent"
@@ -232,4 +233,5 @@
             android:background="@color/cardview_dark_background" />
 
     </RelativeLayout>
+
 </RelativeLayout>
