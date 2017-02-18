@@ -3,8 +3,6 @@ package com.androidtmdbwrapper.model.movies;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.androidtmdbwrapper.enums.MovieAppend;
-import com.androidtmdbwrapper.interfaces.AppendToResponse;
 import com.androidtmdbwrapper.model.collection.CollectionInfo;
 import com.androidtmdbwrapper.model.core.Genre;
 import com.androidtmdbwrapper.model.core.Language;
@@ -14,15 +12,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by sHIVAM on 2/14/2017.
  */
 
-public class MovieInfo extends BasicMovieInfo implements AppendToResponse<MovieAppend>, Parcelable {
+public class MovieInfo extends BasicMovieInfo implements Parcelable {
     @JsonProperty("belongs_to_collection")
     private CollectionInfo belongsToCollection;
     @JsonProperty("budget")
@@ -47,8 +43,6 @@ public class MovieInfo extends BasicMovieInfo implements AppendToResponse<MovieA
     private String tagline;
     @JsonProperty("status")
     private String status;
-
-    private final Set<MovieAppend> methods = EnumSet.noneOf(MovieAppend.class);
 
     private List<Video> videos = Collections.EMPTY_LIST;
     private MediaCreditList credits;
@@ -131,7 +125,6 @@ public class MovieInfo extends BasicMovieInfo implements AppendToResponse<MovieA
     @JsonSetter("credits")
     public void setCredits(MediaCreditList credits) {
         this.credits = credits;
-        addMethod(MovieAppend.CREDITS);
     }
 
     public List<Genre> getGenresList() {
@@ -156,10 +149,6 @@ public class MovieInfo extends BasicMovieInfo implements AppendToResponse<MovieA
 
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
-    }
-
-    public Set<MovieAppend> getMethods() {
-        return methods;
     }
 
     public List<ProductionCompany> getProductionCompanies() {
@@ -225,15 +214,5 @@ public class MovieInfo extends BasicMovieInfo implements AppendToResponse<MovieA
     @JsonSetter("videos")
     public void setVideos(List<Video> videos) {
         this.videos = videos;
-        addMethod(MovieAppend.VIDEOS);
-    }
-
-    private void addMethod(MovieAppend method) {
-        methods.add(method);
-    }
-
-    @Override
-    public boolean hasMethod(MovieAppend method) {
-        return methods.contains(method);
     }
 }

@@ -72,4 +72,8 @@ public class ApiConfiguration implements Parcelable {
                 ", imageConfig=" + imageConfig +
                 '}';
     }
+
+    public String getImageDownloadURL(String fileUrl) {
+        return imageConfig.getBaseUrl() + "original" + fileUrl;
+    }
 }

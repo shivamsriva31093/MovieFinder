@@ -3,7 +3,6 @@ package com.androidtmdbwrapper.model.core;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Collections;
@@ -14,11 +13,11 @@ import java.util.List;
  * Created by sHIVAM on 2/14/2017.
  */
 
-public class SearchResult implements Parcelable, Iterable<BasicMovieInfo> {
+public class SearchResult<T extends Parcelable> implements Parcelable, Iterable<T> {
     @JsonProperty("page")
     private int page;
     @JsonProperty("results")
-    private List<BasicMovieInfo> results = Collections.EMPTY_LIST;
+    private List<T> results = Collections.EMPTY_LIST;
     @JsonProperty("total_results")
     private int totalResults;
     @JsonProperty("total_pages")
@@ -31,6 +30,8 @@ public class SearchResult implements Parcelable, Iterable<BasicMovieInfo> {
         page = in.readInt();
         totalResults = in.readInt();
         totalPages = in.readInt();
+        final Class<?> type = (Class<?>) in.readSerializable();
+        in.readList(results, type.getClassLoader());
     }
 
     public static final Creator<SearchResult> CREATOR = new Creator<SearchResult>() {
@@ -53,11 +54,11 @@ public class SearchResult implements Parcelable, Iterable<BasicMovieInfo> {
         this.page = page;
     }
 
-    public List<BasicMovieInfo> getResults() {
+    public List<T> getResults() {
         return results;
     }
 
-    public void setResults(List<BasicMovieInfo> results) {
+    public void setResults(List<T> results) {
         this.results = results;
     }
 
@@ -78,6 +79,11 @@ public class SearchResult implements Parcelable, Iterable<BasicMovieInfo> {
     }
 
     @Override
+    public Iterator<T> iterator() {
+        return results.iterator();
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -87,10 +93,8 @@ public class SearchResult implements Parcelable, Iterable<BasicMovieInfo> {
         dest.writeInt(page);
         dest.writeInt(totalResults);
         dest.writeInt(totalPages);
-    }
-
-    @Override
-    public Iterator<BasicMovieInfo> iterator() {
-        return results.iterator();
+        final Class<?> type = results.get(0).getClass();
+        dest.writeSerializable(type);
+        dest.writeList(results);
     }
 }
