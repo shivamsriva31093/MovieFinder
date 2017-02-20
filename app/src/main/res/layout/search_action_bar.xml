@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,26 +25,6 @@
             android:layout_gravity="center_vertical"
             android:layout_height="match_parent">
 
-            <Spinner
-                android:id="@+id/optionsMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="27dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/searchbox"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageButton
-                android:id="@+id/search_action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                app:srcCompat="?android:attr/actionModeWebSearchDrawable"
-                android:layout_toRightOf="@+id/optionsMenu"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="0.55" />
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/searchbox"
 
@@ -57,7 +35,7 @@
 
                 <EditText
                     android:id="@+id/searchterm"
-                    android:layout_width="140dp"
+                    android:layout_width="228dp"
                     android:layout_height="42dp"
                     android:textCursorDrawable="@null"
                     android:imeOptions="actionSend"
@@ -70,6 +48,27 @@
                     android:gravity="bottom"
                     android:foregroundGravity="top" />
             </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/search_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="?android:attr/actionModeWebSearchDrawable"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="0.55"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/optionsMenu"
+                android:layout_marginEnd="11dp" />
+
+            <Spinner
+                android:id="@+id/optionsMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_alignBottom="@+id/search_action"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 

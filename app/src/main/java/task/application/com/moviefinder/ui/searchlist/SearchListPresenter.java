@@ -16,10 +16,11 @@ public class SearchListPresenter implements SearchListContract.Presenter,
 
     public SearchListPresenter(SearchListContract.View view) {
         this.view = view;
+        view.setPresenter(this);
     }
 
     @Override
-    public void searchByKeyword(String keyword) {
+    public void searchByKeyword(String keyword, String searchType) {
         view.showLoadingIndicator(true);
         TmdbWrapper tmdbWrapper = new TmdbWrapper(this);
         tmdbWrapper.execute(keyword);
@@ -31,8 +32,12 @@ public class SearchListPresenter implements SearchListContract.Presenter,
     }
 
     @Override
-    public void setFilteringType(String filteringType) {
+    public void onSearchItemClick(MovieDb item) {
+        view.showItemDetailsUi(item);
+    }
 
+    @Override
+    public void setFilteringType(String filteringType) {
     }
 
     @Override

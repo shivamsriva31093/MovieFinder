@@ -13,15 +13,18 @@ import task.application.com.moviefinder.ui.base.BaseView;
 public interface SearchListContract  {
     interface View extends BaseView<Presenter> {
         void showSearchList(ArrayList<MovieDb> movieDbs);
-        void showItemDetailsUi();
+
+        void showItemDetailsUi(MovieDb item);
         void showLoadingIndicator(boolean show);
         void showNoResults();
         void showLoadingResultsError();
     }
 
     interface Presenter extends BasePresenter {
-        void searchByKeyword(String keyword);
+        void searchByKeyword(String keyword, String searchType);
         void clearRecyclerView();
+
+        void onSearchItemClick(MovieDb Item);
         void setFilteringType(String filteringType);
         String getFilteringType();
     }

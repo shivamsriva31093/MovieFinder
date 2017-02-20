@@ -1,6 +1,7 @@
 package task.application.com.moviefinder.ui.searchlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.victor.loading.newton.NewtonCradleLoading;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.util.Util;
 
 /**
@@ -34,6 +35,8 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     private static final String TAG = SearchListFragment.class.getName();
     private static final String SEARCH_LIST = "searchList";
+    private static final String CLICKED_ITEM = "clickedItem";
+    private static final String SEARCH_ITEM = "searchItem";
 
     private ArrayList<MovieDb> resultList;
     private OnReplaceFragmentListener listener;
@@ -73,6 +76,13 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, itemClickListener);
     }
 
+    SearchItemClickListener itemClickListener = new SearchItemClickListener() {
+        @Override
+        public void onItemClick(View view, MovieDb item) {
+            presenter.onSearchItemClick(item);
+        }
+    };
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -104,13 +114,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
-    SearchItemClickListener itemClickListener = new SearchItemClickListener() {
-        @Override
-        public void onItemClick(View view, MovieDb item) {
-            Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
-        }
-    };
-
     @Override
     public void onStart() {
         super.onStart();
@@ -134,8 +137,12 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     @Override
-    public void showItemDetailsUi() {
-
+    public void showItemDetailsUi(MovieDb item) {
+        Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(CLICKED_ITEM, item);
+        intent.putExtra(SEARCH_ITEM, bundle);
+        startActivity(intent);
     }
 
     @Override

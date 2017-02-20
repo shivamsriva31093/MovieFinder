@@ -157,7 +157,7 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
         if (cancel) {
             focusView.requestFocus();
         } else {
-            presenter.searchByKeyword(query);
+            presenter.searchByKeyword(query, queryType);
         }
 
     }

@@ -24,7 +24,7 @@ public class TmdbWrapper extends AsyncTask<String, Void, ArrayList<MovieDb>> {
     protected ArrayList<MovieDb> doInBackground(String... params) {
         TmdbApi api = new TmdbApi("1d49e17fa9eb8f8d72d20a75af1099b1");
         TmdbSearch search = api.getSearch();
-        return (ArrayList<MovieDb>) search.searchMovie(params[0], 0, "", true, 0).getResults();
+        return (ArrayList<MovieDb>) search.searchMovie(params[0], 0, "en", true, 0).getResults();
     }
 
     @Override

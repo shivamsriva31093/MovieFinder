@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -146,7 +145,6 @@ public class SearchFragment extends Fragment implements SearchContract.View{
 
     @Override
     public void showSearchListUi(ArrayList<MovieDb> movieDbs) {
-        Log.d("test", movieDbs.size()+"");
         Bundle bundle = new Bundle();
         bundle.putSerializable("searchList", movieDbs);
         Intent intent = new Intent(getActivity(), SearchListActivity.class);

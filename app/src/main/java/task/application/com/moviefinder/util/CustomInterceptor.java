@@ -1,4 +1,4 @@
-package com.androidtmdbwrapper;
+package task.application.com.moviefinder.util;
 
 import java.io.IOException;
 
@@ -12,9 +12,9 @@ import okhttp3.Response;
  */
 
 public class CustomInterceptor implements Interceptor {
-    private Tmdb tmdb;
+    private TmdbApi tmdb;
 
-    public CustomInterceptor(Tmdb tmdb) {
+    public CustomInterceptor(TmdbApi tmdb) {
         this.tmdb = tmdb;
     }
 
@@ -25,11 +25,11 @@ public class CustomInterceptor implements Interceptor {
 
     public static Response handleIntercept(Chain chain, String apiKey) throws IOException {
         Request request = chain.request();
-        if (!Tmdb.API_HOST.equals(request.url().host())) {
+        if (!TmdbApi.API_BASE_URL.equals(request.url().host())) {
             return chain.proceed(request);
         }
         HttpUrl.Builder urlBuilder = request.url().newBuilder();
-        urlBuilder.setEncodedQueryParameter(Tmdb.API_KEY, apiKey);
+        urlBuilder.setEncodedQueryParameter(TmdbApi.API_KEY, apiKey);
         Request.Builder builder = request.newBuilder();
         builder.url(urlBuilder.build());
         return chain.proceed(builder.build());

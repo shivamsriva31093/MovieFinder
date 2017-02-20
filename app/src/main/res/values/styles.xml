@@ -12,6 +12,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="CardViewTheme">
         <item name="cardCornerRadius">2dp</item>
         <item name="cardElevation">2dp</item>
@@ -21,6 +22,7 @@
         <item name="contentPaddingRight">16dp</item>
         <item name="cardBackgroundColor">#FFFFF5</item>
     </style>
+
     <style name="TextLabel">
         <item name="colorControlNormal">@android:color/transparent</item>
         <item name="colorControlActivated">@android:color/transparent</item>
