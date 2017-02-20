@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="task.application.com.moviefinder.view.DetailActivity">
+    tools:context="task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:padding="100dp"
+                android:padding="5dp"
                 android:src="@drawable/clapperboard"
                 tools:ignore="ContentDescription" />
             <android.support.v7.widget.Toolbar
