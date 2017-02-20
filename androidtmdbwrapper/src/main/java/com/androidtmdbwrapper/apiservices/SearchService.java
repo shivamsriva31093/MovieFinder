@@ -15,8 +15,9 @@ public interface SearchService {
 
     @GET("search/movie")
     Call<SearchResult<BasicMovieInfo>> searchMovies(
-            @Query("query") String query,
-            @Query("language") String language
+            @Query("query") String query
+//            @Query("language") String language,
+//            @Query("page") Integer page
             );
 
 /*    @GET("search/tv")

@@ -13,9 +13,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 
 public class Tmdb {
-    public static final String API_HOST = "api.themoviedb.org";
+    public static final String API_BASE_URL = "api.themoviedb.org";
     public static final String API_VERSION = "3";
-    public static final String API_URL = "https://" + API_HOST + "/" + API_VERSION + "/";
+    public static final String API_URL = "https://" + API_BASE_URL + "/" + API_VERSION + "/";
 
     public static final String API_KEY = "api_key";
 
@@ -28,11 +28,19 @@ public class Tmdb {
         this.apiKey = apiKey;
     }
 
-    public String getApiKey() {
+    String getApiKey() {
         return apiKey;
     }
 
-    protected Retrofit.Builder retrofitBuilder() {
+    protected OkHttpClient getOkHttpClient() {
+        return okHttpClient;
+    }
+
+    protected void setOkHttpClient(OkHttpClient client) {
+        okHttpClient = client;
+    }
+
+    private Retrofit.Builder retrofitBuilder() {
         return new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(JacksonConverterFactory.create())
@@ -49,10 +57,10 @@ public class Tmdb {
     }
 
     protected void configOkHttpClient(OkHttpClient.Builder builder) {
-        builder.addInterceptor(new CustomInterceptor(this));
+
     }
 
-    protected Retrofit getRetrofit() {
+    private Retrofit getRetrofit() {
         if (retrofit == null) {
             retrofit = retrofitBuilder().build();
         }
