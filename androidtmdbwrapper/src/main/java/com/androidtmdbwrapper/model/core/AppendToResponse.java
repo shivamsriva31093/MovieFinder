@@ -1,13 +1,15 @@
 package com.androidtmdbwrapper.model.core;
 
+import com.androidtmdbwrapper.enums.AppendToResponseItem;
+
 /**
  * Created by sHIVAM on 2/18/2017.
  */
 
 public class AppendToResponse {
-    private final AppendToResponse[] items;
+    private final AppendToResponseItem[] items;
 
-    public AppendToResponse(AppendToResponse... items) {
+    public AppendToResponse(AppendToResponseItem... items) {
         this.items = items;
     }
 
