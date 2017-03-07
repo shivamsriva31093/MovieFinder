@@ -142,4 +142,11 @@ public class ImageConfig implements Parcelable {
         dest.writeStringList(profileSizes);
         dest.writeStringList(stillSizes);
     }
+
+    public String getImageUrl(String fileUrl, String size) {
+        if (isValidSize(size))
+            return getBaseUrl() + size + fileUrl;
+        return "https://www.google.com/" +
+                "url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwji0ZnqksPSAhVEN48KHcPbDSgQjRwIBw&url=http%3A%2F%2Fwww.imdb.com%2Ftitle%2Ftt3214002%2F&psig=AFQjCNHkA22NUxYBI7uI8KZr2ITPtyzutw&ust=1488933268462290";
+    }
 }
