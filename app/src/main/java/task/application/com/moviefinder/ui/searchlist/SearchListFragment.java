@@ -94,16 +94,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         View rootView = inflater.inflate(R.layout.fragment_searchlist, container, false);
         recyclerViewParent = (FrameLayout) rootView.findViewById(R.id.recView_parent);
         recyclerView = (RecyclerView) recyclerViewParent.findViewById(R.id.recView);
-//        recyclerView.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN
-//                        && keyCode == KeyEvent.KEYCODE_BACK) {
-//                    recyclerViewAdapter.replaceData(recyclerViewAdapter.oldData);
-//                }
-//                return false;
-//            }
-//        });
         setUpRecyclerView();
         return rootView;
     }
@@ -162,7 +152,8 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     @Override
     public void showNoResults() {
-
+        recyclerViewAdapter.replaceData(new ArrayList<MovieDb>());
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override

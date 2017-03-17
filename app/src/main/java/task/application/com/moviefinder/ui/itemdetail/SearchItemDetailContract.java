@@ -1,9 +1,8 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
-import java.util.List;
+import com.androidtmdbwrapper.model.movies.MovieInfo;
 
 import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.people.PersonCast;
 import task.application.com.moviefinder.ui.base.BasePresenter;
 import task.application.com.moviefinder.ui.base.BaseView;
 
@@ -17,14 +16,12 @@ public interface SearchItemDetailContract {
 
         void showLoadingError();
 
-        void prepareUI(List<PersonCast> cast);
-
-        void showUi(MovieDb item);
+        void showUi(MovieInfo item);
     }
 
     interface Presenter extends BasePresenter {
         void getMovieDetails(MovieDb clickedItem);
 
-        void setUpUiForItem(MovieDb item);
+        void setUpUiForItem(MovieInfo item);
     }
 }

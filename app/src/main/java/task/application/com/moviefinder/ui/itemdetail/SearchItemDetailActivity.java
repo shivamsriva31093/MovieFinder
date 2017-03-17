@@ -2,10 +2,8 @@ package task.application.com.moviefinder.ui.itemdetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.util.Util;
 
 public class SearchItemDetailActivity extends AppCompatActivity {
 
@@ -17,19 +15,26 @@ public class SearchItemDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_detail_new);
         Bundle bundle = new Bundle();
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
-            Log.d("test", bundle.size() + "");
         }
-        SearchItemDetailFragment fragment = (SearchItemDetailFragment)
-                getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
-        if (fragment == null) {
-            fragment = SearchItemDetailFragment.newInstance(this, bundle);
-            Util.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.detail_parent, SEARCH_ITEM_DETAIL);
-        }
-        this.presenter = new SearchItemDetailPresenter(fragment);
+//        SearchItemDetailFragment fragment = (SearchItemDetailFragment)
+//                getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
+//        if (fragment == null) {
+//            fragment = SearchItemDetailFragment.newInstance(this, bundle);
+//            Util.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.detail_parent, SEARCH_ITEM_DETAIL);
+//        }
+
+//        FragmentPrime fragment = (FragmentPrime)
+//                getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
+//        if (fragment == null) {
+//            fragment = FragmentPrime.newInstance(bundle);
+//            Util.addFragmentToActivity(getSupportFragmentManager(), fragment,
+//                    R.id.detail_parent, SEARCH_ITEM_DETAIL);
+//        }
+//        this.presenter = new SearchItemDetailPresenter(fragment);
     }
 
 
