@@ -7,7 +7,7 @@ import com.androidtmdbwrapper.model.collection.CollectionInfo;
 import com.androidtmdbwrapper.model.core.Genre;
 import com.androidtmdbwrapper.model.core.Language;
 import com.androidtmdbwrapper.model.mediadetails.MediaCreditList;
-import com.androidtmdbwrapper.model.mediadetails.Video;
+import com.androidtmdbwrapper.model.mediadetails.VideosResults;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -44,7 +44,7 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
     @JsonProperty("status")
     private String status;
 
-    private List<Video> videos = Collections.EMPTY_LIST;
+    private VideosResults videos;
     private MediaCreditList credits;
 
     public MovieInfo() {
@@ -63,7 +63,7 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
         spokenLanguage = in.createTypedArrayList(Language.CREATOR);
         tagline = in.readString();
         status = in.readString();
-        videos = in.createTypedArrayList(Video.CREATOR);
+        videos = in.readParcelable(VideosResults.class.getClassLoader());
         credits = in.readParcelable(MediaCreditList.class.getClassLoader());
     }
 
@@ -81,7 +81,7 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
         dest.writeTypedList(spokenLanguage);
         dest.writeString(tagline);
         dest.writeString(status);
-        dest.writeTypedList(videos);
+        dest.writeParcelable(videos, flags);
         dest.writeParcelable(credits, flags);
     }
 
@@ -207,12 +207,12 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
         this.tagline = tagline;
     }
 
-    public List<Video> getVideos() {
+    public VideosResults getVideos() {
         return videos;
     }
 
     @JsonSetter("videos")
-    public void setVideos(List<Video> videos) {
+    public void setVideos(VideosResults videos) {
         this.videos = videos;
     }
 }

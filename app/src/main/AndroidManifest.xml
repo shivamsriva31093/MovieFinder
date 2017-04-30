@@ -18,6 +18,7 @@
             android:name=".ui.searchlist.SearchListActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.search.SearchActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,6 +39,7 @@
             android:label="@string/title_activity_search_item_detail"
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.searchlist.SearchListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

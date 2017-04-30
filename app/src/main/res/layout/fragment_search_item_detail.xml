@@ -5,7 +5,7 @@
     android:id="@+id/fragment_content_parent">
 
     <include
-        layout="@layout/content_detail_prime"
+        layout="@layout/content_detail_new"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 

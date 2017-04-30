@@ -1,15 +1,19 @@
 package com.androidtmdbwrapper.model.mediadetails;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.androidtmdbwrapper.model.core.AbstractNameId;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by sHIVAM on 2/15/2017.
  */
 
-public class Video extends AbstractNameId {
+public class Video implements Parcelable {
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("id")
+    private String id;
     @JsonProperty("key")
     private String key;
     @JsonProperty("site")
@@ -27,29 +31,14 @@ public class Video extends AbstractNameId {
     }
 
     protected Video(Parcel in) {
-        super(in);
+        name = in.readString();
+        id = in.readString();
         key = in.readString();
         site = in.readString();
         size = in.readInt();
         type = in.readString();
         language = in.readString();
         country = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(key);
-        dest.writeString(site);
-        dest.writeInt(size);
-        dest.writeString(type);
-        dest.writeString(language);
-        dest.writeString(country);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<Video> CREATOR = new Creator<Video>() {
@@ -112,6 +101,22 @@ public class Video extends AbstractNameId {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -137,5 +142,22 @@ public class Video extends AbstractNameId {
         result = 31 * result + getLanguage().hashCode();
         result = 31 * result + getCountry().hashCode();
         return result;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(id);
+        dest.writeString(key);
+        dest.writeString(site);
+        dest.writeInt(size);
+        dest.writeString(type);
+        dest.writeString(language);
+        dest.writeString(country);
     }
 }

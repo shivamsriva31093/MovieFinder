@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.util.Util;
 
 public class SearchItemDetailActivity extends AppCompatActivity {
 
@@ -27,14 +28,14 @@ public class SearchItemDetailActivity extends AppCompatActivity {
 //            Util.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.detail_parent, SEARCH_ITEM_DETAIL);
 //        }
 
-//        FragmentPrime fragment = (FragmentPrime)
-//                getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
-//        if (fragment == null) {
-//            fragment = FragmentPrime.newInstance(bundle);
-//            Util.addFragmentToActivity(getSupportFragmentManager(), fragment,
-//                    R.id.detail_parent, SEARCH_ITEM_DETAIL);
-//        }
-//        this.presenter = new SearchItemDetailPresenter(fragment);
+        FragmentPrime fragment = (FragmentPrime)
+                getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
+        if (fragment == null) {
+            fragment = FragmentPrime.newInstance(bundle);
+            Util.addFragmentToActivity(getSupportFragmentManager(), fragment,
+                    R.id.detail_parent, SEARCH_ITEM_DETAIL);
+        }
+        this.presenter = new SearchItemDetailPresenter(fragment);
     }
 
 

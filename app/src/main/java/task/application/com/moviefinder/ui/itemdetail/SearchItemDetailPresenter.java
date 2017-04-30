@@ -37,7 +37,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     public void getMovieDetails(MovieDb clickedItem) {
         view.showLoadingIndicator(true);
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
-        AppendToResponse atr = new AppendToResponse(AppendToResponseItem.CREDITS);
+        AppendToResponse atr = new AppendToResponse(AppendToResponseItem.CREDITS, AppendToResponseItem.VIDEOS);
         Call<MovieInfo> call = tmdb.moviesService().summary(clickedItem.getId(), atr);
         call.enqueue(new Callback<MovieInfo>() {
             @Override
@@ -55,6 +55,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
             @Override
             public void onFailure(Call<MovieInfo> call, Throwable t) {
                 view.showLoadingError();
+                view.showLoadingIndicator(false);
                 t.printStackTrace();
             }
         });

@@ -86,6 +86,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Nullable
@@ -203,17 +204,17 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             if (holder.HOLDER_ID == 1) {
-                holder.year.setText(data.get(position - 1).getReleaseDate());
-                holder.type.setText(data.get(position - 1).getTagline());
+                if (!data.get(position - 1).getReleaseDate().isEmpty())
+                    holder.year.setText(data.get(position - 1).getReleaseDate().substring(0, 4));
                 holder.title.setText(data.get(position - 1).getTitle());
                 String url = data.get(position - 1).getBackdropPath();
                 if (url==null) {
 
-                    holder.imageView.setImageResource(R.drawable.clapperboard1);
+                    holder.imageView.setImageResource(R.drawable.movie);
                 } else {
                     Picasso.with(context)
                             .load("https://image.tmdb.org/t/p/w500"+url)
-                            .placeholder(R.drawable.clapperboard1).into(holder.imageView);
+                            .placeholder(R.drawable.movie).into(holder.imageView);
                 }
 
             } else {
@@ -251,7 +252,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             private TextView title;
             private ImageView icon;
             private TextView year;
-            private TextView type;
             private TextView header;
             private CircleImageView imageView;
             private int HOLDER_ID;
@@ -260,7 +260,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                 super(itemView);
                 if (viewType == TYPE_ITEM) {
                     title = (TextView) itemView.findViewById(R.id.title);
-                    type = (TextView) itemView.findViewById(R.id.type);
                     year = (TextView) itemView.findViewById(R.id.year);
                     imageView = (CircleImageView) itemView.findViewById(R.id.item_image);
 
