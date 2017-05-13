@@ -262,18 +262,18 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     title = (TextView) itemView.findViewById(R.id.title);
                     year = (TextView) itemView.findViewById(R.id.year);
                     imageView = (CircleImageView) itemView.findViewById(R.id.item_image);
-
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            listener.onItemClick(v, data.get(getAdapterPosition() - 1));
+                        }
+                    });
                     HOLDER_ID = 1;
                 } else {
                     header = (TextView) itemView.findViewById(R.id.header);
                     HOLDER_ID = 0;
                 }
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listener.onItemClick(v, data.get(getAdapterPosition()-1));
-                    }
-                });
+
             }
         }
     }

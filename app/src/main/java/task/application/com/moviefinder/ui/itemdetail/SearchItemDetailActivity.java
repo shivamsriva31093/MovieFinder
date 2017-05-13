@@ -21,12 +21,7 @@ public class SearchItemDetailActivity extends AppCompatActivity {
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
         }
-//        SearchItemDetailFragment fragment = (SearchItemDetailFragment)
-//                getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
-//        if (fragment == null) {
-//            fragment = SearchItemDetailFragment.newInstance(this, bundle);
-//            Util.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.detail_parent, SEARCH_ITEM_DETAIL);
-//        }
+
 
         FragmentPrime fragment = (FragmentPrime)
                 getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);

@@ -1,7 +1,5 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
-import com.androidtmdbwrapper.model.movies.MovieInfo;
-
 import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.ui.base.BasePresenter;
 import task.application.com.moviefinder.ui.base.BaseView;
@@ -16,12 +14,12 @@ public interface SearchItemDetailContract {
 
         void showLoadingError();
 
-        void showUi(MovieInfo item);
+        void showUi(SearchItemDetailPresenter.PackTmdbOmdbData item);
     }
 
     interface Presenter extends BasePresenter {
         void getMovieDetails(MovieDb clickedItem);
 
-        void setUpUiForItem(MovieInfo item);
+        void setUpUiForItem(SearchItemDetailPresenter.PackTmdbOmdbData item);
     }
 }

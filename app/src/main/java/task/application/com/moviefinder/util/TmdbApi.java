@@ -33,7 +33,6 @@ public class TmdbApi extends Tmdb {
     protected synchronized OkHttpClient okHttpClient() {
         if (getOkHttpClient() == null) {
             OkHttpClient.Builder builder = client.newBuilder();
-            configOkHttpClient(builder);
             setOkHttpClient(builder.build());
         }
         return getOkHttpClient();

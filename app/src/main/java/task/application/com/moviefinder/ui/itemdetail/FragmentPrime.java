@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,9 +52,10 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private AVLoadingIndicatorView progressView;
     private FrameLayout detailView;
     private RelativeLayout basicDetails;
+    private RelativeLayout ratingsView;
     private CircleImageView poster;
     private ImageButton trailerButton;
-    private ImageButton favorite;
+    private FloatingActionButton favorite;
     private ImageButton share;
     private TextView genres;
     private TextView title;
@@ -62,6 +65,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private String trailerKey;
     private ImageSlider<MediaCreditCast> castFrag;
     private ImageSlider<MediaCreditCrew> crewFrag;
+    private TextView rtRating;
+    private TextView imdbRating;
 
     public FragmentPrime() {
     }
@@ -81,6 +86,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.detail_parent);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
+        trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
+
     }
 
     @Nullable
@@ -91,9 +98,13 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         return rootView;
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
+        favorite.setOnClickListener(this);
+        favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
         if (clickedItem != null) {
             presenter.getMovieDetails(clickedItem);
         }
@@ -103,14 +114,16 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
         detailView = (FrameLayout) rootView.findViewById(R.id.fragment_content_parent);
         title = (TextView) detailView.findViewById(R.id.title);
-        trailerButton = (ImageButton) detailView.findViewById(R.id.imageButton);
-        poster = (CircleImageView) detailView.findViewById(R.id.movie_dp);
+
+//        poster = (CircleImageView) detailView.findViewById(R.id.movie_dp);
         basicDetails = (RelativeLayout) detailView.findViewById(R.id.basic_details);
         genres = (TextView) basicDetails.findViewById(R.id.genres);
         lang = (TextView) basicDetails.findViewById(R.id.lang);
         runtime = (TextView) basicDetails.findViewById(R.id.runtime_date);
+        ratingsView = (RelativeLayout) detailView.findViewById(R.id.ratingsView);
+        rtRating = (TextView) ratingsView.findViewById(R.id.rt_rating);
+        imdbRating = (TextView) ratingsView.findViewById(R.id.imdb_rating);
         synopsis = (TextView) detailView.findViewById(R.id.plot);
-        favorite = (ImageButton) detailView.findViewById(R.id.imageButton4);
         share = (ImageButton) detailView.findViewById(R.id.imageButton5);
         castFrag = ImageSlider.newInstance();
         crewFrag = ImageSlider.newInstance();
@@ -119,8 +132,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         Util.addFragmentToActivity(getActivity().getSupportFragmentManager(),
                 crewFrag, R.id.crew_image_slider, CREW_FRAG);
         trailerButton.setOnClickListener(this);
-        favorite.setOnClickListener(this);
-        favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
+
         share.setOnClickListener(this);
     }
 
@@ -144,23 +156,51 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void showLoadingError() {
-
+        share.setVisibility(View.GONE);
+        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.activity_detail_coord_layout),
+                "Error in Connectivity.", Snackbar.LENGTH_SHORT);
+        snackbar.setAction("Reload", new ErrorHandlerClickListener());
     }
 
     @Override
-    public void showUi(MovieInfo item) {
+    public void showUi(SearchItemDetailPresenter.PackTmdbOmdbData data) {
+        MovieInfo item = data.getMovieInfo();
         Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + item.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
-//        Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + item.getPosterPath())
-//                .error(android.R.drawable.picture_frame).into(poster);
         showGenresList(item);
         title.setText(item.getOriginalTitle());
         lang.setText(item.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
+        setRatings(data);
         runtime.setText(String.valueOf(item.getRuntime()) + "min");
         synopsis.setText(item.getOverview());
         trailerKey = getVideoUrl(item);
         castFrag.updateImageSliderView(item.getCredits().getCast());
         crewFrag.updateImageSliderView(item.getCredits().getCrew());
+    }
+
+    private void setRatings(SearchItemDetailPresenter.PackTmdbOmdbData data) {
+        if (data.getOmdbMovieDetails() == null ||
+                data.getOmdbMovieDetails().getRatings().isEmpty()) {
+            imdbRating.setText("-");
+            rtRating.setText("-");
+        } else {
+            if (data.getOmdbMovieDetails().getRatings().get(0).getValue().equals("N/A"))
+                imdbRating.setText("-");
+            else
+                imdbRating.setText(data.getOmdbMovieDetails().getRatings().get(0).getValue());
+            if (data.getOmdbMovieDetails().getRatings().size() > 1) {
+                if (data.getOmdbMovieDetails().getRatings().get(1).getSource().equals("Rotten Tomatoes") &&
+                        data.getOmdbMovieDetails().getRatings().get(1).getValue().equals("N/A"))
+                    rtRating.setText("-");
+                else
+                    rtRating.setText(data.getOmdbMovieDetails().getRatings().get(1).getValue());
+            } else {
+                rtRating.setText("-");
+            }
+
+
+        }
+
     }
 
     private String getVideoUrl(MovieInfo item) {
@@ -191,8 +231,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                         YOUTUBE_API_KEY, trailerKey));
             }
         }
-        if (v instanceof ImageButton && v.getId() == R.id.imageButton4) {
-            ImageButton button = (ImageButton) v;
+        if (v instanceof FloatingActionButton && v.getId() == R.id.favorite) {
+            FloatingActionButton button = (FloatingActionButton) v;
             int tag = (int) button.getTag();
             if (tag == R.drawable.ic_favorite_border_black_24dp) {
                 button.setImageDrawable(getResources().getDrawable(R.drawable.hearts, null));
@@ -212,6 +252,16 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                     + " sent via: " + getResources().getString(R.string.app_name));
             sendIntent.setType("text/plain");
             startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+        }
+    }
+
+    private class ErrorHandlerClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            if (clickedItem != null) {
+                presenter.getMovieDetails(clickedItem);
+            }
         }
     }
 }
