@@ -3,6 +3,7 @@ package com.androidtmdbwrapper.model.core;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Collections;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by sHIVAM on 2/14/2017.
  */
 
-public class SearchResult<T extends Parcelable> implements Parcelable, Iterable<T> {
+public class SearchResult<T extends MediaBasic> implements Parcelable, Iterable<T> {
     @JsonProperty("page")
     private int page;
     @JsonProperty("results")

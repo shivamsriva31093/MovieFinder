@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.androidtmdbwrapper.enums.MediaType;
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
+import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.androidtmdbwrapper.model.tv.BasicTVInfo;
 import com.squareup.picasso.Picasso;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.util.Util;
@@ -38,7 +42,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private static final String CLICKED_ITEM = "clickedItem";
     private static final String SEARCH_ITEM = "searchItem";
 
-    private ArrayList<MovieDb> resultList;
+    private ArrayList<? extends MediaBasic> resultList;
     private OnReplaceFragmentListener listener;
 
     private SearchListContract.Presenter presenter;
@@ -47,16 +51,18 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private RelativeLayout fragmentContainer;
     private SearchListAdapter recyclerViewAdapter;
     private NewtonCradleLoading progressView;
+    private MediaType searchMediaType;
 
 
     public static SearchListFragment newInstance() {
         return new SearchListFragment();
     }
 
-    public static SearchListFragment newInstance(ArrayList<MovieDb> movieDbs) {
+    public static SearchListFragment newInstance(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType) {
         SearchListFragment fragment = new SearchListFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(SEARCH_LIST, movieDbs);
+        bundle.putSerializable("filtering_type", filterType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -66,20 +72,23 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null) {
             if(!savedInstanceState.isEmpty()) {
-                resultList = (ArrayList<MovieDb>) savedInstanceState.getSerializable(SEARCH_LIST);
+                resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
+                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
             }
         } else if (getArguments() != null && !getArguments().isEmpty()) {
-            resultList = (ArrayList<MovieDb>) getArguments().getSerializable(SEARCH_LIST);
+            resultList = getArguments().getParcelableArrayList(SEARCH_LIST);
+            searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
         }
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.activity_search_list);
         progressView = (NewtonCradleLoading) fragmentContainer.findViewById(R.id.progressView);
-        recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, itemClickListener);
+        recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, searchMediaType, itemClickListener);
     }
 
     SearchItemClickListener itemClickListener = new SearchItemClickListener() {
         @Override
-        public void onItemClick(View view, MovieDb item) {
+        public <T extends MediaBasic> Void onItemClick(View view, T item) {
             presenter.onSearchItemClick(item);
+            return null;
         }
     };
 
@@ -122,18 +131,20 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     @Override
-    public void showSearchList(ArrayList<MovieDb> movieDbs) {
+    public void showSearchList(ArrayList<? extends MediaBasic> movieDbs) {
 //        recyclerViewAdapter.replaceData(movieDbs);
-        listener.replaceFragment(movieDbs);
+        listener.replaceFragment(movieDbs, presenter.getFilteringType());
     }
 
     @Override
-    public void showItemDetailsUi(MovieDb item) {
+    public <T extends MediaBasic> Void showItemDetailsUi(T item) {
         Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CLICKED_ITEM, item);
+        bundle.putParcelable(CLICKED_ITEM, item);
+        bundle.putSerializable("filtering_type", searchMediaType);
         intent.putExtra(SEARCH_ITEM, bundle);
         startActivity(intent);
+        return null;
     }
 
     @Override
@@ -153,7 +164,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     @Override
     public void showNoResults() {
-        recyclerViewAdapter.replaceData(new ArrayList<MovieDb>());
+        recyclerViewAdapter.replaceData(new ArrayList<>());
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
@@ -170,23 +181,27 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(SEARCH_LIST, recyclerViewAdapter.getCurrentData());
+        outState.putSerializable("filtering_type", searchMediaType);
         super.onSaveInstanceState(outState);
     }
 
 
     private class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ViewHolder>{
         private Context context;
-        private ArrayList<MovieDb> data;
-        private ArrayList<MovieDb> oldData;
+        private ArrayList<? extends MediaBasic> data;
+        private ArrayList<? extends MediaBasic> oldData;
         private SearchItemClickListener listener;
+        private MediaType searchType;
         private static final int TYPE_HEADER = 0;
         private static final int TYPE_ITEM = 1;
 
-        public SearchListAdapter(Context context, ArrayList<MovieDb> data, SearchItemClickListener listener) {
+        public SearchListAdapter(Context context, ArrayList<? extends MediaBasic> data, MediaType searchType, SearchItemClickListener listener) {
             this.context = context;
+            this.searchType = searchType;
             this.data = data;
             this.listener = listener;
         }
+
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -204,17 +219,35 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             if (holder.HOLDER_ID == 1) {
-                if (!data.get(position - 1).getReleaseDate().isEmpty())
-                    holder.year.setText(data.get(position - 1).getReleaseDate().substring(0, 4));
-                holder.title.setText(data.get(position - 1).getTitle());
-                String url = data.get(position - 1).getBackdropPath();
-                if (url==null) {
-
-                    holder.imageView.setImageResource(R.drawable.movie);
+                if (searchType.equals(MediaType.MOVIES)) {
+                    BasicMovieInfo movie = (BasicMovieInfo) data.get(position - 1);
+                    if (!movie.getReleaseDate().isEmpty())
+                        holder.year.setText(movie.getReleaseDate().substring(0, 4));
+                    holder.title.setText(movie.getTitle());
+                    String url = movie.getBackdropPath();
+                    if (url == null) {
+                        holder.imageView.setImageResource(R.drawable.movie);
+                    } else {
+                        Picasso.with(context)
+                                .load("https://image.tmdb.org/t/p/w500" + url)
+                                .placeholder(R.drawable.movie).into(holder.imageView);
+                    }
                 } else {
-                    Picasso.with(context)
-                            .load("https://image.tmdb.org/t/p/w500"+url)
-                            .placeholder(R.drawable.movie).into(holder.imageView);
+                    BasicTVInfo tv = (BasicTVInfo) data.get(position - 1);
+                    if (!tv.getFirstAirDate().isEmpty())
+                        holder.year.setText(tv.getFirstAirDate().substring(0, 4));
+                    holder.title.setText(tv.getOriginalName());
+                    String url = tv.getPosterPath();
+                    Log.d("tmdb", (url == null) + "");
+                    if (url == null) {
+                        holder.imageView.setImageResource(R.drawable.movie);
+                    } else {
+                        Picasso.with(context)
+                                .load("https://image.tmdb.org/t/p/w500" + url)
+                                .fit()
+                                .placeholder(R.drawable.movie)
+                                .into(holder.imageView);
+                    }
                 }
 
             } else {
@@ -222,13 +255,13 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             }
         }
 
-        public void replaceData(ArrayList<MovieDb> movieDbs) {
+        public void replaceData(ArrayList<? extends MediaBasic> movieDbs) {
             this.oldData = data;
             this.data = Util.checkNotNull(movieDbs);
             notifyDataSetChanged();
         }
 
-        public ArrayList<MovieDb> getCurrentData() {
+        public ArrayList<? extends MediaBasic> getCurrentData() {
             return this.data;
         }
 
@@ -276,15 +309,16 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
             }
         }
+
     }
 
 
     public interface SearchItemClickListener {
-        void onItemClick(View view, MovieDb item);
+        <T extends MediaBasic> Void onItemClick(View view, T item);
     }
 
     public interface OnReplaceFragmentListener {
-        void replaceFragment(ArrayList<MovieDb> movieDbs);
+        void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType);
     }
 
 }

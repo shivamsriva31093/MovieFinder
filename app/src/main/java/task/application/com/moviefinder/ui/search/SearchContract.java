@@ -1,8 +1,10 @@
 package task.application.com.moviefinder.ui.search;
 
+import com.androidtmdbwrapper.enums.MediaType;
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
+
 import java.util.ArrayList;
 
-import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.ui.base.BasePresenter;
 import task.application.com.moviefinder.ui.base.BaseView;
 
@@ -13,7 +15,7 @@ import task.application.com.moviefinder.ui.base.BaseView;
 public interface SearchContract {
 
     interface View extends BaseView<Presenter> {
-        void showSearchListUi(ArrayList<MovieDb> movieDbs);
+        void showSearchListUi(ArrayList<? extends MediaBasic> movieDbs);
         void showLoadingResultsError();
         void showLoadingIndicator(boolean flag);
         void showNoResults();
@@ -21,7 +23,9 @@ public interface SearchContract {
 
     interface Presenter extends BasePresenter {
         void searchByKeyword(String keyword);
-        void setFilteringType(String filteringType);
-        String getFilteringType();
+
+        void setFilteringType(MediaType filteringType);
+
+        MediaType getFilteringType();
     }
 }

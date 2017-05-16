@@ -31,13 +31,22 @@ public class MediaBasic implements Parcelable {
 
     protected MediaBasic(Parcel in) {
         id = in.readInt();
+        posterPath = in.readString();
         backdropPath = in.readString();
         popularity = in.readFloat();
         voteAverage = in.readFloat();
         voteCount = in.readInt();
-        posterPath = in.readString();
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
+        dest.writeFloat(popularity);
+        dest.writeFloat(voteAverage);
+        dest.writeInt(voteCount);
+    }
     public static final Creator<MediaBasic> CREATOR = new Creator<MediaBasic>() {
         @Override
         public MediaBasic createFromParcel(Parcel in) {
@@ -112,13 +121,5 @@ public class MediaBasic implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(posterPath);
-        dest.writeString(backdropPath);
-        dest.writeFloat(popularity);
-        dest.writeFloat(voteAverage);
-        dest.writeInt(voteCount);
-    }
+
 }

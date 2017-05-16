@@ -2,8 +2,9 @@ package com.androidtmdbwrapper.apiservices;
 
 import com.androidtmdbwrapper.model.core.SearchResult;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.androidtmdbwrapper.model.tv.BasicTVInfo;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -14,18 +15,14 @@ import retrofit2.http.Query;
 public interface SearchService {
 
     @GET("search/movie")
-    Call<SearchResult<BasicMovieInfo>> searchMovies(
+    Observable<SearchResult<BasicMovieInfo>> searchMovies(
             @Query("query") String query
 //            @Query("language") String language,
 //            @Query("page") Integer page
             );
 
-/*    @GET("search/tv")
-    Call<SearchResult<BasicTVInfo>> tv(
-            @Query("query") String query,
-            @Query("page") Integer page,
-            @Query("language") String language,
-            @Query("first_air_date_year") Integer firstAirDateYear,
-            @Query("search_type") String searchType
-    );*/
+    @GET("search/tv")
+    Observable<SearchResult<BasicTVInfo>> searchTv(
+            @Query("query") String query
+    );
 }

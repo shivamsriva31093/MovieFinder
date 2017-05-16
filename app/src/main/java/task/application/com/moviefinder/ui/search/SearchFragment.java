@@ -19,11 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.androidtmdbwrapper.enums.MediaType;
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.util.ArrayList;
 
-import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.searchlist.SearchListActivity;
 import task.application.com.moviefinder.util.Util;
@@ -77,7 +78,10 @@ public class SearchFragment extends Fragment implements SearchContract.View{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 searchTerm.setHint("Search "+parent.getSelectedItem().toString());
-                presenter.setFilteringType(parent.getSelectedItem().toString());
+                if (parent.getSelectedItemId() == 0)
+                    presenter.setFilteringType(MediaType.MOVIES);
+                else
+                    presenter.setFilteringType(MediaType.TV);
             }
 
             @Override
@@ -118,7 +122,6 @@ public class SearchFragment extends Fragment implements SearchContract.View{
     private void attemptToSearch() {
         searchTerm.setError(null);
         final String query = searchTerm.getText().toString();
-        final String queryType = presenter.getFilteringType();
         View focusView = null;
         boolean cancel = false;
 
@@ -144,9 +147,10 @@ public class SearchFragment extends Fragment implements SearchContract.View{
     }
 
     @Override
-    public void showSearchListUi(ArrayList<MovieDb> movieDbs) {
+    public void showSearchListUi(ArrayList<? extends MediaBasic> movieDbs) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("searchList", movieDbs);
+        bundle.putParcelableArrayList("searchList", movieDbs);
+        bundle.putSerializable("filtering_type", presenter.getFilteringType());
         Intent intent = new Intent(getActivity(), SearchListActivity.class);
         intent.putExtra("bundle", bundle);
         startActivity(intent);

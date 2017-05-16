@@ -16,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.credits.MediaCreditCast;
 import com.androidtmdbwrapper.model.credits.MediaCreditCrew;
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.mediadetails.Video;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -28,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.utility.ImageSlider;
 import task.application.com.moviefinder.util.Util;
@@ -45,7 +46,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private static final String YOUTUBE_API_KEY = "AIzaSyC9iXjkY03gWbADszp0x9zX2yRvRMYjaxo";
     private SearchItemDetailContract.Presenter presenter;
 
-    private MovieDb clickedItem;
+    private MediaBasic clickedItem;
+    private MediaType itemType;
+    private MovieInfo retrievedItem;
 
     private RelativeLayout fragmentContainer;
     private ImageView backDropImage;
@@ -81,7 +84,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && !getArguments().isEmpty()) {
-            clickedItem = (MovieDb) getArguments().getSerializable(CLICKED_ITEM);
+            itemType = (MediaType) getArguments().getSerializable("filtering_type");
+            clickedItem = (MediaBasic) getArguments().getParcelable(CLICKED_ITEM);
         }
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.detail_parent);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
@@ -164,18 +168,18 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void showUi(SearchItemDetailPresenter.PackTmdbOmdbData data) {
-        MovieInfo item = data.getMovieInfo();
-        Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + item.getBackdropPath()).fit()
+        retrievedItem = data.getMovieInfo();
+        Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + retrievedItem.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
-        showGenresList(item);
-        title.setText(item.getOriginalTitle());
-        lang.setText(item.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
+        showGenresList(retrievedItem);
+        title.setText(retrievedItem.getOriginalTitle());
+        lang.setText(retrievedItem.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
         setRatings(data);
-        runtime.setText(String.valueOf(item.getRuntime()) + "min");
-        synopsis.setText(item.getOverview());
-        trailerKey = getVideoUrl(item);
-        castFrag.updateImageSliderView(item.getCredits().getCast());
-        crewFrag.updateImageSliderView(item.getCredits().getCrew());
+        runtime.setText(String.valueOf(retrievedItem.getRuntime()) + "min");
+        synopsis.setText(retrievedItem.getOverview());
+        trailerKey = getVideoUrl(retrievedItem);
+        castFrag.updateImageSliderView(retrievedItem.getCredits().getCast());
+        crewFrag.updateImageSliderView(retrievedItem.getCredits().getCrew());
     }
 
     private void setRatings(SearchItemDetailPresenter.PackTmdbOmdbData data) {
@@ -247,7 +251,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this movie: "
-                    + clickedItem.getTitle() + "! "
+                    + retrievedItem.getTitle() + "! "
                     + "www.youtube.com/watch?v=" + trailerKey
                     + " sent via: " + getResources().getString(R.string.app_name));
             sendIntent.setType("text/plain");

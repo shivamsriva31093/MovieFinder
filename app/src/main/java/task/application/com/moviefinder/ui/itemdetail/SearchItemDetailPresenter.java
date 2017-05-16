@@ -5,11 +5,11 @@ import android.support.annotation.NonNull;
 import com.androidtmdbwrapper.enums.AppendToResponseItem;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
 import com.androidtmdbwrapper.model.core.AppendToResponse;
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 
 import org.reactivestreams.Subscription;
 
-import info.movito.themoviedbapi.model.MovieDb;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -37,7 +37,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     }
 
     @Override
-    public void getMovieDetails(MovieDb clickedItem) {
+    public void getMovieDetails(MediaBasic clickedItem) {
         view.showLoadingIndicator(true);
         final PackTmdbOmdbData data = new PackTmdbOmdbData();
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
@@ -64,7 +64,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     }
 
 
-    private Observable<MovieInfo> getMovieInfoObservable(final TmdbApi tmdb, final MovieDb item) {
+    private Observable<MovieInfo> getMovieInfoObservable(final TmdbApi tmdb, final MediaBasic item) {
         final AppendToResponse atr =
                 new AppendToResponse(AppendToResponseItem.CREDITS,
                         AppendToResponseItem.VIDEOS);
