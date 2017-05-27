@@ -4,20 +4,27 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.androidtmdbwrapper.model.core.AbstractNameId;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.HashMap;
+import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder(alphabetic = true)
 public class CreatedBy extends AbstractNameId implements Parcelable {
 
     @JsonProperty("profile_path")
     private String profilePath;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     * No args constructor for use in serialization
-     */
     public CreatedBy() {
     }
-
 
     protected CreatedBy(Parcel in) {
         super(in);
@@ -57,5 +64,14 @@ public class CreatedBy extends AbstractNameId implements Parcelable {
         this.profilePath = profilePath;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
 
 }

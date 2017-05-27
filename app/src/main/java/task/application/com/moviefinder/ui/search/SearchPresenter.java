@@ -23,7 +23,7 @@ import task.application.com.moviefinder.util.Util;
 public class SearchPresenter implements SearchContract.Presenter, TmdbWrapper.TmdbWrapperCallbackInterface{
 
     private final SearchContract.View searchView;
-    private MediaType filterType;
+    private MediaType filterType = MediaType.MOVIES;
     public SearchPresenter(@NonNull SearchContract.View searchView) {
         Util.checkNotNull(searchView, "view object can't be null");
         this.searchView = searchView;

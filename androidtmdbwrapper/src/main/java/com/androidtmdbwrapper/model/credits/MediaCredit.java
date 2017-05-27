@@ -1,24 +1,36 @@
 package com.androidtmdbwrapper.model.credits;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.androidtmdbwrapper.model.core.AbstractNameId;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by sHIVAM on 2/14/2017.
  */
-
-public class MediaCredit extends AbstractNameId {
+@JsonIgnoreProperties({
+        "gender"
+})
+public class MediaCredit extends AbstractNameId implements Parcelable {
     @JsonProperty("credit_id")
     private String creditId;
     @JsonProperty("profile_path")
     private String profilePath;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public MediaCredit() {
     }
 
-    public MediaCredit(Parcel in) {
+    protected MediaCredit(Parcel in) {
         super(in);
         creditId = in.readString();
         profilePath = in.readString();
@@ -62,5 +74,15 @@ public class MediaCredit extends AbstractNameId {
 
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
     }
 }

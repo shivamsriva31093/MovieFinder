@@ -3,6 +3,9 @@ package com.androidtmdbwrapper.model.tv;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.androidtmdbwrapper.model.core.Genre;
+import com.androidtmdbwrapper.model.mediadetails.MediaCreditList;
+import com.androidtmdbwrapper.model.mediadetails.VideosResults;
 import com.androidtmdbwrapper.model.movies.ProductionCompany;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -11,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,54 +21,33 @@ import java.util.Map;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "created_by",
-        "episode_run_time",
-        "homepage",
-        "in_production",
-        "languages",
-        "last_air_date",
-        "name",
-        "networks",
-        "number_of_episodes",
-        "number_of_seasons",
-        "origin_country",
-        "original_language",
-        "production_companies",
-        "seasons",
-        "status",
-        "type"
-})
-public class TvInfo implements Parcelable {
+@JsonPropertyOrder(alphabetic = true)
+public class TvInfo extends BasicTVInfo implements Parcelable {
 
     @JsonProperty("created_by")
     private List<CreatedBy> createdBy = Collections.EMPTY_LIST;
     @JsonProperty("episode_run_time")
-    private List<Integer> episodeRunTime = new ArrayList<Integer>();
+    private List<Integer> episodeRunTime = Collections.EMPTY_LIST;
+    @JsonProperty("genres")
+    private List<Genre> genres = Collections.EMPTY_LIST;
     @JsonProperty("homepage")
     private String homepage;
     @JsonProperty("in_production")
     private boolean inProduction;
     @JsonProperty("languages")
-    private List<String> languages = new ArrayList<String>();
+    private List<String> languages = Collections.EMPTY_LIST;
     @JsonProperty("last_air_date")
     private String lastAirDate;
-    @JsonProperty("name")
-    private String name;
     @JsonProperty("networks")
-    private List<Network> networks = new ArrayList<Network>();
+    private List<Network> networks = Collections.EMPTY_LIST;
     @JsonProperty("number_of_episodes")
     private int numberOfEpisodes;
     @JsonProperty("number_of_seasons")
     private int numberOfSeasons;
-    @JsonProperty("origin_country")
-    private List<String> originCountry = new ArrayList<String>();
-    @JsonProperty("original_language")
-    private String originalLanguage;
     @JsonProperty("production_companies")
-    private List<ProductionCompany> productionCompanies = new ArrayList<ProductionCompany>();
+    private List<ProductionCompany> productionCompanies = Collections.EMPTY_LIST;
     @JsonProperty("seasons")
-    private List<Season> seasons = new ArrayList<Season>();
+    private List<Season> seasons = Collections.EMPTY_LIST;
     @JsonProperty("status")
     private String status;
     @JsonProperty("type")
@@ -74,66 +55,55 @@ public class TvInfo implements Parcelable {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     * No args constructor for use in serialization
-     */
+    private VideosResults videos;
+    private MediaCreditList credits;
+
     public TvInfo() {
     }
 
-    /**
-     * @param networks
-     * @param status
-     * @param lastAirDate
-     * @param numberOfSeasons
-     * @param originalLanguage
-     * @param type
-     * @param homepage
-     * @param numberOfEpisodes
-     * @param languages
-     * @param originCountry
-     * @param createdBy
-     * @param inProduction
-     * @param seasons
-     * @param name
-     * @param productionCompanies
-     * @param episodeRunTime
-     */
-    public TvInfo(List<CreatedBy> createdBy, List<Integer> episodeRunTime, String homepage, boolean inProduction, List<String> languages, String lastAirDate, String name, List<Network> networks, int numberOfEpisodes, int numberOfSeasons, List<String> originCountry, String originalLanguage, List<ProductionCompany> productionCompanies, List<Season> seasons, String status, String type) {
-        super();
-        this.createdBy = createdBy;
-        this.episodeRunTime = episodeRunTime;
-        this.homepage = homepage;
-        this.inProduction = inProduction;
-        this.languages = languages;
-        this.lastAirDate = lastAirDate;
-        this.name = name;
-        this.networks = networks;
-        this.numberOfEpisodes = numberOfEpisodes;
-        this.numberOfSeasons = numberOfSeasons;
-        this.originCountry = originCountry;
-        this.originalLanguage = originalLanguage;
-        this.productionCompanies = productionCompanies;
-        this.seasons = seasons;
-        this.status = status;
-        this.type = type;
-    }
 
     protected TvInfo(Parcel in) {
+        super(in);
         createdBy = in.createTypedArrayList(CreatedBy.CREATOR);
+        genres = in.createTypedArrayList(Genre.CREATOR);
         homepage = in.readString();
         inProduction = in.readByte() != 0;
         languages = in.createStringArrayList();
         lastAirDate = in.readString();
-        name = in.readString();
         networks = in.createTypedArrayList(Network.CREATOR);
         numberOfEpisodes = in.readInt();
         numberOfSeasons = in.readInt();
-        originCountry = in.createStringArrayList();
-        originalLanguage = in.readString();
         productionCompanies = in.createTypedArrayList(ProductionCompany.CREATOR);
         seasons = in.createTypedArrayList(Season.CREATOR);
         status = in.readString();
         type = in.readString();
+        videos = in.readParcelable(VideosResults.class.getClassLoader());
+        credits = in.readParcelable(MediaCreditList.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeTypedList(createdBy);
+        dest.writeTypedList(genres);
+        dest.writeString(homepage);
+        dest.writeByte((byte) (inProduction ? 1 : 0));
+        dest.writeStringList(languages);
+        dest.writeString(lastAirDate);
+        dest.writeTypedList(networks);
+        dest.writeInt(numberOfEpisodes);
+        dest.writeInt(numberOfSeasons);
+        dest.writeTypedList(productionCompanies);
+        dest.writeTypedList(seasons);
+        dest.writeString(status);
+        dest.writeString(type);
+        dest.writeParcelable(videos, flags);
+        dest.writeParcelable(credits, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<TvInfo> CREATOR = new Creator<TvInfo>() {
@@ -166,6 +136,16 @@ public class TvInfo implements Parcelable {
     @JsonProperty("episode_run_time")
     public void setEpisodeRunTime(List<Integer> episodeRunTime) {
         this.episodeRunTime = episodeRunTime;
+    }
+
+    @JsonProperty("genres")
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    @JsonProperty("genres")
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     @JsonProperty("homepage")
@@ -208,16 +188,6 @@ public class TvInfo implements Parcelable {
         this.lastAirDate = lastAirDate;
     }
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @JsonProperty("networks")
     public List<Network> getNetworks() {
         return networks;
@@ -256,16 +226,6 @@ public class TvInfo implements Parcelable {
     @JsonProperty("origin_country")
     public void setOriginCountry(List<String> originCountry) {
         this.originCountry = originCountry;
-    }
-
-    @JsonProperty("original_language")
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    @JsonProperty("original_language")
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
     }
 
     @JsonProperty("production_companies")
@@ -318,27 +278,19 @@ public class TvInfo implements Parcelable {
         this.additionalProperties.put(name, value);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public VideosResults getVideos() {
+        return videos;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeTypedList(createdBy);
-        parcel.writeString(homepage);
-        parcel.writeByte((byte) (inProduction ? 1 : 0));
-        parcel.writeStringList(languages);
-        parcel.writeString(lastAirDate);
-        parcel.writeString(name);
-        parcel.writeTypedList(networks);
-        parcel.writeInt(numberOfEpisodes);
-        parcel.writeInt(numberOfSeasons);
-        parcel.writeStringList(originCountry);
-        parcel.writeString(originalLanguage);
-        parcel.writeTypedList(productionCompanies);
-        parcel.writeTypedList(seasons);
-        parcel.writeString(status);
-        parcel.writeString(type);
+    public void setVideos(VideosResults videos) {
+        this.videos = videos;
+    }
+
+    public MediaCreditList getCredits() {
+        return credits;
+    }
+
+    public void setCredits(MediaCreditList credits) {
+        this.credits = credits;
     }
 }

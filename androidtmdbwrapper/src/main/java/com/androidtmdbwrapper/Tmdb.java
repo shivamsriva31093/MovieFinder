@@ -1,11 +1,10 @@
 package com.androidtmdbwrapper;
 
-import android.util.Log;
-
 import com.androidtmdbwrapper.apiservices.MoviesService;
 import com.androidtmdbwrapper.apiservices.OmdbApiService;
 import com.androidtmdbwrapper.apiservices.SearchService;
 import com.androidtmdbwrapper.apiservices.TmdbApiService;
+import com.androidtmdbwrapper.apiservices.TvService;
 
 import java.io.IOException;
 
@@ -28,6 +27,7 @@ public class Tmdb {
     public static final String API_URL = "https://" + API_BASE_URL + "/" + API_VERSION + "/";
 
     public static final String API_KEY = "api_key";
+    public static final String OMDB_API_KEY = "11ccb3f8";
 
     private static Retrofit retrofit;
     private static OkHttpClient okHttpClient;
@@ -92,6 +92,10 @@ public class Tmdb {
         return getRetrofit().create(MoviesService.class);
     }
 
+    public TvService tvService() {
+        return getRetrofit().create(TvService.class);
+    }
+
     public OmdbApiService getOmdbApi() {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl("http://www.omdbapi.com/?");
@@ -124,8 +128,8 @@ public class Tmdb {
                 return chain.proceed(request);
             }
             HttpUrl.Builder urlBuilder = request.url().newBuilder();
+            urlBuilder.setEncodedQueryParameter("apikey", OMDB_API_KEY);
             Request.Builder builder = request.newBuilder();
-            Log.d("omdb_api", request.url().toString());
             builder.url(urlBuilder.build());
             return chain.proceed(builder.build());
         }

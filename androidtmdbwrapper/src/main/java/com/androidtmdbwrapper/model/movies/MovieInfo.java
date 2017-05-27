@@ -51,6 +51,7 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
     }
 
     protected MovieInfo(Parcel in) {
+        super(in);
         belongsToCollection = in.readParcelable(CollectionInfo.class.getClassLoader());
         budget = in.readLong();
         genresList = in.createTypedArrayList(Genre.CREATOR);

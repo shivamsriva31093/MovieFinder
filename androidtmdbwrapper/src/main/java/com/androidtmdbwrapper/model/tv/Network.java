@@ -1,10 +1,28 @@
 package com.androidtmdbwrapper.model.tv;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.androidtmdbwrapper.model.core.AbstractNameId;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-public class Network extends AbstractNameId {
+import java.util.HashMap;
+import java.util.Map;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder(alphabetic = true)
+public class Network extends AbstractNameId implements Parcelable {
+
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    public Network() {
+    }
+
 
     protected Network(Parcel in) {
         super(in);
@@ -31,4 +49,15 @@ public class Network extends AbstractNameId {
             return new Network[size];
         }
     };
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
+
 }

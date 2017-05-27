@@ -20,9 +20,11 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.androidtmdbwrapper.enums.MediaType;
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
+
 import java.util.ArrayList;
 
-import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.util.Util;
 
@@ -35,6 +37,7 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
     private static final String TAG = SearchListActivity.class.getName();
     private static final String LIST_FRAG_TAG = "searchlist_frag";
     private static final String SEARCH_LIST = "searchList";
+    private static final String FILTERING_TYPE = "filtering_type";
     private static final String EMPTY_QUERY = "emptyQuery";
     private static final String SEARCH_QUERY = "query";
     private static final String BUNDLE = "bundle";
@@ -99,6 +102,10 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 searchTerm.setHint(SEARCH+" " + parent.getSelectedItem().toString());
+                if (parent.getSelectedItemId() == 0)
+                    presenter.setFilteringType(MediaType.MOVIES);
+                else
+                    presenter.setFilteringType(MediaType.TV);
             }
 
             @Override
@@ -157,7 +164,7 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
         if (cancel) {
             focusView.requestFocus();
         } else {
-            presenter.searchByKeyword(query, queryType);
+            presenter.searchByKeyword(query);
         }
 
     }
@@ -198,9 +205,9 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
     }
 
     @Override
-    public void replaceFragment(ArrayList<MovieDb> movieDbs) {
+    public void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs);
+        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs, filterType);
         presenter = new SearchListPresenter(fragment);
         transaction.replace(fragmentContainer.getId(), fragment);
         transaction.addToBackStack(SEARCH_FRAG_COUNT++ + "");

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.androidtmdbwrapper.enums.MediaType;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -83,6 +84,7 @@ public class MediaBasic implements Parcelable {
         this.id = id;
     }
 
+    @JsonGetter("media_type")
     public MediaType getMediaType() {
         return mediaType;
     }

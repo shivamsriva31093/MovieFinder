@@ -14,13 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "air_date",
-        "episode_count",
-        "id",
-        "poster_path",
-        "season_number"
-})
+@JsonPropertyOrder(alphabetic = true)
 public class Season implements Parcelable {
 
     @JsonProperty("air_date")
@@ -36,26 +30,7 @@ public class Season implements Parcelable {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     * No args constructor for use in serialization
-     */
     public Season() {
-    }
-
-    /**
-     * @param id
-     * @param airDate
-     * @param posterPath
-     * @param episodeCount
-     * @param seasonNumber
-     */
-    public Season(String airDate, int episodeCount, int id, String posterPath, int seasonNumber) {
-        super();
-        this.airDate = airDate;
-        this.episodeCount = episodeCount;
-        this.id = id;
-        this.posterPath = posterPath;
-        this.seasonNumber = seasonNumber;
     }
 
     protected Season(Parcel in) {

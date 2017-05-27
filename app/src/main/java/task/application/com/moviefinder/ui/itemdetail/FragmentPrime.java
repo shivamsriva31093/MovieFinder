@@ -1,6 +1,8 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,20 +15,26 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
+import com.androidtmdbwrapper.model.OmdbMovieDetails;
+import com.androidtmdbwrapper.model.core.Genre;
 import com.androidtmdbwrapper.model.credits.MediaCreditCast;
 import com.androidtmdbwrapper.model.credits.MediaCreditCrew;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.mediadetails.Video;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
+import com.androidtmdbwrapper.model.tv.TvInfo;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -70,6 +78,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private ImageSlider<MediaCreditCrew> crewFrag;
     private TextView rtRating;
     private TextView imdbRating;
+    private ProgressBar ratingsLoader;
 
     public FragmentPrime() {
     }
@@ -91,7 +100,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
         trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
-
+        presenter.setFilteringType(itemType);
     }
 
     @Nullable
@@ -125,6 +134,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         lang = (TextView) basicDetails.findViewById(R.id.lang);
         runtime = (TextView) basicDetails.findViewById(R.id.runtime_date);
         ratingsView = (RelativeLayout) detailView.findViewById(R.id.ratingsView);
+        ratingsLoader = (ProgressBar) ratingsView.findViewById(R.id.ratings_load);
+        ratingsLoader.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
         rtRating = (TextView) ratingsView.findViewById(R.id.rt_rating);
         imdbRating = (TextView) ratingsView.findViewById(R.id.imdb_rating);
         synopsis = (TextView) detailView.findViewById(R.id.plot);
@@ -159,6 +170,20 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     }
 
     @Override
+    public void showRatingsViewLoadingIndicator(boolean show) {
+        if (show) {
+            ratingsLoader.setVisibility(View.VISIBLE);
+        } else {
+            ratingsLoader.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showTestToast(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showLoadingError() {
         share.setVisibility(View.GONE);
         Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.activity_detail_coord_layout),
@@ -167,14 +192,36 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     }
 
     @Override
-    public void showUi(SearchItemDetailPresenter.PackTmdbOmdbData data) {
-        retrievedItem = data.getMovieInfo();
+    public void showUi(MediaBasic data) {
+        if (presenter.getFilteringType().equals(MediaType.MOVIES))
+            setUpMovieDetails((MovieInfo) data);
+        else
+            setUpTvDetails((TvInfo) data);
+    }
+
+    private void setUpTvDetails(TvInfo data) {
+
+        Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
+                .error(R.drawable.trailer).into(backDropImage);
+        showGenresList(data.getGenres());
+        title.setText(data.getOriginalName());
+        lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
+        //setRatings(data);
+        runtime.setText(String.valueOf(data.getEpisodeRunTime()) + "min");
+        synopsis.setText(data.getOverview());
+        trailerKey = getVideoUrl(data);
+        castFrag.updateImageSliderView(data.getCredits().getCast());
+        crewFrag.updateImageSliderView(data.getCredits().getCrew());
+    }
+
+    private void setUpMovieDetails(MovieInfo data) {
+        retrievedItem = data;
         Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + retrievedItem.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
-        showGenresList(retrievedItem);
+        showGenresList(retrievedItem.getGenresList());
         title.setText(retrievedItem.getOriginalTitle());
         lang.setText(retrievedItem.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
-        setRatings(data);
+        //setRatings(data);
         runtime.setText(String.valueOf(retrievedItem.getRuntime()) + "min");
         synopsis.setText(retrievedItem.getOverview());
         trailerKey = getVideoUrl(retrievedItem);
@@ -182,22 +229,23 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         crewFrag.updateImageSliderView(retrievedItem.getCredits().getCrew());
     }
 
-    private void setRatings(SearchItemDetailPresenter.PackTmdbOmdbData data) {
-        if (data.getOmdbMovieDetails() == null ||
-                data.getOmdbMovieDetails().getRatings().isEmpty()) {
+    @Override
+    public void showRatingsUi(OmdbMovieDetails data) {
+        if (data == null ||
+                data.getRatings().isEmpty()) {
             imdbRating.setText("-");
             rtRating.setText("-");
         } else {
-            if (data.getOmdbMovieDetails().getRatings().get(0).getValue().equals("N/A"))
+            if (data.getRatings().get(0).getValue().equals("N/A"))
                 imdbRating.setText("-");
             else
-                imdbRating.setText(data.getOmdbMovieDetails().getRatings().get(0).getValue());
-            if (data.getOmdbMovieDetails().getRatings().size() > 1) {
-                if (data.getOmdbMovieDetails().getRatings().get(1).getSource().equals("Rotten Tomatoes") &&
-                        data.getOmdbMovieDetails().getRatings().get(1).getValue().equals("N/A"))
+                imdbRating.setText(data.getRatings().get(0).getValue());
+            if (data.getRatings().size() > 1) {
+                if (data.getRatings().get(1).getSource().equals("Rotten Tomatoes") &&
+                        data.getRatings().get(1).getValue().equals("N/A"))
                     rtRating.setText("-");
                 else
-                    rtRating.setText(data.getOmdbMovieDetails().getRatings().get(1).getValue());
+                    rtRating.setText(data.getRatings().get(1).getValue());
             } else {
                 rtRating.setText("-");
             }
@@ -207,21 +255,26 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     }
 
-    private String getVideoUrl(MovieInfo item) {
+    private String getVideoUrl(MediaBasic item) {
+        List<Video> list = new ArrayList<>();
+        if (itemType.equals(MediaType.TV))
+            list = ((TvInfo) item).getVideos().getVideos();
+        else
+            list = ((MovieInfo) item).getVideos().getVideos();
         ArrayList<String> trailerList = new ArrayList<>();
-        for (Video res : item.getVideos().getVideos()) {
+        for (Video res : list) {
             if (res.getSite().equals("YouTube"))
                 trailerList.add(res.getKey());
         }
         return trailerList.isEmpty() ? "" : trailerList.get(0);
     }
 
-    private void showGenresList(MovieInfo item) {
+    private void showGenresList(List<Genre> item) {
         StringBuilder sb = new StringBuilder();
         String delim = "";
-        for (int i = 0; i < item.getGenresList().size(); i++) {
+        for (int i = 0; i < item.size(); i++) {
             if (i == 3) break;
-            sb.append(delim).append(item.getGenresList().get(i).getName());
+            sb.append(delim).append(item.get(i).getName());
             delim = ", ";
         }
         genres.setText(sb.toString());
