@@ -213,7 +213,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         //setRatings(data);
         runtime.setText(String.valueOf(data.getEpisodeRunTime()) + "min");
         synopsis.setText(data.getOverview());
-        trailerKey = getVideoUrl(data);
+        String trailer = getVideoUrl(data);
+        if (trailer.isEmpty())
+            trailerButton.setVisibility(View.GONE);
+        else
+            trailerKey = trailer;
         castFrag.updateImageSliderView(data.getCredits().getCast());
         crewFrag.updateImageSliderView(data.getCredits().getCrew());
     }
@@ -228,7 +232,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         //setRatings(data);
         runtime.setText(String.valueOf(data.getRuntime()) + "min");
         synopsis.setText(data.getOverview());
-        trailerKey = getVideoUrl(data);
+        String trailer = getVideoUrl(data);
+        if (trailer.isEmpty())
+            trailerButton.setVisibility(View.GONE);
+        else
+            trailerKey = trailer;
         castFrag.updateImageSliderView(data.getCredits().getCast());
         crewFrag.updateImageSliderView(data.getCredits().getCrew());
     }
@@ -291,6 +299,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             if (trailerKey != null && !trailerKey.isEmpty()) {
                 context.startActivity(YouTubeStandalonePlayer.createVideoIntent(getActivity(),
                         YOUTUBE_API_KEY, trailerKey));
+            } else {
+                Toast.makeText(context, "No trailer available.", Toast.LENGTH_SHORT).show();
             }
         }
         if (v instanceof FloatingActionButton && v.getId() == R.id.favorite) {
