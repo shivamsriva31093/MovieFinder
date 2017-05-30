@@ -102,15 +102,13 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 searchTerm.setHint(SEARCH+" " + parent.getSelectedItem().toString());
-                if (parent.getSelectedItemId() == 0)
-                    presenter.setFilteringType(MediaType.MOVIES);
-                else
-                    presenter.setFilteringType(MediaType.TV);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 parent.setSelection(0);
+                Log.d("debug", "Nothing selected");
+                presenter.setFilteringType(MediaType.MOVIES);
             }
         });
 
@@ -150,8 +148,6 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
     private void attemptToSearch() {
         searchTerm.setError(null);
         final String query = searchTerm.getText().toString();
-        final String queryType = moreOptions.getSelectedItem().toString();
-        Log.d("querytype", queryType);
         View focusView = null;
         boolean cancel = false;
 
@@ -164,7 +160,12 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
         if (cancel) {
             focusView.requestFocus();
         } else {
+            if (moreOptions.getSelectedItem().toString().equals("Movies"))
+                presenter.setFilteringType(MediaType.MOVIES);
+            else
+                presenter.setFilteringType(MediaType.TV);
             presenter.searchByKeyword(query);
+            Log.d("debug", "selected item is " + moreOptions.getSelectedItem());
         }
 
     }

@@ -1,5 +1,6 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.utility.ImageSlider;
 import task.application.com.moviefinder.util.Util;
@@ -56,7 +58,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     private MediaBasic clickedItem;
     private MediaType itemType;
-    private MovieInfo retrievedItem;
+    private MediaBasic retrievedItem;
 
     private RelativeLayout fragmentContainer;
     private ImageView backDropImage;
@@ -79,6 +81,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private TextView rtRating;
     private TextView imdbRating;
     private ProgressBar ratingsLoader;
+    private View snackBarView;
 
     public FragmentPrime() {
     }
@@ -118,6 +121,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
         favorite.setOnClickListener(this);
         favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
+        snackBarView = getActivity().findViewById(R.id.activity_detail_coord_layout);
         if (clickedItem != null) {
             presenter.getMovieDetails(clickedItem);
         }
@@ -186,7 +190,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void showLoadingError() {
         share.setVisibility(View.GONE);
-        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.activity_detail_coord_layout),
+        Snackbar snackbar = Snackbar.make(snackBarView,
                 "Error in Connectivity.", Snackbar.LENGTH_SHORT);
         snackbar.setAction("Reload", new ErrorHandlerClickListener());
     }
@@ -200,7 +204,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     }
 
     private void setUpTvDetails(TvInfo data) {
-
+        retrievedItem = data;
         Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
         showGenresList(data.getGenres());
@@ -218,15 +222,15 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         retrievedItem = data;
         Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + retrievedItem.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
-        showGenresList(retrievedItem.getGenresList());
-        title.setText(retrievedItem.getOriginalTitle());
-        lang.setText(retrievedItem.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
+        showGenresList(data.getGenresList());
+        title.setText(data.getOriginalTitle());
+        lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
         //setRatings(data);
-        runtime.setText(String.valueOf(retrievedItem.getRuntime()) + "min");
-        synopsis.setText(retrievedItem.getOverview());
-        trailerKey = getVideoUrl(retrievedItem);
-        castFrag.updateImageSliderView(retrievedItem.getCredits().getCast());
-        crewFrag.updateImageSliderView(retrievedItem.getCredits().getCrew());
+        runtime.setText(String.valueOf(data.getRuntime()) + "min");
+        synopsis.setText(data.getOverview());
+        trailerKey = getVideoUrl(data);
+        castFrag.updateImageSliderView(data.getCredits().getCast());
+        crewFrag.updateImageSliderView(data.getCredits().getCrew());
     }
 
     @Override
@@ -282,9 +286,10 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void onClick(View v) {
+        Context context = ApplicationClass.getInstance();
         if (v instanceof ImageButton && v.getId() == R.id.imageButton) {
             if (trailerKey != null && !trailerKey.isEmpty()) {
-                startActivity(YouTubeStandalonePlayer.createVideoIntent(getActivity(),
+                context.startActivity(YouTubeStandalonePlayer.createVideoIntent(getActivity(),
                         YOUTUBE_API_KEY, trailerKey));
             }
         }
@@ -292,10 +297,10 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             FloatingActionButton button = (FloatingActionButton) v;
             int tag = (int) button.getTag();
             if (tag == R.drawable.ic_favorite_border_black_24dp) {
-                button.setImageDrawable(getResources().getDrawable(R.drawable.hearts, null));
+                button.setImageDrawable(context.getResources().getDrawable(R.drawable.hearts, null));
                 button.setTag(R.drawable.hearts);
             } else {
-                button.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
+                button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
                 button.setTag(R.drawable.ic_favorite_border_black_24dp);
             }
         }
@@ -303,12 +308,12 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (v instanceof ImageButton && v.getId() == R.id.imageButton5) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this movie: "
-                    + retrievedItem.getTitle() + "! "
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this trailer: "
+                    + ((presenter.getFilteringType().equals(MediaType.MOVIES)) ? ((MovieInfo) retrievedItem).getTitle() : ((TvInfo) retrievedItem).getOriginalName()) + "! "
                     + "www.youtube.com/watch?v=" + trailerKey
                     + " sent via: " + getResources().getString(R.string.app_name));
             sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+            context.startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
         }
     }
 

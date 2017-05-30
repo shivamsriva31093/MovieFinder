@@ -1,5 +1,7 @@
 package task.application.com.moviefinder.ui.searchlist;
 
+import android.util.Log;
+
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 
@@ -20,7 +22,7 @@ public class SearchListPresenter implements SearchListContract.Presenter,
         TmdbWrapper.TmdbWrapperCallbackInterface {
 
     private SearchListContract.View view;
-    private MediaType filterType = MediaType.MOVIES;
+    private MediaType filterType;
 
     public SearchListPresenter(SearchListContract.View view) {
         this.view = view;
@@ -43,7 +45,7 @@ public class SearchListPresenter implements SearchListContract.Presenter,
                     });
 
         } else {
-
+            Log.d("debug", "Query for TV");
             tmdb.searchService().searchTv(keyword)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -68,6 +70,7 @@ public class SearchListPresenter implements SearchListContract.Presenter,
     @Override
     public void setFilteringType(MediaType filteringType) {
         this.filterType = filteringType;
+        Log.d("debug", "filter is et to: " + filteringType.toString());
     }
 
     @Override

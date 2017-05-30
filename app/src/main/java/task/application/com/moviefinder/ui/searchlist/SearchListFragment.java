@@ -26,6 +26,7 @@ import com.victor.loading.newton.NewtonCradleLoading;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.util.Util;
@@ -73,7 +74,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         if(savedInstanceState != null) {
             if(!savedInstanceState.isEmpty()) {
                 resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
-                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
+//                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
             }
         } else if (getArguments() != null && !getArguments().isEmpty()) {
             resultList = getArguments().getParcelableArrayList(SEARCH_LIST);
@@ -149,15 +150,16 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     @Override
     public void showLoadingIndicator(boolean show) {
+        Context context = ApplicationClass.getInstance();
         if(show) {
             recyclerViewParent.setVisibility(View.GONE);
-            fragmentContainer.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            fragmentContainer.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
             progressView.setVisibility(View.VISIBLE);
             progressView.start();
         } else {
             progressView.setVisibility(View.GONE);
             progressView.stop();
-            fragmentContainer.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+            fragmentContainer.setBackgroundColor(context.getResources().getColor(android.R.color.background_light));
             recyclerViewParent.setVisibility(View.VISIBLE);
         }
     }
