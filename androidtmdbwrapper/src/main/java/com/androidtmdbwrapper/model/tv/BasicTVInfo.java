@@ -3,7 +3,6 @@ package com.androidtmdbwrapper.model.tv;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -44,7 +43,6 @@ public class BasicTVInfo extends MediaBasic implements Parcelable {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public BasicTVInfo() {
-        super.setMediaType(MediaType.TV);
     }
 
     protected BasicTVInfo(Parcel in) {
