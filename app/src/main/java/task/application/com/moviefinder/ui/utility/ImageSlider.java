@@ -92,7 +92,8 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
         public void onBindViewHolder(ViewHolder holder, int position) {
             Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500"
                     + credits.get(position).getProfilePath())
-                    .error(R.drawable.clapperboard)
+                    .placeholder(R.drawable.creditplaceholder)
+                    .error(R.drawable.creditplaceholder)
                     .into(holder.creditImage);
             holder.creditTitle.setText(credits.get(position).getName());
             if (credits.get(0) instanceof MediaCreditCrew) {
