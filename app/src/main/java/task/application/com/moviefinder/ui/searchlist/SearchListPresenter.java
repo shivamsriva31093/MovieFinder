@@ -7,19 +7,16 @@ import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 
 import java.util.ArrayList;
 
-import info.movito.themoviedbapi.model.MovieDb;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import task.application.com.moviefinder.ApplicationClass;
-import task.application.com.moviefinder.model.remote.api.tmdb.TmdbWrapper;
 import task.application.com.moviefinder.util.TmdbApi;
 
 /**
  * Created by sHIVAM on 2/6/2017.
  */
 
-public class SearchListPresenter implements SearchListContract.Presenter,
-        TmdbWrapper.TmdbWrapperCallbackInterface {
+public class SearchListPresenter implements SearchListContract.Presenter {
 
     private SearchListContract.View view;
     private MediaType filterType;
@@ -83,13 +80,4 @@ public class SearchListPresenter implements SearchListContract.Presenter,
 
     }
 
-    @Override
-    public void onSearchResult(ArrayList<MovieDb> movieDbs) {
-//        view.showLoadingIndicator(false);
-//        if(movieDbs != null && !movieDbs.isEmpty()) {
-//            view.showSearchList(movieDbs);
-//        } else {
-//            view.showNoResults();
-//        }
-    }
 }

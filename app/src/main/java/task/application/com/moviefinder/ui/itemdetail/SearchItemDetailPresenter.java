@@ -17,7 +17,11 @@ import org.reactivestreams.Subscription;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
+import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.util.TmdbApi;
 import task.application.com.moviefinder.util.Util;
 
@@ -31,11 +35,13 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     private Subscription subscription;
     private MediaType filter = MediaType.MOVIES;
     private MediaInfoResponseListener listener;
+    private Realm realm;
 
     public SearchItemDetailPresenter(@NonNull SearchItemDetailContract.View view) {
         this.view = Util.checkNotNull(view, "view can't be null");
         view.setPresenter(this);
         listener = this;
+        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -96,8 +102,71 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     }
 
     @Override
+    public void checkMediaInDB(MediaBasic item) {
+        MediaItem res = realm.where(MediaItem.class)
+                .equalTo("tmdbId", String.valueOf(item.getId()))
+                .findFirstAsync();
+        res.addChangeListener((RealmChangeListener<MediaItem>) mediaItem -> {
+            if (mediaItem.isValid())
+                view.setFavorite(true);
+        });
+    }
+
+    @Override
+    public void addMediaToFavorites(MediaBasic item) {
+        switch (getFilteringType()) {
+            case MOVIES:
+                MovieInfo mv = (MovieInfo) item;
+                addToRealm(mv.getId(), MediaType.MOVIES, mv.getTitle(), mv.getBackdropPath());
+                break;
+            case TV:
+                TvInfo tv = (TvInfo) item;
+                addToRealm(tv.getId(), MediaType.MOVIES, tv.getName(), tv.getBackdropPath());
+                break;
+        }
+    }
+
+    private void addToRealm(int tmdbId, MediaType mediaType, String title, String backDrop) {
+        realm.executeTransactionAsync(realm1 -> {
+                    realm1.copyToRealm(new MediaItem(
+                            String.valueOf(tmdbId),
+                            mediaType,
+                            title,
+                            backDrop
+                    ));
+                }, () -> view.showTestToast("Added to favorites!"),
+                error -> {
+                    view.showTestToast("Error in adding to favorites. Please try again later.");
+                    error.printStackTrace();
+                });
+    }
+
+    @Override
+    public void removeMediaFromFavorites(MediaBasic item) {
+        final RealmResults<MediaItem> res = realm.where(MediaItem.class).equalTo("tmdbId", String.valueOf(item.getId()))
+                .findAll();
+        if (res.isValid() && !res.isEmpty()) {
+            realm.executeTransaction((realm1 -> {
+                try {
+                    res.deleteAllFromRealm();
+                    view.showTestToast("Removed from favorites");
+                } catch (IllegalStateException ex) {
+                    ex.printStackTrace();
+                }
+            }));
+        }
+
+    }
+
+    @Override
     public MediaType getFilteringType() {
         return filter;
+    }
+
+    @Override
+    public void destroy() {
+        realm.removeAllChangeListeners();
+        realm.close();
     }
 
 
@@ -138,42 +207,6 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                 }), (throwable -> {
                     view.showRatingsViewLoadingIndicator(false);
                 }));
-    }
-
-    class PackTmdbOmdbData {
-        private MovieInfo movieInfo;
-        private OmdbMovieDetails omdbMovieDetails;
-
-        public PackTmdbOmdbData() {
-        }
-
-        public PackTmdbOmdbData(MovieInfo movieInfo, OmdbMovieDetails omdbMovieDetails) {
-            this.movieInfo = movieInfo;
-            this.omdbMovieDetails = omdbMovieDetails;
-        }
-
-        public MovieInfo getMovieInfo() {
-            return movieInfo;
-        }
-
-        public void setMovieInfo(MovieInfo movieInfo) {
-            this.movieInfo = movieInfo;
-        }
-
-        public OmdbMovieDetails getOmdbMovieDetails() {
-            return omdbMovieDetails;
-        }
-
-        public void setOmdbMovieDetails(OmdbMovieDetails omdbMovieDetails) {
-            this.omdbMovieDetails = omdbMovieDetails;
-        }
-
-        @Override
-        public String toString() {
-            return "PackTmdbOmdbData{" +
-                    "omdbMovieDetails=" + omdbMovieDetails.getImdbRating() +
-                    '}';
-        }
     }
 
 }

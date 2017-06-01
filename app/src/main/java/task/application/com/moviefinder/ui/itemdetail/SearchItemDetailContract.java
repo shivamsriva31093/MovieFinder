@@ -18,6 +18,7 @@ public interface SearchItemDetailContract {
 
         void showUi(MediaBasic item);
 
+        void setFavorite(boolean status);
         void showRatingsUi(OmdbMovieDetails data);
 
         void showRatingsViewLoadingIndicator(boolean show);
@@ -27,9 +28,15 @@ public interface SearchItemDetailContract {
 
     interface Presenter extends BasePresenter {
         void getMovieDetails(MediaBasic clickedItem);
-
         void setFilteringType(MediaType filteringType);
 
+        void checkMediaInDB(MediaBasic item);
+
+        void addMediaToFavorites(MediaBasic item);
+
+        void removeMediaFromFavorites(MediaBasic item);
         MediaType getFilteringType();
+
+        void destroy();
     }
 }

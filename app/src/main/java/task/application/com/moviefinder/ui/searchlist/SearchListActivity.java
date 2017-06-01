@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,13 +25,14 @@ import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import java.util.ArrayList;
 
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
 import task.application.com.moviefinder.util.Util;
 
 /**
  * Created by sHIVAM on 2/6/2017.
  */
 
-public class SearchListActivity extends AppCompatActivity implements SearchListFragment.OnReplaceFragmentListener {
+public class SearchListActivity extends NavigationDrawerActivity implements SearchListFragment.OnReplaceFragmentListener {
 
     private static final String TAG = SearchListActivity.class.getName();
     private static final String LIST_FRAG_TAG = "searchlist_frag";
@@ -58,7 +58,8 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_list);
+        View layoutView = getLayoutInflater().inflate(R.layout.activity_search_list, null, false);
+        setContentView(layoutView);
 
         if(savedInstanceState != null) {
             if(savedInstanceState.containsKey(SEARCH_QUERY))
@@ -80,6 +81,11 @@ public class SearchListActivity extends AppCompatActivity implements SearchListF
         presenter = new SearchListPresenter(fragment);
         fragmentContainer = (RelativeLayout) findViewById(R.id.activity_search_list);
         setUpSearchBox();
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
     }
 
     private void setUpSearchBox() {

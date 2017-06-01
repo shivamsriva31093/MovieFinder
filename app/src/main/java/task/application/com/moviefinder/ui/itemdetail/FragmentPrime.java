@@ -30,6 +30,8 @@ import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.mediadetails.Video;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.TvInfo;
+import com.google.android.youtube.player.YouTubeApiServiceUtil;
+import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -38,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.utility.ImageSlider;
@@ -66,7 +67,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private FrameLayout detailView;
     private RelativeLayout basicDetails;
     private RelativeLayout ratingsView;
-    private CircleImageView poster;
     private ImageButton trailerButton;
     private FloatingActionButton favorite;
     private ImageButton share;
@@ -132,7 +132,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         detailView = (FrameLayout) rootView.findViewById(R.id.fragment_content_parent);
         title = (TextView) detailView.findViewById(R.id.title);
 
-//        poster = (CircleImageView) detailView.findViewById(R.id.movie_dp);
+        favorite = (FloatingActionButton) rootView.findViewById(R.id.favorite);
         basicDetails = (RelativeLayout) detailView.findViewById(R.id.basic_details);
         genres = (TextView) basicDetails.findViewById(R.id.genres);
         lang = (TextView) basicDetails.findViewById(R.id.lang);
@@ -197,6 +197,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void showUi(MediaBasic data) {
+        presenter.checkMediaInDB(data);
         if (presenter.getFilteringType().equals(MediaType.MOVIES))
             setUpMovieDetails((MovieInfo) data);
         else
@@ -293,12 +294,24 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     }
 
     @Override
+    public void setFavorite(boolean status) {
+        if (status) {
+            favorite.setImageDrawable(ApplicationClass.getInstance()
+                    .getResources().getDrawable(R.drawable.hearts));
+            favorite.setTag(R.drawable.hearts);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         Context context = ApplicationClass.getInstance();
         if (v instanceof ImageButton && v.getId() == R.id.imageButton) {
             if (trailerKey != null && !trailerKey.isEmpty()) {
-                context.startActivity(YouTubeStandalonePlayer.createVideoIntent(getActivity(),
-                        YOUTUBE_API_KEY, trailerKey));
+                if (YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS))
+                    context.startActivity(YouTubeStandalonePlayer.createVideoIntent(getActivity(),
+                            YOUTUBE_API_KEY, trailerKey));
+                else
+                    showTestToast("No youtube service found");
             } else {
                 Toast.makeText(context, "No trailer available.", Toast.LENGTH_SHORT).show();
             }
@@ -306,13 +319,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (v instanceof FloatingActionButton && v.getId() == R.id.favorite) {
             FloatingActionButton button = (FloatingActionButton) v;
             int tag = (int) button.getTag();
-            if (tag == R.drawable.ic_favorite_border_black_24dp) {
-                button.setImageDrawable(context.getResources().getDrawable(R.drawable.hearts, null));
-                button.setTag(R.drawable.hearts);
-            } else {
-                button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
-                button.setTag(R.drawable.ic_favorite_border_black_24dp);
-            }
+            toggleFavorite(button, tag, context);
         }
 
         if (v instanceof ImageButton && v.getId() == R.id.imageButton5) {
@@ -325,6 +332,29 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             sendIntent.setType("text/plain");
             context.startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
         }
+    }
+
+    private void toggleFavorite(FloatingActionButton button, int tag, Context context) {
+        if (tag == R.drawable.ic_favorite_border_black_24dp) {
+            button.setImageDrawable(context.getResources().getDrawable(R.drawable.hearts, null));
+            button.setTag(R.drawable.hearts);
+            presenter.addMediaToFavorites(retrievedItem);
+        } else {
+            button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
+            button.setTag(R.drawable.ic_favorite_border_black_24dp);
+            presenter.removeMediaFromFavorites(retrievedItem);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
     }
 
     private class ErrorHandlerClickListener implements View.OnClickListener {
