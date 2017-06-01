@@ -2,12 +2,10 @@ package com.androidtmdbwrapper.model.movies;
 
 import android.os.Parcel;
 
-import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-
 /**
  * Created by sHIVAM on 2/14/2017.
  */
@@ -31,7 +29,7 @@ public class BasicMovieInfo extends MediaBasic {
     private String originalLanguage;
 
     public BasicMovieInfo() {
-        super.setMediaType(MediaType.MOVIES);
+
     }
 
 

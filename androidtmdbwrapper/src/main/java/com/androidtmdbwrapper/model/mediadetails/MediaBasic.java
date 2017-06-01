@@ -3,10 +3,7 @@ package com.androidtmdbwrapper.model.mediadetails;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.androidtmdbwrapper.enums.MediaType;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * Created by sHIVAM on 2/14/2017.
@@ -15,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class MediaBasic implements Parcelable {
     @JsonProperty("id")
     private int id;
-    private MediaType mediaType;
     @JsonProperty("poster_path")
     private String posterPath;
     @JsonProperty("backdrop_path")
@@ -82,16 +78,6 @@ public class MediaBasic implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @JsonGetter("media_type")
-    public MediaType getMediaType() {
-        return mediaType;
-    }
-
-    @JsonSetter("media_type")
-    public void setMediaType(MediaType mediaType) {
-        this.mediaType = mediaType;
     }
 
     public float getPopularity() {

@@ -1,6 +1,8 @@
 package task.application.com.moviefinder.ui.navdrawer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,18 +15,24 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.favorites.FavoritesMedia;
 
 public class NavigationDrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NavigationDrawerItemListeners {
 
+    private static final int NAVDRAWER_LAUNCH_DELAY = 250;
+    private static final int MAIN_CONTENT_FADEOUT_DURATION = 250;
     private DrawerLayout drawer;
+    private NavigationDrawerItemListeners listener;
     private FrameLayout frameLayout;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         frameLayout = (FrameLayout) findViewById(R.id.activity_content);
+        listener = this;
     }
 
     @Override
@@ -39,6 +47,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     protected void createNvDrawer() {
+        handler = new Handler();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,11 +98,32 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_favorite:
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.itemSelected(new Intent(NavigationDrawerActivity.this, FavoritesMedia.class));
+                    }
+                }, NAVDRAWER_LAUNCH_DELAY);
                 break;
+        }
+
+        if (frameLayout != null) {
+            frameLayout.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void itemSelected(Intent intent) {
+        startActivity(intent);
+        finish();
+    }
+
+}
+
+interface NavigationDrawerItemListeners {
+    void itemSelected(Intent intent);
 }

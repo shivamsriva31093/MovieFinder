@@ -1,12 +1,13 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
 import task.application.com.moviefinder.util.Util;
 
-public class SearchItemDetailActivity extends AppCompatActivity {
+public class SearchItemDetailActivity extends NavigationDrawerActivity {
 
     private static final String SEARCH_ITEM = "searchItem";
     private static final String SEARCH_ITEM_DETAIL = "detail_frag";
@@ -16,7 +17,8 @@ public class SearchItemDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_new);
+        View layoutView = getLayoutInflater().inflate(R.layout.activity_detail_new, null, false);
+        setContentView(layoutView);
         Bundle bundle = new Bundle();
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
@@ -33,5 +35,8 @@ public class SearchItemDetailActivity extends AppCompatActivity {
         this.presenter = new SearchItemDetailPresenter(fragment);
     }
 
-
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+    }
 }
