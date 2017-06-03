@@ -51,7 +51,8 @@
         <activity
             android:name=".ui.favorites.FavoritesMedia"
             android:label="@string/title_activity_favorites_media"
-            android:parentActivityName=".ui.navdrawer.NavigationDrawerActivity">
+            android:parentActivityName=".ui.navdrawer.NavigationDrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity" />

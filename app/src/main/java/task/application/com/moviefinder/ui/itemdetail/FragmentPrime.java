@@ -42,7 +42,6 @@ import java.util.Locale;
 
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.utility.ImageSlider;
 import task.application.com.moviefinder.util.Util;
 
 /**
@@ -52,10 +51,10 @@ import task.application.com.moviefinder.util.Util;
 public class FragmentPrime extends Fragment implements SearchItemDetailContract.View, View.OnClickListener {
     private static final String TAG = FragmentPrime.class.getName();
     private static final String CLICKED_ITEM = "clickedItem";
-    private static final String CAST_FRAG = "castFragment";
-    private static final String CREW_FRAG = "crewFragment";
+
     private static final String YOUTUBE_API_KEY = "AIzaSyC9iXjkY03gWbADszp0x9zX2yRvRMYjaxo";
     private SearchItemDetailContract.Presenter presenter;
+    private FragmentInteractionListener listener;
 
     private MediaBasic clickedItem;
     private MediaType itemType;
@@ -76,8 +75,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private TextView runtime;
     private TextView synopsis;
     private String trailerKey;
-    private ImageSlider<MediaCreditCast> castFrag;
-    private ImageSlider<MediaCreditCrew> crewFrag;
     private TextView rtRating;
     private TextView imdbRating;
     private ProgressBar ratingsLoader;
@@ -144,15 +141,14 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         imdbRating = (TextView) ratingsView.findViewById(R.id.imdb_rating);
         synopsis = (TextView) detailView.findViewById(R.id.plot);
         share = (ImageButton) detailView.findViewById(R.id.imageButton5);
-        castFrag = ImageSlider.newInstance();
-        crewFrag = ImageSlider.newInstance();
-        Util.addFragmentToActivity(getActivity().getSupportFragmentManager(),
-                castFrag, R.id.cast_image_slider, CAST_FRAG);
-        Util.addFragmentToActivity(getActivity().getSupportFragmentManager(),
-                crewFrag, R.id.crew_image_slider, CREW_FRAG);
+        addCastCrewImageSliders();
         trailerButton.setOnClickListener(this);
 
         share.setOnClickListener(this);
+    }
+
+    private void addCastCrewImageSliders() {
+        listener.addCreditImageSlider();
     }
 
     @Override
@@ -219,8 +215,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             trailerButton.setVisibility(View.GONE);
         else
             trailerKey = trailer;
-        castFrag.updateImageSliderView(data.getCredits().getCast());
-        crewFrag.updateImageSliderView(data.getCredits().getCrew());
+        listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
     }
 
     private void setUpMovieDetails(MovieInfo data) {
@@ -238,8 +233,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             trailerButton.setVisibility(View.GONE);
         else
             trailerKey = trailer;
-        castFrag.updateImageSliderView(data.getCredits().getCast());
-        crewFrag.updateImageSliderView(data.getCredits().getCrew());
+        listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
     }
 
     @Override
@@ -308,8 +302,13 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (v instanceof ImageButton && v.getId() == R.id.imageButton) {
             if (trailerKey != null && !trailerKey.isEmpty()) {
                 if (YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS))
-                    context.startActivity(YouTubeStandalonePlayer.createVideoIntent(getActivity(),
-                            YOUTUBE_API_KEY, trailerKey));
+                    context.startActivity(
+                            YouTubeStandalonePlayer.createVideoIntent(
+                                    getActivity(),
+                                    YOUTUBE_API_KEY,
+                                    trailerKey
+                            )
+                    );
                 else
                     showTestToast("No youtube service found");
             } else {
@@ -347,6 +346,17 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentInteractionListener) {
+            listener = (FragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
     }
@@ -365,5 +375,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                 presenter.getMovieDetails(clickedItem);
             }
         }
+    }
+
+    public interface FragmentInteractionListener {
+        void addCreditImageSlider();
+
+        void updateImageSliders(List<MediaCreditCast> cast, List<MediaCreditCrew> crew);
     }
 }

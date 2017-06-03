@@ -24,6 +24,8 @@ import task.application.com.moviefinder.R;
 
 public class ImageSlider<T extends MediaCredit> extends Fragment {
     private String FRAG_TAG;
+    public static final String CAST_FRAG = "castFragment";
+    public static final String CREW_FRAG = "crewFragment";
     private RecyclerView recyclerView;
     private RVAdapter rvAdapter;
     public ImageSlider() {

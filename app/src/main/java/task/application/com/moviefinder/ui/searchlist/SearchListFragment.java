@@ -80,8 +80,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             resultList = getArguments().getParcelableArrayList(SEARCH_LIST);
             searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
         }
-        fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.activity_search_list);
-        progressView = (NewtonCradleLoading) fragmentContainer.findViewById(R.id.progressView);
+
         recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, searchMediaType, itemClickListener);
     }
 
@@ -97,6 +96,8 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
+        fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.activity_search_list);
+        progressView = (NewtonCradleLoading) fragmentContainer.findViewById(R.id.progressView);
     }
 
     @Nullable

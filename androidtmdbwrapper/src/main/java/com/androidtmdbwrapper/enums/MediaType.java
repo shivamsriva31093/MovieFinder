@@ -7,6 +7,18 @@ import java.io.Serializable;
  */
 
 public enum MediaType implements Serializable {
-    MOVIES,
-    TV;
+    MOVIES("Movies"),
+    TV("Tv");
+
+    private String media;
+
+    MediaType(String media) {
+        this.media = media;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.media;
+    }
 }
