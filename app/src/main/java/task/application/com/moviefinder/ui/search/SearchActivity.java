@@ -31,7 +31,6 @@ public class SearchActivity extends NavigationDrawerActivity {
                     R.id.fragment_container, SEARCH_HOME_TAG);
         }
         searchPresenter = new SearchPresenter(searchFragment);
-
     }
 
     @Override

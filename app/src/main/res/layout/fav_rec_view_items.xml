@@ -19,7 +19,10 @@
             android:id="@+id/backdrop"
             android:layout_width="172dp"
             android:layout_height="172dp"
-            android:scaleType="centerCrop" />
+            android:adjustViewBounds="true"
+            android:background="@color/book_loading_page"
+            android:scaleType="center"
+            card_view:srcCompat="@drawable/movie" />
 
         <TextView
             android:id="@+id/title"
