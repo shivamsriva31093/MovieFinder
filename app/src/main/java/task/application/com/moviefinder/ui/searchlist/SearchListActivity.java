@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatImageButton;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -49,6 +50,7 @@ public class SearchListActivity extends NavigationDrawerActivity implements Sear
     private TextInputLayout searchBox;
     private EditText searchTerm;
     private Spinner moreOptions;
+    private AppCompatImageButton menuButton;
     private ImageButton searchAction;
     private RelativeLayout fragmentContainer;
     private Bundle intentBundle;
@@ -93,6 +95,7 @@ public class SearchListActivity extends NavigationDrawerActivity implements Sear
         searchTerm = (EditText) findViewById(R.id.searchterm);
         searchTerm.setText(searchQuery);
         moreOptions = (Spinner) findViewById(R.id.optionsMenu);
+        menuButton = (AppCompatImageButton) findViewById(R.id.menu_button);
         searchAction = (ImageButton) findViewById(R.id.search_action);
         searchTerm.setFocusable(false);
         InputMethodManager inputMethodManager = (InputMethodManager)
@@ -144,7 +147,15 @@ public class SearchListActivity extends NavigationDrawerActivity implements Sear
         searchAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                searchTerm.setFocusableInTouchMode(true);
                 attemptToSearch();
+            }
+        });
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer();
             }
         });
 
