@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollection;
 import io.realm.OrderedRealmCollectionChangeListener;
-import io.realm.RealmChangeListener;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
@@ -105,10 +104,10 @@ public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends Recyc
     private void removeChangeListener(@NonNull OrderedRealmCollection<T> data) {
         if (data instanceof RealmResults) {
             RealmResults<T> res = (RealmResults<T>) data;
-            res.removeChangeListener((RealmChangeListener) listener);
+            res.removeChangeListener(listener);
         } else if (data instanceof RealmList) {
             RealmList<T> res = (RealmList<T>) data;
-            res.removeChangeListener((RealmChangeListener) listener);
+            res.removeChangeListener(listener);
         } else {
             throw new IllegalStateException("OrderedRealmCollection is not supported: " + data.getClass());
         }

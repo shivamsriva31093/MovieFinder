@@ -19,10 +19,7 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
         Bundle bundle = new Bundle();
         FavoritesMediaFragment fragment = null;
         switch (item.getItemId()) {
-            case R.id.navigation_home:
-                startActivity(new Intent(FavoritesMediaActivity.this, SearchActivity.class));
-                finish();
-                return true;
+
             case R.id.navigation_tv:
                 bundle.putString("FILTER", "Tv");
                 fragment = FavoritesMediaFragment.newInstance(bundle);
@@ -46,7 +43,7 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
         setContentView(R.layout.activity_favorites_media);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        navigation.setSelectedItemId(R.id.navigation_tv);
     }
 
     @Override
@@ -57,6 +54,12 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, SearchActivity.class));
+        super.onBackPressed();
     }
 
     @Override

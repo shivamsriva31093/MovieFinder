@@ -68,6 +68,11 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public void updateImageSliders(List<MediaCreditCast> cast, List<MediaCreditCrew> crew) {
         ImageSlider<MediaCreditCast> castFrag = (ImageSlider<MediaCreditCast>)
                 getSupportFragmentManager().findFragmentByTag(ImageSlider.CAST_FRAG);
