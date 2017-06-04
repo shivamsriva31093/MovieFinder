@@ -88,6 +88,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
     ItemTouchListener itemTouchListener = new ItemTouchListener() {
         @Override
+
         public void onItemClick(View view, int position, MediaItem item) {
             if (!isMultiSelect)
                 presenter.showMediaDetails(item);
@@ -290,6 +291,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                 title = (TextView) itemView.findViewById(R.id.title);
                 itemView.setOnClickListener(view ->
+
                         listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
                 itemView.setOnLongClickListener(view ->
                         listener.onItemLongClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
@@ -303,7 +305,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     }
 
     interface ItemTouchListener {
-        void onItemClick(View view, int position, MediaItem item);
+void onItemClick(View view, int position, MediaItem item);
 
         boolean onItemLongClick(View view, int position, MediaItem item);
     }
