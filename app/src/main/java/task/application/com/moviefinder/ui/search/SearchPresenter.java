@@ -22,6 +22,7 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     private final SearchContract.View searchView;
     private MediaType filterType = MediaType.MOVIES;
+
     public SearchPresenter(@NonNull SearchContract.View searchView) {
         Util.checkNotNull(searchView, "view object can't be null");
         this.searchView = searchView;

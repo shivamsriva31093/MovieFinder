@@ -32,4 +32,13 @@ public class Util {
         transaction.add(containerId, fragment, tag);
         transaction.commit();
     }
+
+    public static void replaceFragmentFromActivity(@NonNull FragmentManager fragmentManager,
+                                                   @NonNull Fragment fragment, int containerId) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(containerId, fragment);
+        transaction.commit();
+    }
 }

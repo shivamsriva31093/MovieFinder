@@ -49,7 +49,7 @@
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.favorites.FavoritesMedia"
+            android:name=".ui.favorites.FavoritesMediaActivity"
             android:label="@string/title_activity_favorites_media"
             android:parentActivityName=".ui.navdrawer.NavigationDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar">

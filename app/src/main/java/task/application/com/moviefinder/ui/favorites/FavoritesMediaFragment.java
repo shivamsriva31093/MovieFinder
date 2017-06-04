@@ -12,20 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.Sort;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.utility.realmrecview.RealmRecViewAdapter;
+import task.application.com.moviefinder.util.Util;
 
 
-public class FavoritesMediaFragment extends Fragment {
+public class FavoritesMediaFragment extends Fragment implements FavoritesMediaContract.View {
 
 
     private static String FILTER = "";
@@ -33,6 +32,7 @@ public class FavoritesMediaFragment extends Fragment {
     private RecyclerView recView;
     private Realm realm;
     private RecViewAdapter adapter;
+    private FavoritesMediaContract.Presenter presenter;
 
     public FavoritesMediaFragment() {
         // Required empty public constructor
@@ -65,22 +65,14 @@ public class FavoritesMediaFragment extends Fragment {
     private void setUpRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recView.setLayoutManager(layoutManager);
-        adapter = new RecViewAdapter(null);
+        adapter = new RecViewAdapter(null, itemTouchListener);
         recView.setAdapter(adapter);
-        RealmResults<MediaItem> res = realm.where(MediaItem.class)
-                .equalTo("mediaType", FILTER)
-                .findAllSortedAsync("createdAt", Sort.DESCENDING);
-        res.addChangeListener(mediaItems -> {
-            if (mediaItems.isValid()) {
-                updateRecViewData(mediaItems);
-            }
-        });
+        presenter.fetchDataFromRealm(FILTER);
     }
 
-    private void updateRecViewData(RealmResults<MediaItem> res) {
-        adapter.updateData(res);
-        Toast.makeText(getActivity(), res.size() + "", Toast.LENGTH_SHORT).show();
-    }
+    ItemTouchListener itemTouchListener = (view, item) -> {
+
+    };
 
 
     @Override
@@ -98,15 +90,37 @@ public class FavoritesMediaFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        realm.removeAllChangeListeners();
-        realm.close();
-        realm = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.start();
+    }
+
+    @Override
+    public void setPresenter(FavoritesMediaContract.Presenter presenter) {
+        this.presenter = Util.checkNotNull(presenter, "View presenter can't be null: " + presenter.getClass());
+    }
+
+    @Override
+    public void updateListAdapter(RealmResults<MediaItem> res) {
+        adapter.updateData(res);
     }
 
     private class RecViewAdapter extends RealmRecViewAdapter<MediaItem, RecViewAdapter.ViewHolder> {
 
-        public RecViewAdapter(@Nullable OrderedRealmCollection<MediaItem> data) {
+        private ItemTouchListener listener;
+
+        public RecViewAdapter(@Nullable OrderedRealmCollection<MediaItem> data, ItemTouchListener listener) {
             this(data, true);
+            this.listener = listener;
         }
 
         public RecViewAdapter(@Nullable OrderedRealmCollection<MediaItem> data, boolean autoUpdate) {
@@ -139,6 +153,10 @@ public class FavoritesMediaFragment extends Fragment {
                 super(itemView);
                 backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                 title = (TextView) itemView.findViewById(R.id.title);
+                itemView.setOnTouchListener((view, motionEvent) -> {
+                    listener.onItemTouch(view, getItem(getAdapterPosition()));
+                    return true;
+                });
             }
         }
     }
@@ -148,5 +166,8 @@ public class FavoritesMediaFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    interface ItemTouchListener {
+        void onItemTouch(View view, MediaItem item);
+    }
 
 }

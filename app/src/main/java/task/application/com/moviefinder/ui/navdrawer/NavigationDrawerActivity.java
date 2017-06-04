@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.favorites.FavoritesMedia;
+import task.application.com.moviefinder.ui.favorites.FavoritesMediaActivity;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NavigationDrawerItemListeners {
@@ -101,7 +101,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        listener.itemSelected(new Intent(NavigationDrawerActivity.this, FavoritesMedia.class));
+                        listener.itemSelected(new Intent(NavigationDrawerActivity.this, FavoritesMediaActivity.class));
                     }
                 }, NAVDRAWER_LAUNCH_DELAY);
                 break;

@@ -59,7 +59,15 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
 
     private void setUpRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager.HORIZONTAL, false) {
+            @Override
+            public boolean supportsPredictiveItemAnimations() {
+                return true;
+            }
+        };
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setLayoutManager(layoutManager);
         rvAdapter = new RVAdapter(Collections.<T>emptyList());
         recyclerView.setAdapter(rvAdapter);
@@ -67,7 +75,6 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
 
     public void updateImageSliderView(List<T> list) {
         rvAdapter.updateData(list);
-        rvAdapter.notifyDataSetChanged();
     }
 
 
@@ -92,11 +99,14 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500"
+            Picasso picasso = Picasso.with(getActivity());
+            picasso.setIndicatorsEnabled(true);
+            picasso.load("https://image.tmdb.org/t/p/w500"
                     + credits.get(position).getProfilePath())
                     .placeholder(R.drawable.creditplaceholder)
                     .error(R.drawable.creditplaceholder)
                     .into(holder.creditImage);
+
             holder.creditTitle.setText(credits.get(position).getName());
             if (credits.get(0) instanceof MediaCreditCrew) {
                 holder.creditDesignation.setText(((MediaCreditCrew) credits.get(position)).getJob());
@@ -112,6 +122,7 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
 
         public void updateData(List<T> list) {
             this.credits = list;
+            notifyDataSetChanged();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {

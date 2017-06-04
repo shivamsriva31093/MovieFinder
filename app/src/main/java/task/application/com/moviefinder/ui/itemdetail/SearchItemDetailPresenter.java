@@ -121,7 +121,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                 break;
             case TV:
                 TvInfo tv = (TvInfo) item;
-                addToRealm(tv.getId(), MediaType.MOVIES, tv.getName(), tv.getBackdropPath());
+                addToRealm(tv.getId(), MediaType.TV, tv.getName(), tv.getBackdropPath());
                 break;
         }
     }
