@@ -302,7 +302,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (v instanceof ImageButton && v.getId() == R.id.imageButton) {
             if (trailerKey != null && !trailerKey.isEmpty()) {
                 if (YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS))
-                    context.startActivity(
+                    getActivity().startActivity(
                             YouTubeStandalonePlayer.createVideoIntent(
                                     getActivity(),
                                     YOUTUBE_API_KEY,
@@ -330,7 +330,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                     + " sent via: " + getResources().getString(R.string.app_name));
             sendIntent.setType("text/plain");
             sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+            getActivity().startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
         }
     }
 
