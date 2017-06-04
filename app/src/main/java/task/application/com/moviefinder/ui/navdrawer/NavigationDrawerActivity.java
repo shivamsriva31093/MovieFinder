@@ -54,6 +54,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         toggle.isDrawerIndicatorEnabled();
+
         toggle.syncState();
         toggle.setDrawerIndicatorEnabled(true);
         drawer.addDrawerListener(toggle);
