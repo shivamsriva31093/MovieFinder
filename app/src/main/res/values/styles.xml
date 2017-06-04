@@ -24,9 +24,23 @@
     </style>
 
     <style name="TextLabel">
-        <item name="colorControlNormal">@android:color/transparent</item>
-        <item name="colorControlActivated">@android:color/transparent</item>
-        <item name="colorControlHighlight">@android:color/transparent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
+    <style name="TextLabel2">
+        <item name="colorControlNormal">@color/colorTransparent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
+
+    <style name="MyCubeButtonPin">
+        <item name="android:background">@drawable/selector_search_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

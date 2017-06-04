@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class SearchFragment extends Fragment implements SearchContract.View{
     private TextInputLayout searchBox;
     private EditText searchTerm;
     private Spinner moreOptions;
-    private ImageButton searchAction;
+    private AppCompatButton searchAction;
 
     private LinearLayout logoContainer;
     private ImageView logo;
@@ -68,16 +69,16 @@ public class SearchFragment extends Fragment implements SearchContract.View{
         searchBox = (TextInputLayout) rootView.findViewById(R.id.searchbox);
         searchTerm = (EditText) rootView.findViewById(R.id.searchterm);
         moreOptions = (Spinner) rootView.findViewById(R.id.optionsMenu);
-        searchAction = (ImageButton) rootView.findViewById(R.id.search_action);
+        searchAction = (AppCompatButton) rootView.findViewById(R.id.search_action);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.searchbox_extra_options,
-                android.R.layout.simple_spinner_item);
+                R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         moreOptions.setAdapter(adapter);
         moreOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                searchTerm.setHint("Search "+parent.getSelectedItem().toString());
+                //searchTerm.setHint("Search "+parent.getSelectedItem().toString());
                 if (parent.getSelectedItemId() == 0)
                     presenter.setFilteringType(MediaType.MOVIES);
                 else

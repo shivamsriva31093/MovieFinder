@@ -3,7 +3,11 @@
     <color name="colorPrimary">#FF5252</color>
     <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#eef1f2</color>
+    <color name="colorAccentSelected">#ffcdd0</color>
+    <color name="colorTransparent">@android:color/transparent</color>
     <color name="textColor">#e6edf1</color>
     <color name="textBlack">#2e3133</color>
     <color name="searchColor">#45565e</color>
+    <color name="theme_final_signin_pressed">#E65542</color>
+    <color name="theme_final_signin">#CA4A39</color>
 </resources>

@@ -329,6 +329,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                     + "www.youtube.com/watch?v=" + trailerKey
                     + " sent via: " + getResources().getString(R.string.app_name));
             sendIntent.setType("text/plain");
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
         }
     }
