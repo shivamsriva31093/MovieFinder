@@ -19,13 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.victor.loading.rotate.RotateLoading;
-
 import java.util.ArrayList;
-
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.searchlist.SearchListActivity;
 import task.application.com.moviefinder.util.Util;
@@ -37,12 +34,10 @@ public class SearchFragment extends Fragment implements SearchContract.View{
 
     private SearchContract.Presenter presenter;
     private View noResultsView;
-
     private TextInputLayout searchBox;
     private EditText searchTerm;
     private Spinner moreOptions;
     private AppCompatButton searchAction;
-
     private LinearLayout logoContainer;
     private ImageView logo;
     private RotateLoading progressView;
