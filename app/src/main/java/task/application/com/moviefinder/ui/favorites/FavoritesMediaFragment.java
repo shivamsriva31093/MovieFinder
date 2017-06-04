@@ -8,7 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,9 +23,13 @@ import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
@@ -37,6 +46,9 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private Realm realm;
     private RecViewAdapter adapter;
     private FavoritesMediaContract.Presenter presenter;
+
+    private boolean isMultiSelect;
+    private ActionMode actionMode;
 
     public FavoritesMediaFragment() {
         // Required empty public constructor
@@ -76,17 +88,77 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
     ItemTouchListener itemTouchListener = new ItemTouchListener() {
         @Override
-        public void onItemClick(View view, MediaItem item) {
-            presenter.showMediaDetails(item);
+        public void onItemClick(View view, int position, MediaItem item) {
+            if (!isMultiSelect)
+                presenter.showMediaDetails(item);
+            else {
+                toggleSelection(position);
+
+            }
         }
 
         @Override
-        public boolean onItemLongClick(View view, MediaItem item) {
-
-            return false;
+        public boolean onItemLongClick(View view, int position, MediaItem item) {
+            if (actionMode != null) {
+                toggleSelection(position);
+                return true;
+            }
+            isMultiSelect = true;
+            actionMode = getActivity().startActionMode(actionCallback);
+            toggleSelection(position);
+            return true;
         }
     };
 
+    private void toggleSelection(int position) {
+        adapter.toggleSelection(position);
+        if (adapter.getSelectedItemCount() == 0) {
+            actionMode.finish();
+            return;
+        }
+        String title = ApplicationClass.getInstance().getString(R.string.selected_count,
+                adapter.getSelectedItemCount());
+        actionMode.setTitle(title);
+    }
+
+    private ActionMode.Callback actionCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.rec_view_contextual_menu, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_delete:
+                    deleteSelectedItems();
+                    mode.finish();
+                    return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            actionMode = null;
+            isMultiSelect = false;
+            adapter.clearSelections();
+        }
+    };
+
+    private void deleteSelectedItems() {
+        final List<Integer> items = adapter.getSelectedItems();
+        for (int pos : items) {
+            adapter.removeItem(pos);
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -142,10 +214,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private class RecViewAdapter extends RealmRecViewAdapter<MediaItem, RecViewAdapter.ViewHolder> {
 
         private ItemTouchListener listener;
+        private SparseBooleanArray selectedItems;
 
         public RecViewAdapter(@Nullable OrderedRealmCollection<MediaItem> data, ItemTouchListener listener) {
             this(data, true);
             this.listener = listener;
+            selectedItems = new SparseBooleanArray();
         }
 
         public RecViewAdapter(@Nullable OrderedRealmCollection<MediaItem> data, boolean autoUpdate) {
@@ -161,14 +235,51 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             OrderedRealmCollection<MediaItem> data = getData();
-            if (data != null) {
-                Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position).getBackDrop())
+            if (data == null) return;
+            if (selectedItems.get(position, false))
+                holder.itemView.setAlpha(0.5f);
+            else
+                holder.itemView.setAlpha(1f);
+            holder.backdrop.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position).getBackDrop())
                         .error(R.drawable.fav_media_placeholder)
                         .placeholder(R.drawable.fav_media_placeholder)
                         .into(holder.backdrop);
-                holder.title.setText(getData().get(position).getTitle());
-            }
+            holder.title.setText(getData().get(position).getTitle());
+
         }
+
+        public void removeItem(final int pos) {
+            realm.executeTransaction(realm1 -> {
+                getData().deleteFromRealm(pos);
+                notifyDataSetChanged();
+            });
+        }
+
+        public void toggleSelection(int position) {
+            if (selectedItems.get(position, false))
+                selectedItems.delete(position);
+            else
+                selectedItems.put(position, true);
+            notifyItemChanged(position);
+        }
+
+        public int getSelectedItemCount() {
+            return selectedItems.size();
+        }
+
+        public void clearSelections() {
+            selectedItems.clear();
+            notifyDataSetChanged();
+        }
+
+        public List<Integer> getSelectedItems() {
+            List<Integer> itemIndices = new ArrayList<>();
+            for (int i = 0; i < selectedItems.size(); i++)
+                itemIndices.add(selectedItems.keyAt(i));
+            return itemIndices;
+        }
+
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             private ImageView backdrop;
@@ -179,9 +290,9 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                 title = (TextView) itemView.findViewById(R.id.title);
                 itemView.setOnClickListener(view ->
-                        listener.onItemClick(view, getItem(getAdapterPosition())));
+                        listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
                 itemView.setOnLongClickListener(view ->
-                        listener.onItemLongClick(view, getItem(getAdapterPosition())));
+                        listener.onItemLongClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
             }
         }
     }
@@ -192,9 +303,9 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     }
 
     interface ItemTouchListener {
-        void onItemClick(View view, MediaItem item);
+        void onItemClick(View view, int position, MediaItem item);
 
-        boolean onItemLongClick(View view, MediaItem item);
+        boolean onItemLongClick(View view, int position, MediaItem item);
     }
 
 }
