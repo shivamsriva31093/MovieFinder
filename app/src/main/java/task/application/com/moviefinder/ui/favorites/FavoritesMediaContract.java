@@ -12,6 +12,8 @@ import task.application.com.moviefinder.ui.base.BaseView;
 public interface FavoritesMediaContract {
     interface View extends BaseView<Presenter> {
         void updateListAdapter(RealmResults<MediaItem> res);
+
+        void showItemDetailsUI(MediaItem item);
     }
 
     interface Presenter extends BasePresenter {
@@ -19,5 +21,6 @@ public interface FavoritesMediaContract {
 
         void fetchDataFromRealm(final String FILTER);
 
+        void showMediaDetails(MediaItem item);
     }
 }

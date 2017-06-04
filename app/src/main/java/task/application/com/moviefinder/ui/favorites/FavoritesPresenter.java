@@ -43,4 +43,9 @@ public class FavoritesPresenter implements FavoritesMediaContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void showMediaDetails(MediaItem item) {
+        view.showItemDetailsUI(item);
+    }
 }

@@ -1,6 +1,7 @@
 package task.application.com.moviefinder.ui.favorites;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidtmdbwrapper.enums.MediaType;
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.squareup.picasso.Picasso;
 
 import io.realm.OrderedRealmCollection;
@@ -20,6 +23,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
+import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.ui.utility.realmrecview.RealmRecViewAdapter;
 import task.application.com.moviefinder.util.Util;
 
@@ -70,8 +74,17 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         presenter.fetchDataFromRealm(FILTER);
     }
 
-    ItemTouchListener itemTouchListener = (view, item) -> {
+    ItemTouchListener itemTouchListener = new ItemTouchListener() {
+        @Override
+        public void onItemClick(View view, MediaItem item) {
+            presenter.showMediaDetails(item);
+        }
 
+        @Override
+        public boolean onItemLongClick(View view, MediaItem item) {
+
+            return false;
+        }
     };
 
 
@@ -114,6 +127,18 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         adapter.updateData(res);
     }
 
+    @Override
+    public void showItemDetailsUI(MediaItem item) {
+        Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
+        Bundle bundle = new Bundle();
+        MediaBasic media = new MediaBasic();
+        media.setId(Integer.valueOf(item.getTmdbId()));
+        bundle.putParcelable("clickedItem", media);
+        bundle.putSerializable("filtering_type", item.getMediaType().equals("Tv") ? MediaType.TV : MediaType.MOVIES);
+        intent.putExtra("searchItem", bundle);
+        startActivity(intent);
+    }
+
     private class RecViewAdapter extends RealmRecViewAdapter<MediaItem, RecViewAdapter.ViewHolder> {
 
         private ItemTouchListener listener;
@@ -153,10 +178,10 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 super(itemView);
                 backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                 title = (TextView) itemView.findViewById(R.id.title);
-                itemView.setOnTouchListener((view, motionEvent) -> {
-                    listener.onItemTouch(view, getItem(getAdapterPosition()));
-                    return true;
-                });
+                itemView.setOnClickListener(view ->
+                        listener.onItemClick(view, getItem(getAdapterPosition())));
+                itemView.setOnLongClickListener(view ->
+                        listener.onItemLongClick(view, getItem(getAdapterPosition())));
             }
         }
     }
@@ -167,7 +192,9 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     }
 
     interface ItemTouchListener {
-        void onItemTouch(View view, MediaItem item);
+        void onItemClick(View view, MediaItem item);
+
+        boolean onItemLongClick(View view, MediaItem item);
     }
 
 }
