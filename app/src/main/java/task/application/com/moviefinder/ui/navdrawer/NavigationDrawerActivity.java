@@ -48,6 +48,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     protected void createNvDrawer() {
+
         handler = new Handler();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
