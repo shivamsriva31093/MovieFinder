@@ -242,8 +242,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 holder.itemView.setAlpha(1f);
             holder.backdrop.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position).getBackDrop())
-                        .error(R.drawable.fav_media_placeholder)
-                        .placeholder(R.drawable.fav_media_placeholder)
+                    .error(R.drawable.movie)
+                    .placeholder(R.drawable.movie)
                         .into(holder.backdrop);
             holder.title.setText(getData().get(position).getTitle());
 
