@@ -10,4 +10,5 @@
     <color name="searchColor">#45565e</color>
     <color name="theme_final_signin_pressed">#E65542</color>
     <color name="theme_final_signin">#CA4A39</color>
+    <color name="status_bar_light_grey">#7b7878</color>
 </resources>

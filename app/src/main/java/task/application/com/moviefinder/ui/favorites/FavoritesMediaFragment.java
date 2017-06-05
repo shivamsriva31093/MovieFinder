@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -83,7 +84,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         recView.setLayoutManager(layoutManager);
         adapter = new RecViewAdapter(null, itemTouchListener);
         recView.setAdapter(adapter);
-        presenter.fetchDataFromRealm(FILTER);
+        if (presenter != null)
+            presenter.fetchDataFromRealm(FILTER);
     }
 
     ItemTouchListener itemTouchListener = new ItemTouchListener() {
@@ -106,10 +108,15 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             }
             isMultiSelect = true;
             actionMode = getActivity().startActionMode(actionCallback);
+            animateLayoutShiftDown();
             toggleSelection(position);
             return true;
         }
     };
+
+    private void animateLayoutShiftDown() {
+
+    }
 
     private void toggleSelection(int position) {
         adapter.toggleSelection(position);
@@ -127,6 +134,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.rec_view_contextual_menu, menu);
+            CheckBox selectAll = (CheckBox) menu.findItem(R.id.select_all).getActionView();
+            selectAll.setButtonDrawable(R.drawable.cab_checkbox_selector);
             return true;
         }
 
@@ -142,6 +151,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                     deleteSelectedItems();
                     mode.finish();
                     return true;
+                case R.id.select_all:
+                    item.setChecked(true);
             }
             return false;
         }
@@ -156,12 +167,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
     private void deleteSelectedItems() {
         final List<Integer> items = adapter.getSelectedItems();
-        realm.executeTransaction((r) -> {
-            OrderedRealmCollection<MediaItem> snapshot = adapter.getData().createSnapshot();
-            for (int pos : items) {
-                snapshot.deleteFromRealm(pos);
-            }
-        });
+        presenter.deleteDataFromRealm(items, adapter.getData().createSnapshot());
     }
 
     @Override
@@ -253,12 +259,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
         }
 
-        public void removeItem(final int pos) {
-            realm.executeTransaction(realm1 -> {
-                getData().deleteFromRealm(pos);
-            });
-        }
-
         public void toggleSelection(int position) {
             if (selectedItems.get(position, false))
                 selectedItems.delete(position);
@@ -307,8 +307,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     }
 
     interface ItemTouchListener {
-void onItemClick(View view, int position, MediaItem item);
-
+        void onItemClick(View view, int position, MediaItem item);
         boolean onItemLongClick(View view, int position, MediaItem item);
     }
 
