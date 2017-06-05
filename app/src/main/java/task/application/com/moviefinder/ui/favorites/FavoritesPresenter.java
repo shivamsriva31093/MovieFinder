@@ -1,5 +1,8 @@
 package task.application.com.moviefinder.ui.favorites;
 
+import java.util.List;
+
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -47,5 +50,15 @@ public class FavoritesPresenter implements FavoritesMediaContract.Presenter {
     @Override
     public void showMediaDetails(MediaItem item) {
         view.showItemDetailsUI(item);
+    }
+
+    @Override
+    public void deleteDataFromRealm(final List<Integer> items,
+                                    final OrderedRealmCollectionSnapshot<MediaItem> snapshot) {
+        realm.executeTransaction((r) -> {
+            for (int pos : items) {
+                snapshot.deleteFromRealm(pos);
+            }
+        });
     }
 }

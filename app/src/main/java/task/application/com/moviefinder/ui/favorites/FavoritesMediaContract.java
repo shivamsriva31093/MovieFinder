@@ -1,5 +1,8 @@
 package task.application.com.moviefinder.ui.favorites;
 
+import java.util.List;
+
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.RealmResults;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.base.BasePresenter;
@@ -22,5 +25,7 @@ public interface FavoritesMediaContract {
         void fetchDataFromRealm(final String FILTER);
 
         void showMediaDetails(MediaItem item);
+
+        void deleteDataFromRealm(List<Integer> items, OrderedRealmCollectionSnapshot<MediaItem> snapshot);
     }
 }
