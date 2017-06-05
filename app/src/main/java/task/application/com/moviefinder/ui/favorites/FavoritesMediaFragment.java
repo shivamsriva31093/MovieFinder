@@ -156,9 +156,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
     private void deleteSelectedItems() {
         final List<Integer> items = adapter.getSelectedItems();
-        for (int pos : items) {
-            adapter.removeItem(pos);
-        }
+        realm.executeTransaction((r) -> {
+            OrderedRealmCollection<MediaItem> snapshot = adapter.getData().createSnapshot();
+            for (int pos : items) {
+                snapshot.deleteFromRealm(pos);
+            }
+        });
     }
 
     @Override
@@ -253,7 +256,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         public void removeItem(final int pos) {
             realm.executeTransaction(realm1 -> {
                 getData().deleteFromRealm(pos);
-                notifyDataSetChanged();
             });
         }
 
