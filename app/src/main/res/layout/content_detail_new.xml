@@ -47,7 +47,7 @@
             android:textAlignment="viewStart" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/synopsis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -63,7 +63,7 @@
             android:typeface="sans" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/cast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -87,7 +87,7 @@
             android:layout_row="3" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/crew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
