@@ -5,19 +5,21 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="120dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="0dp"
         app:contentPaddingBottom="8dp"
         app:contentPaddingTop="8dp">
 
         <android.support.v7.widget.AppCompatImageButton
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="30dp"
+            android:padding="6dp"
+            android:layout_height="30dp"
             android:id="@+id/menu_button"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="7dp"
             android:layout_gravity="top|left"
+            android:clickable="true"
             android:background="@android:color/transparent"
             android:src="@drawable/menu"
             android:scaleType="centerCrop"
@@ -25,11 +27,12 @@
 
         <ImageButton
             android:id="@+id/search_action"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:padding="4dp"
             android:layout_marginEnd="18dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="9dp"
             android:layout_gravity="top|right"
             android:background="@android:color/transparent"
             android:src="@drawable/search_icon"
@@ -39,13 +42,14 @@
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:layout_marginLeft="70dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="145dp"
             android:gravity="top|left"
             android:id="@+id/title_textView"
-            android:text="Movie Finder"
+            android:text="Moovi"
+            style="@style/TextBody"
             android:textColor="@color/colorAccent"
-            android:textSize="22sp" />
+            android:textSize="19sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -56,7 +60,9 @@
                 android:id="@+id/searchbox"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/colorAccentTranslucent"
+                android:layout_marginRight="10dp"
                 android:textColorHint="@android:color/white"
                 app:hintEnabled="false">
 
@@ -70,25 +76,25 @@
                     android:imeOptions="actionSend"
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
-                    android:textColor="@android:color/white"
                     android:textCursorDrawable="@null"
                     android:textSize="18sp"
                     android:theme="@style/TextLabel2"
                     android:typeface="sans" />
+                <Spinner
+                    android:id="@+id/optionsMenu"
+                    android:layout_width="25dp"
+                    android:layout_height="27dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    app:layout_constraintVertical_bias="0.0" />
             </android.support.design.widget.TextInputLayout>
 
 
 
-            <Spinner
-                android:id="@+id/optionsMenu"
-                android:layout_width="25dp"
-                android:layout_height="27dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:padding="2dp"
-                app:layout_constraintVertical_bias="0.0" />
+
 
         </RelativeLayout>
 

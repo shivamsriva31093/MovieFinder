@@ -44,6 +44,7 @@
             android:layout_row="1"
             android:clickable="false"
             android:padding="10dp"
+            style="@style/TextBody"
             android:textAlignment="viewStart" />
 
         <TextView
@@ -54,13 +55,12 @@
             android:layout_gravity="left"
             android:layout_margin="10dp"
             android:layout_row="0"
-            android:fontFamily="sans-serif"
             android:gravity="center_vertical|center_horizontal"
             android:text="Synopsis"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            style="@style/TextHeaderSub"
             android:textStyle="bold"
-            android:typeface="sans" />
+            android:textColor="@color/colorPrimary"
+            />
 
         <TextView
             android:id="@+id/cast"
@@ -70,13 +70,11 @@
             android:layout_gravity="left"
             android:layout_margin="10dp"
             android:layout_row="2"
-            android:fontFamily="sans-serif"
             android:gravity="center_vertical|center_horizontal"
             android:text="Cast"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:typeface="sans" />
+            style="@style/TextHeaderSub"
+            android:textStyle="bold" />
 
         <FrameLayout
             android:id="@+id/cast_image_slider"
@@ -94,13 +92,11 @@
             android:layout_gravity="left"
             android:layout_margin="10dp"
             android:layout_row="4"
-            android:fontFamily="sans-serif"
             android:gravity="center_vertical|center_horizontal"
             android:text="Crew"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:typeface="sans" />
+            style="@style/TextHeaderSub"
+            android:textStyle="bold" />
 
         <FrameLayout
             android:id="@+id/crew_image_slider"
@@ -116,15 +112,10 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif"
-        android:padding="0dp"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textSize="28sp"
-        android:typeface="normal"
+        style="@style/TextHeader"
         app:layout_constraintLeft_toLeftOf="@+id/pseudoFAB"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pseudoFAB" />
