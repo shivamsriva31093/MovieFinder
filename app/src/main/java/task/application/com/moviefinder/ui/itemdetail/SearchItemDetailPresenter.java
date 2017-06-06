@@ -18,7 +18,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
@@ -103,13 +102,11 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
 
     @Override
     public void checkMediaInDB(MediaBasic item) {
-        MediaItem res = realm.where(MediaItem.class)
+        final RealmResults<MediaItem> res = realm.where(MediaItem.class)
                 .equalTo("tmdbId", String.valueOf(item.getId()))
-                .findFirstAsync();
-        res.addChangeListener((RealmChangeListener<MediaItem>) mediaItem -> {
-            if (mediaItem.isValid())
-                view.setFavorite(true);
-        });
+                .findAll();
+        if (!res.isEmpty() && res.isValid())
+            view.setFavorite(true);
     }
 
     @Override
