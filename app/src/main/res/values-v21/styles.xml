@@ -9,4 +9,8 @@
         <item name="android:actionModeBackground">@color/colorPrimary</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.RippleEffectCustom">
+        <item name="android:colorControlHighlight">@android:color/darker_gray</item>
+    </style>
+
 </resources>

@@ -13,4 +13,5 @@
     <dimen name="text_size_body">13sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_large">24sp</dimen>
+    <dimen name="rec_view_itemoffset">2.2dp</dimen>
 </resources>
