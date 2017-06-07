@@ -1,31 +1,56 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_detail_coord_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:id="@+id/appbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--&gt;-->
+
+        <!---->
+        <!--&lt;!&ndash;<android.support.design.widget.CollapsingToolbarLayout&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:fitsSystemWindows="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:contentScrim="?attr/colorPrimary"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:layout_scrollFlags="scroll|exitUntilCollapsed"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:toolbarId="@+id/toolbar">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<android.support.v7.widget.Toolbar&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/toolbar"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="0dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:layout_collapseMode="pin"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:popupTheme="@style/AppTheme.PopupOverlay">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;</android.support.v7.widget.Toolbar>&ndash;&gt;-->
+        <!--&lt;!&ndash;</android.support.design.widget.CollapsingToolbarLayout>&ndash;&gt;-->
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTintMode="multiply"
+        app:behavior_overlapTop="48dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:id="@+id/detail_parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-            app:toolbarId="@+id/toolbar">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="300dp">
 
                 <ImageView
                     android:id="@+id/app_bar_image"
@@ -48,32 +73,7 @@
                     android:foregroundGravity="center"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/play" />
-
             </FrameLayout>
-
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTintMode="multiply"
-        app:behavior_overlapTop="48dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <RelativeLayout
-            android:id="@+id/detail_parent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/progressView"
@@ -82,11 +82,34 @@
                 android:layout_centerInParent="true"
                 android:layout_margin="40dp"
                 android:visibility="gone"
-                app:indicatorColor="@color/colorPrimary"
+                app:indicatorColor="@color/colorAccent"
                 app:indicatorName="BallScaleIndicator" />
 
         </RelativeLayout>
-
     </android.support.v4.widget.NestedScrollView>
 
-</android.support.design.widget.CoordinatorLayout>
+    <android.support.v7.widget.AppCompatImageButton
+        android:layout_width="30dp"
+        android:padding="6dp"
+        android:layout_height="30dp"
+        android:id="@+id/menu_button"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="top|left"
+        android:clickable="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/menu"
+        android:scaleType="centerCrop"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/favorite"
+        android:layout_gravity="bottom|right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_favorite_border_black_24dp"
+        />
+
+</FrameLayout>

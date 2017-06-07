@@ -1,6 +1,7 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageButton;
 import android.view.View;
 
 import com.androidtmdbwrapper.model.credits.MediaCreditCast;
@@ -19,6 +20,7 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
     private static final String SEARCH_ITEM_DETAIL = "detail_frag";
 
     private SearchItemDetailPresenter presenter;
+    private AppCompatImageButton menuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,13 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
         }
-
+        menuButton = (AppCompatImageButton) findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer();
+            }
+        });
 
         FragmentPrime fragment = (FragmentPrime)
                 getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
