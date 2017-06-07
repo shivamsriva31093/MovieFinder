@@ -7,8 +7,8 @@
     <group android:name="background">
         <path
             android:name="circle"
-            android:fillColor="@color/colorPrimary"
-            android:pathData=""
+            android:fillColor="@color/colorPrimary"></path>
+
     </group>
 
 </vector>
