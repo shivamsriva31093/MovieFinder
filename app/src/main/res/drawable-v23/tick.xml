@@ -1,27 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <layer-list>
+<?xml version="1.0" encoding="utf-8"?><!--<selector xmlns:android="http://schemas.android.com/apk/res/android">--><!--<item>--><!--<layer-list>-->
 
-            <item android:width="7dp" android:height="2.15dp" android:top="7dp" android:left="2dp">
-                <!--android:top="20dp"-->
-                <!--android:left="6dp">-->
-                <rotate android:fromDegrees="45">
-                    <shape android:shape="rectangle">
-                        <solid android:color="#fff" />
-                    </shape>
-                </rotate>
-            </item>
+<!--<item android:width="7dp" android:height="2.15dp" android:top="7dp" android:left="2dp">--><!--&lt;!&ndash;android:top="20dp"&ndash;&gt;--><!--&lt;!&ndash;android:left="6dp">&ndash;&gt;--><!--<rotate android:fromDegrees="45">--><!--<shape android:shape="rectangle">--><!--<solid android:color="#fff" />--><!--</shape>--><!--</rotate>--><!--</item>-->
 
-            <item android:width="14dp" android:height="2.15dp" android:top="5dp" android:left="5dp" android:bottom="5dp">
-                <!--android:top="16dp"-->
-                <!--android:left="9dp">-->
-                <rotate android:fromDegrees="-45">
-                    <shape android:shape="rectangle">
-                        <solid android:color="#fff" />
-                    </shape>
-                </rotate>
-            </item>
-        </layer-list>
-    </item>
-</selector>
+<!--<item android:width="14dp" android:height="2.15dp" android:top="5dp" android:left="5dp" android:bottom="5dp">--><!--&lt;!&ndash;android:top="16dp"&ndash;&gt;--><!--&lt;!&ndash;android:left="9dp">&ndash;&gt;--><!--<rotate android:fromDegrees="-45">--><!--<shape android:shape="rectangle">--><!--<solid android:color="#fff" />--><!--</shape>--><!--</rotate>--><!--</item>--><!--</layer-list>--><!--</item>--><!--</selector>-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
+    <group android:name="background">
+        <path
+            android:name="circle"
+            android:fillColor="@color/colorPrimary"
+            android:pathData="M12,12m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0 " />
+    </group>
+    <group android:name="check">
+        <path
+            android:name="tick"
+            android:pathData="M6,11 l3.5,4 l8,-7"
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="1" />
+    </group>
+
+</vector>
