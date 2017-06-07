@@ -74,7 +74,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         if(savedInstanceState != null) {
             if(!savedInstanceState.isEmpty()) {
                 resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
-//                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
+                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
             }
         } else if (getArguments() != null && !getArguments().isEmpty()) {
             resultList = getArguments().getParcelableArrayList(SEARCH_LIST);

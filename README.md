@@ -1,8 +1,5 @@
 #MOVIE FINDER ANDROID APP
 
-**APK DOWNLOAD LINK**
-
-https://drive.google.com/open?id=0B8qXQhwx3SYwdlRZTDRsSjBhQmc
 
  **FEATURES**
 
