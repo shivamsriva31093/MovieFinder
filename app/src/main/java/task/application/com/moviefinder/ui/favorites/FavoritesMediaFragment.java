@@ -1,11 +1,15 @@
 package task.application.com.moviefinder.ui.favorites;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,6 +56,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
     private boolean isMultiSelect;
     private ActionMode actionMode;
+    private BottomNavigationView bottomNavigationView;
 
     public FavoritesMediaFragment() {
         // Required empty public constructor
@@ -68,6 +74,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey("FILTER"))
             FILTER = getArguments().getString("FILTER");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
     }
 
     @Override
@@ -116,7 +128,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             actionMode = getActivity().startActionMode(actionCallback);
             adapter.notifyDataSetChanged();
             toggleSelection(position);
-            animateChanges(View.GONE);
+            animateChanges(1, View.GONE, true);
             return true;
         }
 
@@ -127,8 +139,24 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
     };
 
-    private void animateChanges(final int visibility) {
-
+    private void animateChanges(final int direction, final int visibility, boolean add) {
+        if (bottomNavigationView == null) return;
+        bottomNavigationView.animate()
+                .translationY(direction * bottomNavigationView.getHeight())
+                .setDuration(200)
+                .setInterpolator(new FastOutLinearInInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        if (add)
+                            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                        else
+                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                        bottomNavigationView.setVisibility(visibility);
+                        bottomNavigationView.animate().setListener(null);
+                    }
+                });
     }
 
     private void toggleSelection(int position) {
@@ -139,7 +167,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private void setSelectedItemCount() {
         if (adapter.getSelectedItemCount() == 0) {
             actionMode.finish();
-            animateChanges(View.VISIBLE);
+            animateChanges(0, View.VISIBLE, false);
             return;
         }
         String title = ApplicationClass.getInstance().getString(R.string.selected_count,
