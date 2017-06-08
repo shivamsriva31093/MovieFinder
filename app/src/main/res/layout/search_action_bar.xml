@@ -6,61 +6,63 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="0dp"
         app:contentPaddingBottom="8dp"
         app:contentPaddingTop="8dp">
 
         <android.support.v7.widget.AppCompatImageButton
-            android:layout_width="30dp"
+            android:layout_width="34dp"
             android:padding="6dp"
-            android:layout_height="30dp"
+            android:layout_height="34dp"
             android:id="@+id/menu_button"
             android:layout_marginLeft="18dp"
             android:layout_marginTop="7dp"
             android:layout_gravity="top|left"
             android:clickable="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/menu"
+            android:src="@drawable/view_grid"
             android:scaleType="centerCrop"
             />
 
         <ImageButton
             android:id="@+id/search_action"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:padding="4dp"
             android:layout_marginEnd="18dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="8dp"
             android:layout_gravity="top|right"
             android:background="@android:color/transparent"
-            android:src="@drawable/search_icon"
+            android:src="@drawable/magnify"
             android:scaleType="centerCrop"
              />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="145dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="130dp"
             android:gravity="top|left"
             android:id="@+id/title_textView"
-            android:text="Moovi"
+            android:text="Movie Finder"
             style="@style/TextBody"
-            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
             android:textSize="19sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/searchbox"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="19dp"
                 android:background="@color/colorAccentTranslucent"
                 android:layout_marginRight="10dp"
                 android:textColorHint="@android:color/white"
@@ -91,9 +93,6 @@
                     android:padding="2dp"
                     app:layout_constraintVertical_bias="0.0" />
             </android.support.design.widget.TextInputLayout>
-
-
-
 
 
         </RelativeLayout>

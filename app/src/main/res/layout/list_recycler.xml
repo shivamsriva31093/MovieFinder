@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="0dp"
                     android:layout_marginLeft="75dp"
                     android:layout_marginTop="5dp"
                     android:text="Click to view details"
@@ -89,6 +89,55 @@
                 <!--android:layout_height="0.5dp"-->
                 <!--android:layout_alignParentBottom="true"-->
                 <!--android:background="@android:color/darker_gray" />-->
+                <TextView
+                    android:id="@+id/imdb_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/details"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/tomato_bar"
+                    android:text="7.8 *"
+                    android:textColor="@color/body_text_2"
+                    android:textSize="12sp"
+                    style="@style/TextHeader" />
+
+                <View
+                    android:id="@+id/imdb_bar"
+                    android:layout_width="110dp"
+                    android:layout_height="7dp"
+                    android:layout_below="@+id/details"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="77dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@color/colorGreen" />
+
+                <View
+                    android:id="@+id/tomato_bar"
+                    android:layout_width="80dp"
+                    android:layout_height="7dp"
+                    android:layout_below="@+id/details"
+                    android:layout_toRightOf="@+id/imdb_bar"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/textbar" />
+
+                <View
+                    android:id="@+id/endbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@+id/tomato_bar"
+                    android:layout_marginTop="14dp"
+                    android:background="@color/textColor" />
+                <!--<View-->
+                    <!--android:id="@+id/tomato_background"-->
+                    <!--android:layout_width="70dp"-->
+                    <!--android:layout_height="7dp"-->
+                    <!--android:layout_marginLeft="80dp"-->
+                    <!--android:layout_below="@+id/imdb_bar"-->
+                    <!--android:layout_marginTop="20dp"-->
+                    <!--android:layout_marginBottom="40dp"-->
+                    <!--android:background="@android:color/tertiary_text_dark" />-->
 
 
             </RelativeLayout>

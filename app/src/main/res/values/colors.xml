@@ -3,9 +3,11 @@
     <color name="colorPrimary">#FF5252</color>
     <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#eef1f2</color>
-    <color name="colorAccentTranslucent">#52fdfdfd</color>
+    <color name="colorAccentTranslucent">#2d878181</color>
     <color name="colorAccentSelected1">#ffcdd0</color>
     <color name="colorAccentSelected">#f9f9f9</color>
+    <color name="colorYellow">#d4e157</color>
+    <color name="colorGreen">#e57373</color>
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="textColor">#e6edf1</color>
     <color name="textBlack">#2e3133</color>
@@ -21,4 +23,5 @@
     <color name="body_text_2_inverse">#8affffff</color>
 
     <color name="status_bar_light_grey">#7b7878</color>
+    <color name="textbar">#dcdfe1</color>
 </resources>
