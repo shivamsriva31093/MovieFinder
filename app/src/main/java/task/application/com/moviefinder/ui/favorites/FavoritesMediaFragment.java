@@ -167,7 +167,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private void setSelectedItemCount() {
         if (adapter.getSelectedItemCount() == 0) {
             actionMode.finish();
-            animateChanges(0, View.VISIBLE, false);
             return;
         }
         String title = ApplicationClass.getInstance().getString(R.string.selected_count,
@@ -208,6 +207,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             actionMode = null;
             isMultiSelect = false;
             adapter.clearSelections();
+            animateChanges(0, View.VISIBLE, false);
         }
     };
 
@@ -215,6 +215,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         final List<Integer> items = adapter.getSelectedItems();
         presenter.deleteDataFromRealm(items, adapter.getData().createSnapshot());
     }
+
 
     @Override
     public void onAttach(Context context) {
