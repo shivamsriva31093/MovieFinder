@@ -116,14 +116,30 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             actionMode = getActivity().startActionMode(actionCallback);
             adapter.notifyDataSetChanged();
             toggleSelection(position);
+            animateChanges(View.GONE);
             return true;
         }
+
+        @Override
+        public void onCheckboxClick(int position, MediaItem item) {
+            setSelectedItemCount();
+        }
+
     };
+
+    private void animateChanges(final int visibility) {
+
+    }
 
     private void toggleSelection(int position) {
         adapter.toggleSelection(position);
+        setSelectedItemCount();
+    }
+
+    private void setSelectedItemCount() {
         if (adapter.getSelectedItemCount() == 0) {
             actionMode.finish();
+            animateChanges(View.VISIBLE);
             return;
         }
         String title = ApplicationClass.getInstance().getString(R.string.selected_count,
@@ -261,6 +277,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                     .placeholder(R.drawable.movie)
                     .into(holder.backdrop);
             holder.title.setText(getData().get(position).getTitle());
+
         }
 
         public void toggleSelection(int position) {
@@ -308,10 +325,13 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                     title = (TextView) itemView.findViewById(R.id.title);
                     checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
                     cardView.setOnClickListener(view ->
-
                             listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
                     cardView.setOnLongClickListener(view ->
                             listener.onItemLongClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
+                    checkBox.setOnClickListener(view -> {
+                        toggleSelection(getAdapterPosition());
+                        listener.onCheckboxClick(getAdapterPosition(), getItem(getAdapterPosition()));
+                    });
                 }
             }
         }
@@ -325,6 +345,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     interface ItemTouchListener {
         void onItemClick(View view, int position, MediaItem item);
         boolean onItemLongClick(View view, int position, MediaItem item);
+
+        void onCheckboxClick(int position, MediaItem item);
     }
 
 }
