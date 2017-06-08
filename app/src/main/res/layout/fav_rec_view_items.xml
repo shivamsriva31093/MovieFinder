@@ -67,7 +67,7 @@
                 android:elevation="1dp"
                 android:padding="2dp"
                 android:translationZ="2dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </FrameLayout>
     </android.support.v7.widget.CardView>

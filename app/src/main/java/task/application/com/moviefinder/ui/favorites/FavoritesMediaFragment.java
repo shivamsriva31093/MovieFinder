@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.OrderedRealmCollection;
-import io.realm.Realm;
 import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
@@ -47,7 +46,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private static String FILTER = "";
     private OnFragmentInteractionListener mListener;
     private RecyclerView recView;
-    private Realm realm;
     private RecViewAdapter adapter;
     private FavoritesMediaContract.Presenter presenter;
 
@@ -70,7 +68,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey("FILTER"))
             FILTER = getArguments().getString("FILTER");
-        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -106,7 +103,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 presenter.showMediaDetails(item);
             else {
                 toggleSelection(position);
-
             }
         }
 
@@ -117,17 +113,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 return true;
             }
             isMultiSelect = true;
-
             actionMode = getActivity().startActionMode(actionCallback);
-            animateLayoutShiftDown();
+            adapter.notifyDataSetChanged();
             toggleSelection(position);
             return true;
         }
     };
-
-    private void animateLayoutShiftDown() {
-
-    }
 
     private void toggleSelection(int position) {
         adapter.toggleSelection(position);
@@ -201,8 +192,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (actionMode != null) {
+            actionMode.finish();
+        }
         if (presenter != null)
             presenter.destroy();
+
     }
 
     @Override
@@ -259,20 +254,21 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         public void onBindViewHolder(ViewHolder holder, int position) {
             OrderedRealmCollection<MediaItem> data = getData();
             if (data == null) return;
-            holder.backdrop.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            holder.checkBox.setVisibility(isMultiSelect ? View.VISIBLE : View.GONE);
+            toggleCheckBoxState(isMultiSelect && selectedItems.get(position, false), position, holder);
             Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position).getBackDrop())
                     .error(R.drawable.movie)
                     .placeholder(R.drawable.movie)
-                        .into(holder.backdrop);
+                    .into(holder.backdrop);
             holder.title.setText(getData().get(position).getTitle());
-
         }
 
         public void toggleSelection(int position) {
-            if (selectedItems.get(position, false))
+            if (selectedItems.get(position, false)) {
                 selectedItems.delete(position);
-            else
+            } else {
                 selectedItems.put(position, true);
+            }
             notifyItemChanged(position);
         }
 
@@ -281,6 +277,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         }
 
         public void clearSelections() {
+            List<Integer> list = getSelectedItems();
             selectedItems.clear();
             notifyDataSetChanged();
         }
@@ -292,8 +289,9 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             return itemIndices;
         }
 
-        public void ToggleCheckBoxState() {
-
+        public void toggleCheckBoxState(boolean state, int position, ViewHolder holder) {
+            holder.checkBox.setChecked(state);
+            holder.backdrop.setScaleType(state ? ImageView.ScaleType.CENTER_INSIDE : ImageView.ScaleType.CENTER_CROP);
         }
 
 
@@ -308,6 +306,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                     CardView cardView = (CardView) ((LinearLayout) itemView).findViewById(R.id.card_view);
                     backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                     title = (TextView) itemView.findViewById(R.id.title);
+                    checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
                     cardView.setOnClickListener(view ->
 
                             listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
