@@ -41,6 +41,7 @@
                     android:layout_marginTop="10dp"
                     android:text="ARRIVAL"
                     android:textSize="18sp"
+                    style="@style/TextHeader"
                     android:typeface="normal" />
 
                 <TextView
@@ -89,32 +90,40 @@
                 <!--android:layout_height="0.5dp"-->
                 <!--android:layout_alignParentBottom="true"-->
                 <!--android:background="@android:color/darker_gray" />-->
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="23dp"
+                    android:layout_height="18dp"
+                    android:scaleType="fitXY"
+                    android:layout_below="@+id/details"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="74dp"
+                    android:src="@drawable/imdb_bar_icon"/>
                 <TextView
                     android:id="@+id/imdb_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/details"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="7dp"
                     android:layout_toRightOf="@+id/tomato_bar"
                     android:text="7.8 *"
-                    android:textColor="@color/body_text_2"
+                    android:textColor="@color/body_text_1"
                     android:textSize="12sp"
                     style="@style/TextHeader" />
 
                 <View
                     android:id="@+id/imdb_bar"
-                    android:layout_width="110dp"
+                    android:layout_width="90dp"
                     android:layout_height="7dp"
                     android:layout_below="@+id/details"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="77dp"
+                    android:layout_marginLeft="110dp"
                     android:layout_marginTop="14dp"
                     android:background="@color/colorGreen" />
 
                 <View
                     android:id="@+id/tomato_bar"
-                    android:layout_width="80dp"
+                    android:layout_width="60dp"
                     android:layout_height="7dp"
                     android:layout_below="@+id/details"
                     android:layout_toRightOf="@+id/imdb_bar"

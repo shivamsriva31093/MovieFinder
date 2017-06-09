@@ -9,5 +9,4 @@
     android:paddingTop="7dp"
     android:paddingLeft="15dp"
     android:textSize="16dp">
-
 </TextView>
