@@ -45,4 +45,6 @@
     <string name="title_tv">Tv</string>
     <string name="title_movies">Movies</string>
     <string name="selected_count">%d selected</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="search_for_movies_or_tv">Search for movies or tv</string>
 </resources>

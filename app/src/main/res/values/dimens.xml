@@ -14,4 +14,20 @@
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="rec_view_itemoffset">2.2dp</dimen>
+
+    <!-- Configuring search bar -->
+    <dimen name="search_bar_height">48dp</dimen>
+    <dimen name="search_bar_left_icon_lm">4dp</dimen>
+    <dimen name="search_bar_right_icon_rm">4dp</dimen>
+    <dimen name="search_bar_search_input_lm">20dp</dimen>
+    <dimen name="search_bar_search_input_rm">68dp</dimen>
+    <dimen name="search_bar_filter_section_lm">64dp</dimen>
+    <dimen name="text_content_margin">16dp</dimen>
+    <dimen name="search_view_corner_radius">3dp</dimen>
+    <dimen name="search_bar_text_size">16sp</dimen>
+
+    <!-- Sizes for persistent search bar action buttons -->
+    <dimen name="button_icon_size">24dp</dimen>
+    <dimen name="button_size">24dp</dimen>
+    <dimen name="button_padding">12dp</dimen>
 </resources>

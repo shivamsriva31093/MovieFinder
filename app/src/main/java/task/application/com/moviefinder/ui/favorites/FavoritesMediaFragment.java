@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +58,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private boolean isMultiSelect;
     private ActionMode actionMode;
     private BottomNavigationView bottomNavigationView;
+    private FrameLayout searchBarContainer;
 
     public FavoritesMediaFragment() {
         // Required empty public constructor
@@ -80,6 +82,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        searchBarContainer = (FrameLayout) getActivity().findViewById(R.id.search_bar);
     }
 
     @Override
@@ -125,10 +128,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 return true;
             }
             isMultiSelect = true;
-            actionMode = getActivity().startActionMode(actionCallback);
-            adapter.notifyDataSetChanged();
-            toggleSelection(position);
-            animateChanges(1, View.GONE, true);
+            animateSearchBar(-1, View.GONE, position);
             return true;
         }
 
@@ -139,12 +139,32 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
     };
 
-    private void animateChanges(final int direction, final int visibility, boolean add) {
+    private void animateSearchBar(final int direction, final int visibility, final int position) {
+        if (searchBarContainer == null) return;
+        searchBarContainer.animate()
+                .setDuration(200)
+                .translationY(direction * searchBarContainer.getHeight())
+                .setInterpolator(new AccelerateInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        searchBarContainer.setVisibility(visibility);
+                        searchBarContainer.animate().setListener(null);
+                        actionMode = getActivity().startActionMode(actionCallback);
+                        adapter.notifyDataSetChanged();
+                        toggleSelection(position);
+                        animateBotNavChanges(1, View.GONE, true);
+                    }
+                });
+    }
+
+    private void animateBotNavChanges(final int direction, final int visibility, boolean add) {
         if (bottomNavigationView == null) return;
         bottomNavigationView.animate()
                 .translationY(direction * bottomNavigationView.getHeight())
                 .setDuration(200)
-                .setInterpolator(new FastOutLinearInInterpolator())
+                .setInterpolator(new AccelerateInterpolator())
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -205,9 +225,11 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
+            searchBarContainer.setTranslationY(0);
+            searchBarContainer.setVisibility(View.VISIBLE);
             isMultiSelect = false;
             adapter.clearSelections();
-            animateChanges(0, View.VISIBLE, false);
+            animateBotNavChanges(0, View.VISIBLE, false);
         }
     };
 

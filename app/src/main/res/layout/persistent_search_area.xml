@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_query_area"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    card_view:cardCornerRadius="@dimen/search_view_corner_radius"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <FrameLayout
+            android:id="@+id/search_bar_left_action_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/search_bar_left_icon_lm"
+            android:layout_marginStart="@dimen/search_bar_left_icon_lm">
+
+            <ImageView
+                android:id="@+id/search_bar_left_action"
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:alpha="1"
+                android:background="@drawable/oval_button"
+                android:padding="@dimen/button_padding"
+                android:scaleType="center"
+                card_view:srcCompat="@drawable/ic_menu_black_18dp" />
+
+            <ProgressBar
+                android:id="@+id/search_bar_progess"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:clickable="false"
+                android:padding="@dimen/button_padding"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/search_bar_left_action_container"
+            android:layout_toRightOf="@id/search_bar_left_action_container">
+
+
+            <EditText
+
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:alpha="1"
+                android:background="@color/transparent"
+                android:ellipsize="end"
+                android:ems="10"
+                android:hint="@string/search_for_movies_or_tv"
+                android:imeOptions="actionSearch"
+                android:inputType="textNoSuggestions"
+                android:longClickable="false"
+                android:maxLines="1"
+                android:minHeight="@dimen/button_size"
+                android:textSize="@dimen/search_bar_text_size" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/clear_btn"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:alpha="1"
+            android:background="@drawable/oval_button"
+            android:clickable="true"
+            android:padding="@dimen/button_padding"
+            android:scaleType="center"
+            android:src="@drawable/ic_close_black_18dp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_size"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/search_bar_right_icon_rm"
+            android:layout_marginRight="@dimen/search_bar_right_icon_rm" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
