@@ -3,22 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/colorAccent">
+    >
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="0dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="3dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="3dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:background="#e2c19393"
         android:foreground="?android:attr/selectableItemBackground"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp"
         card_view:cardCornerRadius="4dp"
         card_view:layout_collapseMode="none"
         card_view:layout_collapseParallaxMultiplier="0.0">
@@ -36,7 +33,7 @@
                 android:layout_marginRight="0dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:tint="#aa000000"
+                android:tint="#89000000"
                 android:tintMode="src_atop"
                 card_view:srcCompat="@drawable/arrival" />
 
