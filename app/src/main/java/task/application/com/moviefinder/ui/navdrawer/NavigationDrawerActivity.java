@@ -53,10 +53,10 @@ public class NavigationDrawerActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.isDrawerIndicatorEnabled();
+       // toggle.isDrawerIndicatorEnabled();
 
         toggle.syncState();
-        toggle.setDrawerIndicatorEnabled(true);
+        //toggle.setDrawerIndicatorEnabled(true);
         drawer.addDrawerListener(toggle);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

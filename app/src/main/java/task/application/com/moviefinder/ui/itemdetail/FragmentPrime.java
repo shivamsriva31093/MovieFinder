@@ -49,17 +49,15 @@ import task.application.com.moviefinder.util.Util;
  */
 
 public class FragmentPrime extends Fragment implements SearchItemDetailContract.View, View.OnClickListener {
+
     private static final String TAG = FragmentPrime.class.getName();
     private static final String CLICKED_ITEM = "clickedItem";
-
     private static final String YOUTUBE_API_KEY = "AIzaSyC9iXjkY03gWbADszp0x9zX2yRvRMYjaxo";
     private SearchItemDetailContract.Presenter presenter;
     private FragmentInteractionListener listener;
-
     private MediaBasic clickedItem;
     private MediaType itemType;
     private MediaBasic retrievedItem;
-
     private RelativeLayout fragmentContainer;
     private ImageView backDropImage;
     private AVLoadingIndicatorView progressView;
@@ -171,11 +169,13 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void showRatingsViewLoadingIndicator(boolean show) {
+
         if (show) {
             ratingsLoader.setVisibility(View.VISIBLE);
         } else {
             ratingsLoader.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -202,9 +202,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     private void setUpTvDetails(TvInfo data) {
         retrievedItem = data;
-        Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
+        Picasso picasso = Picasso.with(getActivity());
+        picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
         showGenresList(data.getGenres());
+
         title.setText(data.getOriginalName());
         lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
         //setRatings(data);
@@ -220,7 +222,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     private void setUpMovieDetails(MovieInfo data) {
         retrievedItem = data;
-        Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + retrievedItem.getBackdropPath()).fit()
+        Picasso picasso = Picasso.with(getActivity());
+        picasso.load("https://image.tmdb.org/t/p/original" + retrievedItem.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
         showGenresList(data.getGenresList());
         title.setText(data.getOriginalTitle());
@@ -256,10 +259,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             } else {
                 rtRating.setText("-");
             }
-
-
         }
-
     }
 
     private String getVideoUrl(MediaBasic item) {

@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorAccent"
     tools:openDrawer="start">
 
     <FrameLayout
@@ -22,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@color/colorAccent"
         app:headerLayout="@layout/nav_header_navigation_drawer"
         app:menu="@menu/activity_navigation_drawer_drawer" />
 

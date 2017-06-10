@@ -29,11 +29,10 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Movie Finder"
-        android:textStyle="bold"
-        android:textSize="20sp"
         android:layout_marginLeft="55dp"
-        android:textColor="@android:color/tertiary_text_dark"
-        style="@style/TextHeader"/>
+        style="@style/TextBody"
+        android:textStyle="bold"
+        android:textSize="19sp"/>
 
 
 </LinearLayout>

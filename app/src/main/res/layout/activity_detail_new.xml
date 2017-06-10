@@ -64,15 +64,15 @@
 
                 <ImageButton
                     android:id="@+id/imageButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:adjustViewBounds="true"
                     android:background="@null"
                     android:baselineAlignBottom="false"
                     android:foregroundGravity="center"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/play" />
+                    app:srcCompat="@drawable/play1" />
             </FrameLayout>
 
             <com.wang.avi.AVLoadingIndicatorView

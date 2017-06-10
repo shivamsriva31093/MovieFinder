@@ -12,16 +12,16 @@
         app:contentPaddingTop="8dp">
 
         <android.support.v7.widget.AppCompatImageButton
-            android:layout_width="34dp"
+            android:layout_width="36dp"
             android:padding="6dp"
-            android:layout_height="34dp"
+            android:layout_height="36dp"
             android:id="@+id/menu_button"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="5dp"
             android:layout_gravity="top|left"
             android:clickable="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/view_grid"
+            android:src="@drawable/menu_list"
             android:scaleType="centerCrop"
             />
 
@@ -43,13 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:layout_marginLeft="130dp"
+            android:layout_marginLeft="120dp"
             android:gravity="top|left"
             android:id="@+id/title_textView"
             android:text="Movie Finder"
             style="@style/TextBody"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
             android:textSize="19sp" />
 
         <RelativeLayout
@@ -64,7 +63,7 @@
                 android:layout_height="42dp"
                 android:layout_marginLeft="19dp"
                 android:background="@color/colorAccentTranslucent"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="19dp"
                 android:textColorHint="@android:color/white"
                 app:hintEnabled="false">
 
@@ -82,6 +81,7 @@
                     android:textSize="18sp"
                     android:theme="@style/TextLabel2"
                     android:typeface="sans" />
+
                 <Spinner
                     android:id="@+id/optionsMenu"
                     android:layout_width="25dp"

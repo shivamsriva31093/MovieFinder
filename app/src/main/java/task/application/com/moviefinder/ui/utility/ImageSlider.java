@@ -100,7 +100,6 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Picasso picasso = Picasso.with(getActivity());
-            picasso.setIndicatorsEnabled(true);
             picasso.load("https://image.tmdb.org/t/p/w500"
                     + credits.get(position).getProfilePath())
                     .placeholder(R.drawable.creditplaceholder)
