@@ -19,6 +19,11 @@
         <item name="android:statusBarColor">@color/status_bar_light_grey</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.RippleEffectCustom">
+        <item name="android:colorControlHighlight">@android:color/darker_gray</item>
+    </style>
+
+
     <style name="ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="android:height">?attr/actionBarSize</item>
         <item name="android:background">@color/colorPrimary</item>

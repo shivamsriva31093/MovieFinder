@@ -3,7 +3,6 @@
     android:id="@+id/searchbar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/transparent"
     android:clipToPadding="false"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -14,6 +13,4 @@
         android:layout_height="wrap_content">
         <include layout="@layout/persistent_search_area" />
     </FrameLayout>
-
-
 </LinearLayout>
