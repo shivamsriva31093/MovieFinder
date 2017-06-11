@@ -53,7 +53,8 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-        this.presenter = new SearchItemDetailPresenter(fragment);
+        if (presenter == null)
+            this.presenter = new SearchItemDetailPresenter(fragment);
     }
 
     @Override
