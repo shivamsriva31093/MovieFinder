@@ -48,12 +48,11 @@
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/title"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="2dp"
                     android:text="2016"
-                    android:textColor="@color/body_text_3"
+                    android:textColor="@color/body_text_2"
                     android:textSize="14sp"
                     android:typeface="normal" />
 
@@ -75,14 +74,13 @@
                     android:id="@+id/details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/title"
+                    android:layout_below="@+id/year"
                     android:layout_marginBottom="0dp"
                     android:layout_marginLeft="75dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="4dp"
                     android:text="Click to view details"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="13sp"
-
                     android:typeface="normal" />
 
                 <!--<View-->
@@ -92,20 +90,20 @@
                 <!--android:background="@android:color/darker_gray" />-->
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="23dp"
-                    android:layout_height="18dp"
+                    android:layout_height="21dp"
                     android:scaleType="fitXY"
                     android:id="@+id/imdb_icon_view"
-                    android:layout_below="@+id/details"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="74dp"
+                    android:layout_below="@+id/title"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="280dp"
                     android:src="@drawable/imdb_bar_icon"/>
                 <TextView
                     android:id="@+id/imdb_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/details"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_below="@+id/title"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="1dp"
                     android:layout_toRightOf="@+id/imdb_icon_view"
                     android:text="7.8"
                     android:textSize="13sp"
@@ -116,20 +114,20 @@
                     android:layout_height="10dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/star_imdb"
-                    android:layout_below="@+id/details"
+                    android:layout_below="@+id/title"
                     android:layout_toRightOf="@+id/imdb_title"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="11dp"/>
+                    android:layout_marginTop="5dp"/>
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_favorite_border_black_24dp"
-                    android:layout_below="@+id/title"
-                    android:layout_toRightOf="@+id/details"
-                    android:layout_marginLeft="110dp"
-                    android:layout_marginTop="18dp"/>
+                <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:layout_width="24dp"-->
+                    <!--android:layout_height="24dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@drawable/ic_favorite_border_black_24dp"-->
+                    <!--android:layout_below="@+id/title"-->
+                    <!--android:layout_toRightOf="@+id/details"-->
+                    <!--android:layout_marginLeft="110dp"-->
+                    <!--android:layout_marginTop="18dp"/>-->
 
                 <View
                     android:id="@+id/imdb_bar"
@@ -138,7 +136,7 @@
                     android:layout_below="@+id/details"
                     android:layout_gravity="left"
                     android:layout_marginLeft="0dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="0dp"
                     android:background="@color/colorGreen" />
 
                 <View
@@ -147,8 +145,8 @@
                     android:layout_height="6dp"
                     android:layout_below="@+id/details"
                     android:layout_toRightOf="@+id/imdb_bar"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
                     android:background="@color/textbar" />
 
                 <View
@@ -156,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_below="@+id/tomato_bar"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="3dp"
                     android:background="@color/textColor" />
                 <!--<View-->
                     <!--android:id="@+id/tomato_background"-->

@@ -36,7 +36,7 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDrawer();
+                onBackPressed();
             }
         });
 

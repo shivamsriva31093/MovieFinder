@@ -20,7 +20,7 @@
             android:layout_gravity="top|left"
             android:clickable="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/menu_list"
+            android:src="@drawable/view_grid"
             android:scaleType="centerCrop"
             />
 

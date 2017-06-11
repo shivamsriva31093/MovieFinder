@@ -36,7 +36,7 @@
                 android:scaleType="centerCrop"
                 android:tint="#89000000"
                 android:tintMode="src_atop"
-                card_view:srcCompat="@drawable/arrival" />
+                card_view:srcCompat="@drawable/trailer1" />
 
             <TextView
                 android:id="@+id/title"

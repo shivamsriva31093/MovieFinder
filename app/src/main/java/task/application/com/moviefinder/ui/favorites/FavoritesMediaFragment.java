@@ -324,8 +324,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             holder.checkBox.setVisibility(isMultiSelect ? View.VISIBLE : View.GONE);
             toggleCheckBoxState(isMultiSelect && selectedItems.get(position, false), position, holder);
             Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position).getBackDrop())
-                    .error(R.drawable.movie)
-                    .placeholder(R.drawable.movie)
+                    .error(R.drawable.trailer1)
+                    .placeholder(R.drawable.trailer1)
                     .into(holder.backdrop);
             holder.title.setText(getData().get(position).getTitle());
 

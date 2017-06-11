@@ -229,11 +229,11 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     holder.title.setText(movie.getTitle());
                     String url = movie.getBackdropPath();
                     if (url == null) {
-                        holder.imageView.setImageResource(R.drawable.movie);
+                        holder.imageView.setImageResource(R.drawable.trailer1);
                     } else {
                         Picasso.with(context)
                                 .load("https://image.tmdb.org/t/p/w500" + url)
-                                .placeholder(R.drawable.movie).into(holder.imageView);
+                                .placeholder(R.drawable.trailer1).into(holder.imageView);
                     }
                 } else {
                     BasicTVInfo tv = (BasicTVInfo) data.get(position - 1);
@@ -243,12 +243,12 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     String url = tv.getPosterPath();
                     Log.d("tmdb", (url == null) + "");
                     if (url == null) {
-                        holder.imageView.setImageResource(R.drawable.movie);
+                        holder.imageView.setImageResource(R.drawable.trailer1);
                     } else {
                         Picasso.with(context)
                                 .load("https://image.tmdb.org/t/p/w500" + url)
                                 .fit()
-                                .placeholder(R.drawable.movie)
+                                .placeholder(R.drawable.trailer1)
                                 .into(holder.imageView);
                     }
                 }
