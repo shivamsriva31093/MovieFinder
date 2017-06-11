@@ -7,6 +7,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
+import task.application.com.moviefinder.util.Util;
 
 /**
  * Created by sHIVAM on 6/4/2017.
@@ -18,7 +19,7 @@ public class FavoritesPresenter implements FavoritesMediaContract.Presenter {
     private Realm realm;
 
     FavoritesPresenter(FavoritesMediaContract.View view) {
-        this.view = view;
+        this.view = Util.checkNotNull(view, "FavoriteMediaFragment view is null!");
         view.setPresenter(this);
         realm = Realm.getDefaultInstance();
     }

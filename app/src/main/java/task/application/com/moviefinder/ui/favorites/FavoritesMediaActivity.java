@@ -13,7 +13,7 @@ import task.application.com.moviefinder.util.Util;
 public class FavoritesMediaActivity extends AppCompatActivity implements FavoritesMediaFragment.OnFragmentInteractionListener {
 
     private FavoritesMediaContract.Presenter presenter;
-
+    FavoritesMediaFragment fragment = null;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
         Bundle bundle = new Bundle();
@@ -49,7 +49,11 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
     @Override
     protected void onResume() {
         super.onResume();
+        if (fragment != null) {
+            presenter = new FavoritesPresenter(fragment);
+        }
     }
+
 
     @Override
     protected void onDestroy() {

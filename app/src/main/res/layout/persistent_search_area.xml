@@ -87,14 +87,44 @@
             android:scaleType="center"
             android:src="@drawable/ic_close_black_18dp" />
 
-        <View
+        <LinearLayout
+            android:id="@+id/menu_items"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_size"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/search_bar_right_icon_rm"
-            android:layout_marginRight="@dimen/search_bar_right_icon_rm" />
+            android:layout_marginRight="@dimen/search_bar_right_icon_rm"
+            android:layout_toEndOf="@+id/clear_btn">
+
+            <ImageView
+                android:id="@+id/movie_search"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:background="@drawable/oval_button"
+                android:clickable="true"
+                android:padding="@dimen/button_padding"
+                android:scaleType="center"
+                android:src="@drawable/movies" />
+
+            <ImageView
+                android:id="@+id/tv_search"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:background="@drawable/oval_button"
+                android:clickable="true"
+                android:padding="@dimen/button_padding"
+                android:scaleType="center"
+                android:src="@drawable/television" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

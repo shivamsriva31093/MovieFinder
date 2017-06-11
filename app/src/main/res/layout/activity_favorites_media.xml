@@ -5,31 +5,44 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="task.application.com.moviefinder.ui.favorites.FavoritesMediaActivity">
 
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="65dp"
-        android:layout_height="match_parent">
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/search_bar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:elevation="1dp"
-        android:padding="2dp"
-        android:translationZ="1dp">
+        android:layout_height="wrap_content">
 
-        <include layout="@layout/persistent_searchbar" />
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/search_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="24dp"
+            android:elevation="8dp"
+            android:padding="2dp"
+            android:translationZ="1dp">
+
+
+            <include layout="@layout/persistent_searchbar" />
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+
+
+        </FrameLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
