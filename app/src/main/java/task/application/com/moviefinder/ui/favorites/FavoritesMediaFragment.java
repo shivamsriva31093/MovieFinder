@@ -103,6 +103,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             }
         };
         recView.setLayoutManager(layoutManager);
+        recView.setNestedScrollingEnabled(false);
         adapter = new RecViewAdapter(null, itemTouchListener);
         recView.addItemDecoration(new ItemOffsetDecoration(getActivity(), R.dimen.rec_view_itemoffset));
         recView.setAdapter(adapter);
