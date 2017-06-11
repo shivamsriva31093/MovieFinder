@@ -32,6 +32,7 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
         }
+
         menuButton = (AppCompatImageButton) findViewById(R.id.menu_button);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
