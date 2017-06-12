@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +51,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
 
     private static String FILTER = "";
+    private static final int PARENT_BOTTOM_MARGIN = 56;
     private OnFragmentInteractionListener mListener;
     private RecyclerView recView;
     private RecViewAdapter adapter;
@@ -59,6 +61,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private ActionMode actionMode;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout searchBarContainer;
+    private NestedScrollView parentLayout;
 
     public FavoritesMediaFragment() {
         // Required empty public constructor
@@ -83,6 +86,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         super.onActivityCreated(savedInstanceState);
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         searchBarContainer = (FrameLayout) getActivity().findViewById(R.id.search_bar);
+        parentLayout = (NestedScrollView) getActivity().findViewById(R.id.scrollingView);
     }
 
     @Override
@@ -104,6 +108,17 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         };
         recView.setLayoutManager(layoutManager);
         recView.setNestedScrollingEnabled(false);
+        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
         adapter = new RecViewAdapter(null, itemTouchListener);
         recView.addItemDecoration(new ItemOffsetDecoration(getActivity(), R.dimen.rec_view_itemoffset));
         recView.setAdapter(adapter);
@@ -155,12 +170,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                         actionMode = getActivity().startActionMode(actionCallback);
                         adapter.notifyDataSetChanged();
                         toggleSelection(position);
-                        animateBotNavChanges(1, View.GONE, true);
+                        animateBotNavChanges(1, View.GONE, true, 0);
                     }
                 });
     }
 
-    private void animateBotNavChanges(final int direction, final int visibility, boolean add) {
+    private void animateBotNavChanges(final int direction, final int visibility, boolean add, final int margin) {
         if (bottomNavigationView == null) return;
         bottomNavigationView.animate()
                 .translationY(direction * bottomNavigationView.getHeight())
@@ -174,10 +189,17 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
                         else
                             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                        setParentLayoutBottomMargin(margin);
                         bottomNavigationView.setVisibility(visibility);
                         bottomNavigationView.animate().setListener(null);
                     }
                 });
+    }
+
+    private void setParentLayoutBottomMargin(int margin) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) parentLayout.getLayoutParams();
+        params.bottomMargin = margin;
+        parentLayout.setLayoutParams(params);
     }
 
     private void toggleSelection(int position) {
@@ -230,7 +252,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             searchBarContainer.setVisibility(View.VISIBLE);
             isMultiSelect = false;
             adapter.clearSelections();
-            animateBotNavChanges(0, View.VISIBLE, false);
+            animateBotNavChanges(0, View.VISIBLE, false, PARENT_BOTTOM_MARGIN);
         }
     };
 
@@ -274,6 +296,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         if (presenter != null)
             presenter.start();
     }
+
 
     @Override
     public void setPresenter(FavoritesMediaContract.Presenter presenter) {

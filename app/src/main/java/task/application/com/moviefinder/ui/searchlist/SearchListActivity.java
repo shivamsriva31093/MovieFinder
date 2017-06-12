@@ -130,34 +130,23 @@ public class SearchListActivity extends NavigationDrawerActivity implements Sear
             }
         });
 
-        searchTerm.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    InputMethodManager inputMethodManager = (InputMethodManager)
-                            getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    attemptToSearch();
-                }
-                return false;
-            }
-        });
-
-        searchAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchTerm.setFocusableInTouchMode(true);
+        searchTerm.setOnKeyListener((v, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                InputMethodManager inputMethodManager1 = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager1.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 attemptToSearch();
             }
+            return false;
         });
 
-        menuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDrawer();
-            }
+        searchAction.setOnClickListener(v -> {
+            searchTerm.setFocusableInTouchMode(true);
+            attemptToSearch();
         });
+
+        menuButton.setOnClickListener(v -> openDrawer());
 
 
     }

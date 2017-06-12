@@ -5,6 +5,10 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
 
+    dataBinding {
+        enabled true
+    }
+
     defaultConfig {
         applicationId "task.application.com.moviefinder"
         minSdkVersion 21
