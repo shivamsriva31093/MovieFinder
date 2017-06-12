@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.search.SearchActivity;
+import task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour;
 import task.application.com.moviefinder.util.Util;
 
 public class FavoritesMediaActivity extends AppCompatActivity implements FavoritesMediaFragment.OnFragmentInteractionListener {
@@ -63,10 +65,18 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
             if (savedInstanceState.containsKey(SEARCH_QUERY))
                 searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
         }
+        setUpBottomNavigationView();
+
+        setUpSearchBox();
+    }
+
+    private void setUpBottomNavigationView() {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_tv);
-        setUpSearchBox();
+        BottomNavigationBehaviour<BottomNavigationView> behaviour = new BottomNavigationBehaviour<>(this);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        params.setBehavior(behaviour);
     }
 
     private void setUpSearchBox() {

@@ -38,6 +38,10 @@ public final class BottomNavigationBehaviour<V extends View> extends VerticalScr
 
     private FavoritesMediaActivity activity;
 
+    public BottomNavigationBehaviour(FavoritesMediaActivity activity) {
+        this();
+        this.activity = activity;
+    }
 
     public BottomNavigationBehaviour() {
         super();
@@ -50,7 +54,7 @@ public final class BottomNavigationBehaviour<V extends View> extends VerticalScr
         mTabLayoutId = a.getResourceId(0, View.NO_ID);
         mElevation = a.getResourceId(1, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mElevation, context.getResources().getDisplayMetrics()));
         a.recycle();
-        activity = (FavoritesMediaActivity) context;
+//        activity = (FavoritesMediaActivity) context;
     }
 
     public static <V extends View> BottomNavigationBehaviour<V> from(@NonNull V view) {
