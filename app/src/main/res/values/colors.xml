@@ -22,7 +22,7 @@
     <color name="body_text_1_inverse">#deffffff</color>
     <color name="body_text_2_inverse">#8affffff</color>
 
-    <color name="status_bar_light_grey">#7b7878</color>
+    <color name="status_bar_light_grey">#646262</color>
     <color name="textbar">#dcdfe1</color>
     <color name="transparent">@android:color/transparent</color>
     <color name="divider_col">#F0F0F0</color>

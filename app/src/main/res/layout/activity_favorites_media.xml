@@ -18,7 +18,7 @@
         android:layout_marginTop="24dp"
         android:elevation="8dp"
         android:padding="2dp"
-        android:translationZ="1dp">
+        >
 
 
         <include layout="@layout/persistent_searchbar" />
@@ -38,7 +38,6 @@
             android:fitsSystemWindows="true"
             android:nestedScrollingEnabled="false">
 
-
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -49,10 +48,9 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         app:elevation="8dp"
-        android:background="@color/colorPrimary"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        android:background="@android:color/white"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/navigation" />
     <!--app:layout_behavior="task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour"-->
 

@@ -9,16 +9,20 @@
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="0dp"
-        android:layout_marginLeft="3dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="3dp"
         android:layout_weight="1"
+        card_view:cardElevation="0dp"
+        card_view:contentPaddingLeft="-3dp"
+        card_view:contentPaddingRight="-3dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:contentPaddingTop="-3dp"
+        card_view:contentPaddingBottom="-3dp"
+        card_view:cardMaxElevation="0dp"
         android:layout_gravity="center"
         android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardCornerRadius="4dp"
-        card_view:layout_collapseMode="none"
-        card_view:layout_collapseParallaxMultiplier="0.0">
+        card_view:cardCornerRadius="0dp"
+        card_view:useCompatPadding="false"
+       >
 
 
         <FrameLayout
@@ -30,8 +34,6 @@
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginBottom="0dp"
-                android:layout_marginRight="0dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:tint="#89000000"
@@ -50,7 +52,7 @@
                 android:text="Arrival"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:translationZ="1dp"
                 android:typeface="sans" />
 
