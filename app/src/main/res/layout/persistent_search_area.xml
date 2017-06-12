@@ -51,26 +51,43 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/search_bar_left_action_container"
-            android:layout_toRightOf="@id/search_bar_left_action_container">
+            android:layout_toLeftOf="@+id/clear_btn"
+            android:layout_toRightOf="@id/search_bar_left_action_container"
+            android:layout_toStartOf="@+id/clear_btn">
 
 
-            <EditText
-
-                android:id="@+id/searchInput"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/searchInputTextLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:alpha="1"
-                android:background="@color/transparent"
-                android:ellipsize="end"
-                android:ems="10"
-                android:hint="@string/search_for_movies_or_tv"
-                android:imeOptions="actionSearch"
-                android:inputType="textNoSuggestions"
-                android:longClickable="false"
-                android:maxLines="1"
-                android:minHeight="@dimen/button_size"
-                android:textSize="@dimen/search_bar_text_size" />
+                android:layout_gravity="center_vertical|center"
+                android:gravity="center_vertical"
+                card_view:hintAnimationEnabled="false"
+                card_view:hintEnabled="false"
+                card_view:hintTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+
+                <EditText
+
+                    android:id="@+id/searchInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_weight="1"
+                    android:alpha="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:foregroundGravity="center_vertical|center_horizontal"
+                    android:gravity="start"
+                    android:hint="@string/search_for_movies_or_tv"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textNoSuggestions"
+                    android:longClickable="false"
+                    android:maxLines="1"
+                    android:minHeight="@dimen/button_size"
+                    android:textSize="@dimen/search_bar_text_size" />
+            </android.support.design.widget.TextInputLayout>
+
         </FrameLayout>
 
         <ImageView
@@ -96,7 +113,8 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/search_bar_right_icon_rm"
             android:layout_marginRight="@dimen/search_bar_right_icon_rm"
-            android:layout_toEndOf="@+id/clear_btn">
+            android:layout_toEndOf="@+id/clear_btn"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/movie_search"

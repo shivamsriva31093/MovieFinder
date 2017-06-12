@@ -7,11 +7,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -27,6 +31,7 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
 
     private static final String SEARCH_QUERY = "query";
     private static final String EMPTY_QUERY = "emptyQuery";
+    private static int STATUS_BAR_HEIGHT;
 
     private CharSequence searchQuery;
     private FavoritesMediaContract.Presenter presenter;
@@ -54,8 +59,18 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
         presenter = new FavoritesPresenter(fragment);
         return true;
     };
+    private TextInputLayout searchInputTextLayout;
 
-
+    private int getStatusBarHeight() {
+        Rect rectangle = new Rect();
+        Window window = getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        int statusBarHeight = rectangle.top;
+        int contentViewTop =
+                window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        int titleBarHeight = contentViewTop - statusBarHeight;
+        return statusBarHeight;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +81,7 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
                 searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
         }
         setUpBottomNavigationView();
-
+        STATUS_BAR_HEIGHT = getStatusBarHeight();
         setUpSearchBox();
     }
 
@@ -82,6 +97,7 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
     private void setUpSearchBox() {
         FrameLayout searchBar = (FrameLayout) findViewById(R.id.search_bar);
         searchInput = (EditText) searchBar.findViewById(R.id.searchInput);
+        searchInputTextLayout = (TextInputLayout) searchBar.findViewById(R.id.searchInputTextLayout);
         clearBtn = (ImageView) searchBar.findViewById(R.id.clear_btn);
         searchInput.setFocusable(false);
         InputMethodManager inputMethodManager = (InputMethodManager)
@@ -104,6 +120,28 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
             }
             return false;
         });
+        clearBtn.setVisibility(View.GONE);
+        clearBtn.setOnClickListener(view -> {
+            searchInput.setText("");
+        });
+
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                clearBtn.setVisibility(charSequence.length() > 0 ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
 
     private void attemptToSearch() {
@@ -121,7 +159,7 @@ public class FavoritesMediaActivity extends AppCompatActivity implements Favorit
         if (cancel) {
             focusView.requestFocus();
         } else {
-            Toast.makeText(this, "Feature coming soon", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Feature coming soon", Toast.LENGTH_SHORT).show();
         }
 
     }
