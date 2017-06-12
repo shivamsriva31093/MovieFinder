@@ -1,9 +1,11 @@
 package task.application.com.moviefinder.util;
 
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
 
 /**
  * Created by sHIVAM on 12/21/2016.
@@ -40,5 +42,16 @@ public class Util {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(containerId, fragment);
         transaction.commit();
+    }
+
+    public int getStatusBarHeight(Window curWindow) {
+        Rect rectangle = new Rect();
+        Window window = curWindow;
+        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        int statusBarHeight = rectangle.top;
+        int contentViewTop =
+                window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        int titleBarHeight = contentViewTop - statusBarHeight;
+        return statusBarHeight;
     }
 }

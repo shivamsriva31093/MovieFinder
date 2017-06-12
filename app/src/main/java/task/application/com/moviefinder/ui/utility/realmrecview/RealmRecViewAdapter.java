@@ -130,7 +130,7 @@ public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends Recyc
 
     @Nullable
     public T getItem(int position) {
-        return isDatasetValid() ? data.get(position) : null;
+        return isDatasetValid() && position < data.size() ? data.get(position) : null;
     }
 
     @Nullable

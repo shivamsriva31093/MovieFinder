@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidtmdbwrapper.enums.MediaType;
@@ -43,7 +44,7 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.ui.utility.realmrecview.RealmRecViewAdapter;
-import task.application.com.moviefinder.util.ItemOffsetDecoration;
+import task.application.com.moviefinder.util.GridLayoutItemDecoration;
 import task.application.com.moviefinder.util.Util;
 
 
@@ -62,6 +63,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private BottomNavigationView bottomNavigationView;
     private FrameLayout searchBarContainer;
     private NestedScrollView parentLayout;
+    private FrameLayout searchBarLeftActionLayout;
 
     public FavoritesMediaFragment() {
         // Required empty public constructor
@@ -87,6 +89,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         searchBarContainer = (FrameLayout) getActivity().findViewById(R.id.search_bar);
         parentLayout = (NestedScrollView) getActivity().findViewById(R.id.scrollingView);
+        searchBarLeftActionLayout = (FrameLayout) searchBarContainer.findViewById(R.id.search_bar_left_action_container);
     }
 
     @Override
@@ -120,7 +123,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             }
         });
         adapter = new RecViewAdapter(null, itemTouchListener);
-        recView.addItemDecoration(new ItemOffsetDecoration(getActivity(), R.dimen.rec_view_itemoffset));
+        recView.addItemDecoration(new GridLayoutItemDecoration(2, 1, true));
         recView.setAdapter(adapter);
         if (presenter != null)
             presenter.fetchDataFromRealm(FILTER);
@@ -320,6 +323,28 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         startActivity(intent);
     }
 
+    @Override
+    public void showLoadingIndicator(boolean status) {
+        ImageView navDrawerButton = (ImageView) searchBarLeftActionLayout.findViewById(R.id.search_bar_left_action);
+        ProgressBar progressBar = (ProgressBar) searchBarLeftActionLayout.findViewById(R.id.search_bar_progess);
+        navDrawerButton.animate()
+                .setDuration(300)
+                .rotationX(180.0f)
+                .setInterpolator(new AccelerateInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+
+                    }
+                });
+    }
+
+    @Override
+    public void showSearchListUi(ArrayList<? extends MediaBasic> mediaData) {
+
+    }
+
     private class RecViewAdapter extends RealmRecViewAdapter<MediaItem, RecViewAdapter.ViewHolder> {
 
         private ItemTouchListener listener;
@@ -383,7 +408,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
         public void toggleCheckBoxState(boolean state, int position, ViewHolder holder) {
             holder.checkBox.setChecked(state);
-            holder.backdrop.setScaleType(state ? ImageView.ScaleType.CENTER_INSIDE : ImageView.ScaleType.CENTER_CROP);
+//            holder.backdrop.setScaleType(state ? ImageView.ScaleType.CENTER_INSIDE : ImageView.ScaleType.CENTER_CROP);
         }
 
 

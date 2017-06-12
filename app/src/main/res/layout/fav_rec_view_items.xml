@@ -42,13 +42,15 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center"
                 android:cursorVisible="false"
                 android:editable="false"
                 android:fontFamily="sans-serif"
                 android:foregroundGravity="center_vertical|center_horizontal"
                 android:gravity="center_horizontal|center"
+                android:padding="5dp"
                 android:text="Arrival"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"

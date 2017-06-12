@@ -1,12 +1,19 @@
 package task.application.com.moviefinder.ui.favorites;
 
+import com.androidtmdbwrapper.enums.MediaType;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
+import task.application.com.moviefinder.util.TmdbApi;
 import task.application.com.moviefinder.util.Util;
 
 /**
@@ -17,6 +24,7 @@ public class FavoritesPresenter implements FavoritesMediaContract.Presenter {
 
     private FavoritesMediaContract.View view;
     private Realm realm;
+    private MediaType filter = MediaType.MOVIES;
 
     FavoritesPresenter(FavoritesMediaContract.View view) {
         this.view = Util.checkNotNull(view, "FavoriteMediaFragment view is null!");
@@ -61,5 +69,38 @@ public class FavoritesPresenter implements FavoritesMediaContract.Presenter {
                 snapshot.deleteFromRealm(pos);
             }
         });
+    }
+
+    @Override
+    public void searchByKeyword(String keyword) {
+        view.showLoadingIndicator(true);
+        TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
+        if (getFilter().equals(MediaType.MOVIES)) {
+            tmdb.searchService().searchMovies(keyword)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(searchRes -> {
+                        view.showSearchListUi(new ArrayList<>(searchRes.getResults()));
+                        view.showLoadingIndicator(false);
+                    });
+
+        } else {
+
+            tmdb.searchService().searchTv(keyword)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(searchRes -> {
+                        view.showSearchListUi(new ArrayList<>(searchRes.getResults()));
+                        view.showLoadingIndicator(false);
+                    });
+        }
+    }
+
+    public MediaType getFilter() {
+        return filter;
+    }
+
+    public void setFilter(MediaType filter) {
+        this.filter = filter;
     }
 }

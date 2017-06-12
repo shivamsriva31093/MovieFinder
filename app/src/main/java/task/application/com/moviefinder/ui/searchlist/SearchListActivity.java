@@ -33,7 +33,8 @@ import task.application.com.moviefinder.util.Util;
  * Created by sHIVAM on 2/6/2017.
  */
 
-public class SearchListActivity extends NavigationDrawerActivity implements SearchListFragment.OnReplaceFragmentListener {
+public class SearchListActivity extends NavigationDrawerActivity implements
+        SearchListFragment.OnReplaceFragmentListener, NavigationDrawerActivity.NavigationDrawerStateChangeListener {
 
     private static final String TAG = SearchListActivity.class.getName();
     private static final String LIST_FRAG_TAG = "searchlist_frag";
@@ -62,7 +63,7 @@ public class SearchListActivity extends NavigationDrawerActivity implements Sear
         super.onCreate(savedInstanceState);
         View layoutView = getLayoutInflater().inflate(R.layout.activity_search_list, null, false);
         setContentView(layoutView);
-
+        setDrawerStateChangeListener(this);
         if(savedInstanceState != null) {
             if(savedInstanceState.containsKey(SEARCH_QUERY))
                 searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
@@ -219,5 +220,25 @@ public class SearchListActivity extends NavigationDrawerActivity implements Sear
         transaction.replace(fragmentContainer.getId(), fragment);
         transaction.addToBackStack(SEARCH_FRAG_COUNT++ + "");
         transaction.commit();
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

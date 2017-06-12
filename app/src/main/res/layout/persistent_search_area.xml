@@ -25,13 +25,26 @@
             android:layout_marginStart="@dimen/search_bar_left_icon_lm">
 
             <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:clickable="true"
+                android:padding="@dimen/button_padding"
+                android:scaleType="center"
+                android:src="@drawable/backspace"
+                android:tint="@color/status_bar_light_grey"
+                android:visibility="visible" />
+
+            <ImageView
                 android:id="@+id/search_bar_left_action"
                 android:layout_width="@dimen/button_icon_size"
                 android:layout_height="@dimen/button_icon_size"
                 android:alpha="1"
                 android:background="@drawable/oval_button"
                 android:padding="@dimen/button_padding"
+                android:clickable="true"
                 android:scaleType="center"
+                android:visibility="gone"
                 card_view:srcCompat="@drawable/ic_menu_black_18dp" />
 
             <ProgressBar

@@ -5,6 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:statusBarBackground="@color/transparent"
     tools:context="task.application.com.moviefinder.ui.favorites.FavoritesMediaActivity">
 
     <FrameLayout
@@ -15,11 +16,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="4dp"
         android:elevation="8dp"
-        android:fitsSystemWindows="false"
-        android:padding="2dp"
-        >
+        android:padding="2dp">
 
 
         <include layout="@layout/persistent_searchbar" />
@@ -36,7 +35,7 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
+            android:fitsSystemWindows="false"
             android:nestedScrollingEnabled="false">
 
         </FrameLayout>
@@ -48,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        app:elevation="8dp"
         android:background="@android:color/white"
+        app:elevation="8dp"
         app:itemIconTint="@color/colorPrimary"
         app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/navigation" />

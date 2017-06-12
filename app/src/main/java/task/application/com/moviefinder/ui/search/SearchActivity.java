@@ -12,7 +12,7 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
 import task.application.com.moviefinder.util.Util;
 
-public class SearchActivity extends NavigationDrawerActivity {
+public class SearchActivity extends NavigationDrawerActivity implements NavigationDrawerActivity.NavigationDrawerStateChangeListener {
 
     private static final String SEARCH_HOME_TAG = "search_home";
     private SearchPresenter searchPresenter;
@@ -20,6 +20,7 @@ public class SearchActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setDrawerStateChangeListener(this);
         View layoutView = getLayoutInflater().inflate(R.layout.activity_search_1, null, false);
         setContentView(layoutView);
         setUpToolbar();
@@ -43,6 +44,11 @@ public class SearchActivity extends NavigationDrawerActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if(ev.getAction() == MotionEvent.ACTION_DOWN) {
             View view = getCurrentFocus();
@@ -58,5 +64,25 @@ public class SearchActivity extends NavigationDrawerActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

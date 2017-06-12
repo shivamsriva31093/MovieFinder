@@ -14,7 +14,8 @@ import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
 import task.application.com.moviefinder.ui.utility.ImageSlider;
 import task.application.com.moviefinder.util.Util;
 
-public class SearchItemDetailActivity extends NavigationDrawerActivity implements FragmentPrime.FragmentInteractionListener {
+public class SearchItemDetailActivity extends NavigationDrawerActivity implements
+        FragmentPrime.FragmentInteractionListener, NavigationDrawerActivity.NavigationDrawerStateChangeListener {
 
     private static final String SEARCH_ITEM = "searchItem";
     private static final String SEARCH_ITEM_DETAIL = "detail_frag";
@@ -28,6 +29,7 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
         super.onCreate(savedInstanceState);
         View layoutView = getLayoutInflater().inflate(R.layout.activity_detail_new, null, false);
         setContentView(layoutView);
+        setDrawerStateChangeListener(this);
         Bundle bundle = new Bundle();
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
@@ -86,7 +88,7 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
 
     @Override
     public void onBackPressed() {
-        finish();
+        super.onBackPressed();
     }
 
     @Override
@@ -101,5 +103,25 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
         if (crewFrag != null) {
             crewFrag.updateImageSliderView(crew);
         }
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }
