@@ -65,6 +65,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
                 android:button="@drawable/custom_checkbox"
                 android:elevation="1dp"
                 android:padding="2dp"

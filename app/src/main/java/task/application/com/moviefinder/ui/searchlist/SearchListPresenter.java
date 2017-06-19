@@ -39,6 +39,9 @@ public class SearchListPresenter implements SearchListContract.Presenter {
                     .subscribe(searchRes -> {
                         view.showLoadingIndicator(false);
                         view.showSearchList(new ArrayList<>(searchRes.getResults()));
+                    }, throwable -> {
+                        view.showLoadingIndicator(false);
+                        view.showLoadingResultsError();
                     });
 
         } else {
@@ -49,6 +52,9 @@ public class SearchListPresenter implements SearchListContract.Presenter {
                     .subscribe(searchRes -> {
                         view.showLoadingIndicator(false);
                         view.showSearchList(new ArrayList<>(searchRes.getResults()));
+                    }, throwable -> {
+                        view.showLoadingIndicator(false);
+                        view.showLoadingResultsError();
                     });
         }
     }

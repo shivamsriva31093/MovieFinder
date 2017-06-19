@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +55,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private SearchListAdapter recyclerViewAdapter;
     private NewtonCradleLoading progressView;
     private MediaType searchMediaType;
+    private CoordinatorLayout parentActivityLayout;
 
 
     public static SearchListFragment newInstance() {
@@ -96,6 +99,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
+        parentActivityLayout = (CoordinatorLayout) getActivity().findViewById(R.id.main_content);
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.activity_search_list);
         progressView = (NewtonCradleLoading) fragmentContainer.findViewById(R.id.progressView);
     }
@@ -173,7 +177,9 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     @Override
     public void showLoadingResultsError() {
-
+        Snackbar snackbar = Snackbar.make(parentActivityLayout,
+                "Error in connectivity. Please check your net connection and retry", Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     @Override

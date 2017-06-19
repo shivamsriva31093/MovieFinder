@@ -2,6 +2,9 @@ package task.application.com.moviefinder.ui.search;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
@@ -14,15 +17,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.victor.loading.rotate.RotateLoading;
+
 import java.util.ArrayList;
+
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.searchlist.SearchListActivity;
 import task.application.com.moviefinder.util.Util;
@@ -41,6 +46,7 @@ public class SearchFragment extends Fragment implements SearchContract.View{
     private LinearLayout logoContainer;
     private ImageView logo;
     private RotateLoading progressView;
+    private CoordinatorLayout parentActivityLayout;
 
     public SearchFragment() {
     }
@@ -58,6 +64,12 @@ public class SearchFragment extends Fragment implements SearchContract.View{
         progressView = (RotateLoading) rootView.findViewById(R.id.progressView);
         setUpSearchBox(rootView);
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        parentActivityLayout = (CoordinatorLayout) getActivity().findViewById(R.id.search_activity_coord);
     }
 
     private void setUpSearchBox(View rootView) {
@@ -154,7 +166,9 @@ public class SearchFragment extends Fragment implements SearchContract.View{
 
     @Override
     public void showLoadingResultsError() {
-
+        Snackbar snackbar = Snackbar.make(parentActivityLayout,
+                "Error in connectivity. Please check your net connection and retry", Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     @Override

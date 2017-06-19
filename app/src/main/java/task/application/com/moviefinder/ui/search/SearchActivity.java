@@ -12,7 +12,8 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
 import task.application.com.moviefinder.util.Util;
 
-public class SearchActivity extends NavigationDrawerActivity implements NavigationDrawerActivity.NavigationDrawerStateChangeListener {
+public class SearchActivity extends NavigationDrawerActivity implements
+        NavigationDrawerActivity.NavigationDrawerStateChangeListener {
 
     private static final String SEARCH_HOME_TAG = "search_home";
     private SearchPresenter searchPresenter;
@@ -25,7 +26,8 @@ public class SearchActivity extends NavigationDrawerActivity implements Navigati
         setContentView(layoutView);
         setUpToolbar();
 
-        SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.search_home);
+        SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.search_home);
         if(null == searchFragment) {
             searchFragment = SearchFragment.newInstance();
             Util.addFragmentToActivity(getSupportFragmentManager(), searchFragment,
