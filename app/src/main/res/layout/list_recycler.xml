@@ -88,33 +88,6 @@
                 <!--android:layout_height="0.5dp"-->
                 <!--android:layout_alignParentBottom="true"-->
                 <!--android:background="@android:color/darker_gray" />-->
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="23dp"
-                    android:layout_height="21dp"
-                    android:scaleType="fitXY"
-                    android:id="@+id/imdb_icon_view"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="280dp"
-                    android:src="@drawable/imdb_bar_icon"/>
-                <TextView
-                    android:id="@+id/imdb_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginTop="17dp"
-                    android:layout_toRightOf="@+id/imdb_icon_view"
-                    android:text="7.8"
-                    android:textSize="13sp"
-                    style="@style/TextHeader" />
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/star_imdb"
-                    android:layout_toRightOf="@+id/imdb_title"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="21dp"/>
 
                 <!--<android.support.v7.widget.AppCompatImageView-->
                     <!--android:layout_width="24dp"-->
@@ -125,6 +98,67 @@
                     <!--android:layout_toRightOf="@+id/details"-->
                     <!--android:layout_marginLeft="110dp"-->
                     <!--android:layout_marginTop="18dp"/>-->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/title"
+                    android:layout_toRightOf="@+id/title"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/rating_progress"
+                        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/colorPrimaryDark"
+                        android:visibility="gone" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/imdb_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="left|center_vertical|start"
+                        android:layout_margin="2dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/imdb_bar_icon"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/imdb_rating"
+                        style="@style/TextHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="2dp"
+                        android:layout_toRightOf="@+id/imdb_icon_view"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="-"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/star_icon"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="2dp"
+                        android:layout_toRightOf="@+id/imdb_title"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/star_imdb"
+                        android:visibility="gone" />
+                </LinearLayout>
 
                 <View
                     android:id="@+id/imdb_bar"

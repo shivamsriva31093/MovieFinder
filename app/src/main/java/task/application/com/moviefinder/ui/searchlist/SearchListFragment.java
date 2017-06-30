@@ -7,14 +7,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -143,6 +145,11 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     @Override
+    public void setImdbRatings(String rating, int pos) {
+        recyclerViewAdapter.setRating(rating, pos);
+    }
+
+    @Override
     public <T extends MediaBasic> Void showItemDetailsUi(T item) {
         Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
         Bundle bundle = new Bundle();
@@ -200,9 +207,11 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         private ArrayList<? extends MediaBasic> data;
         private ArrayList<? extends MediaBasic> oldData;
         private SearchItemClickListener listener;
+        private SparseBooleanArray posArray = new SparseBooleanArray();
         private MediaType searchType;
         private static final int TYPE_HEADER = 0;
         private static final int TYPE_ITEM = 1;
+        private SparseBooleanArray imdbRating = new SparseBooleanArray();
 
         public SearchListAdapter(Context context, ArrayList<? extends MediaBasic> data, MediaType searchType, SearchItemClickListener listener) {
             this.context = context;
@@ -227,40 +236,68 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+
             if (holder.HOLDER_ID == 1) {
-                if (searchType.equals(MediaType.MOVIES)) {
-                    BasicMovieInfo movie = (BasicMovieInfo) data.get(position - 1);
-                    if (!movie.getReleaseDate().isEmpty())
-                        holder.year.setText(movie.getReleaseDate().substring(0, 4));
-                    holder.title.setText(movie.getTitle());
-                    String url = movie.getBackdropPath();
-                    if (url == null) {
-                        holder.imageView.setImageResource(R.drawable.trailer1);
-                    } else {
-                        Picasso.with(context)
-                                .load("https://image.tmdb.org/t/p/w500" + url)
-                                .placeholder(R.drawable.trailer1).into(holder.imageView);
-                    }
+                if (!imdbRating.get(position, false)) {
+                    holder.progressBar.setVisibility(View.VISIBLE);
+                    presenter.getRatings(searchType, data.get(position - 1), position - 1);
+                    imdbRating.put(position, true);
+                    posArray.put(position, false);
+                    loadMediaData(holder, position);
                 } else {
-                    BasicTVInfo tv = (BasicTVInfo) data.get(position - 1);
-                    if (!tv.getFirstAirDate().isEmpty())
-                        holder.year.setText(tv.getFirstAirDate().substring(0, 4));
-                    holder.title.setText(tv.getOriginalName());
-                    String url = tv.getPosterPath();
-                    Log.d("tmdb", (url == null) + "");
-                    if (url == null) {
-                        holder.imageView.setImageResource(R.drawable.trailer1);
-                    } else {
-                        Picasso.with(context)
-                                .load("https://image.tmdb.org/t/p/w500" + url)
-                                .fit()
-                                .placeholder(R.drawable.trailer1)
-                                .into(holder.imageView);
+
+                    if (posArray.get(position)) {
+                        loadMediaData(holder, position);
+                        holder.progressBar.setVisibility(View.GONE);
+                        holder.imdbRating.setText(data.get(position - 1).getImdbRating());
+                        holder.imdbRating.setVisibility(View.VISIBLE);
+                        holder.imdbIcon.setVisibility(View.VISIBLE);
+                        holder.starIcon.setVisibility(View.VISIBLE);
                     }
                 }
-
             } else {
                  holder.header.setText(data.size() + " results returned");
+            }
+        }
+
+        private void loadMediaData(ViewHolder holder, int position) {
+            if (searchType.equals(MediaType.MOVIES)) {
+                loadMovieInfo(holder, (BasicMovieInfo) data.get(position - 1));
+            } else {
+                loadTvInfo(holder, (BasicTVInfo) data.get(position - 1));
+            }
+            holder.imdbRating.setVisibility(View.GONE);
+            holder.imdbIcon.setVisibility(View.GONE);
+            holder.starIcon.setVisibility(View.GONE);
+        }
+
+        private void loadTvInfo(ViewHolder holder, BasicTVInfo tv) {
+            if (!tv.getFirstAirDate().isEmpty())
+                holder.year.setText(tv.getFirstAirDate().substring(0, 4));
+            holder.title.setText(tv.getOriginalName());
+            String url = tv.getPosterPath();
+            if (url == null) {
+                holder.imageView.setImageResource(R.drawable.trailer1);
+            } else {
+                Picasso.with(context)
+                        .load("https://image.tmdb.org/t/p/w500" + url)
+                        .fit()
+                        .placeholder(R.drawable.trailer1)
+                        .into(holder.imageView);
+            }
+        }
+
+        private void loadMovieInfo(ViewHolder holder, BasicMovieInfo movie) {
+            if (!movie.getReleaseDate().isEmpty())
+                holder.year.setText(movie.getReleaseDate().substring(0, 4));
+            holder.title.setText(movie.getTitle());
+            String url = movie.getBackdropPath();
+            if (url == null) {
+                holder.imageView.setImageResource(R.drawable.trailer1);
+            } else {
+                Picasso.with(context)
+                        .load("https://image.tmdb.org/t/p/w500" + url)
+                        .placeholder(R.drawable.trailer1).into(holder.imageView);
             }
         }
 
@@ -290,12 +327,25 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             return position == 0;
         }
 
+        public void setRating(String rating, int pos) {
+            rating = rating == null ? "N/A" : rating;
+            MediaBasic item = data.get(pos);
+            item.setImdbRating(rating);
+            posArray.put(pos + 1, true);
+            notifyItemChanged(pos + 1);
+        }
+
+
         class ViewHolder extends RecyclerView.ViewHolder {
             private TextView title;
             private ImageView icon;
             private TextView year;
             private TextView header;
+            private AppCompatImageView imdbIcon;
+            private AppCompatImageView starIcon;
             private CircleImageView imageView;
+            private TextView imdbRating;
+            private ProgressBar progressBar;
             private int HOLDER_ID;
 
             public ViewHolder(View itemView, int viewType) {
@@ -304,12 +354,11 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     title = (TextView) itemView.findViewById(R.id.title);
                     year = (TextView) itemView.findViewById(R.id.year);
                     imageView = (CircleImageView) itemView.findViewById(R.id.item_image);
-                    itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            listener.onItemClick(v, data.get(getAdapterPosition() - 1));
-                        }
-                    });
+                    imdbRating = (TextView) itemView.findViewById(R.id.imdb_rating);
+                    progressBar = (ProgressBar) itemView.findViewById(R.id.rating_progress);
+                    imdbIcon = (AppCompatImageView) itemView.findViewById(R.id.imdb_icon);
+                    starIcon = (AppCompatImageView) itemView.findViewById(R.id.star_icon);
+                    itemView.setOnClickListener(v -> listener.onItemClick(v, data.get(getAdapterPosition() - 1)));
                     HOLDER_ID = 1;
                 } else {
                     header = (TextView) itemView.findViewById(R.id.header);

@@ -16,6 +16,7 @@ public interface SearchListContract  {
     interface View extends BaseView<Presenter> {
         void showSearchList(ArrayList<? extends MediaBasic> movieDbs);
 
+        void setImdbRatings(String rating, int pos);
         <T extends MediaBasic> Void showItemDetailsUi(T Item);
         void showLoadingIndicator(boolean show);
         void showNoResults();
@@ -28,8 +29,8 @@ public interface SearchListContract  {
 
         <T extends MediaBasic> Void onSearchItemClick(T Item);
 
+        void getRatings(MediaType filter, MediaBasic item, int pos);
         void setFilteringType(MediaType filteringType);
-
         MediaType getFilteringType();
     }
 }
