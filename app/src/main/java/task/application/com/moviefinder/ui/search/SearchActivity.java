@@ -25,8 +25,6 @@ public class SearchActivity extends NavigationDrawerActivity {
         View layoutView = getLayoutInflater().inflate(R.layout.activity_search_1, null, false);
         setContentView(layoutView);
         setUpToolbar();
-        Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        startActivityForResult(turnOn, 0);
 
         SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.search_home);
@@ -51,10 +49,6 @@ public class SearchActivity extends NavigationDrawerActivity {
         super.onBackPressed();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
