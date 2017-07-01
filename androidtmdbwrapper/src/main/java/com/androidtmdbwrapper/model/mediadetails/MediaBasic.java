@@ -23,6 +23,8 @@ public class MediaBasic implements Parcelable {
     @JsonProperty("vote_count")
     private int voteCount;
 
+    private String imdbRating;
+
     public MediaBasic() {
     }
 
@@ -33,17 +35,9 @@ public class MediaBasic implements Parcelable {
         popularity = in.readFloat();
         voteAverage = in.readFloat();
         voteCount = in.readInt();
+        imdbRating = in.readString();
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(posterPath);
-        dest.writeString(backdropPath);
-        dest.writeFloat(popularity);
-        dest.writeFloat(voteAverage);
-        dest.writeInt(voteCount);
-    }
     public static final Creator<MediaBasic> CREATOR = new Creator<MediaBasic>() {
         @Override
         public MediaBasic createFromParcel(Parcel in) {
@@ -55,6 +49,14 @@ public class MediaBasic implements Parcelable {
             return new MediaBasic[size];
         }
     };
+
+    public String getImdbRating() {
+        return imdbRating;
+    }
+
+    public void setImdbRating(String imdbRating) {
+        this.imdbRating = imdbRating;
+    }
 
     public String getPosterPath() {
         return posterPath;
@@ -104,10 +106,20 @@ public class MediaBasic implements Parcelable {
         this.voteCount = voteCount;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(posterPath);
+        parcel.writeString(backdropPath);
+        parcel.writeFloat(popularity);
+        parcel.writeFloat(voteAverage);
+        parcel.writeInt(voteCount);
+        parcel.writeString(imdbRating);
+    }
 }
