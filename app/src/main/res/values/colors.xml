@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FF5252</color>
-    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#eef1f2</color>
-    <color name="colorAccentTranslucent">#24878181</color>
+    <color name="colorAccentText">#edf0f2</color>
+    <color name="colorAccentTextTranslucent">#baedf0f2</color>
+    <color name="colorAccentTranslucent">#36fdfdfd</color>
     <color name="colorAccentSelected1">#ffcdd0</color>
     <color name="colorAccentSelected">#f9f9f9</color>
     <color name="colorYellow">#d4e157</color>
@@ -15,14 +17,12 @@
     <color name="theme_final_signin_pressed">#E65542</color>
     <color name="theme_final_signin">#CA4A39</color>
     <color name="body_text_1">#de000000</color>
-    <color name="body_text_2">#8a000000</color>
+    <color name="body_text_2">#93000000</color>
     <color name="body_text_3">#60000000</color>
     <color name="body_text_disabled">#44000000</color>
-
     <color name="body_text_1_inverse">#deffffff</color>
     <color name="body_text_2_inverse">#8affffff</color>
-
-    <color name="status_bar_light_grey">#646262</color>
+    <color name="status_bar_light_grey">#d6d6d6</color>
     <color name="textbar">#dcdfe1</color>
     <color name="transparent">@android:color/transparent</color>
     <color name="divider_col">#F0F0F0</color>

@@ -84,6 +84,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="16dp"
+                android:textColorHint="@color/colorAccentTextTranslucent"
                 app:hintEnabled="true"
                 >
 
@@ -96,9 +97,9 @@
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
                     android:textAlignment="viewStart"
+                    android:textColorHint="@color/colorAccentTextTranslucent"
                     android:hint="Search"
                     android:theme="@style/TextLabel"
-                    android:textColorHint="@color/colorAccent"
                     android:textColor="@color/colorAccent"
                     android:textCursorDrawable="@null"
                     android:textSize="18sp"

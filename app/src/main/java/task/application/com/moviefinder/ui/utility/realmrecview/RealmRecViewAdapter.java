@@ -3,6 +3,7 @@ package task.application.com.moviefinder.ui.utility.realmrecview;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollection;
@@ -113,7 +114,6 @@ public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends Recyc
         }
     }
 
-
     private boolean isDatasetValid() {
         return data != null && data.isValid();
     }
@@ -130,6 +130,7 @@ public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends Recyc
 
     @Nullable
     public T getItem(int position) {
+        Log.d("position",position+"");
         return isDatasetValid() && position < data.size() ? data.get(position) : null;
     }
 

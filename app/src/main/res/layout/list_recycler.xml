@@ -41,6 +41,7 @@
                     android:layout_marginTop="10dp"
                     android:text="ARRIVAL"
                     android:textSize="18sp"
+                    android:textColor="@color/body_text_2"
                     style="@style/TextHeader"
                     android:typeface="normal" />
 
@@ -88,6 +89,36 @@
                 <!--android:layout_height="0.5dp"-->
                 <!--android:layout_alignParentBottom="true"-->
                 <!--android:background="@android:color/darker_gray" />-->
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="23dp"
+                    android:layout_height="21dp"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imdb_icon_view"
+                    android:tint="#88bab5b5"
+                    android:tintMode="src_atop"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="280dp"
+                    android:src="@drawable/imdb_bar_icon"/>
+                <TextView
+                    android:id="@+id/imdb_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/imdb_icon_view"
+                    android:text="7.8"
+                    android:textSize="13sp"
+                    style="@style/TextHeader" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/star_imdb"
+                    android:layout_toRightOf="@+id/imdb_title"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="21dp"/>
+>>>>>>> Stashed changes
 
                 <!--<android.support.v7.widget.AppCompatImageView-->
                     <!--android:layout_width="24dp"-->

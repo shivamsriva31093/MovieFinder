@@ -13,6 +13,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -29,14 +30,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
@@ -49,7 +47,6 @@ import task.application.com.moviefinder.util.Util;
 
 
 public class FavoritesMediaFragment extends Fragment implements FavoritesMediaContract.View {
-
 
     private static String FILTER = "";
     private static final int PARENT_BOTTOM_MARGIN = 56;
@@ -428,6 +425,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                             listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
                     cardView.setOnLongClickListener(view ->
                             listener.onItemLongClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
+                    Log.d("time",getAdapterPosition()+"");
                     checkBox.setOnClickListener(view -> {
                         toggleSelection(getAdapterPosition());
                         listener.onCheckboxClick(getAdapterPosition(), getItem(getAdapterPosition()));

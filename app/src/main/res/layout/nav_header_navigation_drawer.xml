@@ -22,7 +22,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
-        android:src="@color/colorPrimary"
+        android:src="@color/status_bar_light_grey"
          />
     <TextView
         android:layout_width="match_parent"

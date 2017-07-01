@@ -1,6 +1,8 @@
 package task.application.com.moviefinder.ui.search;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -25,6 +27,8 @@ public class SearchActivity extends NavigationDrawerActivity implements
         View layoutView = getLayoutInflater().inflate(R.layout.activity_search_1, null, false);
         setContentView(layoutView);
         setUpToolbar();
+        Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(turnOn, 0);
 
         SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.search_home);
@@ -43,6 +47,10 @@ public class SearchActivity extends NavigationDrawerActivity implements
 
     private void setUpToolbar() {
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

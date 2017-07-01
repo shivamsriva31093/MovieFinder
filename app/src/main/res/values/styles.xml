@@ -101,10 +101,9 @@
 
     <style name="TextLabel2">
         <item name="colorControlNormal">@color/colorTransparent</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorTransparent</item>
+        <item name="colorControlHighlight">@color/colorTransparent</item>
     </style>
-
 
     <style name="MyCubeButtonPin">
         <item name="android:background">@drawable/selector_search_button</item>

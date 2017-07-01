@@ -23,7 +23,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/search_bar_left_icon_lm"
             android:layout_marginStart="@dimen/search_bar_left_icon_lm">
-
             <ImageView
                 android:id="@+id/backButton"
                 android:layout_width="@dimen/button_icon_size"
@@ -35,7 +34,9 @@
                 android:tint="@color/status_bar_light_grey"
                 android:visibility="visible" />
 
-            <ImageView
+
+            <android.support.v7.widget.AppCompatImageView
+
                 android:id="@+id/search_bar_left_action"
                 android:layout_width="@dimen/button_icon_size"
                 android:layout_height="@dimen/button_icon_size"
@@ -103,7 +104,7 @@
 
         </FrameLayout>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/clear_btn"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"

@@ -291,8 +291,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     public void setFavorite(boolean status) {
         if (status) {
             favorite.setImageDrawable(ApplicationClass.getInstance()
-                    .getResources().getDrawable(R.drawable.hearts));
-            favorite.setTag(R.drawable.hearts);
+                    .getResources().getDrawable(R.drawable.favorite));
+            favorite.setTag(R.drawable.favorite);
         }
     }
 
@@ -336,8 +336,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     private void toggleFavorite(FloatingActionButton button, int tag, Context context) {
         if (tag == R.drawable.ic_favorite_border_black_24dp) {
-            button.setImageDrawable(context.getResources().getDrawable(R.drawable.hearts, null));
-            button.setTag(R.drawable.hearts);
+            button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
+            button.setTag(R.drawable.favorite);
             presenter.addMediaToFavorites(retrievedItem);
         } else {
             button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
