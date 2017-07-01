@@ -22,7 +22,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -30,11 +29,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
@@ -185,11 +187,11 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        if (add)
-                            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                        else
-                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                        setParentLayoutBottomMargin(margin);
+//                        if (add)
+//                            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//                        else
+//                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//                        setParentLayoutBottomMargin(margin);
                         bottomNavigationView.setVisibility(visibility);
                         bottomNavigationView.animate().setListener(null);
                     }
