@@ -25,7 +25,7 @@ import task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour;
 import task.application.com.moviefinder.util.Util;
 
 public class FavoritesMediaActivity extends NavigationDrawerActivity implements
-        FavoritesMediaFragment.OnFragmentInteractionListener, NavigationDrawerActivity.NavigationDrawerStateChangeListener {
+        FavoritesMediaFragment.OnFragmentInteractionListener {
 
     private static final String SEARCH_QUERY = "query";
     private static final String EMPTY_QUERY = "emptyQuery";
@@ -64,7 +64,6 @@ public class FavoritesMediaActivity extends NavigationDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDrawerStateChangeListener(this);
         View rootView = LayoutInflater.from(this).inflate(R.layout.activity_favorites_media, null, false);
         setContentView(rootView);
         if (savedInstanceState != null) {
@@ -224,23 +223,4 @@ public class FavoritesMediaActivity extends NavigationDrawerActivity implements
         return super.dispatchTouchEvent(ev);
     }
 
-    @Override
-    public void onDrawerSlide(View drawerView, float slideOffset) {
-
-    }
-
-    @Override
-    public void onDrawerOpened(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
 }

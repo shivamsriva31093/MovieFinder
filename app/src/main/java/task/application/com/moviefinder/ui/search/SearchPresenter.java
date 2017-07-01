@@ -39,7 +39,7 @@ public class SearchPresenter implements SearchContract.Presenter {
         searchView.showLoadingIndicator(true);
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         if (getFilteringType().equals(MediaType.MOVIES)) {
-            tmdb.searchService().searchMovies(keyword)
+            tmdb.searchService().searchMovies(keyword, null)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(searchRes -> {
@@ -52,7 +52,7 @@ public class SearchPresenter implements SearchContract.Presenter {
 
         } else {
 
-            tmdb.searchService().searchTv(keyword)
+            tmdb.searchService().searchTv(keyword, null)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(searchRes -> {

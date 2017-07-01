@@ -29,11 +29,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
     private NavigationDrawerItemListeners listener;
     private FrameLayout mainContent;
     private Handler handler;
-    private NavigationDrawerStateChangeListener stateChangeListener;
-
-    protected void setDrawerStateChangeListener(NavigationDrawerStateChangeListener listener) {
-        this.stateChangeListener = listener;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,22 +64,22 @@ public class NavigationDrawerActivity extends AppCompatActivity
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                stateChangeListener.onDrawerSlide(drawerView, slideOffset);
+
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                stateChangeListener.onDrawerOpened(drawerView);
+
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                stateChangeListener.onDrawerClosed(drawerView);
+
             }
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                stateChangeListener.onDrawerStateChanged(newState);
+
             }
         });
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

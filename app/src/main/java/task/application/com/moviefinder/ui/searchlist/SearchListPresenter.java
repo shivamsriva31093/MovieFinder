@@ -23,6 +23,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
 
     private SearchListContract.View view;
     private MediaType filterType;
+    private String query = "";
     private MediaInfoResponseListener listener;
 
     public SearchListPresenter(SearchListContract.View view) {
@@ -34,27 +35,30 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
     @Override
     public void searchByKeyword(String keyword) {
         view.showLoadingIndicator(true);
+        query = keyword;
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         switch (getFilteringType()) {
             case MOVIES:
-                tmdb.searchService().searchMovies(keyword)
+                tmdb.searchService().searchMovies(keyword, null)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
                             view.showLoadingIndicator(false);
-                            view.showSearchList(new ArrayList<>(searchRes.getResults()));
+                            view.showSearchList(new ArrayList<>(searchRes.getResults()),
+                                    searchRes.getTotalResults());
                         }, throwable -> {
                             view.showLoadingIndicator(false);
                             view.showLoadingResultsError();
                         });
                 break;
             case TV:
-                tmdb.searchService().searchTv(keyword)
+                tmdb.searchService().searchTv(keyword, null)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
                             view.showLoadingIndicator(false);
-                            view.showSearchList(new ArrayList<>(searchRes.getResults()));
+                            view.showSearchList(new ArrayList<>(searchRes.getResults()),
+                                    searchRes.getTotalResults());
                         }, throwable -> {
                             view.showLoadingIndicator(false);
                             view.showLoadingResultsError();
@@ -63,9 +67,37 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
         }
     }
 
+
     @Override
     public void clearRecyclerView() {
 
+    }
+
+    @Override
+    public void searchByKeyword(String keyword, int page) {
+        TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
+        switch (getFilteringType()) {
+            case MOVIES:
+                tmdb.searchService().searchMovies(keyword, page)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(searchRes -> {
+                            view.updateNewItems(searchRes.getResults(), searchRes.getTotalResults());
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                        });
+                break;
+            case TV:
+                tmdb.searchService().searchTv(keyword, page)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(searchRes -> {
+                            view.updateNewItems(searchRes.getResults(), searchRes.getTotalResults());
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                        });
+                break;
+        }
     }
 
     @Override
@@ -143,6 +175,15 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                 });
     }
 
+    @Override
+    public String getQuery() {
+        return query;
+    }
+
+    @Override
+    public void setQuery(String query) {
+        this.query = query;
+    }
 }
 
 interface MediaInfoResponseListener {

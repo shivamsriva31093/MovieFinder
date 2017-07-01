@@ -34,7 +34,7 @@ import task.application.com.moviefinder.util.Util;
  */
 
 public class SearchListActivity extends NavigationDrawerActivity implements
-        SearchListFragment.OnReplaceFragmentListener, NavigationDrawerActivity.NavigationDrawerStateChangeListener {
+        SearchListFragment.OnReplaceFragmentListener {
 
     private static final String TAG = SearchListActivity.class.getName();
     private static final String LIST_FRAG_TAG = "searchlist_frag";
@@ -63,7 +63,6 @@ public class SearchListActivity extends NavigationDrawerActivity implements
         super.onCreate(savedInstanceState);
         View layoutView = getLayoutInflater().inflate(R.layout.activity_search_list, null, false);
         setContentView(layoutView);
-        setDrawerStateChangeListener(this);
         if(savedInstanceState != null) {
             if(savedInstanceState.containsKey(SEARCH_QUERY))
                 searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
@@ -213,32 +212,12 @@ public class SearchListActivity extends NavigationDrawerActivity implements
     }
 
     @Override
-    public void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType) {
+    public void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType, int totalResults) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs, filterType);
+        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs, filterType, totalResults);
         presenter = new SearchListPresenter(fragment);
         transaction.replace(fragmentContainer.getId(), fragment);
         transaction.addToBackStack(SEARCH_FRAG_COUNT++ + "");
         transaction.commit();
-    }
-
-    @Override
-    public void onDrawerSlide(View drawerView, float slideOffset) {
-
-    }
-
-    @Override
-    public void onDrawerOpened(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
     }
 }

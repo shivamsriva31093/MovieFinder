@@ -76,7 +76,7 @@ public class FavoritesPresenter implements FavoritesMediaContract.Presenter {
         view.showLoadingIndicator(true);
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         if (getFilter().equals(MediaType.MOVIES)) {
-            tmdb.searchService().searchMovies(keyword)
+            tmdb.searchService().searchMovies(keyword, null)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(searchRes -> {
@@ -86,7 +86,7 @@ public class FavoritesPresenter implements FavoritesMediaContract.Presenter {
 
         } else {
 
-            tmdb.searchService().searchTv(keyword)
+            tmdb.searchService().searchTv(keyword, null)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(searchRes -> {
