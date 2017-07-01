@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import task.application.com.moviefinder.R;
@@ -25,14 +27,14 @@ public class NavigationDrawerActivity extends AppCompatActivity
     private static final int MAIN_CONTENT_FADEOUT_DURATION = 250;
     private DrawerLayout drawer;
     private NavigationDrawerItemListeners listener;
-    private FrameLayout frameLayout;
+    private FrameLayout mainContent;
     private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
-        frameLayout = (FrameLayout) findViewById(R.id.activity_content);
+        mainContent = (FrameLayout) findViewById(R.id.activity_content);
         listener = this;
     }
 
@@ -44,7 +46,8 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
     @Override
     public void setContentView(View view) {
-        frameLayout.addView(view);
+        mainContent.addView(view);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
     protected void createNvDrawer() {
@@ -53,12 +56,32 @@ public class NavigationDrawerActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.isDrawerIndicatorEnabled();
+       // toggle.isDrawerIndicatorEnabled();
 
         toggle.syncState();
-        toggle.setDrawerIndicatorEnabled(true);
+        //toggle.setDrawerIndicatorEnabled(true);
         drawer.addDrawerListener(toggle);
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
 
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -101,41 +124,48 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         switch (id) {
             case R.id.nav_favorite:
-                Intent intent = new Intent(getBaseContext(), FavoritesMediaActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        listener.itemSelected(new Intent(getBaseContext(), FavoritesMediaActivity.class));
-//                    }
-//                }, NAVDRAWER_LAUNCH_DELAY);
-                return true;
+                handler.postDelayed(() ->
+                        listener.itemSelected(new Intent(NavigationDrawerActivity.this,
+                                FavoritesMediaActivity.class)), NAVDRAWER_LAUNCH_DELAY);
+                break;
         }
 
-//        if (frameLayout != null) {
-//            frameLayout.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
-//        }
+        if (mainContent != null) {
+            mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+        }
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void itemSelected(Intent intent) {
         startActivity(intent);
+        finish();
     }
 
+
+    public interface NavigationDrawerStateChangeListener {
+
+        void onDrawerSlide(View drawerView, float slideOffset);
+
+        void onDrawerOpened(View drawerView);
+
+        void onDrawerClosed(View drawerView);
+
+        void onDrawerStateChanged(int newState);
+    }
 }
 
 interface NavigationDrawerItemListeners {
     void itemSelected(Intent intent);
 }
+
+

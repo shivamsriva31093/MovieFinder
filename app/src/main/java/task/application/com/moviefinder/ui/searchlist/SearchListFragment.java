@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +29,15 @@ import com.squareup.picasso.Picasso;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
+import task.application.com.moviefinder.util.EndlessScrollListener;
 import task.application.com.moviefinder.util.Util;
+import task.application.com.moviefinder.util.ViewType;
 
 /**
  * Created by sHIVAM on 2/6/2017.
@@ -58,17 +62,20 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private NewtonCradleLoading progressView;
     private MediaType searchMediaType;
     private CoordinatorLayout parentActivityLayout;
+    private int totalResults;
 
 
     public static SearchListFragment newInstance() {
         return new SearchListFragment();
     }
 
-    public static SearchListFragment newInstance(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType) {
+    public static SearchListFragment newInstance(ArrayList<? extends MediaBasic> movieDbs,
+                                                 MediaType filterType, int totalResults) {
         SearchListFragment fragment = new SearchListFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(SEARCH_LIST, movieDbs);
         bundle.putSerializable("filtering_type", filterType);
+        bundle.putInt("totalItems", totalResults);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -80,10 +87,12 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             if(!savedInstanceState.isEmpty()) {
                 resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
                 searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
+                totalResults = getArguments().getInt("totalItems");
             }
         } else if (getArguments() != null && !getArguments().isEmpty()) {
             resultList = getArguments().getParcelableArrayList(SEARCH_LIST);
             searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
+            totalResults = getArguments().getInt("totalItems");
         }
 
         recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, searchMediaType, itemClickListener);
@@ -120,7 +129,25 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.addOnScrollListener(new EndlessScrollListener(linearLayoutManager, 5) {
+            @Override
+            public void onLoadMore(int page, int totalItems, RecyclerView recyclerView) {
+                Log.d("test", page + " ");
+                loadNextPageFromApi(page);
+            }
+
+            @Override
+            public int getFooterViewType(int defaultNoFooterViewType) {
+                return ViewType.TYPE_FOOTER.ordinal();
+            }
+        });
     }
+
+    private void loadNextPageFromApi(int page) {
+        presenter.searchByKeyword(presenter.getQuery(), page);
+    }
+
+
 
     @Override
     public void onStart() {
@@ -139,9 +166,14 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     @Override
-    public void showSearchList(ArrayList<? extends MediaBasic> movieDbs) {
+    public void showSearchList(ArrayList<? extends MediaBasic> movieDbs, int totalResults) {
 //        recyclerViewAdapter.replaceData(movieDbs);
-        listener.replaceFragment(movieDbs, presenter.getFilteringType());
+        listener.replaceFragment(movieDbs, presenter.getFilteringType(), totalResults);
+    }
+
+    @Override
+    public void updateNewItems(List<? extends MediaBasic> data, int totalResults) {
+        recyclerViewAdapter.addDataItems(data);
     }
 
     @Override
@@ -204,59 +236,86 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     private class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ViewHolder>{
         private Context context;
-        private ArrayList<? extends MediaBasic> data;
-        private ArrayList<? extends MediaBasic> oldData;
+        //        private ArrayList<? extends MediaBasic> data;
+        private ArrayList<MediaBasic> data = new ArrayList<>();
         private SearchItemClickListener listener;
         private SparseBooleanArray posArray = new SparseBooleanArray();
         private MediaType searchType;
         private static final int TYPE_HEADER = 0;
         private static final int TYPE_ITEM = 1;
+        private static final int TYPE_FOOTER = 2;
         private SparseBooleanArray imdbRating = new SparseBooleanArray();
+        private ArrayList<? extends MediaBasic> oldData = new ArrayList<>();
 
-        public SearchListAdapter(Context context, ArrayList<? extends MediaBasic> data, MediaType searchType, SearchItemClickListener listener) {
+        public SearchListAdapter(Context context, ArrayList<? extends MediaBasic> data,
+                                 MediaType searchType, SearchItemClickListener listener) {
             this.context = context;
             this.searchType = searchType;
-            this.data = data;
+            this.data.addAll(data);
             this.listener = listener;
         }
 
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if(viewType == TYPE_ITEM) {
-                View itemView = LayoutInflater.from(context).inflate(R.layout.list_recycler, parent, false);
-                return new ViewHolder(itemView, TYPE_ITEM);
+            ViewType holderType = ViewType.values()[viewType];
+            switch (holderType) {
+                case TYPE_HEADER:
+                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_header, parent, false)
+                            , TYPE_HEADER);
+                case TYPE_ITEM:
+                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_recycler, parent, false),
+                            TYPE_ITEM);
+                case TYPE_FOOTER:
+                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_footer, parent, false),
+                            TYPE_FOOTER);
+                default:
+                    return null;
             }
-            if(viewType == TYPE_HEADER){
-                View itemView = LayoutInflater.from(context).inflate(R.layout.list_header, parent, false);
-                return new ViewHolder(itemView, TYPE_HEADER);
-            }
-            return null;
         }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0)
+                return ViewType.TYPE_HEADER.ordinal();
+            if (position == data.size() + 1)
+                return ViewType.TYPE_FOOTER.ordinal();
+            return ViewType.TYPE_ITEM.ordinal();
+        }
+
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
-            if (holder.HOLDER_ID == 1) {
-                if (!imdbRating.get(position, false)) {
-                    holder.progressBar.setVisibility(View.VISIBLE);
-                    presenter.getRatings(searchType, data.get(position - 1), position - 1);
-                    imdbRating.put(position, true);
-                    posArray.put(position, false);
-                    loadMediaData(holder, position);
-                } else {
+            switch (holder.HOLDER_ID) {
+                case TYPE_HEADER:
+                    holder.header.setText(totalResults + " results returned");
+                    break;
+                case TYPE_ITEM:
+                    showRowItems(holder, position);
+                    break;
+                case TYPE_FOOTER:
+                    holder.footerProgressBar.setVisibility(View.VISIBLE);
+            }
+        }
 
-                    if (posArray.get(position)) {
-                        loadMediaData(holder, position);
-                        holder.progressBar.setVisibility(View.GONE);
-                        holder.imdbRating.setText(data.get(position - 1).getImdbRating());
-                        holder.imdbRating.setVisibility(View.VISIBLE);
-                        holder.imdbIcon.setVisibility(View.VISIBLE);
-                        holder.starIcon.setVisibility(View.VISIBLE);
-                    }
-                }
+        private void showRowItems(ViewHolder holder, int position) {
+            if (!imdbRating.get(position, false)) {
+                holder.progressBar.setVisibility(View.VISIBLE);
+                presenter.getRatings(searchType, data.get(position - 1), position - 1);
+                imdbRating.put(position, true);
+                posArray.put(position, false);
+                loadMediaData(holder, position);
             } else {
-                 holder.header.setText(data.size() + " results returned");
+
+                if (posArray.get(position)) {
+                    loadMediaData(holder, position);
+                    holder.progressBar.setVisibility(View.GONE);
+                    holder.imdbRating.setText(data.get(position - 1).getImdbRating());
+                    holder.imdbRating.setVisibility(View.VISIBLE);
+                    holder.imdbIcon.setVisibility(View.VISIBLE);
+                    holder.starIcon.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -303,8 +362,18 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
         public void replaceData(ArrayList<? extends MediaBasic> movieDbs) {
             this.oldData = data;
-            this.data = Util.checkNotNull(movieDbs);
+            this.data.clear();
+            this.data.addAll(Util.checkNotNull(movieDbs));
             notifyDataSetChanged();
+        }
+
+        public void addDataItems(List<? extends MediaBasic> newDataItems) {
+            Log.d("test", newDataItems.size() + " " + newDataItems.get(0).getPosterPath());
+            int posStart = data.size();
+            data.addAll(newDataItems);
+            notifyItemRangeInserted(posStart, newDataItems.size() - 1);
+//            Handler handler = new Handler();
+//            handler.post(() -> notifyItemRangeInserted(posStart, newDataItems.size()-1));
         }
 
         public ArrayList<? extends MediaBasic> getCurrentData() {
@@ -313,18 +382,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
         @Override
         public int getItemCount() {
-            return data.size() + 1;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            if (isPositionHeader(position))
-                return TYPE_HEADER;
-            return TYPE_ITEM;
-        }
-
-        private boolean isPositionHeader(int position) {
-            return position == 0;
+            return data != null ? data.size() + 2 : 0;
         }
 
         public void setRating(String rating, int pos) {
@@ -346,23 +404,31 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             private CircleImageView imageView;
             private TextView imdbRating;
             private ProgressBar progressBar;
-            private int HOLDER_ID;
+            private ProgressBar footerProgressBar;
+            private ViewType HOLDER_ID;
 
             public ViewHolder(View itemView, int viewType) {
                 super(itemView);
-                if (viewType == TYPE_ITEM) {
-                    title = (TextView) itemView.findViewById(R.id.title);
-                    year = (TextView) itemView.findViewById(R.id.year);
-                    imageView = (CircleImageView) itemView.findViewById(R.id.item_image);
-                    imdbRating = (TextView) itemView.findViewById(R.id.imdb_rating);
-                    progressBar = (ProgressBar) itemView.findViewById(R.id.rating_progress);
-                    imdbIcon = (AppCompatImageView) itemView.findViewById(R.id.imdb_icon);
-                    starIcon = (AppCompatImageView) itemView.findViewById(R.id.star_icon);
-                    itemView.setOnClickListener(v -> listener.onItemClick(v, data.get(getAdapterPosition() - 1)));
-                    HOLDER_ID = 1;
-                } else {
-                    header = (TextView) itemView.findViewById(R.id.header);
-                    HOLDER_ID = 0;
+                switch (viewType) {
+                    case TYPE_ITEM:
+                        title = (TextView) itemView.findViewById(R.id.title);
+                        year = (TextView) itemView.findViewById(R.id.year);
+                        imageView = (CircleImageView) itemView.findViewById(R.id.item_image);
+                        imdbRating = (TextView) itemView.findViewById(R.id.imdb_rating);
+                        progressBar = (ProgressBar) itemView.findViewById(R.id.rating_progress);
+                        imdbIcon = (AppCompatImageView) itemView.findViewById(R.id.imdb_icon);
+                        starIcon = (AppCompatImageView) itemView.findViewById(R.id.star_icon);
+                        itemView.setOnClickListener(v -> listener.onItemClick(v, data.get(getAdapterPosition() - 1)));
+                        HOLDER_ID = ViewType.TYPE_ITEM;
+                        break;
+                    case TYPE_HEADER:
+                        header = (TextView) itemView.findViewById(R.id.header);
+                        HOLDER_ID = ViewType.TYPE_HEADER;
+                        break;
+                    case TYPE_FOOTER:
+                        footerProgressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+                        HOLDER_ID = ViewType.TYPE_FOOTER;
+                        break;
                 }
 
             }
@@ -376,7 +442,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     public interface OnReplaceFragmentListener {
-        void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType);
+        void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType, int totalResults);
     }
 
 }
