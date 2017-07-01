@@ -170,6 +170,7 @@ public class SearchListActivity extends NavigationDrawerActivity implements
                 presenter.setFilteringType(MediaType.MOVIES);
             else
                 presenter.setFilteringType(MediaType.TV);
+            presenter.setQuery(query);
             presenter.searchByKeyword(query);
             Log.d("debug", "selected item is " + moreOptions.getSelectedItem());
         }
@@ -212,9 +213,9 @@ public class SearchListActivity extends NavigationDrawerActivity implements
     }
 
     @Override
-    public void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType, int totalResults) {
+    public void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, String searchQuery, MediaType filterType, int totalResults, int totalPages) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs, filterType, totalResults);
+        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs, searchQuery, filterType, totalResults, totalPages);
         presenter = new SearchListPresenter(fragment);
         transaction.replace(fragmentContainer.getId(), fragment);
         transaction.addToBackStack(SEARCH_FRAG_COUNT++ + "");

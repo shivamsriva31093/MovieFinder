@@ -3,6 +3,7 @@ package task.application.com.moviefinder.ui.searchlist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -10,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +63,12 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private MediaType searchMediaType;
     private CoordinatorLayout parentActivityLayout;
     private int totalResults;
+    private int totalPages;
+    private boolean isLoading;
+    private boolean isLastPage;
+    private int currentPage = 1;
+    private String searchQuery = "";
+    private int noOfReq = 0;
 
 
     public static SearchListFragment newInstance() {
@@ -70,12 +76,15 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     public static SearchListFragment newInstance(ArrayList<? extends MediaBasic> movieDbs,
-                                                 MediaType filterType, int totalResults) {
+                                                 String query,
+                                                 MediaType filterType, int totalResults, int totalPages) {
         SearchListFragment fragment = new SearchListFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(SEARCH_LIST, movieDbs);
         bundle.putSerializable("filtering_type", filterType);
         bundle.putInt("totalItems", totalResults);
+        bundle.putInt("totalPages", totalPages);
+        bundle.putString("query", query);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -88,11 +97,15 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                 resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
                 searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
                 totalResults = getArguments().getInt("totalItems");
+                totalPages = getArguments().getInt("totalPages");
+                searchQuery = getArguments().getString("query");
             }
         } else if (getArguments() != null && !getArguments().isEmpty()) {
             resultList = getArguments().getParcelableArrayList(SEARCH_LIST);
             searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
             totalResults = getArguments().getInt("totalItems");
+            totalPages = getArguments().getInt("totalPages");
+            searchQuery = getArguments().getString("query");
         }
 
         recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, searchMediaType, itemClickListener);
@@ -121,6 +134,8 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         View rootView = inflater.inflate(R.layout.fragment_searchlist, container, false);
         recyclerViewParent = (FrameLayout) rootView.findViewById(R.id.recView_parent);
         recyclerView = (RecyclerView) recyclerViewParent.findViewById(R.id.recView);
+        presenter.setFilteringType(searchMediaType);
+        presenter.setQuery(searchQuery);
         setUpRecyclerView();
         return rootView;
     }
@@ -131,9 +146,25 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addOnScrollListener(new EndlessScrollListener(linearLayoutManager, 5) {
             @Override
-            public void onLoadMore(int page, int totalItems, RecyclerView recyclerView) {
-                Log.d("test", page + " ");
-                loadNextPageFromApi(page);
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public int getTotalPages() {
+                return totalPages;
+            }
+
+            @Override
+            public void loadMore() {
+                isLoading = true;
+                currentPage += 1;
+                loadNextPageFromApi(currentPage);
             }
 
             @Override
@@ -144,7 +175,9 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     private void loadNextPageFromApi(int page) {
-        presenter.searchByKeyword(presenter.getQuery(), page);
+        new Handler().postDelayed(() -> {
+            presenter.searchByKeyword(presenter.getQuery(), page);
+        }, 500);
     }
 
 
@@ -166,14 +199,19 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     @Override
-    public void showSearchList(ArrayList<? extends MediaBasic> movieDbs, int totalResults) {
-//        recyclerViewAdapter.replaceData(movieDbs);
-        listener.replaceFragment(movieDbs, presenter.getFilteringType(), totalResults);
+    public void showSearchList(ArrayList<? extends MediaBasic> movieDbs, int totalResults, int totalPages) {
+        listener.replaceFragment(movieDbs, presenter.getQuery(), presenter.getFilteringType(), totalResults, totalPages);
     }
 
     @Override
-    public void updateNewItems(List<? extends MediaBasic> data, int totalResults) {
+    public void updateNewItems(List<? extends MediaBasic> data) {
+        recyclerViewAdapter.removeFooter();
+        isLoading = false;
         recyclerViewAdapter.addDataItems(data);
+        if (currentPage == totalPages)
+            isLastPage = true;
+        else
+            recyclerViewAdapter.addFooter();
     }
 
     @Override
@@ -236,7 +274,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     private class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ViewHolder>{
         private Context context;
-        //        private ArrayList<? extends MediaBasic> data;
         private ArrayList<MediaBasic> data = new ArrayList<>();
         private SearchItemClickListener listener;
         private SparseBooleanArray posArray = new SparseBooleanArray();
@@ -246,6 +283,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         private static final int TYPE_FOOTER = 2;
         private SparseBooleanArray imdbRating = new SparseBooleanArray();
         private ArrayList<? extends MediaBasic> oldData = new ArrayList<>();
+        private boolean isLoaderRemoved = false;
 
         public SearchListAdapter(Context context, ArrayList<? extends MediaBasic> data,
                                  MediaType searchType, SearchItemClickListener listener) {
@@ -295,7 +333,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     showRowItems(holder, position);
                     break;
                 case TYPE_FOOTER:
-                    holder.footerProgressBar.setVisibility(View.VISIBLE);
+                    holder.footerProgressBar.setVisibility(isLoaderRemoved ? View.GONE : View.VISIBLE);
             }
         }
 
@@ -368,12 +406,13 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         }
 
         public void addDataItems(List<? extends MediaBasic> newDataItems) {
-            Log.d("test", newDataItems.size() + " " + newDataItems.get(0).getPosterPath());
-            int posStart = data.size();
-            data.addAll(newDataItems);
-            notifyItemRangeInserted(posStart, newDataItems.size() - 1);
-//            Handler handler = new Handler();
-//            handler.post(() -> notifyItemRangeInserted(posStart, newDataItems.size()-1));
+            int posStart = data.size() + 1;
+            for (MediaBasic item : newDataItems) {
+                data.add(item);
+                notifyItemInserted(posStart);
+                posStart++;
+            }
+
         }
 
         public ArrayList<? extends MediaBasic> getCurrentData() {
@@ -391,6 +430,14 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             item.setImdbRating(rating);
             posArray.put(pos + 1, true);
             notifyItemChanged(pos + 1);
+        }
+
+        public void removeFooter() {
+            isLoaderRemoved = true;
+        }
+
+        public void addFooter() {
+            isLoaderRemoved = false;
         }
 
 
@@ -442,7 +489,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     public interface OnReplaceFragmentListener {
-        void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, MediaType filterType, int totalResults);
+        void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, String searchQuery, MediaType filterType, int totalResults, int totalPages);
     }
 
 }

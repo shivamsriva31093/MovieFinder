@@ -47,6 +47,7 @@ public class SearchFragment extends Fragment implements SearchContract.View{
     private ImageView logo;
     private RotateLoading progressView;
     private CoordinatorLayout parentActivityLayout;
+    private String searchQuery = "";
 
     public SearchFragment() {
     }
@@ -106,23 +107,15 @@ public class SearchFragment extends Fragment implements SearchContract.View{
             }
         });
 
-        searchTerm.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    attemptToSearch();
-                }
-                return false;
-            }
-        });
-
-        searchAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        searchTerm.setOnKeyListener((v, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 attemptToSearch();
             }
+            return false;
         });
+
+        searchAction.setOnClickListener(v -> attemptToSearch());
 
 
     }
@@ -142,6 +135,7 @@ public class SearchFragment extends Fragment implements SearchContract.View{
         if(cancel) {
             focusView.requestFocus();
         } else {
+            searchQuery = query;
             presenter.searchByKeyword(query);
             Toast.makeText(getActivity(), "Searching for "+query, Toast.LENGTH_SHORT).show();
         }
@@ -155,10 +149,13 @@ public class SearchFragment extends Fragment implements SearchContract.View{
     }
 
     @Override
-    public void showSearchListUi(ArrayList<? extends MediaBasic> movieDbs) {
+    public void showSearchListUi(ArrayList<? extends MediaBasic> movieDbs, int totalResults, int totalPages) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("searchList", movieDbs);
         bundle.putSerializable("filtering_type", presenter.getFilteringType());
+        bundle.putInt("totalPages", totalPages);
+        bundle.putInt("totalItems", totalResults);
+        bundle.putString("query", searchQuery);
         Intent intent = new Intent(getActivity(), SearchListActivity.class);
         intent.putExtra("bundle", bundle);
         startActivity(intent);

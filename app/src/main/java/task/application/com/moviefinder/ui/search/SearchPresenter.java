@@ -43,7 +43,8 @@ public class SearchPresenter implements SearchContract.Presenter {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(searchRes -> {
-                        searchView.showSearchListUi(new ArrayList<BasicMovieInfo>(searchRes.getResults()));
+                        searchView.showSearchListUi(new ArrayList<BasicMovieInfo>(searchRes.getResults()),
+                                searchRes.getTotalResults(), searchRes.getTotalPages());
                         searchView.showLoadingIndicator(false);
                     }, throwable -> {
                         searchView.showLoadingResultsError();
@@ -56,7 +57,8 @@ public class SearchPresenter implements SearchContract.Presenter {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(searchRes -> {
-                        searchView.showSearchListUi(new ArrayList<BasicTVInfo>(searchRes.getResults()));
+                        searchView.showSearchListUi(new ArrayList<BasicTVInfo>(searchRes.getResults()),
+                                searchRes.getTotalResults(), searchRes.getTotalPages());
                         searchView.showLoadingIndicator(false);
                     }, throwable -> {
                         searchView.showLoadingResultsError();

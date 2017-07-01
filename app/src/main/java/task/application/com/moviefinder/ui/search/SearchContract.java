@@ -15,7 +15,7 @@ import task.application.com.moviefinder.ui.base.BaseView;
 public interface SearchContract {
 
     interface View extends BaseView<Presenter> {
-        void showSearchListUi(ArrayList<? extends MediaBasic> movieDbs);
+        void showSearchListUi(ArrayList<? extends MediaBasic> movieDbs, int totalResults, int totalPages);
         void showLoadingResultsError();
         void showLoadingIndicator(boolean flag);
         void showNoResults();

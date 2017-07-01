@@ -1,5 +1,7 @@
 package task.application.com.moviefinder.ui.searchlist;
 
+import android.util.Log;
+
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -8,6 +10,7 @@ import com.androidtmdbwrapper.model.tv.ExternalIds;
 import com.androidtmdbwrapper.model.tv.TvInfo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -35,7 +38,6 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
     @Override
     public void searchByKeyword(String keyword) {
         view.showLoadingIndicator(true);
-        query = keyword;
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         switch (getFilteringType()) {
             case MOVIES:
@@ -45,7 +47,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         .subscribe(searchRes -> {
                             view.showLoadingIndicator(false);
                             view.showSearchList(new ArrayList<>(searchRes.getResults()),
-                                    searchRes.getTotalResults());
+                                    searchRes.getTotalResults(), searchRes.getTotalPages());
                         }, throwable -> {
                             view.showLoadingIndicator(false);
                             view.showLoadingResultsError();
@@ -58,7 +60,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         .subscribe(searchRes -> {
                             view.showLoadingIndicator(false);
                             view.showSearchList(new ArrayList<>(searchRes.getResults()),
-                                    searchRes.getTotalResults());
+                                    searchRes.getTotalResults(), searchRes.getTotalPages());
                         }, throwable -> {
                             view.showLoadingIndicator(false);
                             view.showLoadingResultsError();
@@ -75,6 +77,8 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
 
     @Override
     public void searchByKeyword(String keyword, int page) {
+        Log.d("test", "method called  " + keyword);
+
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         switch (getFilteringType()) {
             case MOVIES:
@@ -82,8 +86,9 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
-                            view.updateNewItems(searchRes.getResults(), searchRes.getTotalResults());
+                            view.updateNewItems(searchRes.getResults());
                         }, throwable -> {
+                            view.updateNewItems(Collections.EMPTY_LIST);
                             throwable.printStackTrace();
                         });
                 break;
@@ -92,8 +97,9 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
-                            view.updateNewItems(searchRes.getResults(), searchRes.getTotalResults());
+                            view.updateNewItems(searchRes.getResults());
                         }, throwable -> {
+                            view.updateNewItems(Collections.EMPTY_LIST);
                             throwable.printStackTrace();
                         });
                 break;

@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "task.application.com.moviefinder"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 23
         multiDexEnabled true
         versionCode 1
