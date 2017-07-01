@@ -28,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
+        android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
@@ -48,8 +49,8 @@
         android:layout_gravity="bottom"
         android:background="@color/colorAccentTranslucent"
         app:elevation="8dp"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/status_bar_light_grey"
         app:menu="@menu/navigation" />
     <!--app:layout_behavior="task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour"-->
 
