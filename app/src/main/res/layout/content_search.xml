@@ -5,7 +5,7 @@
     android:id="@+id/content_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     tools:showIn="@layout/activity_search_1">
 
     <TextView
@@ -18,17 +18,17 @@
         android:layout_margin="48dp"
         android:visibility="gone" />
 
-
-
     <TextView
         android:id="@+id/apptitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_below="@+id/logo_container"
-        android:text="Movie Finder"
-        android:textColor="@color/textColor"
-        android:textSize="24dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:text="Search a movie or a TV series by selecting different filters"
+        android:textColor="@color/body_text_3"
+        android:textSize="20dp" />
     <!--<TextView-->
         <!--android:id="@+id/description"-->
         <!--android:layout_width="match_parent"-->
@@ -42,7 +42,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="30dp"
         android:layout_marginTop="25dp"
         android:layout_below="@+id/cardView"
         android:gravity="center_horizontal"
@@ -50,20 +50,19 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_below="@+id/cardView"
             android:foregroundGravity="center"
-            android:src="@drawable/logo_movie"
             android:visibility="visible"
             android:layout_weight="1" />
 
         <com.victor.loading.rotate.RotateLoading
             android:id="@+id/progressView"
             android:visibility="gone"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:loading_color="@android:color/white"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:loading_color="@color/colorPrimary"
             app:loading_width="5dp" />
 
     </LinearLayout>
@@ -73,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/search_layout"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="90dp"
             android:layout_below="@+id/apptitle">
 
             <android.support.design.widget.TextInputLayout
@@ -84,7 +83,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="16dp"
-                android:textColorHint="@color/colorAccentTextTranslucent"
+                android:textColorHint="@color/body_text_3"
                 app:hintEnabled="true"
                 >
 
@@ -97,10 +96,10 @@
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
                     android:textAlignment="viewStart"
-                    android:textColorHint="@color/colorAccentTextTranslucent"
+                    android:textColorHint="@color/body_text_3"
                     android:hint="Search"
                     android:theme="@style/TextLabel"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/body_text_3"
                     android:textCursorDrawable="@null"
                     android:textSize="18sp"
                     android:typeface="sans" />
@@ -126,7 +125,7 @@
         android:layout_below="@+id/search_layout"
         android:layout_marginRight="20dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="100dp"
         android:text="Search"
         android:textColor="@color/colorPrimary"
         />

@@ -134,6 +134,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/title"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@+id/title"
                     android:gravity="top"
                     android:orientation="horizontal">
@@ -151,7 +152,7 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/imdb_icon"
-                        android:layout_width="11dp"
+                        android:layout_width="21dp"
                         android:layout_height="20dp"
                         android:layout_gravity="left|center_vertical|start"
                         android:layout_marginTop="6dp"
@@ -164,13 +165,12 @@
 
                     <TextView
                         android:id="@+id/imdb_rating"
-                        style="@style/TextHeader"
+                        style="@style/TextBody"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginTop="6dp"
-                        android:tint="#88bab5b5"
-                        android:tintMode="src_atop"
+                        android:layout_marginLeft="3dp"
                         android:layout_toRightOf="@+id/imdb_icon_view"
                         android:layout_weight="1"
                         android:padding="5dp"
@@ -180,8 +180,8 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/star_icon"
-                        android:layout_width="13dp"
-                        android:layout_height="15dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/imdb_rating"
