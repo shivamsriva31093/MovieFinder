@@ -16,13 +16,13 @@ public interface SearchService {
 
     @GET("search/movie")
     Observable<SearchResult<BasicMovieInfo>> searchMovies(
-            @Query("query") String query
-//            @Query("language") String language,
-//            @Query("page") Integer page
+            @Query("query") String query,
+            @Query("page") Integer page
             );
 
     @GET("search/tv")
     Observable<SearchResult<BasicTVInfo>> searchTv(
-            @Query("query") String query
+            @Query("query") String query,
+            @Query("page") Integer page
     );
 }
