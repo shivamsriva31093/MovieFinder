@@ -3,12 +3,11 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:layout_marginTop="255dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_content_parent">
 
 
     <include
-        layout="@layout/content_detail_new"
+        layout="@layout/content_itemdetail"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 

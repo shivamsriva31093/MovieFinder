@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,11 +19,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
+import task.application.com.moviefinder.navigation.NavigationModel;
+import task.application.com.moviefinder.ui.base.BaseActivity;
 import task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour;
 import task.application.com.moviefinder.util.Util;
 
-public class FavoritesMediaActivity extends NavigationDrawerActivity implements
+public class FavoritesMediaActivity extends BaseActivity implements
         FavoritesMediaFragment.OnFragmentInteractionListener {
 
     private static final String SEARCH_QUERY = "query";
@@ -64,8 +64,7 @@ public class FavoritesMediaActivity extends NavigationDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View rootView = LayoutInflater.from(this).inflate(R.layout.activity_favorites_media, null, false);
-        setContentView(rootView);
+        setContentView(R.layout.activity_favorites_media);
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(SEARCH_QUERY))
                 searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
@@ -75,17 +74,28 @@ public class FavoritesMediaActivity extends NavigationDrawerActivity implements
     }
 
     @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
+    protected NavigationModel.NavigationItemEnum getSelfNavDrawerItem() {
+        return NavigationModel.NavigationItemEnum.FAVORITES;
     }
+
+    @Override
+    public void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
+        super.onNavDrawerStateChanged(isOpen, isAnimating);
+    }
+
+    @Override
+    public void onNavDrawerSlide(float offset) {
+        super.onNavDrawerSlide(offset);
+    }
+
 
     private void setUpBottomNavigationView() {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_tv);
         BottomNavigationBehaviour<BottomNavigationView> behaviour = new BottomNavigationBehaviour<>(this);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         params.setBehavior(behaviour);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_tv);
     }
 
     private void setUpSearchBox() {
@@ -190,15 +200,9 @@ public class FavoritesMediaActivity extends NavigationDrawerActivity implements
         }
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     @Override

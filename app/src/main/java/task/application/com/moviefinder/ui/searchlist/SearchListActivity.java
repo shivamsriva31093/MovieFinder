@@ -26,14 +26,15 @@ import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import java.util.ArrayList;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
+import task.application.com.moviefinder.navigation.NavigationModel;
+import task.application.com.moviefinder.ui.base.BaseActivity;
 import task.application.com.moviefinder.util.Util;
 
 /**
  * Created by sHIVAM on 2/6/2017.
  */
 
-public class SearchListActivity extends NavigationDrawerActivity implements
+public class SearchListActivity extends BaseActivity implements
         SearchListFragment.OnReplaceFragmentListener {
 
     private static final String TAG = SearchListActivity.class.getName();
@@ -57,22 +58,23 @@ public class SearchListActivity extends NavigationDrawerActivity implements
     private Bundle intentBundle;
 
     private CharSequence searchQuery;
+    private SearchListFragment fragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View layoutView = getLayoutInflater().inflate(R.layout.activity_search_list, null, false);
-        setContentView(layoutView);
+        setContentView(R.layout.activity_search_list);
         if(savedInstanceState != null) {
             if(savedInstanceState.containsKey(SEARCH_QUERY))
                 searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
+            fragment = (SearchListFragment) getSupportFragmentManager().getFragment(savedInstanceState, LIST_FRAG_TAG);
         } else {
             if(getIntent().hasExtra(BUNDLE)) {
                 intentBundle = getIntent().getBundleExtra(BUNDLE);
             }
         }
 
-        SearchListFragment fragment = (SearchListFragment)
+        fragment = (SearchListFragment)
                 getSupportFragmentManager().findFragmentByTag(LIST_FRAG_TAG);
         if(fragment == null) {
             fragment = SearchListFragment.newInstance();
@@ -83,11 +85,6 @@ public class SearchListActivity extends NavigationDrawerActivity implements
         presenter = new SearchListPresenter(fragment);
         fragmentContainer = (RelativeLayout) findViewById(R.id.activity_search_list);
         setUpSearchBox();
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
     }
 
     private void setUpSearchBox() {
@@ -121,13 +118,10 @@ public class SearchListActivity extends NavigationDrawerActivity implements
             }
         });
 
-        searchTerm.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                searchTerm.setFocusableInTouchMode(true);
-                searchTerm.requestFocus();
-                return false;
-            }
+        searchTerm.setOnTouchListener((v, event) -> {
+            searchTerm.setFocusableInTouchMode(true);
+            searchTerm.requestFocus();
+            return false;
         });
 
         searchTerm.setOnKeyListener((v, keyCode, event) -> {
@@ -146,9 +140,22 @@ public class SearchListActivity extends NavigationDrawerActivity implements
             attemptToSearch();
         });
 
-        menuButton.setOnClickListener(v -> openDrawer());
+        menuButton.setOnClickListener(v -> openNavDrawer());
+    }
 
+    @Override
+    protected NavigationModel.NavigationItemEnum getSelfNavDrawerItem() {
+        return NavigationModel.NavigationItemEnum.SEARCHLIST;
+    }
 
+    @Override
+    public void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
+        super.onNavDrawerStateChanged(isOpen, isAnimating);
+    }
+
+    @Override
+    public void onNavDrawerSlide(float offset) {
+        super.onNavDrawerSlide(offset);
     }
 
     private void attemptToSearch() {
@@ -181,6 +188,7 @@ public class SearchListActivity extends NavigationDrawerActivity implements
     protected void onSaveInstanceState(Bundle outState) {
         outState.putCharSequence(SEARCH_QUERY, searchQuery);
         super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, LIST_FRAG_TAG, fragment);
     }
 
     @Override

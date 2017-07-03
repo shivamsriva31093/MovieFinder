@@ -26,10 +26,10 @@
         <activity
             android:name=".ui.search.SearchActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,10 +44,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="task.application.com.moviefinder.ui.searchlist.SearchListActivity" />
         </activity>
-        <activity
-            android:name=".ui.navdrawer.NavigationDrawerActivity"
-            android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.favorites.FavoritesMediaActivity"
             android:label="@string/title_activity_favorites_media"

@@ -1,39 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_detail_coord_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-
-
-    <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:id="@+id/appbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--&gt;-->
-
-        <!---->
-        <!--&lt;!&ndash;<android.support.design.widget.CollapsingToolbarLayout&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:fitsSystemWindows="true"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:contentScrim="?attr/colorPrimary"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:layout_scrollFlags="scroll|exitUntilCollapsed"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:toolbarId="@+id/toolbar">&ndash;&gt;-->
-
-            <!--&lt;!&ndash;<android.support.v7.widget.Toolbar&ndash;&gt;-->
-                <!--&lt;!&ndash;android:id="@+id/toolbar"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="0dp"&ndash;&gt;-->
-                <!--&lt;!&ndash;app:layout_collapseMode="pin"&ndash;&gt;-->
-                <!--&lt;!&ndash;app:popupTheme="@style/AppTheme.PopupOverlay">&ndash;&gt;-->
-
-            <!--&lt;!&ndash;</android.support.v7.widget.Toolbar>&ndash;&gt;-->
-        <!--&lt;!&ndash;</android.support.design.widget.CollapsingToolbarLayout>&ndash;&gt;-->
-    <!--</android.support.design.widget.AppBarLayout>-->
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -101,8 +72,7 @@
         android:clickable="true"
         android:background="@android:color/transparent"
         android:src="@drawable/back_menu"
-        android:scaleType="centerCrop"
-        />
+        android:scaleType="centerCrop" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/favorite"
@@ -111,7 +81,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_favorite_border_black_24dp"
-        />
+        android:src="@drawable/ic_favorite_border_black_24dp" />
 
 </FrameLayout>

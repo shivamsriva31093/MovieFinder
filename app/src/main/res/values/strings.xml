@@ -47,4 +47,11 @@
     <string name="selected_count">%d selected</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="search_for_movies_or_tv">Search for movies or tv</string>
+    <string name="favorites">Favorites</string>
+    <string name="advanced_search">Advanced Search</string>
+    <string name="recent_movies">Recent Movies</string>
+    <string name="imdb_top_250">IMDb Top 250</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="share">Share</string>
+    <string name="send">Send</string>
 </resources>

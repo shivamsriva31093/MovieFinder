@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -106,6 +108,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             totalResults = getArguments().getInt("totalItems");
             totalPages = getArguments().getInt("totalPages");
             searchQuery = getArguments().getString("query");
+            Log.d("test_1", totalPages + " " + totalResults + " " + searchQuery);
         }
 
         recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, searchMediaType, itemClickListener);
@@ -123,7 +126,16 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
-        parentActivityLayout = (CoordinatorLayout) getActivity().findViewById(R.id.main_content);
+        if (savedInstanceState != null) {
+            if (!savedInstanceState.isEmpty()) {
+                resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
+                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
+                totalResults = getArguments().getInt("totalItems");
+                totalPages = getArguments().getInt("totalPages");
+                searchQuery = getArguments().getString("query");
+            }
+        }
+        parentActivityLayout = (CoordinatorLayout) getActivity().findViewById(R.id.parent_layout);
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.activity_search_list);
         progressView = (NewtonCradleLoading) fragmentContainer.findViewById(R.id.progressView);
     }
@@ -141,6 +153,10 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     }
 
     private void setUpRecyclerView() {
+        if (resultList.isEmpty()) {
+            showNoResults();
+            return;
+        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
@@ -208,10 +224,11 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         recyclerViewAdapter.removeFooter();
         isLoading = false;
         recyclerViewAdapter.addDataItems(data);
-        if (currentPage == totalPages)
-            isLastPage = true;
-        else
+        if (currentPage != totalPages)
             recyclerViewAdapter.addFooter();
+        else {
+            isLastPage = true;
+        }
     }
 
     @Override
@@ -248,12 +265,15 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     @Override
     public void showNoResults() {
-        recyclerViewAdapter.replaceData(new ArrayList<>());
-        recyclerViewAdapter.notifyDataSetChanged();
+        recyclerViewParent.setVisibility(View.GONE);
+        ImageView iv = (ImageView) getActivity().findViewById(R.id.no_results);
+        iv.setVisibility(View.VISIBLE);
+        Toast.makeText(getActivity(), "No results found!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLoadingResultsError() {
+        showNoResults();
         Snackbar snackbar = Snackbar.make(parentActivityLayout,
                 "Error in connectivity. Please check your net connection and retry", Snackbar.LENGTH_LONG);
         snackbar.show();
@@ -268,6 +288,9 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(SEARCH_LIST, recyclerViewAdapter.getCurrentData());
         outState.putSerializable("filtering_type", searchMediaType);
+        outState.putInt("totalItems", totalResults);
+        outState.putInt("totalPages", totalPages);
+        outState.putString("query", presenter.getQuery());
         super.onSaveInstanceState(outState);
     }
 
@@ -299,13 +322,13 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             ViewType holderType = ViewType.values()[viewType];
             switch (holderType) {
                 case TYPE_HEADER:
-                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_header, parent, false)
+                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.searchlist_header, parent, false)
                             , TYPE_HEADER);
                 case TYPE_ITEM:
-                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_recycler, parent, false),
+                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.serachlist_recycler, parent, false),
                             TYPE_ITEM);
                 case TYPE_FOOTER:
-                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_footer, parent, false),
+                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.searchlist_footer, parent, false),
                             TYPE_FOOTER);
                 default:
                     return null;
@@ -324,7 +347,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-
             switch (holder.HOLDER_ID) {
                 case TYPE_HEADER:
                     holder.header.setText(totalResults + " results returned");
@@ -334,6 +356,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     break;
                 case TYPE_FOOTER:
                     holder.footerProgressBar.setVisibility(isLoaderRemoved ? View.GONE : View.VISIBLE);
+                    break;
             }
         }
 
@@ -434,10 +457,12 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
         public void removeFooter() {
             isLoaderRemoved = true;
+            notifyItemChanged(data.size() + 1);
         }
 
         public void addFooter() {
             isLoaderRemoved = false;
+            notifyItemChanged(data.size() + 1);
         }
 
 

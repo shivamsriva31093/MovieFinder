@@ -2,7 +2,6 @@ package task.application.com.moviefinder.ui.itemdetail;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageButton;
-import android.view.View;
 
 import com.androidtmdbwrapper.model.credits.MediaCreditCast;
 import com.androidtmdbwrapper.model.credits.MediaCreditCrew;
@@ -10,11 +9,12 @@ import com.androidtmdbwrapper.model.credits.MediaCreditCrew;
 import java.util.List;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
+import task.application.com.moviefinder.navigation.NavigationModel;
+import task.application.com.moviefinder.ui.base.BaseActivity;
 import task.application.com.moviefinder.ui.utility.ImageSlider;
 import task.application.com.moviefinder.util.Util;
 
-public class SearchItemDetailActivity extends NavigationDrawerActivity implements
+public class SearchItemDetailActivity extends BaseActivity implements
         FragmentPrime.FragmentInteractionListener {
 
     private static final String SEARCH_ITEM = "searchItem";
@@ -27,20 +27,14 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View layoutView = getLayoutInflater().inflate(R.layout.activity_detail_new, null, false);
-        setContentView(layoutView);
+        setContentView(R.layout.activity_itemdetail);
         Bundle bundle = new Bundle();
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
         }
 
         menuButton = (AppCompatImageButton) findViewById(R.id.menu_button);
-        menuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        menuButton.setOnClickListener(v -> onBackPressed());
 
         fragment = (FragmentPrime)
                 getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
@@ -53,15 +47,25 @@ public class SearchItemDetailActivity extends NavigationDrawerActivity implement
     }
 
     @Override
+    protected NavigationModel.NavigationItemEnum getSelfNavDrawerItem() {
+        return NavigationModel.NavigationItemEnum.SEARCHDETAIL;
+    }
+
+    @Override
+    public void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
+        super.onNavDrawerStateChanged(isOpen, isAnimating);
+    }
+
+    @Override
+    public void onNavDrawerSlide(float offset) {
+        super.onNavDrawerSlide(offset);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (presenter == null)
             this.presenter = new SearchItemDetailPresenter(fragment);
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
     }
 
     @SuppressWarnings("Unchecked")

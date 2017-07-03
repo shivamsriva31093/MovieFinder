@@ -1,7 +1,5 @@
 package task.application.com.moviefinder.ui.searchlist;
 
-import android.util.Log;
-
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -77,8 +75,6 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
 
     @Override
     public void searchByKeyword(String keyword, int page) {
-        Log.d("test", "method called  " + keyword);
-
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         switch (getFilteringType()) {
             case MOVIES:

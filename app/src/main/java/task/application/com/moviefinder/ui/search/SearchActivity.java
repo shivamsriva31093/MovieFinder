@@ -1,8 +1,6 @@
 package task.application.com.moviefinder.ui.search;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -11,10 +9,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.navdrawer.NavigationDrawerActivity;
+import task.application.com.moviefinder.navigation.NavigationModel;
+import task.application.com.moviefinder.ui.base.BaseActivity;
 import task.application.com.moviefinder.util.Util;
 
-public class SearchActivity extends NavigationDrawerActivity {
+public class SearchActivity extends BaseActivity {
 
     private static final String SEARCH_HOME_TAG = "search_home";
     private SearchPresenter searchPresenter;
@@ -22,8 +21,7 @@ public class SearchActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View layoutView = getLayoutInflater().inflate(R.layout.activity_search_1, null, false);
-        setContentView(layoutView);
+        setContentView(R.layout.activity_search);
         setUpToolbar();
 
         SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
@@ -36,14 +34,26 @@ public class SearchActivity extends NavigationDrawerActivity {
         searchPresenter = new SearchPresenter(searchFragment);
     }
 
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-    }
 
     private void setUpToolbar() {
 
     }
+
+    @Override
+    protected NavigationModel.NavigationItemEnum getSelfNavDrawerItem() {
+        return NavigationModel.NavigationItemEnum.SEARCH_HOME;
+    }
+
+    @Override
+    public void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
+        super.onNavDrawerStateChanged(isOpen, isAnimating);
+    }
+
+    @Override
+    public void onNavDrawerSlide(float offset) {
+        super.onNavDrawerSlide(offset);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
