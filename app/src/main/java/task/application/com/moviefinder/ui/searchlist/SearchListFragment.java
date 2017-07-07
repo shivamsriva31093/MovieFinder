@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -68,7 +69,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private int totalPages;
     private boolean isLoading;
     private boolean isLastPage;
-    private int currentPage = 1;
     private String searchQuery = "";
     private int noOfReq = 0;
 
@@ -157,18 +157,20 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             showNoResults();
             return;
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean supportsPredictiveItemAnimations() {
+                return true;
+            }
+        };
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addOnScrollListener(new EndlessScrollListener(linearLayoutManager, 5) {
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
+
 
             @Override
-            public boolean isLastPage() {
-                return isLastPage;
+            public boolean isLastPage(int page) {
+                return page == getTotalPages();
             }
 
             @Override
@@ -177,23 +179,15 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             }
 
             @Override
-            public void loadMore() {
-                isLoading = true;
-                currentPage += 1;
-                loadNextPageFromApi(currentPage);
-            }
-
-            @Override
-            public int getFooterViewType(int defaultNoFooterViewType) {
-                return ViewType.TYPE_FOOTER.ordinal();
+            public void loadMore(int page) {
+                loadNextPageFromApi(page);
             }
         });
     }
 
     private void loadNextPageFromApi(int page) {
-        new Handler().postDelayed(() -> {
-            presenter.searchByKeyword(presenter.getQuery(), page);
-        }, 500);
+        recyclerViewAdapter.addFooter();
+        presenter.searchByKeyword(presenter.getQuery(), page);
     }
 
 
@@ -221,14 +215,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
 
     @Override
     public void updateNewItems(List<? extends MediaBasic> data) {
-        recyclerViewAdapter.removeFooter();
-        isLoading = false;
         recyclerViewAdapter.addDataItems(data);
-        if (currentPage != totalPages)
-            recyclerViewAdapter.addFooter();
-        else {
-            isLastPage = true;
-        }
     }
 
     @Override
@@ -298,6 +285,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ViewHolder>{
         private Context context;
         private ArrayList<MediaBasic> data = new ArrayList<>();
+        private ArrayList<MediaBasic> oldData = new ArrayList<>();
         private SearchItemClickListener listener;
         private SparseBooleanArray posArray = new SparseBooleanArray();
         private MediaType searchType;
@@ -305,8 +293,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         private static final int TYPE_ITEM = 1;
         private static final int TYPE_FOOTER = 2;
         private SparseBooleanArray imdbRating = new SparseBooleanArray();
-        private ArrayList<? extends MediaBasic> oldData = new ArrayList<>();
-        private boolean isLoaderRemoved = false;
+        private boolean isLoaderRemoved = true;
 
         public SearchListAdapter(Context context, ArrayList<? extends MediaBasic> data,
                                  MediaType searchType, SearchItemClickListener listener) {
@@ -325,7 +312,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.searchlist_header, parent, false)
                             , TYPE_HEADER);
                 case TYPE_ITEM:
-                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.serachlist_recycler, parent, false),
+                    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.searchlist_recycler, parent, false),
                             TYPE_ITEM);
                 case TYPE_FOOTER:
                     return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.searchlist_footer, parent, false),
@@ -352,7 +339,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
                     holder.header.setText(totalResults + " results returned");
                     break;
                 case TYPE_ITEM:
-                    showRowItems(holder, position);
+                    showRowItems(holder, holder.getAdapterPosition());
                     break;
                 case TYPE_FOOTER:
                     holder.footerProgressBar.setVisibility(isLoaderRemoved ? View.GONE : View.VISIBLE);
@@ -429,13 +416,17 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         }
 
         public void addDataItems(List<? extends MediaBasic> newDataItems) {
+            removeFooter();
+//            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtilCB(data, newDataItems));
+//            new Handler().post(() -> {
+//                diffResult.dispatchUpdatesTo(this);
+//                data.addAll(newDataItems);
+//            });
             int posStart = data.size() + 1;
             for (MediaBasic item : newDataItems) {
                 data.add(item);
-                notifyItemInserted(posStart);
-                posStart++;
+                notifyItemInserted(posStart++);
             }
-
         }
 
         public ArrayList<? extends MediaBasic> getCurrentData() {
@@ -452,19 +443,18 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             MediaBasic item = data.get(pos);
             item.setImdbRating(rating);
             posArray.put(pos + 1, true);
-            notifyItemChanged(pos + 1);
+            new Handler().post(() -> notifyItemChanged(pos + 1));
         }
 
         public void removeFooter() {
             isLoaderRemoved = true;
-            notifyItemChanged(data.size() + 1);
+            new Handler().post(() -> notifyItemChanged(data.size() + 1));
         }
 
         public void addFooter() {
             isLoaderRemoved = false;
-            notifyItemChanged(data.size() + 1);
+            new Handler().post(() -> notifyItemChanged(data.size() + 1));
         }
-
 
         class ViewHolder extends RecyclerView.ViewHolder {
             private TextView title;
@@ -506,6 +496,43 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             }
         }
 
+        private class DiffUtilCB extends DiffUtil.Callback {
+            private List<? extends MediaBasic> oldData;
+            private List<? extends MediaBasic> newData;
+
+            public DiffUtilCB(List<? extends MediaBasic> prevData, List<? extends MediaBasic> data) {
+                this.oldData = prevData;
+                this.newData = data;
+            }
+
+            @Override
+            public int getOldListSize() {
+                return oldData.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newData.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldData.get(oldItemPosition).getId() == newData.get(newItemPosition).getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                if (oldData.get(oldItemPosition) == null || newData.get(newItemPosition) == null)
+                    return false;
+                return oldData.get(oldItemPosition).equals(newData.get(newItemPosition));
+            }
+
+            @Nullable
+            @Override
+            public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+                return super.getChangePayload(oldItemPosition, newItemPosition);
+            }
+        }
     }
 
 
