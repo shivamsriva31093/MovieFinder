@@ -1,6 +1,8 @@
 package task.application.com.moviefinder.ui.discover;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
@@ -46,22 +47,44 @@ public class DiscoverActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
+        initViews();
+    }
+
+    private void initViews() {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        findViewById(R.id.nav_button).setOnClickListener(view -> {
+            new Handler().postDelayed(this::openNavDrawer, 150);
+        });
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setUpTabLayout();
-
-
     }
 
     private void setUpTabLayout() {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
+        changeTabsFont();
         tabLayout.setupWithViewPager(mViewPager);
+
+    }
+
+    private void changeTabsFont() {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/" + "FrancoisOne-Regular.ttf");
+        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    ((TextView) tabViewChild).setTypeface(font);
+                }
+            }
+        }
     }
 
     @Override
@@ -152,7 +175,6 @@ public class DiscoverActivity extends BaseActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    Toast.makeText(DiscoverActivity.this, "Hello 0", Toast.LENGTH_SHORT).show();
                     return RecentMoviesFragment.newInstance(new Bundle());
                 case 1:
                 case 2:
