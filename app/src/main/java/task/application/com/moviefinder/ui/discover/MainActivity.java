@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.ui;
+package task.application.com.moviefinder.ui.discover;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

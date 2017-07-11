@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 
 /**
  * Created by sHIVAM on 7/1/2017.
@@ -11,10 +12,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
     private int visibleItemsThreshold = 4;
-
+    private int prevTotalCount = 0;
+    private int curPage = 1;
     RecyclerView.LayoutManager layoutManager;
-    private int defaultNoFooterViewType = -1;
-    private int footerViewType = -1;
+    private boolean isLoading = false;
 
     public EndlessScrollListener() {
     }
@@ -40,7 +41,6 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     }
 
     private void init() {
-        footerViewType = getFooterViewType(defaultNoFooterViewType);
         int threshold = getVisibleThreshold();
         if (threshold > visibleItemsThreshold)
             visibleItemsThreshold = threshold;
@@ -49,20 +49,31 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        if (dy <= 0) return;
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
         int firstVisibleItemPosition = getFirstVisibleItemPos();
-        if (!isLoading() && !isLastPage()) {
-            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                    && firstVisibleItemPosition >= 0) {
-                loadMore();
+        if (isLoading) {
+            if (totalItemCount > prevTotalCount) {
+                isLoading = false;
+                prevTotalCount = totalItemCount;
+            }
+        }
+        if (!isLoading && !isLastPage(curPage)) {
+//            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+//                    && firstVisibleItemPosition >= 0) {
+//                loadMore();
+//            }
+            if ((totalItemCount - visibleItemCount) <= (firstVisibleItemPosition + visibleItemsThreshold)) {
+                isLoading = true;
+                curPage += 1;
+                loadMore(curPage);
+                Log.d("test", "method load more called " + curPage);
             }
         }
     }
 
-    public abstract boolean isLoading();
-
-    public abstract boolean isLastPage();
+    public abstract boolean isLastPage(int page);
 
     public abstract int getTotalPages();
 
@@ -89,19 +100,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         super.onScrollStateChanged(recyclerView, newState);
     }
 
-    public boolean isUsingFooterView() {
-        return footerViewType != defaultNoFooterViewType;
-    }
-
-    public boolean isFooterView(RecyclerView.Adapter adapter) {
-        int pTotalItems = adapter.getItemCount();
-        return pTotalItems > 0 &&
-                adapter.getItemViewType(pTotalItems - 1) == footerViewType;
-    }
-
-    public abstract void loadMore();
-
-    public abstract int getFooterViewType(int defaultNoFooterViewType);
+    public abstract void loadMore(int page);
 
     public int getVisibleThreshold() {
         return visibleItemsThreshold;

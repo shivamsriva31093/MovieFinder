@@ -25,11 +25,12 @@
         </activity>
         <activity
             android:name=".ui.search.SearchActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,8 +48,23 @@
         <activity
             android:name=".ui.favorites.FavoritesMediaActivity"
             android:label="@string/title_activity_favorites_media"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.discover.MainActivity"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
+        <activity
+            android:name=".ui.discover.DiscoverActivity"
+            android:label="@string/title_activity_discover"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

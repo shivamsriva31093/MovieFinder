@@ -34,7 +34,7 @@ public class NavigationConfig {
             concatenateItems(new NavigationItemEnum[]{
                     NavigationItemEnum.FAVORITES,
                     NavigationItemEnum.SEARCH_HOME,
-                    NavigationItemEnum.RECENT_MOVIES,
+                    NavigationItemEnum.DISCOVER_MOVIES,
                     NavigationItemEnum.IMDB_TOP_250
             }, COMMON_ITEMS);
 
@@ -63,7 +63,7 @@ public class NavigationConfig {
             switch (items[i]) {
                 case FAVORITES:
                 case IMDB_TOP_250:
-                case RECENT_MOVIES:
+                case DISCOVER_MOVIES:
                 case SEARCH_HOME:
                 case SEND:
                 case SHARE:

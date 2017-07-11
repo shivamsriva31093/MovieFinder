@@ -1,10 +1,10 @@
-package task.application.com.moviefinder.ui.search;
+package task.application.com.moviefinder.ui.discover;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +23,7 @@ import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.MovieDb;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.util.GridLayoutItemDecoration;
 
 public class RecentMoviesFragment extends Fragment {
 
@@ -75,8 +76,7 @@ public class RecentMoviesFragment extends Fragment {
 
     private void setUpRecView(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.media_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.HORIZONTAL, false) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2) {
             @Override
             public boolean supportsPredictiveItemAnimations() {
                 return true;
@@ -86,6 +86,8 @@ public class RecentMoviesFragment extends Fragment {
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new GridLayoutItemDecoration(2, 1, true));
+        recyclerView.setNestedScrollingEnabled(false);
         rvAdapter = new RVAdapter(mediaData);
         recyclerView.setAdapter(rvAdapter);
     }
@@ -130,7 +132,6 @@ public class RecentMoviesFragment extends Fragment {
         }
 
         public void updateData(List<MovieDb> list) {
-            Log.d("test", list.size() + " ");
             this.data = list;
             notifyDataSetChanged();
         }

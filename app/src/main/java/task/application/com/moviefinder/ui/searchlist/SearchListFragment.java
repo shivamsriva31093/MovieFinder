@@ -499,7 +499,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         private class DiffUtilCB extends DiffUtil.Callback {
             private List<? extends MediaBasic> oldData;
             private List<? extends MediaBasic> newData;
-
             public DiffUtilCB(List<? extends MediaBasic> prevData, List<? extends MediaBasic> data) {
                 this.oldData = prevData;
                 this.newData = data;
