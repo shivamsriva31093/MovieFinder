@@ -1,8 +1,8 @@
 package com.androidtmdbwrapper.apiservices;
 
 import com.androidtmdbwrapper.model.core.AppendToResponse;
-import com.androidtmdbwrapper.model.core.SearchResult;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.androidtmdbwrapper.model.movies.MiscellaneousResults;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 
 import io.reactivex.Observable;
@@ -23,28 +23,28 @@ public interface MoviesService {
     );
 
     @GET("movie/now_playing")
-    Observable<SearchResult<BasicMovieInfo>> getNowPlaying(
+    Observable<MiscellaneousResults<BasicMovieInfo>> getNowPlaying(
             @Query("language") String ISO639_1_language,
             @Query("page") int page,
             @Query("region") String ISO3166_1_region
     );
 
     @GET("movie/popular")
-    Observable<SearchResult<BasicMovieInfo>> getPopular(
+    Observable<MiscellaneousResults<BasicMovieInfo>> getPopular(
             @Query("language") String ISO639_1_language,
             @Query("page") int page,
             @Query("region") String ISO3166_1_region
     );
 
     @GET("movie/top_rated")
-    Observable<SearchResult<BasicMovieInfo>> getTopRated(
+    Observable<MiscellaneousResults<BasicMovieInfo>> getTopRated(
             @Query("language") String ISO639_1_language,
             @Query("page") int page,
             @Query("region") String ISO3166_1_region
     );
 
     @GET("movie/upcoming")
-    Observable<SearchResult<BasicMovieInfo>> getUpcoming(
+    Observable<MiscellaneousResults<BasicMovieInfo>> getUpcoming(
             @Query("language") String ISO639_1_language,
             @Query("page") int page,
             @Query("region") String ISO3166_1_region

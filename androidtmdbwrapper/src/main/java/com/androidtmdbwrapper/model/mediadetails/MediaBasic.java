@@ -23,7 +23,7 @@ public class MediaBasic implements Parcelable {
     @JsonProperty("vote_count")
     private int voteCount;
 
-    private String imdbRating;
+    private String imdbRating = "";
 
     public MediaBasic() {
     }
@@ -122,4 +122,11 @@ public class MediaBasic implements Parcelable {
         parcel.writeInt(voteCount);
         parcel.writeString(imdbRating);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        MediaBasic that = (MediaBasic) obj;
+        return this.getId() == that.getId();
+    }
+
 }
