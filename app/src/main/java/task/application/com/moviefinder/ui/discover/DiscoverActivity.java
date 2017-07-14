@@ -72,6 +72,7 @@ public class DiscoverActivity extends BaseActivity {
     private void setUpTabLayout() {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
+        tabLayout.setSelectedTabIndicatorHeight(0);
         changeTabsFont();
         tabLayout.setupWithViewPager(mViewPager);
 
