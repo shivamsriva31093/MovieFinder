@@ -12,7 +12,6 @@ import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,10 +96,10 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         if(savedInstanceState != null) {
             if(!savedInstanceState.isEmpty()) {
                 resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
-                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
-                totalResults = getArguments().getInt("totalItems");
-                totalPages = getArguments().getInt("totalPages");
-                searchQuery = getArguments().getString("query");
+                searchMediaType = (MediaType) savedInstanceState.getSerializable("filtering_type");
+                totalResults = savedInstanceState.getInt("totalItems");
+                totalPages = savedInstanceState.getInt("totalPages");
+                searchQuery = savedInstanceState.getString("query");
             }
         } else if (getArguments() != null && !getArguments().isEmpty()) {
             resultList = getArguments().getParcelableArrayList(SEARCH_LIST);
@@ -108,7 +107,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             totalResults = getArguments().getInt("totalItems");
             totalPages = getArguments().getInt("totalPages");
             searchQuery = getArguments().getString("query");
-            Log.d("test_1", totalPages + " " + totalResults + " " + searchQuery);
         }
 
         recyclerViewAdapter = new SearchListAdapter(getActivity(), resultList, searchMediaType, itemClickListener);

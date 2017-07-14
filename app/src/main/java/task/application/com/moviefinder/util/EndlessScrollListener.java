@@ -4,7 +4,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 
 /**
  * Created by sHIVAM on 7/1/2017.
@@ -14,7 +13,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     private int visibleItemsThreshold = 4;
     private int prevTotalCount = 0;
     private int curPage = 1;
-    RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager layoutManager;
     private boolean isLoading = false;
 
     public EndlessScrollListener() {
@@ -50,6 +49,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         if (dy <= 0) return;
+
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
         int firstVisibleItemPosition = getFirstVisibleItemPos();
@@ -68,7 +68,6 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
                 isLoading = true;
                 curPage += 1;
                 loadMore(curPage);
-                Log.d("test", "method load more called " + curPage);
             }
         }
     }
@@ -78,10 +77,10 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     public abstract int getTotalPages();
 
     private int getFirstVisibleItemPos() {
-        if (layoutManager instanceof LinearLayoutManager)
-            return ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
-        else if (layoutManager instanceof GridLayoutManager)
+        if (layoutManager instanceof GridLayoutManager)
             return ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
+        else if (layoutManager instanceof LinearLayoutManager)
+            return ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
         else if (layoutManager instanceof StaggeredGridLayoutManager) {
             return getFirstVisibleItem(((StaggeredGridLayoutManager) layoutManager).findFirstVisibleItemPositions(null));
         }
