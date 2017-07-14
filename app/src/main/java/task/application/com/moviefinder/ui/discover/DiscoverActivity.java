@@ -7,16 +7,20 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.io.Serializable;
 
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
@@ -34,6 +38,7 @@ public class DiscoverActivity extends BaseActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private DiscoverPresenter presenter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -59,6 +64,7 @@ public class DiscoverActivity extends BaseActivity {
         });
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setOffscreenPageLimit(5);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setUpTabLayout();
     }
@@ -163,24 +169,41 @@ public class DiscoverActivity extends BaseActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return super.instantiateItem(container, position);
+        }
+
+        @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            Bundle bundle = new Bundle();
+            RecentMoviesFragment fragment;
+            Log.d("test", position + "  is");
             switch (position) {
                 case 0:
-                    return RecentMoviesFragment.newInstance(new Bundle());
+                    bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.NOW_PLAYING);
+                    break;
                 case 1:
+                    bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.UPCOMING);
+                    break;
                 case 2:
-                default:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.POPULAR);
+                    break;
+                case 3:
+                    bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.TOP_RATED);
+                    break;
             }
+            fragment = RecentMoviesFragment.newInstance(bundle);
+            presenter = new DiscoverPresenter(fragment, position);
+            return fragment;
         }
 
         @Override
@@ -200,10 +223,8 @@ public class DiscoverActivity extends BaseActivity {
                             .append("Playing", new RelativeSizeSpan(2f), new ForegroundColorSpan(getResources().getColor(R.color.black)));
                     return spannableStringBuilder.build();
                 case 1:
-                    spannableStringBuilder.append("Recent", new RelativeSizeSpan(2f),
-                            new ForegroundColorSpan(getResources().getColor(R.color.black)))
-                            .append(" ")
-                            .append("Movies", new RelativeSizeSpan(2f), new ForegroundColorSpan(getResources().getColor(R.color.black)));
+                    spannableStringBuilder.append("Upcoming", new RelativeSizeSpan(2f),
+                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
                     return spannableStringBuilder.build();
                 case 2:
                     spannableStringBuilder.append("Popular", new RelativeSizeSpan(2f),
@@ -216,5 +237,12 @@ public class DiscoverActivity extends BaseActivity {
             }
 
         }
+    }
+
+    public enum QueryType implements Serializable {
+        NOW_PLAYING,
+        UPCOMING,
+        POPULAR,
+        TOP_RATED
     }
 }
