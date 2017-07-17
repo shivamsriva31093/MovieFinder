@@ -69,6 +69,7 @@
             android:layout_gravity="bottom"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/black"
+            app:tabBackground="@drawable/ripple_effect_tabs"
             app:tabTextAppearance="@style/TabLayoutStyle"
             app:tabTextColor="@color/status_bar_light_grey" />
     </android.support.design.widget.AppBarLayout>

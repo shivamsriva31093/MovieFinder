@@ -203,7 +203,7 @@ public class DiscoverActivity extends BaseActivity {
                     break;
             }
             fragment = RecentMoviesFragment.newInstance(bundle);
-            presenter = new DiscoverPresenter(fragment, position);
+            presenter = new DiscoverPresenter(fragment, position + "");
             return fragment;
         }
 
