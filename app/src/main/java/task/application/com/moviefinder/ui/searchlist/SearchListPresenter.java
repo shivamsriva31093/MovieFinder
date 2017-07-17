@@ -8,7 +8,6 @@ import com.androidtmdbwrapper.model.tv.ExternalIds;
 import com.androidtmdbwrapper.model.tv.TvInfo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -84,8 +83,8 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         .subscribe(searchRes -> {
                             view.updateNewItems(searchRes.getResults());
                         }, throwable -> {
-                            view.updateNewItems(Collections.EMPTY_LIST);
                             throwable.printStackTrace();
+                            view.setEndlessScrollLoading(false);
                         });
                 break;
             case TV:
@@ -95,7 +94,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         .subscribe(searchRes -> {
                             view.updateNewItems(searchRes.getResults());
                         }, throwable -> {
-                            view.updateNewItems(Collections.EMPTY_LIST);
+                            view.setEndlessScrollLoading(false);
                             throwable.printStackTrace();
                         });
                 break;

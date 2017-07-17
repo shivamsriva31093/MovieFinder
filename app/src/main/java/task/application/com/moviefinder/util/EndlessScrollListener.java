@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 
 /**
  * Created by sHIVAM on 7/1/2017.
@@ -12,9 +13,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
     private int visibleItemsThreshold = 4;
     private int prevTotalCount = 0;
-    private int curPage = 1;
+    private int curPage = 2;
     private RecyclerView.LayoutManager layoutManager;
-    private boolean isLoading = false;
+    private boolean isLoading = true;
+    private int totalItemCount = 0;
 
     public EndlessScrollListener() {
     }
@@ -49,9 +51,8 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         if (dy <= 0) return;
-
         int visibleItemCount = layoutManager.getChildCount();
-        int totalItemCount = layoutManager.getItemCount();
+        totalItemCount = layoutManager.getItemCount();
         int firstVisibleItemPosition = getFirstVisibleItemPos();
         if (isLoading) {
             if (totalItemCount > prevTotalCount) {
@@ -59,14 +60,12 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
                 prevTotalCount = totalItemCount;
             }
         }
+
         if (!isLoading && !isLastPage(curPage)) {
-//            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-//                    && firstVisibleItemPosition >= 0) {
-//                loadMore();
-//            }
+
             if ((totalItemCount - visibleItemCount) <= (firstVisibleItemPosition + visibleItemsThreshold)) {
                 isLoading = true;
-                curPage += 1;
+                Log.d("test", curPage + " is the current page");
                 loadMore(curPage);
             }
         }
@@ -94,12 +93,32 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         return x;
     }
 
+    public int getCurPage() {
+        return curPage;
+    }
+
+    public void setCurPage(int curPage) {
+        this.curPage = curPage;
+    }
+
+    public int getPrevTotalCount() {
+        return prevTotalCount;
+    }
+
+    public void setPrevTotalCount(int prevTotalCount) {
+        this.prevTotalCount = prevTotalCount;
+    }
+
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
     }
 
     public abstract void loadMore(int page);
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+    }
 
     public int getVisibleThreshold() {
         return visibleItemsThreshold;

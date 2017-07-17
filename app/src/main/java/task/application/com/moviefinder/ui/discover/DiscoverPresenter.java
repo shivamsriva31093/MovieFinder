@@ -3,10 +3,9 @@ package task.application.com.moviefinder.ui.discover;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
 import com.androidtmdbwrapper.model.movies.MiscellaneousResults;
 
-import java.util.ArrayList;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.util.TmdbApi;
@@ -19,11 +18,12 @@ public class DiscoverPresenter implements DiscoverContract.Presenter {
 
     private final DiscoverContract.View view;
     private DiscoverActivity.QueryType queryType;
-    private final int viewID;
+    private final String viewID;
     private String lang;
     private String region;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
-    public DiscoverPresenter(DiscoverContract.View view, int ID) {
+    public DiscoverPresenter(DiscoverContract.View view, String ID) {
         this.view = view;
         this.viewID = ID;
         view.setPresenter(this);
@@ -104,7 +104,7 @@ public class DiscoverPresenter implements DiscoverContract.Presenter {
                     view.updateNewItems(basicMovieInfos.getResults());
                 }, throwable -> {
                     throwable.printStackTrace();
-                    view.updateNewItems(new ArrayList<>());
+                    view.setEndlessScrollLoading(false);
                 });
     }
 
@@ -145,5 +145,10 @@ public class DiscoverPresenter implements DiscoverContract.Presenter {
         return tmdb.moviesService().getPopular(ISO639_1_language, page, ISO3166_1_region)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public String getViewID() {
+        return viewID;
     }
 }

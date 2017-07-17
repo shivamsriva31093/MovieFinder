@@ -22,6 +22,8 @@ public interface SearchListContract  {
         <T extends MediaBasic> Void showItemDetailsUi(T Item);
         void showLoadingIndicator(boolean show);
         void showNoResults();
+
+        void setEndlessScrollLoading(boolean status);
         void showLoadingResultsError();
     }
 

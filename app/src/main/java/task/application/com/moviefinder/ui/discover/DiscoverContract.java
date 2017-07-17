@@ -20,6 +20,8 @@ public class DiscoverContract {
         void showLoadingIndicator(boolean flag);
 
         void showNoResults();
+
+        void setEndlessScrollLoading(boolean status);
     }
 
     public interface Presenter extends BasePresenter {
@@ -30,5 +32,7 @@ public class DiscoverContract {
         void setQueryType(DiscoverActivity.QueryType queryType);
 
         DiscoverActivity.QueryType getQueryType();
+
+        String getViewID();
     }
 }

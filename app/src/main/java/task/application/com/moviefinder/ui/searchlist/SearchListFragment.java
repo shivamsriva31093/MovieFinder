@@ -70,6 +70,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private boolean isLastPage;
     private String searchQuery = "";
     private int noOfReq = 0;
+    private EndlessScrollListener rvScrollListener;
 
 
     public static SearchListFragment newInstance() {
@@ -163,7 +164,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         };
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.addOnScrollListener(new EndlessScrollListener(linearLayoutManager, 5) {
+        rvScrollListener = new EndlessScrollListener(linearLayoutManager, 5) {
 
 
             @Override
@@ -180,7 +181,8 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
             public void loadMore(int page) {
                 loadNextPageFromApi(page);
             }
-        });
+        };
+        recyclerView.addOnScrollListener(rvScrollListener);
     }
 
     private void loadNextPageFromApi(int page) {
@@ -188,7 +190,18 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         presenter.searchByKeyword(presenter.getQuery(), page);
     }
 
+    @Override
+    public void setEndlessScrollLoading(boolean status) {
+        rvScrollListener.setLoading(status);
+        recyclerViewAdapter.removeFooter();
+    }
 
+    @Override
+    public void updateNewItems(List<? extends MediaBasic> data) {
+        recyclerViewAdapter.addDataItems(data);
+        int curPage = rvScrollListener.getCurPage();
+        rvScrollListener.setCurPage(curPage + 1);
+    }
 
     @Override
     public void onStart() {
@@ -211,10 +224,6 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         listener.replaceFragment(movieDbs, presenter.getQuery(), presenter.getFilteringType(), totalResults, totalPages);
     }
 
-    @Override
-    public void updateNewItems(List<? extends MediaBasic> data) {
-        recyclerViewAdapter.addDataItems(data);
-    }
 
     @Override
     public void setImdbRatings(String rating, int pos) {
