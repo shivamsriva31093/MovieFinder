@@ -191,7 +191,6 @@ public class FavoritesMediaActivity extends BaseActivity implements
         super.onSaveInstanceState(outState);
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();

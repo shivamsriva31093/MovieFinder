@@ -53,7 +53,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private static final String CLICKED_ITEM = "clickedItem";
     private static final String SEARCH_ITEM = "searchItem";
 
-    private ArrayList<? extends MediaBasic> resultList;
+    private ArrayList<? extends MediaBasic> resultList = new ArrayList<>();
     private OnReplaceFragmentListener listener;
 
     private SearchListContract.Presenter presenter;
@@ -66,10 +66,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     private CoordinatorLayout parentActivityLayout;
     private int totalResults;
     private int totalPages;
-    private boolean isLoading;
-    private boolean isLastPage;
     private String searchQuery = "";
-    private int noOfReq = 0;
     private EndlessScrollListener rvScrollListener;
 
 
@@ -94,15 +91,7 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null) {
-            if(!savedInstanceState.isEmpty()) {
-                resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
-                searchMediaType = (MediaType) savedInstanceState.getSerializable("filtering_type");
-                totalResults = savedInstanceState.getInt("totalItems");
-                totalPages = savedInstanceState.getInt("totalPages");
-                searchQuery = savedInstanceState.getString("query");
-            }
-        } else if (getArguments() != null && !getArguments().isEmpty()) {
+        if (getArguments() != null && !getArguments().isEmpty()) {
             resultList = getArguments().getParcelableArrayList(SEARCH_LIST);
             searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
             totalResults = getArguments().getInt("totalItems");
@@ -124,15 +113,12 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setRetainInstance(true);
-        if (savedInstanceState != null) {
-            if (!savedInstanceState.isEmpty()) {
-                resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
-                searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
-                totalResults = getArguments().getInt("totalItems");
-                totalPages = getArguments().getInt("totalPages");
-                searchQuery = getArguments().getString("query");
-            }
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            resultList = savedInstanceState.getParcelableArrayList(SEARCH_LIST);
+            searchMediaType = (MediaType) getArguments().getSerializable("filtering_type");
+            totalResults = getArguments().getInt("totalItems");
+            totalPages = getArguments().getInt("totalPages");
+            searchQuery = getArguments().getString("query");
         }
         parentActivityLayout = (CoordinatorLayout) getActivity().findViewById(R.id.parent_layout);
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.activity_search_list);

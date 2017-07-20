@@ -64,23 +64,19 @@ public class SearchListActivity extends BaseActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_list);
-        if(savedInstanceState != null) {
-            if(savedInstanceState.containsKey(SEARCH_QUERY))
-                searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
-            fragment = (SearchListFragment) getSupportFragmentManager().getFragment(savedInstanceState, LIST_FRAG_TAG);
-        } else {
-            if(getIntent().hasExtra(BUNDLE)) {
-                intentBundle = getIntent().getBundleExtra(BUNDLE);
-            }
+        if (getIntent().hasExtra(BUNDLE)) {
+            intentBundle = getIntent().getBundleExtra(BUNDLE);
         }
-
-        fragment = (SearchListFragment)
-                getSupportFragmentManager().findFragmentByTag(LIST_FRAG_TAG);
-        if(fragment == null) {
+        if (savedInstanceState == null) {
             fragment = SearchListFragment.newInstance();
             fragment.setArguments(intentBundle);
             Util.addFragmentToActivity(getSupportFragmentManager(), fragment,
                     R.id.activity_search_list, LIST_FRAG_TAG);
+        } else {
+            if (savedInstanceState.containsKey(SEARCH_QUERY))
+                searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
+            fragment = (SearchListFragment) getSupportFragmentManager()
+                    .getFragment(savedInstanceState, LIST_FRAG_TAG);
         }
         presenter = new SearchListPresenter(fragment);
         fragmentContainer = (RelativeLayout) findViewById(R.id.activity_search_list);
@@ -210,6 +206,11 @@ public class SearchListActivity extends BaseActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
         int count = getFragmentManager().getBackStackEntryCount();
 
@@ -221,9 +222,12 @@ public class SearchListActivity extends BaseActivity implements
     }
 
     @Override
-    public void replaceFragment(ArrayList<? extends MediaBasic> movieDbs, String searchQuery, MediaType filterType, int totalResults, int totalPages) {
+    public void replaceFragment(ArrayList<? extends MediaBasic> movieDbs,
+                                String searchQuery, MediaType filterType,
+                                int totalResults, int totalPages) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SearchListFragment fragment = SearchListFragment.newInstance(movieDbs, searchQuery, filterType, totalResults, totalPages);
+        SearchListFragment fragment =
+                SearchListFragment.newInstance(movieDbs, searchQuery, filterType, totalResults, totalPages);
         presenter = new SearchListPresenter(fragment);
         transaction.replace(fragmentContainer.getId(), fragment);
         transaction.addToBackStack(SEARCH_FRAG_COUNT++ + "");
