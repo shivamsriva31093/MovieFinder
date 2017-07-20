@@ -80,7 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
             setToolbarForNavigation();
         }
 
-        View mainContent = findViewById(R.id.parent_layout);
+        View mainContent = findViewById(R.id.main_content);
         if (mainContent != null) {
             mainContent.setAlpha(0);
             mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
@@ -154,6 +154,11 @@ public abstract class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        View mainContent = findViewById(R.id.main_content);
+        if (mainContent != null) {
+            mainContent.setAlpha(0);
+            mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        }
     }
 
     @Override

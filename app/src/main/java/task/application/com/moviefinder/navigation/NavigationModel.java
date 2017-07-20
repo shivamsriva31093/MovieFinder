@@ -121,9 +121,9 @@ public class NavigationModel implements Model<NavigationModel.NavigationQueryEnu
             this(id, titleResource, icon, classToLaunch, false);
         }
 
-        NavigationItemEnum(int id, int titleResourse, int icon, Class classToLaunch, boolean finish) {
+        NavigationItemEnum(int id, int titleResource, int icon, Class classToLaunch, boolean finish) {
             this.id = id;
-            this.titleResource = titleResourse;
+            this.titleResource = titleResource;
             this.icon = icon;
             this.classToLaunch = classToLaunch;
             this.finish = finish;
