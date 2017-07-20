@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.discover.DiscoverActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.discover.DiscoverActivity" />
+        </activity>
+        <activity
             android:name=".ui.searchlist.SearchListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:parentActivityName=".ui.search.SearchActivity"
@@ -24,47 +33,36 @@
                 android:value=".ui.search.SearchActivity" />
         </activity>
         <activity
-            android:name=".ui.search.SearchActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".ui.itemdetail.SearchItemDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:label="@string/title_activity_search_item_detail"
-            android:parentActivityName=".ui.searchlist.SearchListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="task.application.com.moviefinder.ui.searchlist.SearchListActivity" />
+            <!--<meta-data-->
+            <!--android:name="android.support.PARENT_ACTIVITY"-->
+            <!--android:value="task.application.com.moviefinder.ui.searchlist.SearchListActivity" />-->
         </activity>
         <activity
             android:name=".ui.favorites.FavoritesMediaActivity"
             android:label="@string/title_activity_favorites_media"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.discover.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ui.discover.DiscoverActivity"
-            android:label="@string/title_activity_discover"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

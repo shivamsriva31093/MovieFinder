@@ -16,6 +16,7 @@ package task.application.com.moviefinder.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.TaskStackBuilder;
 
 /**
@@ -30,18 +31,14 @@ public class ActivityUtils {
      * @param intent
      */
     public static void createBackStack(Activity activity, Intent intent) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//            TaskStackBuilder builder = TaskStackBuilder.create(activity);
-//            builder.addNextIntentWithParentStack(intent);
-//            builder.startActivities();
-//        } else {
-//            activity.startActivity(intent);
-//            activity.finish();
-//        }
-        TaskStackBuilder backStack = TaskStackBuilder.create(activity);
-        backStack.addParentStack(activity);
-        backStack.addNextIntent(intent);
-        backStack.startActivities();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            TaskStackBuilder builder = TaskStackBuilder.create(activity);
+            builder.addNextIntentWithParentStack(intent);
+            builder.startActivities();
+        } else {
+            activity.startActivity(intent);
+            activity.finish();
+        }
     }
 
 
