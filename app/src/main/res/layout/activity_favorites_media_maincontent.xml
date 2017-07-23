@@ -11,16 +11,28 @@
         android:id="@+id/search_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="@dimen/search_view_inset"
         android:elevation="8dp"
         android:padding="2dp">
 
         <include layout="@layout/persistent_searchbar" />
+        <!--<com.arlib.floatingsearchview.FloatingSearchView-->
+        <!--android:id="@+id/floating_search_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"-->
+        <!--app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"-->
+        <!--app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"-->
+        <!--app:floatingSearch_searchHint="@string/search_for_movies_or_tv"-->
+        <!--app:floatingSearch_suggestionsListAnimDuration="250"-->
+        <!--app:floatingSearch_showSearchKey="false"-->
+        <!--app:floatingSearch_dismissOnOutsideTouch="true"-->
+        <!--app:floatingSearch_leftActionMode="showHamburger"-->
+        <!--app:floatingSearch_menu="@menu/persistent_searchbar_menu"-->
+        <!--app:floatingSearch_close_search_on_keyboard_dismiss="true"-->
+        <!--/>-->
     </FrameLayout>
+
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollingView"

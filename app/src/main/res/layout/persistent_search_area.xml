@@ -23,6 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/search_bar_left_icon_lm"
             android:layout_marginStart="@dimen/search_bar_left_icon_lm">
+
             <ImageView
                 android:id="@+id/backButton"
                 android:layout_width="@dimen/button_icon_size"
@@ -30,8 +31,7 @@
                 android:clickable="true"
                 android:padding="@dimen/button_padding"
                 android:scaleType="center"
-                android:src="@drawable/backspace"
-                android:tint="@color/status_bar_light_grey"
+                android:src="@drawable/ic_arrow_back_black_24dp"
                 android:visibility="visible" />
 
 
