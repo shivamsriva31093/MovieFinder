@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.ui.search;
+package task.application.com.moviefinder.ui.advancedsearch.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import com.victor.loading.rotate.RotateLoading;
 import java.util.ArrayList;
 
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.searchlist.SearchListActivity;
+import task.application.com.moviefinder.ui.advancedsearch.searchlist.SearchListActivity;
 import task.application.com.moviefinder.util.Util;
 
 /**

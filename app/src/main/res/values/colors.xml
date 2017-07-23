@@ -31,4 +31,5 @@
     <color name="light_gray_inactive_icon">#BEBEBE</color>
     <color name="gray_active_icon">#787878</color>
     <color name="white">@android:color/white</color>
+    <color name="hintGrey">#fc4f4f4e</color>
 </resources>

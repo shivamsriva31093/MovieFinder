@@ -1,8 +1,6 @@
-package task.application.com.moviefinder.ui.search;
+package task.application.com.moviefinder.ui.advancedsearch.search;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;

@@ -88,6 +88,17 @@ public abstract class AppNavigationViewAbstractImpl implements
     public void itemSelected(final NavigationItemEnum item) {
         switch (item) {
 
+            case FAVORITES:
+                if (item.getClassToLaunch() != null) {
+                    Intent intent = new Intent(mActivity, item.getClassToLaunch());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mActivity.startActivity(intent);
+                    if (item.isFinish()) {
+                        mActivity.finish();
+                    }
+                }
+                break;
+
             default:
                 if (item.getClassToLaunch() != null) {
                     ActivityUtils.createBackStack(mActivity,

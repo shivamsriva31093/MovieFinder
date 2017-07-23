@@ -187,9 +187,10 @@ public class AppNavigationViewAsDrawerImpl extends AppNavigationViewAbstractImpl
             // Change the active item on the list so the user can see the item changed
             setSelectedNavDrawerItem(item);
             // Fade out the main content
-            View mainContent = mActivity.findViewById(R.id.parent_layout);
+            View mainContent = mActivity.findViewById(R.id.main_content);
             if (mainContent != null) {
                 mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+//                mainContent.animate().alpha(1).setDuration(250);
             }
         }
 

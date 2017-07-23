@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/search_activity_coord"
-    tools:context="task.application.com.moviefinder.ui.search.SearchActivity">
+    tools:context=".ui.advancedsearch.search.SearchActivity">
 
     <include layout="@layout/content_activity_search" />
 

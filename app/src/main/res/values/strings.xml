@@ -57,4 +57,7 @@
     <string name="title_activity_discover">DiscoverActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_discover_media">DiscoverMediaActivity</string>
+    <string name="action_movies">Movies</string>
+    <string name="action_tv">TV</string>
+    <string name="title_activity_app_search">AppSearchActivity</string>
 </resources>

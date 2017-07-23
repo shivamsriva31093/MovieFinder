@@ -1,5 +1,6 @@
 package task.application.com.moviefinder.ui.discover;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +25,9 @@ import java.io.Serializable;
 
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
+import task.application.com.moviefinder.ui.appsearch.AppSearchActivity;
 import task.application.com.moviefinder.ui.base.BaseActivity;
+import task.application.com.moviefinder.util.ActivityUtils;
 import task.application.com.moviefinder.util.CustomSpannableStringBuilder;
 
 public class DiscoverActivity extends BaseActivity {
@@ -61,6 +64,10 @@ public class DiscoverActivity extends BaseActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         findViewById(R.id.nav_button).setOnClickListener(view -> {
             new Handler().postDelayed(this::openNavDrawer, 150);
+        });
+        findViewById(R.id.search).setOnClickListener(view -> {
+            Intent intent = new Intent(DiscoverActivity.this, AppSearchActivity.class);
+            ActivityUtils.startNewActivity(DiscoverActivity.this, intent);
         });
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);

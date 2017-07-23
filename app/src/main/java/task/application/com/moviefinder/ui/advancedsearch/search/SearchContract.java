@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.ui.search;
+package task.application.com.moviefinder.ui.advancedsearch.search;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;

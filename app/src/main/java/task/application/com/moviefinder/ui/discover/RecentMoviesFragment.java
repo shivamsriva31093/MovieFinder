@@ -63,7 +63,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private String TAG = RecentMoviesFragment.class.getSimpleName();
     private LayoutManagerType mCurrentLayoutManagerType;
 
-    private enum LayoutManagerType {
+    public enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
         LINEAR_LAYOUT_MANAGER
     }
