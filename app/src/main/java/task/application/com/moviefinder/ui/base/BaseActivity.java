@@ -196,7 +196,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
     private void setToolbarForNavigation() {
     }
 
-    protected void openNavDrawer() {
+    public
+    void openNavDrawer() {
         mAppNavigationViewAsDrawer.showNavigation();
     }
 
