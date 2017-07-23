@@ -99,9 +99,15 @@ public class AppSearchActivity extends BaseActivity
 
     @Override
     public void changeProBarVisibility(boolean status) {
-        count = !status ? count + 1 : count;
-        if (count == 3)
+        if (status) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            count += 1;
+        }
+        if (count == 3) {
             progressBar.setVisibility(View.GONE);
+            count = 0;
+        }
     }
 
     private void initViews() {
