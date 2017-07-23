@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:gravity="bottom"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:paddingTop="20dp"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="30dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/imageView"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
-        <!--app:srcCompat="@android:drawable/sym_def_app_icon" />-->
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/item_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Movie Finder"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="#00b8d4"
         android:layout_marginLeft="55dp"
         style="@style/TextBody"
         android:textStyle="bold"
         android:textSize="19sp"/>
-
-
 </LinearLayout>

@@ -51,13 +51,12 @@
         <item name="contentPaddingTop">24dp</item>
         <item name="contentPaddingLeft">16dp</item>
         <item name="contentPaddingRight">16dp</item>
-        <item name="cardBackgroundColor">#FFFFF5</item>
     </style>
 
     <style name="RecentMoviesCardViewTheme" parent="CardView">
         <item name="cardCornerRadius">10dp</item>
-        <item name="cardElevation">2dp</item>
-        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardElevation">0dp</item>
+        <item name="android:background">@drawable/card_background</item>
     </style>
 
     <!-- Empty views -->

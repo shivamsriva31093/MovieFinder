@@ -7,6 +7,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -20,48 +21,48 @@
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="2dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="9dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textColor="#00838f"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
-                android:text="MoviX" />
+                android:text="Movie Mix" />
 
             <ImageView
                 android:id="@+id/nav_button"
-                android:layout_width="@dimen/button_icon_size"
-                android:layout_height="@dimen/button_icon_size"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/ripple_effect_button"
                 android:clickable="true"
-                android:padding="2dp"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintRight_toLeftOf="@+id/watchlist"
                 app:layout_constraintTop_toTopOf="@+id/imageView"
-                app:srcCompat="@drawable/calendar" />
+                app:srcCompat="@drawable/heart_blue" />
 
             <ImageView
                 android:id="@+id/watchlist"
-                android:layout_width="@dimen/button_icon_size"
-                android:layout_height="@dimen/button_icon_size"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="26dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/ripple_effect_button"
                 android:clickable="true"
-                android:padding="2dp"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageView"
-                app:srcCompat="@drawable/ic_event_black_24dp" />
+                app:srcCompat="@drawable/magnify" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.design.widget.TabLayout
@@ -70,9 +71,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabSelectedTextColor="#00b8d4"
             app:tabTextAppearance="@style/TabLayoutStyle"
-            app:tabTextColor="@android:color/black" />
+            app:tabTextColor="#545454" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
