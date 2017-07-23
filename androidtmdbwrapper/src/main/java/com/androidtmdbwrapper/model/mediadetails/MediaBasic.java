@@ -3,25 +3,29 @@ package com.androidtmdbwrapper.model.mediadetails;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.androidtmdbwrapper.model.core.BaseMediaData;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by sHIVAM on 2/14/2017.
  */
 
-public class MediaBasic implements Parcelable {
-    @JsonProperty("id")
-    private int id;
+public class MediaBasic extends BaseMediaData implements Parcelable {
     @JsonProperty("poster_path")
     private String posterPath;
     @JsonProperty("backdrop_path")
     private String backdropPath;
-    @JsonProperty("popularity")
-    private float popularity;
     @JsonProperty("vote_average")
     private float voteAverage;
     @JsonProperty("vote_count")
     private int voteCount;
+
+    private Map<String, Object> other = new HashMap<>();
 
     private String imdbRating = "";
 
@@ -29,13 +33,29 @@ public class MediaBasic implements Parcelable {
     }
 
     protected MediaBasic(Parcel in) {
-        id = in.readInt();
+        super(in);
         posterPath = in.readString();
         backdropPath = in.readString();
-        popularity = in.readFloat();
         voteAverage = in.readFloat();
         voteCount = in.readInt();
+        in.readMap(other, HashMap.class.getClassLoader());
         imdbRating = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
+        dest.writeFloat(voteAverage);
+        dest.writeInt(voteCount);
+        dest.writeMap(other);
+        dest.writeString(imdbRating);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<MediaBasic> CREATOR = new Creator<MediaBasic>() {
@@ -74,22 +94,6 @@ public class MediaBasic implements Parcelable {
         this.backdropPath = backdropPath;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public float getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(float popularity) {
-        this.popularity = popularity;
-    }
-
     public float getVoteAverage() {
         return voteAverage;
     }
@@ -106,27 +110,19 @@ public class MediaBasic implements Parcelable {
         this.voteCount = voteCount;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    @JsonAnyGetter
+    public Map<String, Object> any() {
+        return other;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(posterPath);
-        parcel.writeString(backdropPath);
-        parcel.writeFloat(popularity);
-        parcel.writeFloat(voteAverage);
-        parcel.writeInt(voteCount);
-        parcel.writeString(imdbRating);
+    @JsonAnySetter
+    public void set(String name, Object value) {
+        other.put(name, value);
     }
 
     @Override
     public boolean equals(Object obj) {
-        MediaBasic that = (MediaBasic) obj;
-        return this.getId() == that.getId();
+        return super.equals(obj);
     }
 
 }

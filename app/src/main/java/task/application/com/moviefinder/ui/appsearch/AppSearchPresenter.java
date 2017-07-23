@@ -65,6 +65,21 @@ public class AppSearchPresenter implements AppSearchContract.Presenter {
                             view.showNoResults();
                         });
                 break;
+            case PEOPLE:
+                tmdb.searchService().searchPeople(keyword, null)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(searchRes -> {
+                            view.showLoadingIndicator(false);
+                            view.showResultList(new ArrayList<>(searchRes.getResults()),
+                                    searchRes.getTotalPages(), searchRes.getTotalResults());
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                            view.showLoadingIndicator(false);
+                            view.showNoResults();
+                        });
+                break;
+
             default:
                 view.showLoadingIndicator(false);
                 break;
@@ -88,6 +103,17 @@ public class AppSearchPresenter implements AppSearchContract.Presenter {
                 break;
             case TV:
                 tmdb.searchService().searchTv(query, page)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(searchRes -> {
+                            view.updateNewItems(searchRes.getResults());
+                        }, throwable -> {
+                            view.setEndlessScrollLoading(false);
+                            throwable.printStackTrace();
+                        });
+                break;
+            case PEOPLE:
+                tmdb.searchService().searchPeople(query, page)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {

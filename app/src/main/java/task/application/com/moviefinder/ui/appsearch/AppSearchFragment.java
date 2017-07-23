@@ -1,6 +1,5 @@
 package task.application.com.moviefinder.ui.appsearch;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -17,8 +16,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidtmdbwrapper.enums.MediaType;
+import com.androidtmdbwrapper.model.core.BaseMediaData;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.androidtmdbwrapper.model.people.PeopleBasic;
 import com.androidtmdbwrapper.model.tv.BasicTVInfo;
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +28,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.R;
-import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.util.EndlessScrollListener;
 import task.application.com.moviefinder.util.Util;
 import task.application.com.moviefinder.util.ViewType;
@@ -46,7 +46,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
     private MediaType searchType;
     private int totalPages;
     private int totalResults;
-    private ArrayList<? extends MediaBasic> resultList = new ArrayList<>();
+    private ArrayList<? extends BaseMediaData> resultList = new ArrayList<>();
 
     private RecyclerView recyclerView;
     private EndlessScrollListener rvScrollListener;
@@ -73,13 +73,13 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
 
     OnItemTouchListener itemClickListener = new OnItemTouchListener() {
         @Override
-        public <T extends MediaBasic> Void onItemClick(View view, T item) {
-            Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(CLICKED_ITEM, item);
-            bundle.putSerializable("filtering_type", searchType);
-            intent.putExtra(SEARCH_ITEM, bundle);
-            startActivity(intent);
+        public <T extends BaseMediaData> Void onItemClick(View view, T item) {
+//            Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putParcelable(CLICKED_ITEM, item);
+//            bundle.putSerializable("filtering_type", searchType);
+//            intent.putExtra(SEARCH_ITEM, bundle);
+//            startActivity(intent);
             return null;
         }
     };
@@ -153,7 +153,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
     }
 
     @Override
-    public void showResultList(List<? extends MediaBasic> result, int totalPages, int totalResults) {
+    public void showResultList(List<? extends BaseMediaData> result, int totalPages, int totalResults) {
         this.totalPages = totalPages;
         this.totalResults = totalResults;
         recyclerViewAdapter.replaceData(new ArrayList<>(result));
@@ -181,7 +181,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
     }
 
     @Override
-    public void updateNewItems(List<? extends MediaBasic> data) {
+    public void updateNewItems(List<? extends BaseMediaData> data) {
         recyclerViewAdapter.addDataItems(data);
         int curPage = rvScrollListener.getCurPage();
         rvScrollListener.setCurPage(curPage + 1);
@@ -209,8 +209,8 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
     }
 
     private class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ViewHolder> {
-        private ArrayList<MediaBasic> data = new ArrayList<>();
-        private ArrayList<MediaBasic> oldData = new ArrayList<>();
+        private ArrayList<BaseMediaData> data = new ArrayList<>();
+        private ArrayList<BaseMediaData> oldData = new ArrayList<>();
         private OnItemTouchListener listener;
         private SparseBooleanArray posArray = new SparseBooleanArray();
         private MediaType searchType;
@@ -220,7 +220,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         private SparseBooleanArray imdbRating = new SparseBooleanArray();
         private boolean isLoaderRemoved = true;
 
-        public SearchListAdapter(ArrayList<? extends MediaBasic> data,
+        public SearchListAdapter(ArrayList<? extends BaseMediaData> data,
                                  MediaType searchType, OnItemTouchListener listener) {
             this.searchType = searchType;
             this.data.addAll(data);
@@ -296,14 +296,33 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         }
 
         private void loadMediaData(ViewHolder holder, int position) {
-            if (searchType.equals(MediaType.MOVIES)) {
-                loadMovieInfo(holder, (BasicMovieInfo) data.get(position - 1));
-            } else {
-                loadTvInfo(holder, (BasicTVInfo) data.get(position - 1));
+            switch (searchType) {
+                case MOVIES:
+                    loadMovieInfo(holder, (BasicMovieInfo) data.get(position - 1));
+                    break;
+                case TV:
+                    loadTvInfo(holder, (BasicTVInfo) data.get(position - 1));
+                    break;
+                case PEOPLE:
+                    loadPeopleInfo(holder, (PeopleBasic) data.get(position - 1));
             }
             holder.imdbRating.setVisibility(View.GONE);
             holder.imdbIcon.setVisibility(View.GONE);
             holder.starIcon.setVisibility(View.GONE);
+        }
+
+        private void loadPeopleInfo(ViewHolder holder, PeopleBasic person) {
+            holder.title.setText(person.getName());
+            String url = person.getProfilePath();
+            if (url == null) {
+                holder.imageView.setImageResource(R.drawable.creditplaceholder);
+            } else {
+                Picasso.with(getActivity())
+                        .load("https://image.tmdb.org/t/p/w500" + url)
+                        .fit()
+                        .placeholder(R.drawable.trailer1)
+                        .into(holder.imageView);
+            }
         }
 
         private void loadTvInfo(ViewHolder holder, BasicTVInfo tv) {
@@ -336,14 +355,14 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             }
         }
 
-        public void replaceData(ArrayList<? extends MediaBasic> movieDbs) {
+        public void replaceData(ArrayList<? extends BaseMediaData> movieDbs) {
             this.oldData = data;
             this.data.clear();
             this.data.addAll(Util.checkNotNull(movieDbs));
             notifyDataSetChanged();
         }
 
-        public void addDataItems(List<? extends MediaBasic> newDataItems) {
+        public void addDataItems(List<? extends BaseMediaData> newDataItems) {
             removeFooter();
 //            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtilCB(data, newDataItems));
 //            new Handler().post(() -> {
@@ -351,13 +370,13 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
 //                data.addAll(newDataItems);
 //            });
             int posStart = data.size() + 1;
-            for (MediaBasic item : newDataItems) {
+            for (BaseMediaData item : newDataItems) {
                 data.add(item);
                 notifyItemInserted(posStart++);
             }
         }
 
-        public ArrayList<? extends MediaBasic> getCurrentData() {
+        public ArrayList<? extends BaseMediaData> getCurrentData() {
             return this.data;
         }
 
@@ -368,7 +387,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
 
         public void setRating(String rating, int pos) {
             rating = rating == null ? "N/A" : rating;
-            MediaBasic item = data.get(pos);
+            MediaBasic item = (MediaBasic) data.get(pos);
             item.setImdbRating(rating);
             posArray.put(pos + 1, true);
             new Handler().post(() -> notifyItemChanged(pos + 1));
@@ -428,7 +447,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
 
     public interface OnItemTouchListener {
 
-        <T extends MediaBasic> Void onItemClick(View v, T mediaBasic);
+        <T extends BaseMediaData> Void onItemClick(View v, T mediaBasic);
     }
 
     public interface OnFragmentInteractionListener {

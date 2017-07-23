@@ -2,6 +2,7 @@ package com.androidtmdbwrapper.apiservices;
 
 import com.androidtmdbwrapper.model.core.SearchResult;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.androidtmdbwrapper.model.people.PeopleBasic;
 import com.androidtmdbwrapper.model.tv.BasicTVInfo;
 
 import io.reactivex.Observable;
@@ -25,4 +26,11 @@ public interface SearchService {
             @Query("query") String query,
             @Query("page") Integer page
     );
+
+    @GET("search/person")
+    Observable<SearchResult<PeopleBasic>> searchPeople(
+            @Query("query") String query,
+            @Query("page") Integer page
+    );
+
 }

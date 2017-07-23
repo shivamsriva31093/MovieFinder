@@ -1,7 +1,7 @@
 package task.application.com.moviefinder.ui.appsearch;
 
 import com.androidtmdbwrapper.enums.MediaType;
-import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
+import com.androidtmdbwrapper.model.core.BaseMediaData;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import task.application.com.moviefinder.ui.base.BaseView;
 
 public class AppSearchContract {
     public interface View extends BaseView<Presenter> {
-        void updateNewItems(List<? extends MediaBasic> data);
+        void updateNewItems(List<? extends BaseMediaData> data);
 
-        void showResultList(List<? extends MediaBasic> result, int totalPages, int totalResults);
+        void showResultList(List<? extends BaseMediaData> result, int totalPages, int totalResults);
 
         void showLoadingIndicator(boolean flag);
 
