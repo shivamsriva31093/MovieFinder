@@ -19,9 +19,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.advancedsearch.search.SearchActivity;
 import task.application.com.moviefinder.ui.discover.DiscoverActivity;
 import task.application.com.moviefinder.ui.favorites.FavoritesMediaActivity;
-import task.application.com.moviefinder.ui.search.SearchActivity;
 
 /**
  * Determines which items to show in the {@link AppNavigationView}.
@@ -105,7 +105,7 @@ public class NavigationModel implements Model<NavigationModel.NavigationQueryEnu
         SEND(R.id.nav_send, R.string.send, R.drawable.ic_menu_send, null),
         INVALID(),
         SEARCHLIST(),
-        SEARCHDETAIL();
+        SEARCHDETAIL(), APPSEARCH();
 
         private int id;
         private int titleResource;

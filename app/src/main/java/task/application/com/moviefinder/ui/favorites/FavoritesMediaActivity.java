@@ -95,7 +95,7 @@ public class FavoritesMediaActivity extends BaseActivity implements
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         params.setBehavior(behaviour);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_tv);
+        navigation.setSelectedItemId(R.id.navigation_movies);
     }
 
     private void setUpSearchBox() {
