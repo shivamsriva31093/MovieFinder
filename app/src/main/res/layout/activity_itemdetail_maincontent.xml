@@ -18,6 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_margin="8dp"
+                style="@style/RecentMoviesCardViewTheme"
+                android:layout_height="wrap_content">
+
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
@@ -47,6 +53,7 @@
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/play1" />
             </FrameLayout>
+            </android.support.v7.widget.CardView>
 
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/progressView"
@@ -62,16 +69,16 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.v7.widget.AppCompatImageButton
-        android:layout_width="32dp"
+        android:layout_width="34dp"
         android:padding="6dp"
-        android:layout_height="32dp"
+        android:layout_height="34dp"
         android:id="@+id/menu_button"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:layout_gravity="top|left"
         android:clickable="true"
         android:background="@android:color/transparent"
-        android:src="@drawable/back_menu"
+        android:src="@drawable/arrow_left"
         android:scaleType="centerCrop" />
 
     <android.support.design.widget.FloatingActionButton

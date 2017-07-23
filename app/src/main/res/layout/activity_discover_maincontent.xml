@@ -25,12 +25,12 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="2dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textSize="20sp"
-                android:textColor="#00838f"
+                android:textColor="#262626"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
                 android:text="Movie Mix" />
 
