@@ -8,7 +8,9 @@ import java.io.Serializable;
 
 public enum MediaType implements Serializable {
     MOVIES("Movies"),
-    TV("Tv");
+    TV("Tv"),
+    ALL("All"),
+    PEOPLE("People");
 
     private String media;
 
