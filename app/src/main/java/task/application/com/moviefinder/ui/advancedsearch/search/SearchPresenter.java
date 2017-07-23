@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.ui.search;
+package task.application.com.moviefinder.ui.advancedsearch.search;
 
 import android.support.annotation.NonNull;
 

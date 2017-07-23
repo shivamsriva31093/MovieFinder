@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.ui.searchlist;
+package task.application.com.moviefinder.ui.advancedsearch.searchlist;
 
 import android.content.Context;
 import android.graphics.Rect;
