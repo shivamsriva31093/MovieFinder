@@ -45,12 +45,12 @@
                 android:clickable="true"
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintRight_toLeftOf="@+id/watchlist"
+                app:layout_constraintRight_toLeftOf="@+id/search"
                 app:layout_constraintTop_toTopOf="@+id/imageView"
                 app:srcCompat="@drawable/heart_blue" />
 
             <ImageView
-                android:id="@+id/watchlist"
+                android:id="@+id/search"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="8dp"
