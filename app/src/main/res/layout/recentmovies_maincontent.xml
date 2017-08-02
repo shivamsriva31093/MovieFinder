@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     style="@style/RecentMoviesCardViewTheme"
     android:layout_width="match_parent"
+    android:id="@+id/card_view"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:clickable="true"
     android:elevation="0dp"
     card_view:cardElevation="0dp"
-    card_view:cardBackgroundColor="#ebebec"
-    android:background="@color/black"
+    card_view:cardBackgroundColor="#bfbfbf"
     android:padding="10dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toTopOf="parent">
+    <android.support.v7.widget.CardView
+        style="@style/RecentMoviesCardViewTheme1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="1dp"
+        android:clickable="true"
+        android:elevation="0dp"
+        card_view:cardElevation="0dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -49,9 +58,8 @@
             android:padding="1dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_play_arrow_black_24dp"
-            app:civ_border_color="@color/status_bar_light_grey"
-            app:civ_border_overlay="true"
-            app:civ_border_width="0.80dp"
+            app:civ_border_overlay="false"
+            app:civ_border_width="0dp"
             app:civ_fill_color="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/guideline15"
             app:layout_constraintHorizontal_bias="0.944"
@@ -75,6 +83,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
             android:textSize="14sp"
             android:typeface="sans"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio=""
             app:layout_constraintLeft_toLeftOf="parent"
@@ -100,4 +109,5 @@
             tools:layout_editor_absoluteY="25dp" />
 
     </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 </android.support.v7.widget.CardView>

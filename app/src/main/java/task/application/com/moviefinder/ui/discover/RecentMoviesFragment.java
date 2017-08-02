@@ -424,8 +424,11 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                 switch (holderType) {
                     case TYPE_ITEM:
                         poster = (ImageView) itemView.findViewById(R.id.poster);
+                        poster.setClickable(true);
                         title = (TextView) itemView.findViewById(R.id.title);
                         trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
+                        poster.setOnClickListener(view ->
+                                itemTouchListener.onItemClick(view, getAdapterPosition(), data.get(getAdapterPosition())));
                         itemView.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition(), data.get(getAdapterPosition())));
                         HOLDER_ID = holderType;
@@ -451,6 +454,4 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             return new DiscoverPresenter(RecentMoviesFragment.this, TAG);
         }
     };
-
-
 }
