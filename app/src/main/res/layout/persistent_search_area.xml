@@ -4,6 +4,7 @@
     android:id="@+id/search_query_area"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="6dp"
     android:clickable="true"
     card_view:cardCornerRadius="@dimen/search_view_corner_radius"
     card_view:cardElevation="2dp"
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="8dp">
 
         <FrameLayout
             android:id="@+id/search_bar_left_action_container"
@@ -22,16 +23,19 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/search_bar_left_icon_lm"
-            android:layout_marginStart="@dimen/search_bar_left_icon_lm">
+            android:layout_marginStart="@dimen/search_bar_left_icon_lm"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/backButton"
                 android:layout_width="@dimen/button_icon_size"
                 android:layout_height="@dimen/button_icon_size"
+                android:background="@drawable/ripple_effect_button"
                 android:clickable="true"
                 android:padding="@dimen/button_padding"
                 android:scaleType="center"
                 android:src="@drawable/ic_arrow_back_black_24dp"
+                android:tint="@android:color/darker_gray"
                 android:visibility="visible" />
 
 
@@ -42,19 +46,11 @@
                 android:layout_height="@dimen/button_icon_size"
                 android:alpha="1"
                 android:background="@drawable/oval_button"
-                android:padding="@dimen/button_padding"
                 android:clickable="true"
+                android:padding="@dimen/button_padding"
                 android:scaleType="center"
                 android:visibility="gone"
                 card_view:srcCompat="@drawable/ic_menu_black_18dp" />
-
-            <ProgressBar
-                android:id="@+id/search_bar_progess"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size"
-                android:clickable="false"
-                android:padding="@dimen/button_padding"
-                android:visibility="gone" />
 
         </FrameLayout>
 
@@ -62,12 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/search_bar_left_action_container"
-            android:layout_toLeftOf="@+id/clear_btn"
-            android:layout_toRightOf="@id/search_bar_left_action_container"
-            android:layout_toStartOf="@+id/clear_btn">
+            android:layout_toEndOf="@+id/search_bar_left_action_container">
 
 
             <android.support.design.widget.TextInputLayout
@@ -80,17 +72,18 @@
                 card_view:hintEnabled="false"
                 card_view:hintTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
 
-                <EditText
+                <task.application.com.moviefinder.ui.utility.widgets.ClearableEditText
 
                     android:id="@+id/searchInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|start"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:alpha="1"
                     android:background="@color/transparent"
                     android:ellipsize="end"
                     android:ems="10"
+                    android:fontFamily="sans-serif"
                     android:foregroundGravity="center_vertical|center_horizontal"
                     android:gravity="start"
                     android:hint="@string/search_for_movies_or_tv"
@@ -99,64 +92,18 @@
                     android:longClickable="false"
                     android:maxLines="1"
                     android:minHeight="@dimen/button_size"
-                    android:textSize="@dimen/search_bar_text_size" />
+                    android:padding="6dp"
+                    android:selectAllOnFocus="true"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hintGrey"
+                    android:textCursorDrawable="@drawable/appsearch_cursor_drawable"
+                    android:textSize="15sp"
+                    android:typeface="sans" />
             </android.support.design.widget.TextInputLayout>
 
         </FrameLayout>
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/clear_btn"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:alpha="1"
-            android:background="@drawable/oval_button"
-            android:clickable="true"
-            android:padding="@dimen/button_padding"
-            android:scaleType="center"
-            android:src="@drawable/ic_close_black_18dp" />
-
-        <LinearLayout
-            android:id="@+id/menu_items"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_size"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/search_bar_right_icon_rm"
-            android:layout_marginRight="@dimen/search_bar_right_icon_rm"
-            android:layout_toEndOf="@+id/clear_btn"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/movie_search"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_weight="1"
-                android:alpha="1"
-                android:background="@drawable/oval_button"
-                android:clickable="true"
-                android:padding="@dimen/button_padding"
-                android:scaleType="center"
-                android:src="@drawable/movies" />
-
-            <ImageView
-                android:id="@+id/tv_search"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:alpha="1"
-                android:background="@drawable/oval_button"
-                android:clickable="true"
-                android:padding="@dimen/button_padding"
-                android:scaleType="center"
-                android:src="@drawable/television" />
-
-        </LinearLayout>
 
     </RelativeLayout>
 

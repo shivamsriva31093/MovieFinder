@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +32,6 @@ public class FavoritesMediaActivity extends BaseActivity implements
     private FavoritesMediaContract.Presenter presenter;
     FavoritesMediaFragment fragment = null;
     private EditText searchInput;
-    private ImageView clearBtn;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -110,7 +107,7 @@ public class FavoritesMediaActivity extends BaseActivity implements
                 animateOnBackButtonPress();
             }
         });
-        clearBtn = (ImageView) searchBar.findViewById(R.id.clear_btn);
+//        clearBtn = (ImageView) searchBar.findViewById(R.id.clear_btn);
         searchInput.setFocusable(false);
         InputMethodManager inputMethodManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -132,27 +129,6 @@ public class FavoritesMediaActivity extends BaseActivity implements
                 attemptToSearch();
             }
             return false;
-        });
-        clearBtn.setVisibility(View.GONE);
-        clearBtn.setOnClickListener(view -> {
-            searchInput.setText("");
-        });
-
-        searchInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                clearBtn.setVisibility(charSequence.length() > 0 ? View.VISIBLE : View.GONE);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
         });
 
     }

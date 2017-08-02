@@ -27,7 +27,6 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidtmdbwrapper.enums.MediaType;
@@ -325,7 +324,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     @Override
     public void showLoadingIndicator(boolean status) {
         ImageView navDrawerButton = (ImageView) searchBarLeftActionLayout.findViewById(R.id.search_bar_left_action);
-        ProgressBar progressBar = (ProgressBar) searchBarLeftActionLayout.findViewById(R.id.search_bar_progess);
+//        ProgressBar progressBar = (ProgressBar) searchBarLeftActionLayout.findViewById(R.id.search_bar_progess);
         navDrawerButton.animate()
                 .setDuration(300)
                 .rotationX(180.0f)
