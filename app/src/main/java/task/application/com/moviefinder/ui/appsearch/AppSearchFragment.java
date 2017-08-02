@@ -1,5 +1,6 @@
 package task.application.com.moviefinder.ui.appsearch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.util.EndlessScrollListener;
 import task.application.com.moviefinder.util.Util;
 import task.application.com.moviefinder.util.ViewType;
@@ -74,12 +76,12 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
     OnItemTouchListener itemClickListener = new OnItemTouchListener() {
         @Override
         public <T extends BaseMediaData> Void onItemClick(View view, T item) {
-//            Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putParcelable(CLICKED_ITEM, item);
-//            bundle.putSerializable("filtering_type", searchType);
-//            intent.putExtra(SEARCH_ITEM, bundle);
-//            startActivity(intent);
+            Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(CLICKED_ITEM, item);
+            bundle.putSerializable("filtering_type", searchType);
+            intent.putExtra(SEARCH_ITEM, bundle);
+            startActivity(intent);
             return null;
         }
     };

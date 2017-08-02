@@ -2,6 +2,7 @@ package task.application.com.moviefinder.ui.itemdetail;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
+import com.androidtmdbwrapper.model.core.BaseMediaData;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 
 import task.application.com.moviefinder.ui.base.BasePresenter;
@@ -27,7 +28,7 @@ public interface SearchItemDetailContract {
     }
 
     interface Presenter extends BasePresenter {
-        void getMovieDetails(MediaBasic clickedItem);
+        void getMovieDetails(BaseMediaData clickedItem);
         void setFilteringType(MediaType filteringType);
 
         void checkMediaInDB(MediaBasic item);

@@ -7,6 +7,7 @@ import com.androidtmdbwrapper.enums.AppendToResponseItem;
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
 import com.androidtmdbwrapper.model.core.AppendToResponse;
+import com.androidtmdbwrapper.model.core.BaseMediaData;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.ExternalIds;
@@ -49,7 +50,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     }
 
     @Override
-    public void getMovieDetails(MediaBasic clickedItem) {
+    public void getMovieDetails(BaseMediaData clickedItem) {
         view.showLoadingIndicator(true);
         TmdbApi api = TmdbApi.getApiClient(ApplicationClass.API_KEY);
 
@@ -66,7 +67,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                         view.showLoadingError();
                         view.showLoadingIndicator(false);
                     }));
-        } else {
+        } else if (filter.equals(MediaType.TV)) {
             Log.d("test", clickedItem.getId() + "");
             getTvInfoObservable(api, clickedItem)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -92,6 +93,8 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                         view.showRatingsViewLoadingIndicator(false);
                     }));
 
+        } else if (filter.equals(MediaType.PEOPLE)) {
+            view.showLoadingIndicator(false);
         }
     }
 
@@ -167,7 +170,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     }
 
 
-    private Observable<MovieInfo> getMovieInfoObservable(final TmdbApi tmdb, final MediaBasic item) {
+    private Observable<MovieInfo> getMovieInfoObservable(final TmdbApi tmdb, final BaseMediaData item) {
         final AppendToResponse atr =
                 new AppendToResponse(AppendToResponseItem.CREDITS,
                         AppendToResponseItem.VIDEOS);
@@ -175,7 +178,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
 
     }
 
-    private Observable<TvInfo> getTvInfoObservable(final TmdbApi tmdb, final MediaBasic item) {
+    private Observable<TvInfo> getTvInfoObservable(final TmdbApi tmdb, final BaseMediaData item) {
         final AppendToResponse atr =
                 new AppendToResponse(AppendToResponseItem.CREDITS,
                         AppendToResponseItem.VIDEOS);
@@ -183,7 +186,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
 
     }
 
-    private Observable<ExternalIds> getExternalTVIds(final TmdbApi tmdb, final MediaBasic item) {
+    private Observable<ExternalIds> getExternalTVIds(final TmdbApi tmdb, final BaseMediaData item) {
         return tmdb.tvService().getExternalIds(item.getId());
     }
 

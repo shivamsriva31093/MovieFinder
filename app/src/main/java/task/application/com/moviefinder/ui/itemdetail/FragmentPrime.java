@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
+import com.androidtmdbwrapper.model.core.BaseMediaData;
 import com.androidtmdbwrapper.model.core.Genre;
 import com.androidtmdbwrapper.model.credits.MediaCreditCast;
 import com.androidtmdbwrapper.model.credits.MediaCreditCrew;
@@ -55,9 +57,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private static final String YOUTUBE_API_KEY = "AIzaSyC9iXjkY03gWbADszp0x9zX2yRvRMYjaxo";
     private SearchItemDetailContract.Presenter presenter;
     private FragmentInteractionListener listener;
-    private MediaBasic clickedItem;
+    private BaseMediaData clickedItem;
     private MediaType itemType;
-    private MediaBasic retrievedItem;
+    private BaseMediaData retrievedItem;
     private RelativeLayout fragmentContainer;
     private ImageView backDropImage;
     private AVLoadingIndicatorView progressView;
@@ -92,7 +94,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         super.onCreate(savedInstanceState);
         if (getArguments() != null && !getArguments().isEmpty()) {
             itemType = (MediaType) getArguments().getSerializable("filtering_type");
-            clickedItem = (MediaBasic) getArguments().getParcelable(CLICKED_ITEM);
+            clickedItem = (BaseMediaData) getArguments().getParcelable(CLICKED_ITEM);
+            Log.d("test", "itemType is " + itemType.toString());
         }
         fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.detail_parent);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
@@ -196,7 +199,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         presenter.checkMediaInDB(data);
         if (presenter.getFilteringType().equals(MediaType.MOVIES))
             setUpMovieDetails((MovieInfo) data);
-        else
+        else if (presenter.getFilteringType().equals(MediaType.TV))
             setUpTvDetails((TvInfo) data);
     }
 
@@ -221,9 +224,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     }
 
     private void setUpMovieDetails(MovieInfo data) {
-        retrievedItem = data;
+        retrievedItem = (MediaBasic) data;
         Picasso picasso = Picasso.with(getActivity());
-        picasso.load("https://image.tmdb.org/t/p/original" + retrievedItem.getBackdropPath()).fit()
+        picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
                 .error(R.drawable.trailer).into(backDropImage);
         showGenresList(data.getGenresList());
         title.setText(data.getOriginalTitle());
@@ -338,11 +341,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (tag == R.drawable.ic_favorite_border_black_24dp) {
             button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
             button.setTag(R.drawable.favorite);
-            presenter.addMediaToFavorites(retrievedItem);
+            presenter.addMediaToFavorites((MediaBasic) retrievedItem);
         } else {
             button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
             button.setTag(R.drawable.ic_favorite_border_black_24dp);
-            presenter.removeMediaFromFavorites(retrievedItem);
+            presenter.removeMediaFromFavorites((MediaBasic) retrievedItem);
         }
     }
 
