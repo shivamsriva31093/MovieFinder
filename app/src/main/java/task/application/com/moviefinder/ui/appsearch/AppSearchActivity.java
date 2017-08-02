@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -138,6 +139,35 @@ public class AppSearchActivity extends BaseActivity
                     ((TextView) tabViewChild).setTypeface(font);
                 }
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        searchInput.setFocusableInTouchMode(true);
+        searchInput.requestFocus();
+        searchInput.setOnFocusChangeListener((view, hasFocus) -> {
+            setInputMethodVisibile(hasFocus);
+        });
+    }
+
+    private Runnable showInputMethodRunnable = () -> {
+        InputMethodManager inputMethodManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null)
+            inputMethodManager.showSoftInput(searchInput, 0);
+    };
+
+    private void setInputMethodVisibile(boolean hasFocus) {
+        if (hasFocus)
+            new Handler().post(showInputMethodRunnable);
+        else {
+            new Handler().removeCallbacks(showInputMethodRunnable);
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null)
+                inputMethodManager.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
         }
     }
 
