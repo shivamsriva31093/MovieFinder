@@ -31,6 +31,7 @@ import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
 import task.application.com.moviefinder.ui.base.BaseActivity;
+import task.application.com.moviefinder.ui.utility.widgets.ClearableEditText;
 
 public class AppSearchActivity extends BaseActivity
         implements AppSearchFragment.OnFragmentInteractionListener {
@@ -41,7 +42,7 @@ public class AppSearchActivity extends BaseActivity
     private TabLayout tabLayout;
 
     private TextInputLayout searchInputTextLayout;
-    private EditText searchInput;
+    private ClearableEditText searchInput;
     private ProgressBar progressBar;
     private ImageView backButton;
     private String searchQuery = "";
@@ -70,11 +71,12 @@ public class AppSearchActivity extends BaseActivity
         presenters.get(1).searchQuery(query);
         presenters.get(2).setQuery(searchQuery);
         presenters.get(2).searchQuery(query);
+        setInputMethodVisibile(false);
     }
 
     private void setUpSearchBox() {
         searchInputTextLayout = (TextInputLayout) findViewById(R.id.searchInputTextLayout);
-        searchInput = (EditText) findViewById(R.id.searchInput);
+        searchInput = (ClearableEditText) findViewById(R.id.searchInput);
         backButton = (ImageView) findViewById(R.id.backButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         searchInput.setOnTouchListener((v, event) -> {

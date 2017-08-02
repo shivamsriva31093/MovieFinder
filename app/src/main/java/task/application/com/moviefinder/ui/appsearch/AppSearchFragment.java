@@ -68,7 +68,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         if (getArguments() != null && !getArguments().isEmpty()) {
             searchType = (MediaType) getArguments().getSerializable(QUERY_TYPE);
         }
-        recyclerViewAdapter = new SearchListAdapter(resultList, searchType, itemClickListener);
+        recyclerViewAdapter = new SearchListAdapter(resultList, searchType, itemClickListener, true);
     }
 
     OnItemTouchListener itemClickListener = new OnItemTouchListener() {
@@ -219,12 +219,14 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         private static final int TYPE_FOOTER = 2;
         private SparseBooleanArray imdbRating = new SparseBooleanArray();
         private boolean isLoaderRemoved = true;
+        private boolean init;
 
         public SearchListAdapter(ArrayList<? extends BaseMediaData> data,
-                                 MediaType searchType, OnItemTouchListener listener) {
+                                 MediaType searchType, OnItemTouchListener listener, boolean init) {
             this.searchType = searchType;
             this.data.addAll(data);
             this.listener = listener;
+            this.init = init;
         }
 
 
@@ -263,7 +265,9 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         public void onBindViewHolder(ViewHolder holder, int position) {
             switch (holder.HOLDER_ID) {
                 case TYPE_HEADER:
-                    holder.header.setText(totalResults + " results returned");
+                    holder.header.setText(
+                            init ? "Come on Hit!" : totalResults + " results returned"
+                    );
                     break;
                 case TYPE_ITEM:
                     showRowItems(holder, holder.getAdapterPosition());
@@ -359,6 +363,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             this.oldData = data;
             this.data.clear();
             this.data.addAll(Util.checkNotNull(movieDbs));
+            init = false;
             notifyDataSetChanged();
         }
 
