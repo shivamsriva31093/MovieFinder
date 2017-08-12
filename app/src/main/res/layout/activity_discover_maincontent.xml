@@ -10,7 +10,7 @@
         android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="#f8f8fa">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -82,10 +82,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="#00b8d4"
+            app:tabPaddingEnd="8dp"
+            app:tabPaddingStart="8dp"
+            app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabIndicatorColor="@color/colorPrimary"
-            app:tabIndicatorHeight="2dp"
-            app:tabTextAppearance="@style/TabLayoutStyle"
             app:tabTextColor="#545454" />
     </android.support.design.widget.AppBarLayout>
 

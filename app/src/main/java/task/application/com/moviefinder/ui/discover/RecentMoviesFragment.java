@@ -365,8 +365,8 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                 BasicMovieInfo row = (BasicMovieInfo) data.get(position);
                 Picasso.with(getActivity()).load(
                         "https://image.tmdb.org/t/p/w500" + row.getPosterPath())
-                        .error(R.drawable.trailer)
-                        .placeholder(R.drawable.trailer)
+                        .error(R.drawable.imgfound)
+                        .placeholder(R.color.colorPrimary)
                         .into(holder.poster);
                 holder.title.setText(row.getTitle());
             }

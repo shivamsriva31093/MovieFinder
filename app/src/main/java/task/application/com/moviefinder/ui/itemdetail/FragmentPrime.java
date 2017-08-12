@@ -207,7 +207,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         retrievedItem = data;
         Picasso picasso = Picasso.with(getActivity());
         picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
-                .error(R.drawable.trailer).into(backDropImage);
+                .error(R.drawable.imgfound).into(backDropImage);
         showGenresList(data.getGenres());
 
         title.setText(data.getOriginalName());
@@ -227,7 +227,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         retrievedItem = (MediaBasic) data;
         Picasso picasso = Picasso.with(getActivity());
         picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
-                .error(R.drawable.trailer).into(backDropImage);
+                .error(R.drawable.imgfound).into(backDropImage);
         showGenresList(data.getGenresList());
         title.setText(data.getOriginalTitle());
         lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
