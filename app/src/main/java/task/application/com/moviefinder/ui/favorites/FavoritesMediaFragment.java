@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +28,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidtmdbwrapper.enums.MediaType;
@@ -407,6 +408,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         public void toggleCheckBoxState(boolean state, int position, ViewHolder holder) {
             holder.checkBox.setChecked(state);
 //            holder.backdrop.setScaleType(state ? ImageView.ScaleType.CENTER_INSIDE : ImageView.ScaleType.CENTER_CROP);
+            holder.backdrop.setColorFilter(state ? Color.parseColor("#89000000") :
+                    Color.TRANSPARENT, PorterDuff.Mode.SRC_ATOP);
         }
 
 
@@ -417,8 +420,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                if (itemView instanceof LinearLayout) {
-                    CardView cardView = (CardView) ((LinearLayout) itemView).findViewById(R.id.card_view);
+                if (itemView instanceof CardView) {
+                    CardView cardView = (CardView) itemView.findViewById(R.id.card_view_child);
                     backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                     title = (TextView) itemView.findViewById(R.id.title);
                     checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);

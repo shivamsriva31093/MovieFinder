@@ -1,12 +1,16 @@
 package task.application.com.moviefinder.ui.favorites;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -27,6 +31,16 @@ public class FavoritesMediaActivity extends BaseActivity implements
 
     private static final String SEARCH_QUERY = "query";
     private static final String EMPTY_QUERY = "emptyQuery";
+    private static final long MENU_ICON_ANIM_DURATION = 250;
+
+    private enum LeftActionState {
+        SHOW_NAV_DRAWER,
+        SHOW_BACK_BUTTON
+    }
+
+    private LeftActionState leftActionState = LeftActionState.SHOW_NAV_DRAWER;
+    private DrawerArrowDrawable menuDrawable;
+    private Drawable backArrow;
 
     private CharSequence searchQuery;
     private FavoritesMediaContract.Presenter presenter;
@@ -54,8 +68,7 @@ public class FavoritesMediaActivity extends BaseActivity implements
         return true;
     };
     private TextInputLayout searchInputTextLayout;
-    private ImageView navDrawerButton;
-    private ImageView backButton;
+    private ImageView searchBarLeftAction;
 
 
     @Override
@@ -66,6 +79,9 @@ public class FavoritesMediaActivity extends BaseActivity implements
             if (savedInstanceState.containsKey(SEARCH_QUERY))
                 searchQuery = savedInstanceState.getCharSequence(SEARCH_QUERY);
         }
+        menuDrawable = new DrawerArrowDrawable(this);
+        backArrow = getDrawable(R.drawable.ic_arrow_back_black_24dp);
+        leftActionState = LeftActionState.SHOW_NAV_DRAWER;
         setUpBottomNavigationView();
         setUpSearchBox();
     }
@@ -99,16 +115,7 @@ public class FavoritesMediaActivity extends BaseActivity implements
         FrameLayout searchBar = (FrameLayout) findViewById(R.id.search_bar);
         searchInput = (EditText) searchBar.findViewById(R.id.searchInput);
         searchInputTextLayout = (TextInputLayout) searchBar.findViewById(R.id.searchInputTextLayout);
-        navDrawerButton = (ImageView) searchBar.findViewById(R.id.search_bar_left_action);
-        backButton = (ImageView) searchBar.findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                animateOnBackButtonPress();
-            }
-        });
-//        clearBtn = (ImageView) searchBar.findViewById(R.id.clear_btn);
-        searchInput.setFocusable(false);
+        searchBarLeftAction = (ImageView) searchBar.findViewById(R.id.search_bar_left_action);
         InputMethodManager inputMethodManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
@@ -116,29 +123,112 @@ public class FavoritesMediaActivity extends BaseActivity implements
         searchInput.setOnTouchListener((v, event) -> {
             searchInput.setFocusableInTouchMode(true);
             searchInput.requestFocus();
-            animateOnSearchInput();
+            transitionInLeftSection(true);
             return false;
         });
 
         searchInput.setOnKeyListener((v, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                InputMethodManager inputMethodManager1 = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager1.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                setInputMethodVisibile(false);
                 attemptToSearch();
             }
             return false;
         });
 
+        setUpLeftActionContainer();
+
+    }
+
+    private void setUpLeftActionContainer() {
+        searchBarLeftAction.setImageDrawable(menuDrawable);
+        searchBarLeftAction.setOnClickListener(view -> {
+            if (searchInput.isFocused()) {
+                clearSearch();
+            } else {
+                switch (leftActionState) {
+                    case SHOW_NAV_DRAWER:
+
+//                        toggleNavDrawer();
+                        break;
+                }
+            }
+        });
+    }
+
+    private void clearSearch() {
+        transitionOutLeftSection(true);
+        searchInput.setText("");
+        setInputMethodVisibile(false);
+    }
+
+    private void transitionOutLeftSection(boolean withAnim) {
+        switch (leftActionState) {
+            case SHOW_NAV_DRAWER:
+                closeMenuDrawable(menuDrawable, withAnim);
+        }
+    }
+
+    private void transitionInLeftSection(boolean withAnim) {
+        switch (leftActionState) {
+            case SHOW_NAV_DRAWER:
+                openMenuDrawable(menuDrawable, withAnim);
+        }
+    }
+
+    private void closeMenuDrawable(DrawerArrowDrawable menuDrawable, boolean withAnim) {
+        if (withAnim) {
+            ValueAnimator animator = ValueAnimator.ofFloat(1.0f, 0.0f);
+            animator.addUpdateListener(valueAnimator -> {
+                float val = (Float) valueAnimator.getAnimatedValue();
+                menuDrawable.setProgress(val);
+            });
+            animator.setDuration(MENU_ICON_ANIM_DURATION);
+            animator.start();
+        } else {
+            menuDrawable.setProgress(0.0f);
+        }
+    }
+
+    private void openMenuDrawable(DrawerArrowDrawable menuDrawable, boolean withAnim) {
+        if (withAnim) {
+            ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+            animator.addUpdateListener(valueAnimator -> {
+                float val = (Float) valueAnimator.getAnimatedValue();
+                menuDrawable.setProgress(val);
+            });
+            animator.setDuration(MENU_ICON_ANIM_DURATION);
+            animator.start();
+        } else {
+            menuDrawable.setProgress(1.0f);
+        }
+    }
+
+    private void toggleNavDrawer() {
+        openNavDrawer();
     }
 
     private void animateOnBackButtonPress() {
 
     }
 
-    private void animateOnSearchInput() {
+    private Runnable showInputMethodRunnable = () -> {
+        InputMethodManager inputMethodManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null)
+            inputMethodManager.showSoftInput(searchInput, 0);
+    };
 
+    private void setInputMethodVisibile(boolean hasFocus) {
+        if (hasFocus)
+            new Handler().post(showInputMethodRunnable);
+        else {
+            new Handler().removeCallbacks(showInputMethodRunnable);
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null)
+                inputMethodManager.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
+        }
     }
 
     private void attemptToSearch() {
@@ -193,9 +283,8 @@ public class FavoritesMediaActivity extends BaseActivity implements
                 view.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
                     view.setFocusable(false);
-                    InputMethodManager inputMethodManager = (InputMethodManager)
-                            getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    setInputMethodVisibile(false);
+                    transitionInLeftSection(true);
                 }
             }
         }

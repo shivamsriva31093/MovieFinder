@@ -117,11 +117,19 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
         switch (getFilteringType()) {
             case MOVIES:
                 MovieInfo mv = (MovieInfo) item;
-                addToRealm(mv.getId(), MediaType.MOVIES, mv.getTitle(), mv.getBackdropPath());
+                try {
+                    addToRealm(mv.getId(), MediaType.MOVIES, mv.getTitle(), mv.getPosterPath());
+                } catch (IllegalArgumentException | NullPointerException e) {
+                    e.printStackTrace();
+                }
                 break;
             case TV:
                 TvInfo tv = (TvInfo) item;
-                addToRealm(tv.getId(), MediaType.TV, tv.getName(), tv.getBackdropPath());
+                try {
+                    addToRealm(tv.getId(), MediaType.TV, tv.getName(), tv.getPosterPath());
+                } catch (IllegalArgumentException | NullPointerException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
