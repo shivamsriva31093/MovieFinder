@@ -99,8 +99,6 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.setQueryType(queryType);
-        presenter.makeQuery("en", 1, null);
     }
 
     ItemTouchListener itemTouchListener = (view, position, item) -> {
@@ -124,8 +122,10 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             TAG = savedInstanceState.getString("tag");
             totalResults = savedInstanceState.getInt("totalItems");
             totalPages = savedInstanceState.getInt("totalPages");
-            presenterCache.getPresenter(TAG, factory);
+            presenter = presenterCache.getPresenter(TAG, factory);
         }
+        presenter.setQueryType(queryType);
+        presenter.makeQuery("en", 1, null);
     }
 
     private void initViews(View rootView, Bundle savedInstanceState) {
