@@ -47,7 +47,7 @@
             android:name=".ui.favorites.FavoritesMediaActivity"
             android:label="@string/title_activity_favorites_media"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/TransparentStatusNav" />
         <activity
             android:name=".ui.discover.MainActivity"
             android:label="@string/title_activity_main"
