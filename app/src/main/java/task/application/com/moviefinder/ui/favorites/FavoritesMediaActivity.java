@@ -4,12 +4,12 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -101,6 +101,11 @@ public class FavoritesMediaActivity extends BaseActivity implements
         super.onNavDrawerSlide(offset);
     }
 
+    @Override
+    public void lockOrUnlockNavDrawer(boolean status) {
+        getDrawer().setDrawerLockMode(status ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED :
+                DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
 
     private void setUpBottomNavigationView() {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -149,7 +154,7 @@ public class FavoritesMediaActivity extends BaseActivity implements
                 switch (leftActionState) {
                     case SHOW_NAV_DRAWER:
 
-//                        toggleNavDrawer();
+                        toggleNavDrawer();
                         break;
                 }
             }
@@ -268,11 +273,6 @@ public class FavoritesMediaActivity extends BaseActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     public boolean dispatchTouchEvent(MotionEvent ev) {

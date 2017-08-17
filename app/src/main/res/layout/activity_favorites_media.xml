@@ -10,7 +10,8 @@
     <FrameLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <include layout="@layout/activity_favorites_media_maincontent" />
     </FrameLayout>

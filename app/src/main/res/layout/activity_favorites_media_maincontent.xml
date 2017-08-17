@@ -5,30 +5,18 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="task.application.com.moviefinder.ui.favorites.FavoritesMediaActivity">
 
     <FrameLayout
         android:id="@+id/search_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="8dp">
+        android:clipToPadding="true"
+        android:elevation="8dp"
+        android:fitsSystemWindows="true">
 
         <include layout="@layout/persistent_searchbar" />
-        <!--<com.arlib.floatingsearchview.FloatingSearchView-->
-        <!--android:id="@+id/floating_search_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"-->
-        <!--app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"-->
-        <!--app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"-->
-        <!--app:floatingSearch_searchHint="@string/search_for_movies_or_tv"-->
-        <!--app:floatingSearch_suggestionsListAnimDuration="250"-->
-        <!--app:floatingSearch_showSearchKey="false"-->
-        <!--app:floatingSearch_dismissOnOutsideTouch="true"-->
-        <!--app:floatingSearch_leftActionMode="showHamburger"-->
-        <!--app:floatingSearch_menu="@menu/persistent_searchbar_menu"-->
-        <!--app:floatingSearch_close_search_on_keyboard_dismiss="true"-->
-        <!--/>-->
     </FrameLayout>
 
 
@@ -36,13 +24,14 @@
         android:id="@+id/scrollingView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             android:nestedScrollingEnabled="false">
 
         </FrameLayout>
@@ -54,11 +43,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/colorAccentTranslucent"
+        android:background="@android:color/white"
         app:elevation="8dp"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/status_bar_light_grey"
-        app:menu="@menu/navigation" />
+        app:itemIconTint="@drawable/bottomnavbar_color"
+        app:itemTextColor="@drawable/bottomnavbar_color"
+        app:menu="@menu/navigation"></android.support.design.widget.BottomNavigationView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/bottomnavbar_dropshadow"
+        app:layout_anchor="@id/navigation" />
+
     <!--app:layout_behavior="task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour"-->
 
 

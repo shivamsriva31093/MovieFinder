@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Interpolator;
 
 import task.application.com.moviefinder.ui.favorites.FavoritesMediaActivity;
@@ -135,13 +134,13 @@ public final class BottomNavigationBehaviour<V extends View> extends VerticalScr
         if (scrollDirection == ScrollDirection.SCROLL_DIRECTION_DOWN && hidden) {
             hidden = false;
             animateOffset(child, 0);
-            if (activity != null)
-                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            if (activity != null)
+//                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         } else if (scrollDirection == ScrollDirection.SCROLL_DIRECTION_UP && !hidden) {
             hidden = true;
             animateOffset(child, child.getHeight());
-            if (activity != null)
-                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            if (activity != null)
+//                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 

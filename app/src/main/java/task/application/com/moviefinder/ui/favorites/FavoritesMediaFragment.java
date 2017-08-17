@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -15,7 +14,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -63,6 +61,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     private FrameLayout searchBarContainer;
     private NestedScrollView parentLayout;
     private FrameLayout searchBarLeftActionLayout;
+    private OnFragmentInteractionListener listener;
 
     public FavoritesMediaFragment() {
         // Required empty public constructor
@@ -226,6 +225,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             inflater.inflate(R.menu.rec_view_contextual_menu, menu);
             CheckBox selectAll = (CheckBox) menu.findItem(R.id.select_all).getActionView();
             selectAll.setButtonDrawable(R.drawable.cab_checkbox_selector);
+            listener.lockOrUnlockNavDrawer(true);
             return true;
         }
 
@@ -255,6 +255,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             isMultiSelect = false;
             adapter.clearSelections();
             animateBotNavChanges(0, View.VISIBLE, false, PARENT_BOTTOM_MARGIN);
+            listener.lockOrUnlockNavDrawer(false);
         }
     };
 
@@ -297,6 +298,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         super.onStart();
         if (presenter != null)
             presenter.start();
+        try {
+            listener = (FavoritesMediaActivity) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString() + "must implement " +
+                    "OnFragmentInteractionInterface");
+        }
     }
 
 
@@ -429,7 +436,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                             listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
                     cardView.setOnLongClickListener(view ->
                             listener.onItemLongClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
-                    Log.d("time",getAdapterPosition()+"");
                     checkBox.setOnClickListener(view -> {
                         toggleSelection(getAdapterPosition());
                         listener.onCheckboxClick(getAdapterPosition(), getItem(getAdapterPosition()));
@@ -441,7 +447,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+        void lockOrUnlockNavDrawer(boolean status);
     }
 
     interface ItemTouchListener {
