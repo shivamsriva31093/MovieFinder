@@ -32,6 +32,8 @@ public class FavoritesMediaActivity extends BaseActivity implements
     private static final String SEARCH_QUERY = "query";
     private static final String EMPTY_QUERY = "emptyQuery";
     private static final long MENU_ICON_ANIM_DURATION = 250;
+    private boolean isMenuOpen = false;
+    private boolean searchInputHasFocus;
 
     private enum LeftActionState {
         SHOW_NAV_DRAWER,
@@ -128,7 +130,8 @@ public class FavoritesMediaActivity extends BaseActivity implements
         searchInput.setOnTouchListener((v, event) -> {
             searchInput.setFocusableInTouchMode(true);
             searchInput.requestFocus();
-            transitionInLeftSection(true);
+            if (leftActionState.equals(LeftActionState.SHOW_NAV_DRAWER))
+                transitionInLeftSection(true);
             return false;
         });
 
@@ -148,13 +151,15 @@ public class FavoritesMediaActivity extends BaseActivity implements
     private void setUpLeftActionContainer() {
         searchBarLeftAction.setImageDrawable(menuDrawable);
         searchBarLeftAction.setOnClickListener(view -> {
-            if (searchInput.isFocused()) {
-                clearSearch();
+            if (searchInputHasFocus) {
+                transitionOutLeftSection(true);
             } else {
                 switch (leftActionState) {
                     case SHOW_NAV_DRAWER:
-
-                        toggleNavDrawer();
+                        openNavDrawer();
+                        break;
+                    case SHOW_BACK_BUTTON:
+                        transitionOutLeftSection(true);
                         break;
                 }
             }
@@ -169,19 +174,22 @@ public class FavoritesMediaActivity extends BaseActivity implements
 
     private void transitionOutLeftSection(boolean withAnim) {
         switch (leftActionState) {
-            case SHOW_NAV_DRAWER:
+            case SHOW_BACK_BUTTON:
                 closeMenuDrawable(menuDrawable, withAnim);
+                leftActionState = LeftActionState.SHOW_NAV_DRAWER;
         }
     }
 
     private void transitionInLeftSection(boolean withAnim) {
         switch (leftActionState) {
             case SHOW_NAV_DRAWER:
+                leftActionState = LeftActionState.SHOW_BACK_BUTTON;
                 openMenuDrawable(menuDrawable, withAnim);
         }
     }
 
     private void closeMenuDrawable(DrawerArrowDrawable menuDrawable, boolean withAnim) {
+        isMenuOpen = true;
         if (withAnim) {
             ValueAnimator animator = ValueAnimator.ofFloat(1.0f, 0.0f);
             animator.addUpdateListener(valueAnimator -> {
@@ -196,6 +204,7 @@ public class FavoritesMediaActivity extends BaseActivity implements
     }
 
     private void openMenuDrawable(DrawerArrowDrawable menuDrawable, boolean withAnim) {
+        isMenuOpen = false;
         if (withAnim) {
             ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
             animator.addUpdateListener(valueAnimator -> {
@@ -210,12 +219,9 @@ public class FavoritesMediaActivity extends BaseActivity implements
     }
 
     private void toggleNavDrawer() {
-        openNavDrawer();
-    }
-
-    private void animateOnBackButtonPress() {
 
     }
+
 
     private Runnable showInputMethodRunnable = () -> {
         InputMethodManager inputMethodManager = (InputMethodManager)
@@ -268,6 +274,9 @@ public class FavoritesMediaActivity extends BaseActivity implements
         if (fragment != null) {
             presenter = new FavoritesPresenter(fragment);
         }
+        searchInput.setOnFocusChangeListener((view, hasFocus) -> {
+            searchInputHasFocus = hasFocus;
+        });
     }
 
     @Override
@@ -284,7 +293,7 @@ public class FavoritesMediaActivity extends BaseActivity implements
                 if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
                     view.setFocusable(false);
                     setInputMethodVisibile(false);
-                    transitionInLeftSection(true);
+                    transitionOutLeftSection(true);
                 }
             }
         }
