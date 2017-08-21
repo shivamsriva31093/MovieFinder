@@ -1,0 +1,13 @@
+<resources>
+    <!--<declare-styleable name="ClearableEditText">-->
+    <!--<attr name="exampleString" format="string" />-->
+    <!--<attr name="exampleDimension" format="dimension" />-->
+    <!--<attr name="exampleColor" format="color" />-->
+    <!--<attr name="exampleDrawable" format="color|reference" />-->
+    <!--</declare-styleable>-->
+
+    <declare-styleable name="GeneralTextView">
+        <attr name="font" format="string" />
+    </declare-styleable>
+
+</resources>

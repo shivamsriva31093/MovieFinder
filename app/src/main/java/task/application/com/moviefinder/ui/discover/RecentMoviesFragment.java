@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -33,6 +32,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
+import task.application.com.moviefinder.ui.utility.GeneralTextView;
 import task.application.com.moviefinder.util.EndlessScrollListener;
 import task.application.com.moviefinder.util.GridLayoutItemDecoration;
 import task.application.com.moviefinder.util.Util;
@@ -413,7 +413,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         class ViewHolder extends RecyclerView.ViewHolder {
             private ImageView poster;
-            private TextView title;
+            private GeneralTextView title;
             private CircleImageView trailerButton;
             private ProgressBar footerProgressBar;
 
@@ -425,7 +425,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                     case TYPE_ITEM:
                         poster = (ImageView) itemView.findViewById(R.id.poster);
                         poster.setClickable(true);
-                        title = (TextView) itemView.findViewById(R.id.title);
+                        title = (GeneralTextView) itemView.findViewById(R.id.title);
                         trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
                         poster.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition(), data.get(getAdapterPosition())));
