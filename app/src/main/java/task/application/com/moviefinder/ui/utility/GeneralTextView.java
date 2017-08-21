@@ -19,6 +19,9 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
 
 
     private static final String ANDROID_SCHEMA = "http://schemas.android.com/apk/res/android";
+    private static final int SEMI_BOLD = 5;
+    private static final int EXTRA_BOLD = 6;
+    private static final int EXTRA_BOLD_ITALICS = 7;
 
     public GeneralTextView(Context context) {
         this(context, null);
@@ -37,7 +40,9 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
     private void applyCustomFont(Context context, AttributeSet attrs, int defStyle) {
         TypedArray attribArray = context.obtainStyledAttributes(attrs, R.styleable.GeneralTextView);
         String fontName = attribArray.getString(R.styleable.GeneralTextView_font);
-        int textStyle = attrs.getAttributeIntValue(ANDROID_SCHEMA, "textStyle", Typeface.NORMAL);
+        int textStyle = attrs.getAttributeIntValue(R.styleable.GeneralTextView_textStyle, 0);
+        if (textStyle == 0)
+            textStyle = attrs.getAttributeIntValue(ANDROID_SCHEMA, "textStyle", Typeface.NORMAL);
         Typeface customFont = selectTypeface(context, fontName, textStyle);
         setTypeface(customFont);
         attribArray.recycle();
@@ -52,6 +57,12 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
                 return FontCache.getTypeface(fontName + "-Italic.ttf", context);
             case Typeface.BOLD_ITALIC:
                 return FontCache.getTypeface(fontName + "-BoldItalic.ttf", context);
+            case SEMI_BOLD:
+                return FontCache.getTypeface(fontName + "-SemiBold.ttf", context);
+            case EXTRA_BOLD:
+                return FontCache.getTypeface(fontName + "-ExtraBold.ttf", context);
+            case EXTRA_BOLD_ITALICS:
+                return FontCache.getTypeface(fontName + "-ExtraBoldItalic.ttf", context);
             case Typeface.NORMAL:
             default:
                 return FontCache.getTypeface(fontName + "-Regular.ttf", context);

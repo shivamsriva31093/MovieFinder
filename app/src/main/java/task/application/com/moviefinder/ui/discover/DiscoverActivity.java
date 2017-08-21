@@ -1,18 +1,13 @@
 package task.application.com.moviefinder.ui.discover;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +24,7 @@ import task.application.com.moviefinder.ui.appsearch.AppSearchActivity;
 import task.application.com.moviefinder.ui.base.BaseActivity;
 import task.application.com.moviefinder.util.ActivityUtils;
 import task.application.com.moviefinder.util.CustomSpannableStringBuilder;
+import task.application.com.moviefinder.util.CustomTabLayout;
 
 public class DiscoverActivity extends BaseActivity {
 
@@ -48,7 +44,7 @@ public class DiscoverActivity extends BaseActivity {
      */
     private ViewPager mViewPager;
 
-    private TabLayout tabLayout;
+    private CustomTabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,28 +73,11 @@ public class DiscoverActivity extends BaseActivity {
     }
 
     private void setUpTabLayout() {
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
         tabLayout.setSelectedTabIndicatorHeight(4);
-        changeTabsFont();
         tabLayout.setupWithViewPager(mViewPager);
 
-    }
-
-    private void changeTabsFont() {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/" + "FrancoisOne-Regular.ttf");
-        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
-        int tabsCount = vg.getChildCount();
-        for (int j = 0; j < tabsCount; j++) {
-            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
-            int tabChildsCount = vgTab.getChildCount();
-            for (int i = 0; i < tabChildsCount; i++) {
-                View tabViewChild = vgTab.getChildAt(i);
-                if (tabViewChild instanceof TextView) {
-                    ((TextView) tabViewChild).setTypeface(font);
-                }
-            }
-        }
     }
 
     @Override
@@ -225,23 +204,27 @@ public class DiscoverActivity extends BaseActivity {
             CustomSpannableStringBuilder spannableStringBuilder = new CustomSpannableStringBuilder();
             switch (position) {
                 case 0:
-                    spannableStringBuilder.append("Now", new AbsoluteSizeSpan(14), new RelativeSizeSpan(2f),
-                            new ForegroundColorSpan(getResources().getColor(R.color.black)))
-                            .append(" ")
-                            .append("Playing", new RelativeSizeSpan(2f), new ForegroundColorSpan(getResources().getColor(R.color.black)));
-                    return spannableStringBuilder.build();
+//                    spannableStringBuilder.append("Now", new AbsoluteSizeSpan(14), new RelativeSizeSpan(2f),
+//                            new ForegroundColorSpan(getResources().getColor(R.color.black)))
+//                            .append(" ")
+//                            .append("Playing", new RelativeSizeSpan(2f), new ForegroundColorSpan(getResources().getColor(R.color.black)));
+//                    return spannableStringBuilder.build();
+                    return "Now Playing";
                 case 1:
-                    spannableStringBuilder.append("Upcoming", new RelativeSizeSpan(2f),
-                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
-                    return spannableStringBuilder.build();
+//                    spannableStringBuilder.append("Upcoming", new RelativeSizeSpan(2f),
+//                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
+//                    return spannableStringBuilder.build();
+                    return "Upcoming";
                 case 2:
-                    spannableStringBuilder.append("Popular", new RelativeSizeSpan(2f),
-                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
-                    return spannableStringBuilder.build();
+//                    spannableStringBuilder.append("Popular", new RelativeSizeSpan(2f),
+//                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
+//                    return spannableStringBuilder.build();
+                    return "Popular";
                 default:
-                    spannableStringBuilder.append("Top Rated", new RelativeSizeSpan(2f),
-                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
-                    return spannableStringBuilder.build();
+//                    spannableStringBuilder.append("Top Rated", new RelativeSizeSpan(2f),
+//                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
+//                    return spannableStringBuilder.build();
+                    return "Top Rated";
             }
 
         }

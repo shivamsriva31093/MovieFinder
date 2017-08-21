@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp">
 
-        <TextView
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
             android:id="@+id/plot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,8 @@
             android:clickable="false"
             android:padding="10dp"
             android:layout_marginRight="8dp"
-            style="@style/TextBody"
+            android:textStyle="normal"
+            app:font="Nunito"
             android:textAlignment="viewStart" />
 
         <TextView
@@ -108,13 +109,16 @@
 
     </GridLayout>
 
-    <TextView
+    <task.application.com.moviefinder.ui.utility.GeneralTextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="8dp"
-        style="@style/TextHeader"
+        android:textSize="22sp"
+        app:font="OpenSans"
+        app:textStyle="@integer/semiBold"
+        android:textColor="@color/body_text_1"
         app:layout_constraintLeft_toLeftOf="@+id/pseudoFAB"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pseudoFAB"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="top"
@@ -9,15 +10,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:theme="@style/ThemeOverlay.AppCompat">
 
-    <TextView
+    <task.application.com.moviefinder.ui.utility.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movie Finder"
+        android:text="@string/app_name"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
         android:textColor="#00b8d4"
         android:layout_marginLeft="55dp"
-        style="@style/TextBody"
+        app:font="OpenSans"
+        app:textStyle="@integer/bold"
         android:textStyle="bold"
         android:textSize="19sp"/>
 </LinearLayout>

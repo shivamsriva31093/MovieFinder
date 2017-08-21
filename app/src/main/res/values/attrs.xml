@@ -8,6 +8,7 @@
 
     <declare-styleable name="GeneralTextView">
         <attr name="font" format="string" />
+        <attr name="textStyle" format="integer" />
     </declare-styleable>
 
 </resources>

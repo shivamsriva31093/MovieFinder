@@ -14,16 +14,22 @@
 
 package task.application.com.moviefinder.navigation;
 
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.util.CustomTypefaceSpan;
+import task.application.com.moviefinder.util.FontCache;
 
 import static task.application.com.moviefinder.util.LogUtils.LOGE;
 
@@ -141,8 +147,31 @@ public class AppNavigationViewAsDrawerImpl extends AppNavigationViewAbstractImpl
                 }
             }
 
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem mi = menu.getItem(i);
+                applyFontToSubMenu(mi);
+                applyFontToMenuItem(mi);
+            }
+
             mNavigationView.setNavigationItemSelectedListener(this);
         }
+    }
+
+    private void applyFontToSubMenu(MenuItem item) {
+        SubMenu subMenu = item.getSubMenu();
+        if (subMenu != null && subMenu.size() > 0) {
+            for (int i = 0; i < subMenu.size(); i++) {
+                MenuItem subMenuItem = subMenu.getItem(i);
+                applyFontToMenuItem(subMenuItem);
+            }
+        }
+    }
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = FontCache.getTypeface("OpenSans-SemiBold.ttf", mActivity);
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
     }
 
     /**

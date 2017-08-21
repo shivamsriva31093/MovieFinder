@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="normal">0</integer>
+    <integer name="bold">1</integer>
+    <integer name="italics">2</integer>
+    <integer name="boldItalics">3</integer>
+    <integer name="semiBold">5</integer>
+    <integer name="extraBold">6</integer>
+    <integer name="extraBoldItalics">7</integer>
+</resources>

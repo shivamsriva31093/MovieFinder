@@ -18,7 +18,7 @@
             android:padding="0dp"
             app:layout_scrollFlags="scroll|enterAlways|snap|scroll|enterAlways|snap">
 
-            <android.support.v7.widget.AppCompatTextView
+            <task.application.com.moviefinder.ui.utility.GeneralTextView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -33,7 +33,9 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
-                android:text="Movie Mix" />
+                app:font="Cambay"
+
+                android:text="@string/app_title" />
 
             <ImageView
                 android:id="@+id/nav_button"
@@ -76,7 +78,7 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <android.support.design.widget.TabLayout
+        <task.application.com.moviefinder.util.CustomTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

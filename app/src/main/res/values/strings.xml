@@ -60,4 +60,5 @@
     <string name="action_movies">Movies</string>
     <string name="action_tv">TV</string>
     <string name="title_activity_app_search">AppSearchActivity</string>
+    <string name="app_title">Movie Mix</string>
 </resources>
