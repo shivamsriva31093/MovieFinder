@@ -41,9 +41,14 @@ import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
+import task.application.com.moviefinder.ui.utility.GeneralTextView;
 import task.application.com.moviefinder.ui.utility.realmrecview.RealmRecViewAdapter;
 import task.application.com.moviefinder.util.GridLayoutItemDecoration;
 import task.application.com.moviefinder.util.Util;
+import task.application.com.moviefinder.util.ViewType;
+
+import static task.application.com.moviefinder.util.ViewType.TYPE_HEADER;
+import static task.application.com.moviefinder.util.ViewType.TYPE_ITEM;
 
 
 public class FavoritesMediaFragment extends Fragment implements FavoritesMediaContract.View {
@@ -86,7 +91,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         super.onActivityCreated(savedInstanceState);
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         searchBarContainer = (FrameLayout) getActivity().findViewById(R.id.search_bar);
-        parentLayout = (NestedScrollView) getActivity().findViewById(R.id.scrollingView);
+//        parentLayout = (NestedScrollView) getActivity().findViewById(R.id.scrollingView);
         searchBarLeftActionLayout = (FrameLayout) searchBarContainer.findViewById(R.id.search_bar_left_action_container);
     }
 
@@ -101,12 +106,24 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     }
 
     private void setUpRecyclerView() {
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2) {
             @Override
             public boolean supportsPredictiveItemAnimations() {
                 return true;
             }
         };
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                ViewType holderType = ViewType.values()[adapter.getItemViewType(position)];
+                switch (holderType) {
+                    case TYPE_HEADER:
+                        return 2;
+                    default:
+                        return 1;
+                }
+            }
+        });
         recView.setLayoutManager(layoutManager);
         recView.setNestedScrollingEnabled(false);
         recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -195,12 +212,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                         bottomNavigationView.animate().setListener(null);
                     }
                 });
-    }
-
-    private void setParentLayoutBottomMargin(int margin) {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) parentLayout.getLayoutParams();
-        params.bottomMargin = margin;
-        parentLayout.setLayoutParams(params);
     }
 
     private void toggleSelection(int position) {
@@ -367,23 +378,55 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fav_rec_view_items, parent, false);
-            return new ViewHolder(rootView);
+        public int getItemViewType(int position) {
+            if (position == 0)
+                return TYPE_HEADER.ordinal();
+            return TYPE_ITEM.ordinal();
         }
 
         @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View rootView = null;
+            ViewType holderType = ViewType.values()[viewType];
+            switch (holderType) {
+                case TYPE_HEADER:
+                    rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_recentmovies_header, parent, false);
+                    break;
+                case TYPE_ITEM:
+                    rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fav_rec_view_items, parent, false);
+            }
+            return new ViewHolder(rootView, holderType);
+        }
+
+
+        @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+            switch (holder.HOLDER_ID) {
+                case TYPE_HEADER:
+                    holder.headerTitle.setText("Your Favorite " + FILTER);
+                    holder.subHeaderTitle.setVisibility(View.GONE);
+                    break;
+                case TYPE_ITEM:
+                    bindRowItems(holder, position);
+                    break;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return super.getItemCount() + 1;
+        }
+
+        private void bindRowItems(ViewHolder holder, int position) {
             OrderedRealmCollection<MediaItem> data = getData();
             if (data == null) return;
             holder.checkBox.setVisibility(isMultiSelect ? View.VISIBLE : View.GONE);
             toggleCheckBoxState(isMultiSelect && selectedItems.get(position, false), position, holder);
-            Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position).getBackDrop())
+            Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position - 1).getBackDrop())
                     .error(R.drawable.trailer1)
                     .placeholder(R.drawable.trailer1)
                     .into(holder.backdrop);
-            holder.title.setText(getData().get(position).getTitle());
-
+            holder.title.setText(getData().get(position - 1).getTitle());
         }
 
         public void toggleSelection(int position) {
@@ -408,7 +451,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         public List<Integer> getSelectedItems() {
             List<Integer> itemIndices = new ArrayList<>();
             for (int i = 0; i < selectedItems.size(); i++)
-                itemIndices.add(selectedItems.keyAt(i));
+                itemIndices.add(selectedItems.keyAt(i) - 1);
             return itemIndices;
         }
 
@@ -425,21 +468,36 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             private TextView title;
             private CheckBox checkBox;
 
-            public ViewHolder(View itemView) {
+            private GeneralTextView headerTitle;
+            private GeneralTextView subHeaderTitle;
+
+            private ViewType HOLDER_ID;
+
+            public ViewHolder(View itemView, ViewType holderType) {
                 super(itemView);
-                if (itemView instanceof CardView) {
-                    CardView cardView = (CardView) itemView.findViewById(R.id.card_view_child);
-                    backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
-                    title = (TextView) itemView.findViewById(R.id.title);
-                    checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
-                    cardView.setOnClickListener(view ->
-                            listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
-                    cardView.setOnLongClickListener(view ->
-                            listener.onItemLongClick(view, getAdapterPosition(), getItem(getAdapterPosition())));
-                    checkBox.setOnClickListener(view -> {
-                        toggleSelection(getAdapterPosition());
-                        listener.onCheckboxClick(getAdapterPosition(), getItem(getAdapterPosition()));
-                    });
+                switch (holderType) {
+                    case TYPE_HEADER:
+                        headerTitle = (GeneralTextView) itemView.findViewById(R.id.title_view);
+                        subHeaderTitle = (GeneralTextView) itemView.findViewById(R.id.title_view_subheader);
+                        HOLDER_ID = holderType;
+                        break;
+                    case TYPE_ITEM:
+                        if (itemView instanceof CardView) {
+                            CardView cardView = (CardView) itemView.findViewById(R.id.card_view_child);
+                            backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
+                            title = (TextView) itemView.findViewById(R.id.title);
+                            checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+                            cardView.setOnClickListener(view ->
+                                    listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition() - 1)));
+                            cardView.setOnLongClickListener(view ->
+                                    listener.onItemLongClick(view, getAdapterPosition(), getItem(getAdapterPosition() - 1)));
+                            checkBox.setOnClickListener(view -> {
+                                toggleSelection(getAdapterPosition());
+                                listener.onCheckboxClick(getAdapterPosition(), getItem(getAdapterPosition() - 1));
+                            });
+                        }
+                        HOLDER_ID = holderType;
+                        break;
                 }
             }
         }

@@ -25,6 +25,21 @@
         android:layout_marginStart="16dp" />
 
 
+    <View
+        android:id="@+id/endbar"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/body_text_2"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
@@ -33,9 +48,11 @@
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:layout_marginTop="8dp">
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.CollapsibleTextView
             android:id="@+id/plot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,12 +60,13 @@
             android:layout_row="1"
             android:clickable="false"
             android:padding="10dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:textStyle="normal"
             app:font="Nunito"
+            app:trimLength="150"
             android:textAlignment="viewStart" />
 
-        <TextView
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
             android:id="@+id/synopsis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,14 +74,16 @@
             android:layout_gravity="left"
             android:layout_margin="10dp"
             android:layout_row="0"
+            android:layout_marginTop="5dp"
+            app:font="Nunito"
             android:gravity="center_vertical|center_horizontal"
             android:text="Synopsis"
             style="@style/TextHeaderSub"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/body_text_2"
             />
 
-        <TextView
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
             android:id="@+id/cast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +93,8 @@
             android:layout_row="2"
             android:gravity="center_vertical|center_horizontal"
             android:text="Cast"
-            android:textColor="@color/colorPrimary"
+            app:font="Nunito"
+            android:textColor="@color/body_text_2"
             style="@style/TextHeaderSub"
             android:textStyle="bold" />
 
@@ -85,7 +106,7 @@
             android:layout_margin="5dp"
             android:layout_row="3" />
 
-        <TextView
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
             android:id="@+id/crew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,7 +116,8 @@
             android:layout_row="4"
             android:gravity="center_vertical|center_horizontal"
             android:text="Crew"
-            android:textColor="@color/colorPrimary"
+            app:font="Nunito"
+            android:textColor="@color/body_text_2"
             style="@style/TextHeaderSub"
             android:textStyle="bold" />
 
@@ -113,117 +135,50 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="2dp"
+        android:textColor="@color/body_text_1"
         android:textSize="22sp"
         app:font="OpenSans"
-        app:textStyle="@integer/semiBold"
-        android:textColor="@color/body_text_1"
         app:layout_constraintLeft_toLeftOf="@+id/pseudoFAB"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pseudoFAB"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="8dp" />
+        app:textStyle="@integer/semiBold" />
 
-    <RelativeLayout
-        android:id="@+id/ratingsView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!--<ImageButton-->
+    <!--android:id="@+id/imageButton5"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="?attr/selectableItemBackgroundBorderless"-->
+    <!--android:elevation="0dp"-->
+    <!--android:tint="?android:attr/textColorHighlightInverse"-->
+    <!--app:srcCompat="@drawable/share_variant"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/basic_details"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="@+id/basic_details"-->
+    <!--android:layout_marginBottom="8dp" />-->
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/imageButton5"
+        style="@style/MyCubeButtonPin"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/basic_details">
-
-        <ProgressBar
-            android:id="@+id/ratings_load"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="32dp"
-            android:layout_height="26dp"
-            android:layout_centerInParent="true"
-            android:indeterminate="true"
-            android:padding="2dp"
-            android:progressDrawable="@color/colorPrimaryDark"
-            android:progressTint="@android:color/holo_red_dark"
-            android:visibility="gone" />
-
-        <RelativeLayout
-            android:id="@+id/ratings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="0dp">
-
-            <TextView
-                android:id="@+id/rt_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageView12"
-                android:layout_below="@+id/imdb_rating"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/imageView12"
-                android:textColor="@color/colorPrimaryDark" />
-
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_below="@+id/imageView10"
-                android:cropToPadding="true"
-                android:padding="5dp"
-                android:scaleType="centerCrop"
-                android:tint="#88bab5b5"
-                android:tintMode="src_atop"
-                app:srcCompat="@drawable/tomato" />
-
-            <TextView
-                android:id="@+id/imdb_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/imageView12"
-                android:layout_alignBottom="@+id/imageView10"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_toEndOf="@+id/imageView10"
-                android:textColor="@color/colorPrimaryDark" />
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="28dp"
-                android:layout_height="17dp"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                android:tint="#88bab5b5"
-                android:tintMode="src_atop"
-                app:srcCompat="@drawable/imdb_bar_icon" />
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <ImageButton
-        android:id="@+id/imageButton5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
         android:elevation="0dp"
-        android:tint="?android:attr/textColorHighlightInverse"
-        app:srcCompat="@drawable/share_variant"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/basic_details"
-        android:layout_marginTop="8dp"
+        android:shadowColor="@color/colorAccent"
+        android:text="Share"
+        android:textColor="@color/body_text_2"
         app:layout_constraintBottom_toBottomOf="@+id/basic_details"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
     <RelativeLayout
         android:id="@+id/basic_details"
@@ -284,13 +239,172 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline2"
         app:layout_constraintGuide_begin="16dp"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="16dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline3"
         app:layout_constraintGuide_begin="344dp"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="344dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline4"
+        app:layout_constraintGuide_begin="384dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="384dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <RelativeLayout
+        android:id="@+id/ratingsView"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/basic_details"
+        app:layout_constraintVertical_bias="0.311">
+
+        <ProgressBar
+            android:id="@+id/ratings_load"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="32dp"
+            android:layout_height="26dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:padding="2dp"
+            android:progressDrawable="@color/colorPrimaryDark"
+            android:progressTint="@android:color/holo_red_dark"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/ratings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp">
+
+
+            <task.application.com.moviefinder.ui.utility.GeneralTextView
+                android:id="@+id/rt_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView12"
+                android:layout_below="@+id/imdb_rating"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/progress_sync1"
+                android:textColor="@color/body_text_1"
+                app:font="Cambay" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_below="@+id/imageView10"
+                android:cropToPadding="true"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                android:tint="#88bab5b5"
+                android:tintMode="src_atop"
+                app:srcCompat="@drawable/tomato" />
+
+            <com.daimajia.numberprogressbar.NumberProgressBar
+                android:id="@+id/progress_sync1"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView10"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="9dp"
+                android:layout_toRightOf="@+id/imageView12"
+                tools:progress_current="80"
+                tools:progress_max="100"
+                tools:progress_reached_bar_height="3dp"
+                tools:progress_reached_color="#3498DB"
+                tools:progress_text_offset="1dp"
+                tools:progress_text_size="12sp"
+                tools:progress_text_visibility="invisible"
+                tools:progress_unreached_bar_height="2dp" />
+
+            <com.daimajia.numberprogressbar.NumberProgressBar
+                android:id="@+id/progress_sync"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratings_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/imageView12"
+                tools:progress_current="80"
+                tools:progress_max="100"
+                tools:progress_reached_bar_height="3dp"
+                tools:progress_reached_color="#3498DB"
+                tools:progress_text_offset="1dp"
+                tools:progress_text_size="12sp"
+                tools:progress_text_visibility="invisible"
+                tools:progress_unreached_bar_height="2dp" />
+
+            <task.application.com.moviefinder.ui.utility.GeneralTextView
+                android:id="@+id/ratings_title"
+                style="@style/TextHeaderSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Ratings"
+                android:textColor="@color/body_text_2"
+                android:textStyle="bold"
+                app:font="Nunito" />
+
+            <task.application.com.moviefinder.ui.utility.GeneralTextView
+                android:id="@+id/imdb_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_above="@+id/imageView12"
+                android:layout_alignBottom="@+id/imageView10"
+                android:layout_below="@+id/ratings_title"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@+id/progress_sync"
+                android:text="8.4"
+                android:textColor="@color/body_text_1"
+                app:font="Cambay" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="28dp"
+                android:layout_height="17dp"
+                android:layout_below="@+id/ratings_title"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:tint="#88bab5b5"
+                android:tintMode="src_atop"
+                app:srcCompat="@drawable/imdb_bar_icon" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline7"
+        app:layout_constraintGuide_begin="111dp"
+        android:orientation="horizontal" />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,11 +4,9 @@
     android:id="@+id/search_query_area"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
     android:clickable="true"
     card_view:cardCornerRadius="@dimen/search_view_corner_radius"
-    card_view:cardElevation="2dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

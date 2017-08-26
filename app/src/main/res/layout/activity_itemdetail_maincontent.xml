@@ -81,11 +81,10 @@
         android:src="@drawable/arrow_left"
         android:scaleType="centerCrop" />
 
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/favorite"
         android:layout_gravity="bottom|right"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

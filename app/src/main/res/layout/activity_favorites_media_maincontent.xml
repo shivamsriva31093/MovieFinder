@@ -1,41 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="task.application.com.moviefinder.ui.favorites.FavoritesMediaActivity">
-
-    <FrameLayout
-        android:id="@+id/search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clipToPadding="true"
-        android:elevation="8dp"
-        android:fitsSystemWindows="true">
-
-        <include layout="@layout/persistent_searchbar" />
-    </FrameLayout>
-
+    android:fitsSystemWindows="false">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollingView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:background="@color/colorPrimary"
-            android:nestedScrollingEnabled="false">
+            android:layout_height="wrap_content">
 
         </FrameLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.BottomNavigationView
@@ -44,11 +26,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
+        android:background="@color/colorPrimary"
         app:elevation="8dp"
         app:itemIconTint="@drawable/bottomnavbar_color"
         app:itemTextColor="@drawable/bottomnavbar_color"
-        app:menu="@menu/navigation"></android.support.design.widget.BottomNavigationView>
+        app:menu="@menu/navigation" />
 
     <View
         android:id="@+id/view"
@@ -57,7 +39,43 @@
         android:background="@drawable/bottomnavbar_dropshadow"
         app:layout_anchor="@id/navigation" />
 
-    <!--app:layout_behavior="task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour"-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:contentInsetEnd="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetRight="0dp"
+        android:contentInsetStart="0dp"
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:contentInsetEnd="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
+            <FrameLayout
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <include layout="@layout/persistent_searchbar" />
+            </FrameLayout>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 </android.support.design.widget.CoordinatorLayout>

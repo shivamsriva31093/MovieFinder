@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.mediadetails.Video;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.TvInfo;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -44,6 +46,7 @@ import java.util.Locale;
 
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.utility.CollapsibleTextView;
 import task.application.com.moviefinder.util.Util;
 
 /**
@@ -68,12 +71,12 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private RelativeLayout ratingsView;
     private ImageButton trailerButton;
     private FloatingActionButton favorite;
-    private ImageButton share;
+    private AppCompatButton share;
     private TextView genres;
     private TextView title;
     private TextView lang;
     private TextView runtime;
-    private TextView synopsis;
+    private CollapsibleTextView synopsis;
     private String trailerKey;
     private TextView rtRating;
     private TextView imdbRating;
@@ -102,12 +105,32 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
         trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
         presenter.setFilteringType(itemType);
+
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_item_detail, container, false);
+        final NumberProgressBar syncProgress = (NumberProgressBar) rootView.findViewById(R.id.progress_sync);
+        float scale = getContext().getResources().getDisplayMetrics().density;
+        syncProgress.setProgress(78);
+        syncProgress.setProgressTextSize(scale * 12);
+        syncProgress.setReachedBarHeight(scale * 4);
+        syncProgress.setProgressTextVisibility(NumberProgressBar.ProgressTextVisibility.Invisible);
+        syncProgress.setUnreachedBarHeight(scale * 4);
+        syncProgress.setUnreachedBarColor(Color.parseColor("#e6e8e9"));
+        syncProgress.setReachedBarColor(Color.parseColor("#00b8d4"));
+
+        final NumberProgressBar syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
+        syncProgress1.setProgress(44);
+        syncProgress1.setProgressTextSize(scale * 12);
+        syncProgress1.setReachedBarHeight(scale * 4);
+        syncProgress1.setProgressTextVisibility(NumberProgressBar.ProgressTextVisibility.Invisible);
+        syncProgress1.setUnreachedBarHeight(scale * 4);
+        syncProgress1.setUnreachedBarColor(Color.parseColor("#e6e8e9"));
+        syncProgress1.setReachedBarColor(Color.parseColor("#00b8d4"));
         initialiseViewChildren(rootView);
         return rootView;
     }
@@ -140,8 +163,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         ratingsLoader.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
         rtRating = (TextView) ratingsView.findViewById(R.id.rt_rating);
         imdbRating = (TextView) ratingsView.findViewById(R.id.imdb_rating);
-        synopsis = (TextView) detailView.findViewById(R.id.plot);
-        share = (ImageButton) detailView.findViewById(R.id.imageButton5);
+        synopsis = (CollapsibleTextView) detailView.findViewById(R.id.plot);
+        share = (AppCompatButton) detailView.findViewById(R.id.imageButton5);
         addCastCrewImageSliders();
         trailerButton.setOnClickListener(this);
 
@@ -324,7 +347,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             toggleFavorite(button, tag, context);
         }
 
-        if (v instanceof ImageButton && v.getId() == R.id.imageButton5) {
+        if (v instanceof AppCompatButton && v.getId() == R.id.imageButton5) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this trailer: "

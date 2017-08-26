@@ -1,3 +1,4 @@
+
 package task.application.com.moviefinder.ui.itemdetail;
 
 import android.support.annotation.NonNull;
