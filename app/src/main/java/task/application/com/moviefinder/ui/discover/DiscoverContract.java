@@ -1,5 +1,6 @@
 package task.application.com.moviefinder.ui.discover;
 
+import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public class DiscoverContract {
         void showNoResults();
 
         void setEndlessScrollLoading(boolean status);
+
+        void setImdbRatings(String rating, int pos);
     }
 
     public interface Presenter extends BasePresenter {
@@ -30,6 +33,8 @@ public class DiscoverContract {
         void loadNextPage(int page);
 
         void setQueryType(DiscoverActivity.QueryType queryType);
+
+        void getRatings(MediaType filter, MediaBasic item, int pos);
 
         DiscoverActivity.QueryType getQueryType();
 

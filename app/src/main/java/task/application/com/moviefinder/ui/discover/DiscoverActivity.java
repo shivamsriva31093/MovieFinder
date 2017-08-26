@@ -75,7 +75,7 @@ public class DiscoverActivity extends BaseActivity {
     private void setUpTabLayout() {
         tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
-        tabLayout.setSelectedTabIndicatorHeight(4);
+        tabLayout.setSelectedTabIndicatorHeight(6);
         tabLayout.setupWithViewPager(mViewPager);
 
     }
@@ -234,6 +234,24 @@ public class DiscoverActivity extends BaseActivity {
         NOW_PLAYING,
         UPCOMING,
         POPULAR,
-        TOP_RATED
+        TOP_RATED;
+
+        QueryType() {
+        }
+
+        public String getQuery() {
+            switch (this) {
+                case NOW_PLAYING:
+                    return "Now Playing";
+                case POPULAR:
+                    return "Popular";
+                case TOP_RATED:
+                    return "Top Rated";
+                case UPCOMING:
+                    return "Upcoming";
+                default:
+                    return "";
+            }
+        }
     }
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#00b8d4</color>
-    <color name="colorPrimaryDark">#000</color>
+    <color name="colorPrimaryDark">#01a1b9</color>
     <color name="colorAccent">#eef1f2</color>
     <color name="colorAccentText">#edf0f2</color>
     <color name="colorAccentTextTranslucent">#baedf0f2</color>
     <color name="colorAccentTranslucent">#36fdfdfd</color>
     <color name="colorAccentSelected1">#ffcdd0</color>
     <color name="colorAccentSelected">#f9f9f9</color>
-    <color name="colorYellow">#d4e157</color>
-    <color name="colorGreen">#e57373</color>
+    <color name="colorYellow">#ffb84d</color>
+    <color name="colorGreen">#98f23f</color>
     <color name="colorTransparent">@android:color/transparent</color>
-    <color name="textColor">#e6edf1</color>
+    <color name="textColor">#e6e8e9</color>
     <color name="textBlack">#2e3133</color>
     <color name="searchColor">#45565e</color>
     <color name="theme_final_signin_pressed">#E65542</color>

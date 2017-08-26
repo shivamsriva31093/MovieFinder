@@ -14,6 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import task.application.com.moviefinder.util.Util;
 import task.application.com.moviefinder.util.ViewType;
 
 import static task.application.com.moviefinder.util.ViewType.TYPE_FOOTER;
+import static task.application.com.moviefinder.util.ViewType.TYPE_HEADER;
 import static task.application.com.moviefinder.util.ViewType.TYPE_ITEM;
 
 public class RecentMoviesFragment extends Fragment implements DiscoverContract.View {
@@ -136,12 +138,6 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
     private void setUpRecView(View rootView, Bundle savedInstanceState) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.media_list);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT) {
-            @Override
-            public boolean supportsPredictiveItemAnimations() {
-                return true;
-            }
-        };
         mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
         if (savedInstanceState != null) {
             // Restore saved layout manager type.
@@ -149,11 +145,31 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                     .getSerializable(KEY_LAYOUT_MANAGER);
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT) {
+            @Override
+            public boolean supportsPredictiveItemAnimations() {
+                return true;
+            }
+        };
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                ViewType holderType = ViewType.values()[rvAdapter.getItemViewType(position)];
+                switch (holderType) {
+                    case TYPE_HEADER:
+                        return 2;
+                    default:
+                        return 1;
+                }
+            }
+        });
+
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridLayoutItemDecoration(2, 1, true));
-        rvScrollListener = new EndlessScrollListener(layoutManager, 2) {
+        rvScrollListener = new EndlessScrollListener(layoutManager, 5) {
             @Override
             public boolean isLastPage(int page) {
                 return page == getTotalPages();
@@ -189,6 +205,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                     public boolean supportsPredictiveItemAnimations() {
                         return true;
                     }
+
                 };
                 mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
                 break;
@@ -225,6 +242,11 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         rvAdapter.addDataItems(data);
         int curPage = rvScrollListener.getCurPage();
         rvScrollListener.setCurPage(curPage + 1);
+    }
+
+    @Override
+    public void setImdbRatings(String rating, int pos) {
+        rvAdapter.setRating(rating, pos);
     }
 
     @Override
@@ -320,6 +342,8 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         private List<MediaBasic> data = new ArrayList<>();
         private boolean isLoaderRemoved = true;
         private ItemTouchListener itemTouchListener;
+        private SparseBooleanArray imdbRating = new SparseBooleanArray();
+        private SparseBooleanArray posArray = new SparseBooleanArray();
 
         public RVAdapter(List<? extends MediaBasic> data, ItemTouchListener listener) {
             this.data.addAll(data);
@@ -330,11 +354,17 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ViewType holderType = ViewType.values()[viewType];
             switch (holderType) {
+                case TYPE_HEADER:
+                    return new ViewHolder(LayoutInflater.from(getActivity())
+                            .inflate(R.layout.fragment_recentmovies_header
+                                    , parent, false), holderType);
                 case TYPE_ITEM:
-                    return new ViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.recentmovies_maincontent, parent, false),
+                    return new ViewHolder(LayoutInflater.from(getActivity())
+                            .inflate(R.layout.recentmovies_maincontent, parent, false),
                             holderType);
                 case TYPE_FOOTER:
-                    return new ViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.searchlist_footer, parent, false),
+                    return new ViewHolder(LayoutInflater.from(getActivity())
+                            .inflate(R.layout.searchlist_footer, parent, false),
                             holderType);
                 default:
                     return null;
@@ -343,7 +373,9 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         @Override
         public int getItemViewType(int position) {
-            if (position == data.size())
+            if (position == 0)
+                return TYPE_HEADER.ordinal();
+            else if (position == data.size() + 1)
                 return TYPE_FOOTER.ordinal();
             return TYPE_ITEM.ordinal();
         }
@@ -351,6 +383,9 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             switch (holder.HOLDER_ID) {
+                case TYPE_HEADER:
+                    holder.headerTitle.setText(getRelevantText());
+                    break;
                 case TYPE_ITEM:
                     showRowItems(holder, holder.getAdapterPosition());
                     break;
@@ -361,20 +396,49 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         }
 
         private void showRowItems(ViewHolder holder, int position) {
+            if (!imdbRating.get(position, false)) {
+                holder.ratingProgressBar.setVisibility(View.VISIBLE);
+                presenter.getRatings(MediaType.MOVIES, data.get(position - 1), position - 1);
+                imdbRating.put(position, true);
+                posArray.put(position, false);
+                loadMediaData(holder, position);
+            } else {
+
+                if (posArray.get(position)) {
+                    loadMediaData(holder, position);
+                    holder.ratingProgressBar.setVisibility(View.GONE);
+                    holder.imdbRating.setText(data.get(position - 1).getImdbRating());
+                    holder.imdbRating.setVisibility(View.VISIBLE);
+//                    holder.imdbIcon.setVisibility(View.VISIBLE);
+//                    holder.starIcon.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+        private void loadMediaData(ViewHolder holder, int position) {
             if (data != null && !data.isEmpty()) {
-                BasicMovieInfo row = (BasicMovieInfo) data.get(position);
+                BasicMovieInfo row = (BasicMovieInfo) data.get(position - 1);
                 Picasso.with(getActivity()).load(
                         "https://image.tmdb.org/t/p/w500" + row.getPosterPath())
                         .error(R.drawable.imgfound)
                         .placeholder(R.color.colorPrimary)
                         .into(holder.poster);
                 holder.title.setText(row.getTitle());
+                holder.imdbRating.setVisibility(View.GONE);
             }
         }
 
         @Override
         public int getItemCount() {
-            return data.isEmpty() ? 0 : data.size() + 1;
+            return data.isEmpty() ? 0 : data.size() + 2;
+        }
+
+        public void setRating(String rating, int pos) {
+            rating = rating == null ? "N/A" : rating;
+            MediaBasic item = data.get(pos);
+            item.setImdbRating(rating);
+            posArray.put(pos + 1, true);
+            new Handler().post(() -> notifyItemChanged(pos + 1));
         }
 
         public void updateData(List<? extends MediaBasic> list) {
@@ -385,11 +449,6 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         public void addDataItems(List<? extends MediaBasic> newDataItems) {
             removeFooter();
-//            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtilCB(data, newDataItems));
-//            new Handler().post(() -> {
-//                diffResult.dispatchUpdatesTo(this);
-//                data.addAll(newDataItems);
-//            });
             int posStart = data.size();
             for (MediaBasic item : newDataItems) {
                 data.add(item);
@@ -403,12 +462,12 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         public void removeFooter() {
             isLoaderRemoved = true;
-            new Handler().post(() -> notifyItemChanged(data.size()));
+            new Handler().post(() -> notifyItemChanged(data.size() + 1));
         }
 
         public void addFooter() {
             isLoaderRemoved = false;
-            new Handler().post(() -> notifyItemChanged(data.size()));
+            new Handler().post(() -> notifyItemChanged(data.size() + 1));
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
@@ -416,21 +475,31 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             private GeneralTextView title;
             private CircleImageView trailerButton;
             private ProgressBar footerProgressBar;
+            private GeneralTextView headerTitle;
+
+            private GeneralTextView imdbRating;
+            private ProgressBar ratingProgressBar;
 
             private ViewType HOLDER_ID;
 
             public ViewHolder(View itemView, ViewType holderType) {
                 super(itemView);
                 switch (holderType) {
+                    case TYPE_HEADER:
+                        headerTitle = (GeneralTextView) itemView.findViewById(R.id.title_view);
+                        HOLDER_ID = holderType;
+                        break;
                     case TYPE_ITEM:
                         poster = (ImageView) itemView.findViewById(R.id.poster);
                         poster.setClickable(true);
                         title = (GeneralTextView) itemView.findViewById(R.id.title);
                         trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
+                        imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
+                        ratingProgressBar = (ProgressBar) itemView.findViewById(R.id.ratingProgressBar);
                         poster.setOnClickListener(view ->
-                                itemTouchListener.onItemClick(view, getAdapterPosition(), data.get(getAdapterPosition())));
+                                itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
                         itemView.setOnClickListener(view ->
-                                itemTouchListener.onItemClick(view, getAdapterPosition(), data.get(getAdapterPosition())));
+                                itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
                         HOLDER_ID = holderType;
                         break;
                     case TYPE_FOOTER:
@@ -440,6 +509,21 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
                 }
             }
+        }
+    }
+
+    private CharSequence getRelevantText() {
+        switch (queryType) {
+            case NOW_PLAYING:
+                return queryType.getQuery() + " in Theatres";
+            case POPULAR:
+                return queryType.getQuery() + " among Audience";
+            case TOP_RATED:
+                return queryType.getQuery() + " by Movie goers";
+            case UPCOMING:
+                return queryType.getQuery() + " next week";
+            default:
+                return "";
         }
     }
 
