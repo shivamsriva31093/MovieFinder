@@ -49,6 +49,8 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.utility.CollapsibleTextView;
 import task.application.com.moviefinder.util.Util;
 
+import static com.daimajia.numberprogressbar.R.styleable.NumberProgressBar;
+
 /**
  * Created by sHIVAM on 3/16/2017.
  */
@@ -118,19 +120,20 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         syncProgress.setProgress(78);
         syncProgress.setProgressTextSize(scale * 12);
         syncProgress.setReachedBarHeight(scale * 4);
-        syncProgress.setProgressTextVisibility(NumberProgressBar.ProgressTextVisibility.Invisible);
+        syncProgress.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress.setUnreachedBarHeight(scale * 4);
-        syncProgress.setUnreachedBarColor(Color.parseColor("#e6e8e9"));
-        syncProgress.setReachedBarColor(Color.parseColor("#00b8d4"));
+        syncProgress.setUnreachedBarColor(Color.parseColor("#c7c6c6"));
+        syncProgress.setReachedBarColor(Color.parseColor("#dfbb46"));
 
         final NumberProgressBar syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
         syncProgress1.setProgress(44);
         syncProgress1.setProgressTextSize(scale * 12);
         syncProgress1.setReachedBarHeight(scale * 4);
-        syncProgress1.setProgressTextVisibility(NumberProgressBar.ProgressTextVisibility.Invisible);
+        syncProgress1.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress1.setUnreachedBarHeight(scale * 4);
-        syncProgress1.setUnreachedBarColor(Color.parseColor("#e6e8e9"));
-        syncProgress1.setReachedBarColor(Color.parseColor("#00b8d4"));
+        syncProgress1.setUnreachedBarColor(Color.parseColor("#c7c6c6" +
+                ""));
+        syncProgress1.setReachedBarColor(Color.parseColor("#ef5350"));
         initialiseViewChildren(rootView);
         return rootView;
     }

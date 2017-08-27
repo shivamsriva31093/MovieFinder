@@ -434,6 +434,12 @@ public class SearchListFragment extends Fragment implements SearchListContract.V
         public void setRating(String rating, int pos) {
             rating = rating == null ? "N/A" : rating;
             MediaBasic item = data.get(pos);
+            if(rating.contentEquals("N/A")){
+                rating = "Unrated";
+            }
+            else{
+                rating = "IMDb "+rating;
+            }
             item.setImdbRating(rating);
             posArray.put(pos + 1, true);
             new Handler().post(() -> notifyItemChanged(pos + 1));

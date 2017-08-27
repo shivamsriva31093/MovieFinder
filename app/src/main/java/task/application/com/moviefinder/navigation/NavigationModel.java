@@ -98,7 +98,7 @@ public class NavigationModel implements Model<NavigationModel.NavigationQueryEnu
         SEARCH_HOME(R.id.nav_search, R.string.advanced_search,
                 R.drawable.magnify, SearchActivity.class),
         DISCOVER_MOVIES(R.id.nav_recent, R.string.recent_movies,
-                R.drawable.calendar, DiscoverActivity.class),
+                R.drawable.discover, DiscoverActivity.class),
         IMDB_TOP_250(R.id.nav_top_250, R.string.imdb_top_250,
                 R.drawable.trophy_variant_outline, null),
         SHARE(R.id.nav_share, R.string.share, R.drawable.ic_menu_share, null),
