@@ -450,6 +450,12 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         public void setRating(final String[] rating, int pos) {
             rating[0] = rating[0] == null ? "N/A" : rating[0];
             MediaBasic item = data.get(pos);
+            if(rating[0].contentEquals("N/A")){
+                rating[0] = "Unrated";
+            }
+            else{
+                rating[0] = "IMDb "+rating[0];
+            }
             item.setImdbRating(rating[0]);
             posArray.put(pos + 1, true);
             getActivity().runOnUiThread(() -> notifyItemChanged(pos + 1, rating[0]));

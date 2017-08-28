@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="top"
     android:paddingTop="20dp"
+    android:background="@drawable/selector"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -13,13 +14,24 @@
     <task.application.com.moviefinder.ui.utility.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:textColor="#00b8d4"
+        android:text="MOVIE MIX"
+        android:layout_marginTop="53dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/body_text_2"
         android:layout_marginLeft="55dp"
-        app:font="OpenSans"
+        app:font="Nunito"
         app:textStyle="@integer/bold"
-        android:textStyle="bold"
-        android:textSize="19sp"/>
+        android:textStyle="normal"
+        android:textSize="20sp"/>
+    <task.application.com.moviefinder.ui.utility.GeneralTextView
+        android:id="@+id/title_view_subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="55dp"
+        android:text="Built for the love of movies in you"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:font="OpenSans" />
 </LinearLayout>

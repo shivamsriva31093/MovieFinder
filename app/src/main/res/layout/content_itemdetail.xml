@@ -28,11 +28,11 @@
     <View
         android:id="@+id/endbar"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.75dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@color/body_text_2"
+        android:background="@color/body_text_3"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -265,7 +265,7 @@
         android:id="@+id/ratingsView"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
@@ -309,15 +309,13 @@
 
             <ImageView
                 android:id="@+id/imageView12"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
                 android:layout_below="@+id/imageView10"
                 android:cropToPadding="true"
                 android:padding="5dp"
                 android:scaleType="centerCrop"
-                android:tint="#88bab5b5"
-                android:tintMode="src_atop"
-                app:srcCompat="@drawable/tomato" />
+                app:srcCompat="@drawable/rt" />
 
             <com.daimajia.numberprogressbar.NumberProgressBar
                 android:id="@+id/progress_sync1"
@@ -361,10 +359,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Ratings"
+                android:text="Ratings Meter"
                 android:textColor="@color/body_text_2"
                 android:textStyle="bold"
                 app:font="Nunito" />
@@ -392,9 +390,7 @@
                 android:cropToPadding="true"
                 android:padding="0dp"
                 android:scaleType="centerCrop"
-                android:tint="#88bab5b5"
-                android:tintMode="src_atop"
-                app:srcCompat="@drawable/imdb_bar_icon" />
+                app:srcCompat="@drawable/imdb_icon" />
 
         </RelativeLayout>
 

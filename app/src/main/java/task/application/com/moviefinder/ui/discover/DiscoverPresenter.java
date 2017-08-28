@@ -203,7 +203,7 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                     view.setImdbRatings(imdbRating, pos);
                 }), throwable -> {
                     throwable.printStackTrace();
-                    view.setImdbRatings("N/A", pos);
+                    view.setImdbRatings("Unrated", pos);
                 });
     }
 

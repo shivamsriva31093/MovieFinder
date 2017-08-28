@@ -393,7 +393,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         }
 
         public void setRating(String rating, int pos) {
-            rating = rating == null ? "N/A" : rating;
+            rating = rating == null ? "Unrated" : rating;
             MediaBasic item = (MediaBasic) data.get(pos);
             item.setImdbRating(rating);
             posArray.put(pos + 1, true);
