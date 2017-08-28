@@ -163,7 +163,10 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                 getMovieInfoObservable(api, item)
                         .subscribeOn(Schedulers.newThread())
                         .subscribe(movieInfo -> listener.onImdbIdReceived(api, movieInfo.getImdbId(), pos),
-                                Throwable::printStackTrace);
+                                throwable -> {
+                                    throwable.printStackTrace();
+                                    view.setImdbRatings("N/A", pos);
+                                });
                 break;
 
             case TV:
