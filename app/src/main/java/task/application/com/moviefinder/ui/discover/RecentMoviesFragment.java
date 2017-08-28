@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -164,12 +165,19 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                 }
             }
         });
+        DefaultItemAnimator animator = new DefaultItemAnimator() {
+            @Override
+            public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
+                return true;
+            }
+        };
+        recyclerView.setItemAnimator(animator);
 
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridLayoutItemDecoration(2, 1, true));
-        rvScrollListener = new EndlessScrollListener(layoutManager, 5) {
+        rvScrollListener = new EndlessScrollListener(layoutManager, 2) {
             @Override
             public boolean isLastPage(int page) {
                 return page == getTotalPages();
@@ -246,7 +254,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
     @Override
     public void setImdbRatings(String rating, int pos) {
-        rvAdapter.setRating(rating, pos);
+        rvAdapter.setRating(new String[]{rating}, pos);
     }
 
     @Override
@@ -381,6 +389,11 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         }
 
         @Override
+        public void onBindViewHolder(ViewHolder holder, int position, List<Object> payloads) {
+            super.onBindViewHolder(holder, position, payloads);
+        }
+
+        @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             switch (holder.HOLDER_ID) {
                 case TYPE_HEADER:
@@ -398,21 +411,22 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         private void showRowItems(ViewHolder holder, int position) {
             if (!imdbRating.get(position, false)) {
                 holder.ratingProgressBar.setVisibility(View.VISIBLE);
-                presenter.getRatings(MediaType.MOVIES, data.get(position - 1), position - 1);
-                imdbRating.put(position, true);
-                posArray.put(position, false);
-                loadMediaData(holder, position);
+                imdbRating.put(holder.getAdapterPosition(), true);
+                posArray.put(holder.getAdapterPosition(), false);
+                loadMediaData(holder, holder.getAdapterPosition());
+                presenter.getRatings(MediaType.MOVIES, data.get(position - 1), holder.getAdapterPosition() - 1);
             } else {
-
                 if (posArray.get(position)) {
                     loadMediaData(holder, position);
-                    holder.ratingProgressBar.setVisibility(View.GONE);
-                    holder.imdbRating.setText(data.get(position - 1).getImdbRating());
-                    holder.imdbRating.setVisibility(View.VISIBLE);
-//                    holder.imdbIcon.setVisibility(View.VISIBLE);
-//                    holder.starIcon.setVisibility(View.VISIBLE);
+                    updateRowItems(holder, position);
                 }
             }
+        }
+
+        private void updateRowItems(ViewHolder holder, int position) {
+            holder.ratingProgressBar.setVisibility(View.GONE);
+            holder.imdbRating.setText(data.get(position - 1).getImdbRating());
+            holder.imdbRating.setVisibility(View.VISIBLE);
         }
 
         private void loadMediaData(ViewHolder holder, int position) {
@@ -433,12 +447,12 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             return data.isEmpty() ? 0 : data.size() + 2;
         }
 
-        public void setRating(String rating, int pos) {
-            rating = rating == null ? "N/A" : rating;
+        public void setRating(final String[] rating, int pos) {
+            rating[0] = rating[0] == null ? "N/A" : rating[0];
             MediaBasic item = data.get(pos);
-            item.setImdbRating(rating);
+            item.setImdbRating(rating[0]);
             posArray.put(pos + 1, true);
-            new Handler().post(() -> notifyItemChanged(pos + 1));
+            getActivity().runOnUiThread(() -> notifyItemChanged(pos + 1, rating[0]));
         }
 
         public void updateData(List<? extends MediaBasic> list) {
