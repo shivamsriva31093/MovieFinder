@@ -174,6 +174,7 @@ public class AppNavigationViewAsDrawerImpl extends AppNavigationViewAbstractImpl
         mi.setTitle(mNewTitle);
     }
 
+
     /**
      * Sets up the given navdrawer item's appearance to the selected state. Note: this could also be
      * accomplished (perhaps more cleanly) with state-based layouts.
