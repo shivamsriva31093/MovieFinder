@@ -427,6 +427,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                     .placeholder(R.drawable.trailer1)
                     .into(holder.backdrop);
             holder.title.setText(getData().get(position - 1).getTitle());
+            holder.imdbRating.setText(getData().get(position - 1).getImdbRating());
         }
 
         public void toggleSelection(int position) {
@@ -471,6 +472,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             private GeneralTextView headerTitle;
             private GeneralTextView subHeaderTitle;
 
+            private GeneralTextView imdbRating;
+
             private ViewType HOLDER_ID;
 
             public ViewHolder(View itemView, ViewType holderType) {
@@ -487,6 +490,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                             backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                             title = (TextView) itemView.findViewById(R.id.title);
                             checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+                            imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
                             cardView.setOnClickListener(view ->
                                     listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition() - 1)));
                             cardView.setOnLongClickListener(view ->

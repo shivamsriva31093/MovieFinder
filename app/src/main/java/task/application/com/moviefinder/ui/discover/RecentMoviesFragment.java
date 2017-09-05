@@ -107,9 +107,9 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     ItemTouchListener itemTouchListener = (view, position, item) -> {
         Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
         Bundle bundle = new Bundle();
-        MediaBasic media = new MediaBasic();
-        media.setId(item.getId());
-        bundle.putParcelable("clickedItem", media);
+//        MediaBasic media = new MediaBasic();
+//        media.setId(item.getId());
+        bundle.putParcelable("clickedItem", item);
         bundle.putSerializable("filtering_type", MediaType.MOVIES);
         intent.putExtra("searchItem", bundle);
         startActivity(intent);

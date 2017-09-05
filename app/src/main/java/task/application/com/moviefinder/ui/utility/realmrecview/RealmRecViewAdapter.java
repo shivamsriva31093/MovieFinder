@@ -9,14 +9,14 @@ import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollection;
 import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.RealmList;
-import io.realm.RealmModel;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 /**
  * Created by sHIVAM on 6/2/2017.
  */
 
-public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class RealmRecViewAdapter<T extends RealmObject, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     @Nullable
     private OrderedRealmCollection<T> data;

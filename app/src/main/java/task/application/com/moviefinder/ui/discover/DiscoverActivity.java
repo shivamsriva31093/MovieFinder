@@ -3,6 +3,7 @@ package task.application.com.moviefinder.ui.discover;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -50,7 +51,8 @@ public class DiscoverActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
-
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        appBarLayout.setElevation(0);
         initViews();
     }
 
@@ -68,6 +70,7 @@ public class DiscoverActivity extends BaseActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setOffscreenPageLimit(5);
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setUpTabLayout();
     }
@@ -75,7 +78,8 @@ public class DiscoverActivity extends BaseActivity {
     private void setUpTabLayout() {
         tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
-        tabLayout.setSelectedTabIndicatorHeight(6);
+        float scale = getResources().getDisplayMetrics().density;
+        tabLayout.setSelectedTabIndicatorHeight((int) scale * 1);
         tabLayout.setupWithViewPager(mViewPager);
 
     }

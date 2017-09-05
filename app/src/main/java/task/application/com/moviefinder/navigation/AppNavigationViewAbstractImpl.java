@@ -17,8 +17,12 @@ package task.application.com.moviefinder.navigation;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 
+import java.util.List;
+
+import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel.NavigationItemEnum;
 import task.application.com.moviefinder.navigation.NavigationModel.NavigationQueryEnum;
 import task.application.com.moviefinder.navigation.NavigationModel.NavigationUserActionEnum;
@@ -88,6 +92,19 @@ public abstract class AppNavigationViewAbstractImpl implements
     public void itemSelected(final NavigationItemEnum item) {
         switch (item) {
 
+            case SHARE:
+                startShareIntent();
+                break;
+
+            case SEND:
+                Intent sendIntent = createEmailIntent(
+                        "moveupdev@gmail.com",
+                        "Feedback:",
+                        ""
+                );
+                mActivity.startActivity(sendIntent);
+                break;
+
             case FAVORITES:
                 if (item.getClassToLaunch() != null) {
                     Intent intent = new Intent(mActivity, item.getClassToLaunch());
@@ -109,6 +126,51 @@ public abstract class AppNavigationViewAbstractImpl implements
                 }
                 break;
         }
+    }
+
+    private void startShareIntent() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this app: " +
+                "https://play.google.com/store/apps/details?id=task.application.com.moviefinder"
+        );
+        sendIntent.setType("text/plain");
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mActivity.startActivity(
+                Intent.createChooser(
+                        sendIntent, mActivity.getResources().getText(R.string.app_title)
+                )
+        );
+    }
+
+    public Intent createEmailIntent(final String toEmail,
+                                    final String subject,
+                                    final String message) {
+        Intent sendTo = new Intent(Intent.ACTION_SENDTO);
+        String uriText = "mailto:" + Uri.encode(toEmail) +
+                "?subject=" + Uri.encode(subject) +
+                "&body=" + Uri.encode(message);
+        Uri uri = Uri.parse(uriText);
+        sendTo.setData(uri);
+
+        List<ResolveInfo> resolveInfos =
+                mActivity.getPackageManager().queryIntentActivities(sendTo, 0);
+
+        // Emulators may not like this check...
+        if (!resolveInfos.isEmpty()) {
+            return sendTo;
+        }
+
+        // Nothing resolves send to, so fallback to send...
+        Intent send = new Intent(Intent.ACTION_SEND);
+
+        send.setType("text/plain");
+        send.putExtra(Intent.EXTRA_EMAIL,
+                new String[]{toEmail});
+        send.putExtra(Intent.EXTRA_SUBJECT, subject);
+        send.putExtra(Intent.EXTRA_TEXT, message);
+
+        return Intent.createChooser(send, R.string.app_title + "");
     }
 
     @Override

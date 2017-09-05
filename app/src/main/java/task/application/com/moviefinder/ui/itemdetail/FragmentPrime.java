@@ -49,8 +49,6 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.utility.CollapsibleTextView;
 import task.application.com.moviefinder.util.Util;
 
-import static com.daimajia.numberprogressbar.R.styleable.NumberProgressBar;
-
 /**
  * Created by sHIVAM on 3/16/2017.
  */
@@ -75,6 +73,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private FloatingActionButton favorite;
     private AppCompatButton share;
     private TextView genres;
+    private NumberProgressBar syncProgress;
+    private NumberProgressBar syncProgress1;
     private TextView title;
     private TextView lang;
     private TextView runtime;
@@ -115,25 +115,25 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_item_detail, container, false);
-        final NumberProgressBar syncProgress = (NumberProgressBar) rootView.findViewById(R.id.progress_sync);
+        syncProgress = (NumberProgressBar) rootView.findViewById(R.id.progress_sync);
         float scale = getContext().getResources().getDisplayMetrics().density;
-        syncProgress.setProgress(78);
+        syncProgress.setProgress(0);
         syncProgress.setProgressTextSize(scale * 12);
         syncProgress.setReachedBarHeight(scale * 4);
         syncProgress.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress.setUnreachedBarHeight(scale * 4);
         syncProgress.setUnreachedBarColor(Color.parseColor("#c7c6c6"));
-        syncProgress.setReachedBarColor(Color.parseColor("#dfbb46"));
+        syncProgress.setReachedBarColor(Color.parseColor("#60000000"));
 
-        final NumberProgressBar syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
-        syncProgress1.setProgress(44);
+        syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
+        syncProgress1.setProgress(0);
         syncProgress1.setProgressTextSize(scale * 12);
         syncProgress1.setReachedBarHeight(scale * 4);
         syncProgress1.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress1.setUnreachedBarHeight(scale * 4);
         syncProgress1.setUnreachedBarColor(Color.parseColor("#c7c6c6" +
                 ""));
-        syncProgress1.setReachedBarColor(Color.parseColor("#ef5350"));
+        syncProgress1.setReachedBarColor(Color.parseColor("#60000000"));
         initialiseViewChildren(rootView);
         return rootView;
     }
@@ -279,12 +279,20 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                 imdbRating.setText("-");
             else
                 imdbRating.setText(data.getRatings().get(0).getValue());
+            String imdbString = data.getRatings().get(0).getValue().substring(0, 3);
+            Log.d("imdb", imdbString);
+            syncProgress.setProgress((int) Float.parseFloat(imdbString) * 10);
             if (data.getRatings().size() > 1) {
                 if (data.getRatings().get(1).getSource().equals("Rotten Tomatoes") &&
                         data.getRatings().get(1).getValue().equals("N/A"))
                     rtRating.setText("-");
-                else
+                else {
+                    int length = data.getRatings().get(1).getValue().length();
+                    String rtString = data.getRatings().get(1).getValue().substring(0, length - 1);
+                    Log.d("rt", rtString);
+                    syncProgress1.setProgress((int) Float.parseFloat(rtString));
                     rtRating.setText(data.getRatings().get(1).getValue());
+                }
             } else {
                 rtRating.setText("-");
             }
@@ -364,14 +372,17 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     }
 
     private void toggleFavorite(FloatingActionButton button, int tag, Context context) {
+        MediaBasic item = (MediaBasic) retrievedItem;
+        item.setImdbRating(imdbRating.getText().toString());
         if (tag == R.drawable.ic_favorite_border_black_24dp) {
             button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
             button.setTag(R.drawable.favorite);
-            presenter.addMediaToFavorites((MediaBasic) retrievedItem);
+            presenter.addMediaToFavorites(item);
         } else {
             button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
             button.setTag(R.drawable.ic_favorite_border_black_24dp);
-            presenter.removeMediaFromFavorites((MediaBasic) retrievedItem);
+            item.setImdbRating(imdbRating.getText().toString());
+            presenter.removeMediaFromFavorites(item);
         }
     }
 

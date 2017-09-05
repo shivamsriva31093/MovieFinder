@@ -41,7 +41,7 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected NavigationModel.NavigationItemEnum getSelfNavDrawerItem() {
-        return NavigationModel.NavigationItemEnum.SEARCH_HOME;
+        return NavigationModel.NavigationItemEnum.DISCOVER_MOVIES;
     }
 
     @Override

@@ -2,10 +2,8 @@ package task.application.com.moviefinder.ui.appsearch;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,15 +21,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.androidtmdbwrapper.enums.MediaType;
 
-import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
 import task.application.com.moviefinder.ui.base.BaseActivity;
 import task.application.com.moviefinder.ui.utility.widgets.ClearableEditText;
+import task.application.com.moviefinder.util.CustomTabLayout;
 
 public class AppSearchActivity extends BaseActivity
         implements AppSearchFragment.OnFragmentInteractionListener {
@@ -39,7 +36,7 @@ public class AppSearchActivity extends BaseActivity
     AppSearchFragment fragment;
     private MyPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private TabLayout tabLayout;
+    private CustomTabLayout tabLayout;
 
     private TextInputLayout searchInputTextLayout;
     private ClearableEditText searchInput;
@@ -122,26 +119,9 @@ public class AppSearchActivity extends BaseActivity
     }
 
     private void setUpTabLayout() {
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
-        changeTabsFont();
         tabLayout.setupWithViewPager(mViewPager);
-    }
-
-    private void changeTabsFont() {
-        Typeface font = Typeface.createFromAsset(ApplicationClass.getInstance().getAssets(), "fonts/" + "FrancoisOne-Regular.ttf");
-        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
-        int tabsCount = vg.getChildCount();
-        for (int j = 0; j < tabsCount; j++) {
-            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
-            int tabChildsCount = vgTab.getChildCount();
-            for (int i = 0; i < tabChildsCount; i++) {
-                View tabViewChild = vgTab.getChildAt(i);
-                if (tabViewChild instanceof TextView) {
-                    ((TextView) tabViewChild).setTypeface(font);
-                }
-            }
-        }
     }
 
     @Override

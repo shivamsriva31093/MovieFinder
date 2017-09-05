@@ -15,12 +15,14 @@ public class MediaItem extends RealmObject {
     private String mediaType;
     private String title;
     private String backDrop;
+    private String imdbRating;
 
     public MediaItem() {
     }
 
-    public MediaItem(String tmdbId, MediaType mediaType, String title, String backDrop) {
+    public MediaItem(String tmdbId, MediaType mediaType, String title, String backDrop, String imdbRating) {
         this.tmdbId = tmdbId;
+        this.imdbRating = imdbRating;
         this.createdAt = new Date();
         this.mediaType = mediaType.toString();
         this.title = title;
@@ -65,5 +67,13 @@ public class MediaItem extends RealmObject {
 
     public void setBackDrop(String backDrop) {
         this.backDrop = backDrop;
+    }
+
+    public String getImdbRating() {
+        return imdbRating;
+    }
+
+    public void setImdbRating(String imdbRating) {
+        this.imdbRating = imdbRating;
     }
 }

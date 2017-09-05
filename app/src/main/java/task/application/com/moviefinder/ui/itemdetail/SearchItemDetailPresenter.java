@@ -119,7 +119,8 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
             case MOVIES:
                 MovieInfo mv = (MovieInfo) item;
                 try {
-                    addToRealm(mv.getId(), MediaType.MOVIES, mv.getTitle(), mv.getPosterPath());
+                    Log.d("testy1", "rating = " + mv.getImdbRating());
+                    addToRealm(mv.getId(), MediaType.MOVIES, mv.getTitle(), mv.getPosterPath(), mv.getImdbRating());
                 } catch (IllegalArgumentException | NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -127,7 +128,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
             case TV:
                 TvInfo tv = (TvInfo) item;
                 try {
-                    addToRealm(tv.getId(), MediaType.TV, tv.getName(), tv.getPosterPath());
+                    addToRealm(tv.getId(), MediaType.TV, tv.getName(), tv.getPosterPath(), tv.getImdbRating());
                 } catch (IllegalArgumentException | NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -135,14 +136,14 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
         }
     }
 
-    private void addToRealm(int tmdbId, MediaType mediaType, String title, String backDrop) {
+    private void addToRealm(int tmdbId, MediaType mediaType, String title, String backDrop, String imdbRating) {
         realm.executeTransactionAsync(realm1 -> {
                     realm1.copyToRealm(new MediaItem(
                             String.valueOf(tmdbId),
                             mediaType,
                             title,
-                            backDrop
-                    ));
+                            backDrop,
+                            imdbRating));
                 }, () -> view.showTestToast("Added to favorites!"),
                 error -> {
                     view.showTestToast("Error in adding to favorites. Please try again later.");

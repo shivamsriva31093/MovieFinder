@@ -83,12 +83,12 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/favorite"
-        android:layout_gravity="bottom|right"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
         android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_favorite_border_black_24dp" />
+        android:src="@drawable/ic_favorite_border_black_24dp"
+        android:visibility="visible" />
 
 </FrameLayout>

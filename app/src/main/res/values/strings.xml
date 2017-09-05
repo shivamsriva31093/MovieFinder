@@ -53,7 +53,7 @@
     <string name="imdb_top_250">IMDb Top 250</string>
     <string name="contact_us">Contact Us</string>
     <string name="share">Share</string>
-    <string name="send">Send</string>
+    <string name="send">Send Feedback</string>
     <string name="title_activity_discover">DiscoverActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_discover_media">DiscoverMediaActivity</string>

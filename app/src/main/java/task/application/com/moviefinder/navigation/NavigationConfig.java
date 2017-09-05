@@ -33,9 +33,7 @@ public class NavigationConfig {
     public final static NavigationModel.NavigationItemEnum[] NAV_ITEMS =
             concatenateItems(new NavigationItemEnum[]{
                     NavigationItemEnum.FAVORITES,
-                    NavigationItemEnum.SEARCH_HOME,
                     NavigationItemEnum.DISCOVER_MOVIES,
-                    NavigationItemEnum.IMDB_TOP_250
             }, COMMON_ITEMS);
 
     private static NavigationItemEnum[] concatenateItems(NavigationItemEnum[] first,
@@ -62,9 +60,9 @@ public class NavigationConfig {
             boolean includeItem = true;
             switch (items[i]) {
                 case FAVORITES:
-                case IMDB_TOP_250:
+                    //case IMDB_TOP_250:
                 case DISCOVER_MOVIES:
-                case SEARCH_HOME:
+                    //case SEARCH_HOME:
                 case SEND:
                 case SHARE:
                     break;
