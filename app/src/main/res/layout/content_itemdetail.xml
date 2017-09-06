@@ -4,26 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/pseudoFAB"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:alpha="1"
-        android:elevation="4dp"
-        android:fadingEdge="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingEnd="1dp"
-        android:paddingStart="2dp"
-        android:paddingTop="4dp"
-        android:visibility="invisible"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="16dp" />
-
 
     <View
         android:id="@+id/endbar"
@@ -136,16 +116,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="2dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="2dp"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="22sp"
+        android:textStyle="bold"
+        android:text="Harry Potter and the Order of the Phoenix"
         app:font="OpenSans"
-        app:layout_constraintLeft_toLeftOf="@+id/pseudoFAB"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pseudoFAB"
-        android:textStyle="bold" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--<ImageButton-->
     <!--android:id="@+id/imageButton5"-->
@@ -166,71 +148,114 @@
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/imageButton5"
         style="@style/MyCubeButtonPin"
-        android:layout_width="100dp"
-        android:layout_height="32dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="140dp"
         android:elevation="0dp"
-        android:shadowColor="@color/colorAccent"
-        android:text="Share"
-        android:textColor="@color/body_text_2"
-        app:layout_constraintBottom_toBottomOf="@+id/basic_details"
+        android:shadowColor="@color/white"
+        android:text="Share Trailer"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+        app:layout_constraintTop_toTopOf="@+id/title" />
 
     <RelativeLayout
         android:id="@+id/basic_details"
         android:layout_width="0dp"
-        android:layout_height="85dp"
+        android:layout_height="130dp"
+        android:layout_marginLeft="70dp"
+        android:gravity="center_horizontal"
         app:layout_constraintLeft_toLeftOf="@+id/title"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="190dp"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintRight_toLeftOf="@+id/imageButton5"
         android:layout_marginRight="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8">
 
-        <TextView
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
             android:id="@+id/genres"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lang"
-            android:layout_margin="1dp"
-            android:fontFamily="sans-serif"
-            android:padding="2dp"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/genres_title"
+            android:textColor="@color/body_text_2"
             android:textSize="14sp"
             android:typeface="normal" />
 
-        <TextView
-            android:id="@+id/lang"
-            android:layout_width="match_parent"
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
+            android:id="@+id/genres_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/runtime_date"
-            android:layout_margin="1dp"
-            android:padding="2dp"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/darker_gray"
+            android:layout_below="@+id/lang"
+            android:text="Genres:"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="1dp"
+            android:textColor="@color/black"
             android:textSize="14sp"
-            android:typeface="normal" />
+            android:typeface="normal"
+            android:textAlignment="viewStart" />
 
-        <TextView
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
+            android:id="@+id/lang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lang_title"
+            android:textColor="@color/body_text_2"
+            android:textSize="14sp"
+            android:layout_marginTop="3dp"
+            android:typeface="normal"
+            app:font="Nunito"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="1dp"
+            android:layout_below="@+id/runtime_date" />
+
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
             android:id="@+id/runtime_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/lang"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/body_text_2"
+            android:textSize="14sp"
+            android:typeface="normal"
+            android:layout_toRightOf="@+id/runtime_title" />
+
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
+            android:id="@+id/lang_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:text="Language:"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:typeface="normal"
+            app:font="Nunito"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_below="@+id/runtime_date" />
+
+        <task.application.com.moviefinder.ui.utility.GeneralTextView
+            android:id="@+id/runtime_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif"
-            android:padding="2dp"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/black"
             android:textSize="14sp"
-            android:typeface="normal" />
+            android:typeface="normal"
+            android:text="Runtime:"
+            android:textAlignment="viewStart" />
 
     </RelativeLayout>
 
@@ -385,7 +410,7 @@
                 android:id="@+id/imageView10"
                 android:layout_width="24dp"
                 android:layout_height="15dp"
-                android:layout_marginLeft="3"
+                android:layout_marginLeft="3dp"
                 android:layout_below="@+id/ratings_title"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
@@ -405,5 +430,12 @@
         android:orientation="horizontal"
         tools:layout_editor_absoluteY="111dp"
         tools:layout_editor_absoluteX="0dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline8"
+        app:layout_constraintGuide_begin="174dp"
+        android:orientation="horizontal" />
 
 </android.support.constraint.ConstraintLayout>

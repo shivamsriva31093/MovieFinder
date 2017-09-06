@@ -102,7 +102,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             clickedItem = (BaseMediaData) getArguments().getParcelable(CLICKED_ITEM);
             Log.d("test", "itemType is " + itemType.toString());
         }
-        fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.detail_parent);
+        fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.container);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
         trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);

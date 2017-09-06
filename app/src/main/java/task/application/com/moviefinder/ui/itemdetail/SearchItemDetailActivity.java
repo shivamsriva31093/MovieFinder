@@ -41,7 +41,7 @@ public class SearchItemDetailActivity extends BaseActivity implements
         if (fragment == null) {
             fragment = FragmentPrime.newInstance(bundle);
             Util.addFragmentToActivity(getSupportFragmentManager(), fragment,
-                    R.id.detail_parent, SEARCH_ITEM_DETAIL);
+                    R.id.container, SEARCH_ITEM_DETAIL);
         }
         this.presenter = new SearchItemDetailPresenter(fragment);
     }
