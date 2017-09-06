@@ -14,20 +14,21 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
-            android:id="@+id/detail_parent"
+            android:id="@+id/detail_parent1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_margin="8dp"
+                android:id="@+id/iv_cardview"
+                android:layout_margin="0dp"
                 style="@style/RecentMoviesCardViewTheme2"
                 android:layout_height="wrap_content">
 
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="410dp">
 
                 <ImageView
                     android:id="@+id/app_bar_image"
@@ -54,6 +55,15 @@
                     app:srcCompat="@drawable/play1" />
             </FrameLayout>
             </android.support.v7.widget.CardView>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/iv_cardview"
+                android:padding="1dp"
+                android:id="@+id/detail_parent">
+
+            </FrameLayout>
 
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/progressView"
@@ -89,6 +99,6 @@
         android:layout_margin="20dp"
         android:background="?attr/selectableItemBackground"
         android:src="@drawable/ic_favorite_border_black_24dp"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
 </FrameLayout>

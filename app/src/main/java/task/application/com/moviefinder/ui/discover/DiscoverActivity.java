@@ -79,7 +79,7 @@ public class DiscoverActivity extends BaseActivity {
         tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
         float scale = getResources().getDisplayMetrics().density;
-        tabLayout.setSelectedTabIndicatorHeight((int) scale * 1);
+        tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
         tabLayout.setupWithViewPager(mViewPager);
 
     }

@@ -63,7 +63,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private BaseMediaData clickedItem;
     private MediaType itemType;
     private BaseMediaData retrievedItem;
-    private RelativeLayout fragmentContainer;
+    private FrameLayout fragmentContainer;
     private ImageView backDropImage;
     private AVLoadingIndicatorView progressView;
     private FrameLayout detailView;
@@ -102,7 +102,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             clickedItem = (BaseMediaData) getArguments().getParcelable(CLICKED_ITEM);
             Log.d("test", "itemType is " + itemType.toString());
         }
-        fragmentContainer = (RelativeLayout) getActivity().findViewById(R.id.detail_parent);
+        fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.detail_parent);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
         trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
@@ -122,8 +122,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         syncProgress.setReachedBarHeight(scale * 4);
         syncProgress.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress.setUnreachedBarHeight(scale * 4);
-        syncProgress.setUnreachedBarColor(Color.parseColor("#c7c6c6"));
-        syncProgress.setReachedBarColor(Color.parseColor("#60000000"));
+        syncProgress.setUnreachedBarColor(Color.parseColor("#dfe0e2"));
+        syncProgress.setReachedBarColor(Color.parseColor("#babdbe"));
+
 
         syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
         syncProgress1.setProgress(0);
@@ -131,9 +132,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         syncProgress1.setReachedBarHeight(scale * 4);
         syncProgress1.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress1.setUnreachedBarHeight(scale * 4);
-        syncProgress1.setUnreachedBarColor(Color.parseColor("#c7c6c6" +
-                ""));
-        syncProgress1.setReachedBarColor(Color.parseColor("#60000000"));
+        syncProgress1.setUnreachedBarColor(Color.parseColor("#dfe0e2"));
+        syncProgress1.setReachedBarColor(Color.parseColor("#babdbe"));
         initialiseViewChildren(rootView);
         return rootView;
     }
@@ -277,11 +277,12 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         } else {
             if (data.getRatings().get(0).getValue().equals("N/A"))
                 imdbRating.setText("-");
-            else
-                imdbRating.setText(data.getRatings().get(0).getValue());
-            String imdbString = data.getRatings().get(0).getValue().substring(0, 3);
-            Log.d("imdb", imdbString);
-            syncProgress.setProgress((int) Float.parseFloat(imdbString) * 10);
+            else {
+                String imdbString = data.getRatings().get(0).getValue().substring(0, 3);
+                imdbRating.setText(imdbString+" "+"stars");
+                Log.d("imdb", imdbString);
+                syncProgress.setProgress((int) Float.parseFloat(imdbString) * 10);
+            }
             if (data.getRatings().size() > 1) {
                 if (data.getRatings().get(1).getSource().equals("Rotten Tomatoes") &&
                         data.getRatings().get(1).getValue().equals("N/A"))
@@ -291,7 +292,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                     String rtString = data.getRatings().get(1).getValue().substring(0, length - 1);
                     Log.d("rt", rtString);
                     syncProgress1.setProgress((int) Float.parseFloat(rtString));
-                    rtRating.setText(data.getRatings().get(1).getValue());
+                    rtRating.setText(data.getRatings().get(1).getValue()+" "+"positive");
                 }
             } else {
                 rtRating.setText("-");

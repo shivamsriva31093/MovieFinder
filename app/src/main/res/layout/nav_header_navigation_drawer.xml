@@ -14,10 +14,10 @@
     <task.application.com.moviefinder.ui.utility.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MOVIE X"
+        android:text="Movie Go"
         android:layout_marginTop="53dp"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/black"
         android:layout_marginLeft="55dp"
         app:font="OpenSans"
         android:textStyle="bold"
@@ -26,11 +26,11 @@
         android:id="@+id/title_view_subheader"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginStart="55dp"
-        android:text="Built for the love of movies in you"
+        android:text="For the love of movies"
         android:textColor="@color/body_text_1"
-        android:textSize="12sp"
+        android:textSize="13sp"
         android:textStyle="normal"
         app:font="OpenSans" />
 </LinearLayout>

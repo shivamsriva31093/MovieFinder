@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#00b8d4</color>-->
-    <color name="colorPrimary">#01a2b9</color>
+    <!--<color name="colorPrimary">#00b8d4#01a2b9</color>-->
+    <color name="colorPrimary">#e45585</color>
 
-    <color name="colorPrimaryDark">#cbcbcb</color>
+    <color name="colorPrimaryDark">#000000</color>
     //#01a1b9
     <!--<color name="colorPrimary">#ecf0f1</color>-->
     <!--<color name="colorPrimaryDark">#2879ae</color>-->
@@ -13,7 +13,7 @@
     <color name="colorAccentTranslucent">#36fdfdfd</color>
     <color name="colorAccentSelected1">#ffcdd0</color>
     <color name="colorAccentSelected">#f9f9f9</color>
-    <color name="colorYellow">#c7c6c6</color>
+    <color name="colorYellow">#babdbe</color>
     <color name="colorGreen">#98f23f</color>
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="textColor">#e6e8e9</color>
