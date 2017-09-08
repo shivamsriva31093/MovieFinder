@@ -40,6 +40,8 @@ import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
+import task.application.com.moviefinder.ui.base.PresenterCache;
+import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.ui.utility.GeneralTextView;
 import task.application.com.moviefinder.ui.utility.realmrecview.RealmRecViewAdapter;
@@ -54,11 +56,18 @@ import static task.application.com.moviefinder.util.ViewType.TYPE_ITEM;
 public class FavoritesMediaFragment extends Fragment implements FavoritesMediaContract.View {
 
     private static String FILTER = "";
+    private final String TAG = FavoritesMediaFragment.this.getTag();
     private static final int PARENT_BOTTOM_MARGIN = 56;
     private OnFragmentInteractionListener mListener;
     private RecyclerView recView;
     private RecViewAdapter adapter;
     private FavoritesMediaContract.Presenter presenter;
+
+    private PresenterFactory<FavoritesPresenter> factory = () ->
+            new FavoritesPresenter(FavoritesMediaFragment.this);
+    private PresenterCache<FavoritesPresenter> presenterCache =
+            PresenterCache.getInstance();
+    private boolean isDestroyedBySystem;
 
     private boolean isMultiSelect;
     private ActionMode actionMode;
@@ -89,10 +98,12 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            FILTER = savedInstanceState.getString("filter");
+            presenter = presenterCache.getPresenter(TAG, factory);
+        }
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
-        searchBarContainer = (FrameLayout) getActivity().findViewById(R.id.search_bar);
 //        parentLayout = (NestedScrollView) getActivity().findViewById(R.id.scrollingView);
-        searchBarLeftActionLayout = (FrameLayout) searchBarContainer.findViewById(R.id.search_bar_left_action_container);
     }
 
     @Override
@@ -299,9 +310,22 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         if (actionMode != null) {
             actionMode.finish();
         }
-        if (presenter != null)
-            presenter.destroy();
+        if (!isDestroyedBySystem) {
+            presenterCache.removePresenter(TAG);
+        }
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        isDestroyedBySystem = true;
+        outState.putString("filter", FILTER);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isDestroyedBySystem = false;
     }
 
     @Override
