@@ -112,9 +112,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
         trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
-        presenter.setFilteringType(itemType);
-
-
     }
 
     @Nullable
@@ -157,6 +154,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         favorite.setOnClickListener(this);
         favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
         snackBarView = getActivity().findViewById(R.id.activity_detail_coord_layout);
+        presenter.setFilteringType(itemType);
         if (clickedItem != null) {
             presenter.getMovieDetails(clickedItem);
         }
