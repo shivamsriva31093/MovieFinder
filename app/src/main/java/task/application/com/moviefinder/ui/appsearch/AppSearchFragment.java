@@ -29,6 +29,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.base.PresenterCache;
+import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.util.EndlessScrollListener;
 import task.application.com.moviefinder.util.Util;
@@ -42,6 +44,12 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
     private static final String CLICKED_ITEM = "clickedItem";
     private static final String SEARCH_ITEM = "searchItem";
     private static final String SEARCH_LIST = "searchList";
+
+    private PresenterFactory<AppSearchPresenter> factory =
+            () -> new AppSearchPresenter(AppSearchFragment.this, AppSearchFragment.this.getTag());
+    private PresenterCache<AppSearchPresenter> presenterCache =
+            PresenterCache.getInstance();
+    private boolean isDestroyedBySystem;
 
     private AppSearchContract.Presenter presenter;
     private String searchQuery;
@@ -133,7 +141,6 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchQuery = presenter.getQuery();
     }
 
     @Override
@@ -145,7 +152,9 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             totalPages = getArguments().getInt("totalPages");
             totalPages = getArguments().getInt("totalResults");
             searchType = (MediaType) savedInstanceState.getSerializable(QUERY_TYPE);
+            presenter = presenterCache.getPresenter(AppSearchFragment.this.getTag(), factory);
         }
+        searchQuery = presenter.getQuery();
     }
 
 
@@ -191,6 +200,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        isDestroyedBySystem = true;
         outState.putSerializable(SEARCH_LIST, recyclerViewAdapter.getCurrentData());
         outState.putSerializable(QUERY_TYPE, searchType);
         outState.putInt("totalPages", totalPages);
@@ -207,6 +217,20 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString() + "must implement " +
                     "OnReplaceFragmentInterface");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isDestroyedBySystem = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (!isDestroyedBySystem) {
+            presenterCache.removePresenter(TAG);
         }
     }
 
@@ -281,24 +305,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         }
 
         private void showRowItems(ViewHolder holder, int position) {
-//            if (!imdbRating.get(position, false)) {
-//                holder.progressBar.setVisibility(View.VISIBLE);
-//                presenter.getRatings(searchType, data.get(position - 1), position - 1);
-//                imdbRating.put(position, true);
-//                posArray.put(position, false);
-//                loadMediaData(holder, position);
-//            } else {
-//
-//                if (posArray.get(position)) {
-//                    loadMediaData(holder, position);
-//                    holder.progressBar.setVisibility(View.GONE);
-//                    holder.imdbRating.setText(data.get(position - 1).getImdbRating());
-//                    holder.imdbRating.setVisibility(View.VISIBLE);
-//                    holder.imdbIcon.setVisibility(View.VISIBLE);
-//                    holder.starIcon.setVisibility(View.VISIBLE);
-//                }
-//            }
-            loadMediaData(holder, holder.getAdapterPosition());
+            loadMediaData(holder, position);
         }
 
         private void loadMediaData(ViewHolder holder, int position) {
@@ -334,7 +341,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
         private void loadTvInfo(ViewHolder holder, BasicTVInfo tv) {
             if (!tv.getFirstAirDate().isEmpty())
                 holder.year.setText(tv.getFirstAirDate().substring(0, 4));
-            holder.title.setText(tv.getOriginalName());
+            holder.title.setText(tv.getName());
             String url = tv.getPosterPath();
             if (url == null) {
                 holder.imageView.setImageResource(R.drawable.trailer1);

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -33,6 +32,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.base.PresenterCache;
+import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.ui.utility.GeneralTextView;
 import task.application.com.moviefinder.util.EndlessScrollListener;
@@ -61,7 +62,8 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private int totalResults;
     private EndlessScrollListener rvScrollListener;
     private RecyclerView.LayoutManager layoutManager;
-    private DiscoverPresenterCache presenterCache = DiscoverPresenterCache.getInstance();
+    private PresenterCache<DiscoverPresenter> presenterCache =
+            PresenterCache.getInstance();
     private boolean isDestroyedBySystem;
     private String TAG = RecentMoviesFragment.class.getSimpleName();
     private LayoutManagerType mCurrentLayoutManagerType;
@@ -469,7 +471,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         public void addDataItems(List<? extends MediaBasic> newDataItems) {
             removeFooter();
-            int posStart = data.size();
+            int posStart = data.size() + 1;
             for (MediaBasic item : newDataItems) {
                 data.add(item);
                 notifyItemInserted(posStart++);
@@ -551,11 +553,5 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         void onItemClick(View view, int position, MediaBasic item);
     }
 
-    private DiscoverPresenterFactory factory = new DiscoverPresenterFactory() {
-        @NonNull
-        @Override
-        public DiscoverPresenter createPresenter() {
-            return new DiscoverPresenter(RecentMoviesFragment.this, TAG);
-        }
-    };
+    private PresenterFactory<DiscoverPresenter> factory = () -> new DiscoverPresenter(RecentMoviesFragment.this, TAG);
 }

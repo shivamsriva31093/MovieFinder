@@ -46,6 +46,8 @@ import java.util.Locale;
 
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.base.PresenterCache;
+import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.utility.CollapsibleTextView;
 import task.application.com.moviefinder.util.Util;
 
@@ -58,6 +60,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private static final String TAG = FragmentPrime.class.getName();
     private static final String CLICKED_ITEM = "clickedItem";
     private static final String YOUTUBE_API_KEY = "AIzaSyC9iXjkY03gWbADszp0x9zX2yRvRMYjaxo";
+
+    private boolean isDestroyedBySystem;
+    private PresenterCache<SearchItemDetailPresenter> presenterCache
+            = PresenterCache.getInstance();
+
     private SearchItemDetailContract.Presenter presenter;
     private FragmentInteractionListener listener;
     private BaseMediaData clickedItem;
@@ -100,7 +107,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (getArguments() != null && !getArguments().isEmpty()) {
             itemType = (MediaType) getArguments().getSerializable("filtering_type");
             clickedItem = (BaseMediaData) getArguments().getParcelable(CLICKED_ITEM);
-            Log.d("test", "itemType is " + itemType.toString());
         }
         fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.container);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
@@ -142,6 +148,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            itemType = (MediaType) savedInstanceState.getSerializable("filtering_type");
+            clickedItem = savedInstanceState.getParcelable(CLICKED_ITEM);
+            presenter = presenterCache.getPresenter(TAG, factory);
+        }
         favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
         favorite.setOnClickListener(this);
         favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
@@ -172,6 +183,12 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         trailerButton.setOnClickListener(this);
 
         share.setOnClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isDestroyedBySystem = false;
     }
 
     private void addCastCrewImageSliders() {
@@ -236,7 +253,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                 .error(R.drawable.imgfound).into(backDropImage);
         showGenresList(data.getGenres());
 
-        title.setText(data.getOriginalName());
+        title.setText(data.getName());
         lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
         //setRatings(data);
         runtime.setText(String.valueOf(data.getEpisodeRunTime()) + "min");
@@ -255,7 +272,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
                 .error(R.drawable.imgfound).into(backDropImage);
         showGenresList(data.getGenresList());
-        title.setText(data.getOriginalTitle());
+        title.setText(data.getTitle());
         lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
         //setRatings(data);
         runtime.setText(String.valueOf(data.getRuntime()) + "min");
@@ -406,7 +423,18 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.destroy();
+        if (!isDestroyedBySystem) {
+            presenterCache.removePresenter(TAG);
+
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        isDestroyedBySystem = true;
+        outState.putSerializable("filtering_type", itemType);
+        outState.putParcelable(CLICKED_ITEM, clickedItem);
+        super.onSaveInstanceState(outState);
     }
 
     private class ErrorHandlerClickListener implements View.OnClickListener {
@@ -424,4 +452,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
         void updateImageSliders(List<MediaCreditCast> cast, List<MediaCreditCrew> crew);
     }
+
+    private PresenterFactory<SearchItemDetailPresenter> factory = () -> new SearchItemDetailPresenter(FragmentPrime.this);
 }

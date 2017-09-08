@@ -9,13 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.io.Serializable;
 
@@ -122,42 +118,7 @@ public class DiscoverActivity extends BaseActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_discover, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
@@ -177,7 +138,6 @@ public class DiscoverActivity extends BaseActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             Bundle bundle = new Bundle();
             RecentMoviesFragment fragment;
-            Log.d("test", position + "  is");
             switch (position) {
                 case 0:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.NOW_PLAYING);
@@ -208,26 +168,12 @@ public class DiscoverActivity extends BaseActivity {
             CustomSpannableStringBuilder spannableStringBuilder = new CustomSpannableStringBuilder();
             switch (position) {
                 case 0:
-//                    spannableStringBuilder.append("Now", new AbsoluteSizeSpan(14), new RelativeSizeSpan(2f),
-//                            new ForegroundColorSpan(getResources().getColor(R.color.black)))
-//                            .append(" ")
-//                            .append("Playing", new RelativeSizeSpan(2f), new ForegroundColorSpan(getResources().getColor(R.color.black)));
-//                    return spannableStringBuilder.build();
                     return "Now Playing";
                 case 1:
-//                    spannableStringBuilder.append("Upcoming", new RelativeSizeSpan(2f),
-//                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
-//                    return spannableStringBuilder.build();
                     return "Upcoming";
                 case 2:
-//                    spannableStringBuilder.append("Popular", new RelativeSizeSpan(2f),
-//                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
-//                    return spannableStringBuilder.build();
                     return "Popular";
                 default:
-//                    spannableStringBuilder.append("Top Rated", new RelativeSizeSpan(2f),
-//                            new ForegroundColorSpan(getResources().getColor(R.color.black)));
-//                    return spannableStringBuilder.build();
                     return "Top Rated";
             }
 

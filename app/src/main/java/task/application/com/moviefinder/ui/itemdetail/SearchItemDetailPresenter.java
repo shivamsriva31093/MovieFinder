@@ -2,7 +2,6 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.androidtmdbwrapper.enums.AppendToResponseItem;
 import com.androidtmdbwrapper.enums.MediaType;
@@ -69,12 +68,10 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                         view.showLoadingIndicator(false);
                     }));
         } else if (filter.equals(MediaType.TV)) {
-            Log.d("test", clickedItem.getId() + "");
             getTvInfoObservable(api, clickedItem)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
                     .subscribe((tvInfo -> {
-                        Log.d("test", tvInfo.getOriginalName());
                         view.showUi(tvInfo);
                         view.showLoadingIndicator(false);
 
@@ -119,7 +116,6 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
             case MOVIES:
                 MovieInfo mv = (MovieInfo) item;
                 try {
-                    Log.d("testy1", "rating = " + mv.getImdbRating());
                     addToRealm(mv.getId(), MediaType.MOVIES, mv.getTitle(), mv.getPosterPath(), mv.getImdbRating());
                 } catch (IllegalArgumentException | NullPointerException e) {
                     e.printStackTrace();
