@@ -18,8 +18,10 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -31,7 +33,11 @@ import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.base.PresenterCache;
 import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
@@ -106,16 +112,40 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         super.onViewCreated(view, savedInstanceState);
     }
 
-    ItemTouchListener itemTouchListener = (view, position, item) -> {
-        Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
-        Bundle bundle = new Bundle();
-//        MediaBasic media = new MediaBasic();
-//        media.setId(item.getId());
-        bundle.putParcelable("clickedItem", item);
-        bundle.putSerializable("filtering_type", MediaType.MOVIES);
-        intent.putExtra("searchItem", bundle);
-        startActivity(intent);
+    ItemTouchListener itemTouchListener = new ItemTouchListener() {
+        @Override
+        public void onItemClick(View view, int position, MediaBasic item) {
+            Intent intent = new Intent(getActivity(), SearchItemDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("clickedItem", item);
+            bundle.putSerializable("filtering_type", MediaType.MOVIES);
+            intent.putExtra("searchItem", bundle);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onFavoriteButtonClick(View view, int position, MediaBasic data) {
+            ImageView button = (ImageView) view;
+            toggleFavorite(button, position, button.getTag(), ApplicationClass.getInstance(), data);
+        }
     };
+
+    private void toggleFavorite(ImageView button, int position, Object tag, Context context, MediaBasic item) {
+        if (tag != null && (int) tag == R.drawable.ic_favorite_border_black_24dp) {
+            button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
+            button.setTag(R.drawable.favorite);
+            presenter.addMediaToFavorites(item);
+        } else {
+            button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
+            button.setTag(R.drawable.ic_favorite_border_black_24dp);
+            presenter.removeMediaFromFavorites(item);
+        }
+    }
+
+    @Override
+    public void showTestToast(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
 
 
     @Override
@@ -287,6 +317,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         }
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         isDestroyedBySystem = true;
@@ -417,6 +448,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                 posArray.put(holder.getAdapterPosition(), false);
                 loadMediaData(holder, holder.getAdapterPosition());
                 presenter.getRatings(MediaType.MOVIES, data.get(position - 1), holder.getAdapterPosition() - 1);
+
             } else {
                 if (posArray.get(position)) {
                     loadMediaData(holder, position);
@@ -441,6 +473,24 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         .into(holder.poster);
                 holder.title.setText(row.getTitle());
                 holder.imdbRating.setVisibility(View.GONE);
+                checkFavMediaInDB(holder, position);
+            }
+        }
+
+        private void checkFavMediaInDB(ViewHolder holder, int position) {
+            Realm realm = Realm.getDefaultInstance();
+            final RealmResults<MediaItem> res = realm.where(MediaItem.class)
+                    .equalTo("tmdbId", String.valueOf(data.get(position - 1).getId()))
+                    .findAll();
+            if (!res.isEmpty() && res.isValid())
+                setFavorite(holder, true, position);
+        }
+
+        private void setFavorite(ViewHolder holder, boolean status, int position) {
+            if (status) {
+                holder.favorite.setImageDrawable(ApplicationClass.getInstance()
+                        .getResources().getDrawable(R.drawable.favorite));
+                holder.favorite.setTag(R.drawable.favorite);
             }
         }
 
@@ -498,7 +548,8 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             private CircleImageView trailerButton;
             private ProgressBar footerProgressBar;
             private GeneralTextView headerTitle;
-
+            private ImageView favorite;
+            private FrameLayout favoriteParent;
             private GeneralTextView imdbRating;
             private ProgressBar ratingProgressBar;
 
@@ -518,10 +569,17 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
                         imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
                         ratingProgressBar = (ProgressBar) itemView.findViewById(R.id.ratingProgressBar);
+                        favorite = (ImageView) itemView.findViewById(R.id.favorite);
+                        favoriteParent = (FrameLayout) itemView.findViewById(R.id.favorite_parent);
                         poster.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
                         itemView.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
+                        favoriteParent.setOnClickListener(view -> {
+                            MediaBasic item = data.get(getAdapterPosition() - 1);
+                            item.setImdbRating(imdbRating.getText().toString());
+                            itemTouchListener.onFavoriteButtonClick(favorite, getAdapterPosition() - 1, item);
+                        });
                         HOLDER_ID = holderType;
                         break;
                     case TYPE_FOOTER:
@@ -551,6 +609,8 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
     public interface ItemTouchListener {
         void onItemClick(View view, int position, MediaBasic item);
+
+        void onFavoriteButtonClick(View view, int position, MediaBasic data);
     }
 
     private PresenterFactory<DiscoverPresenter> factory = () -> new DiscoverPresenter(RecentMoviesFragment.this, TAG);

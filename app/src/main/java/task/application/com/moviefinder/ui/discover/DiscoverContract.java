@@ -12,7 +12,7 @@ import task.application.com.moviefinder.ui.base.BaseView;
  * Created by sHIVAM on 7/12/2017.
  */
 
-public class DiscoverContract {
+public interface DiscoverContract {
     public interface View extends BaseView<Presenter> {
         void updateNewItems(List<? extends MediaBasic> data);
 
@@ -25,6 +25,8 @@ public class DiscoverContract {
         void setEndlessScrollLoading(boolean status);
 
         void setImdbRatings(String rating, int pos);
+
+        void showTestToast(String msg);
     }
 
     public interface Presenter extends BasePresenter {
@@ -35,6 +37,10 @@ public class DiscoverContract {
         void setQueryType(DiscoverActivity.QueryType queryType);
 
         void getRatings(MediaType filter, MediaBasic item, int pos);
+
+        void addMediaToFavorites(MediaBasic item);
+
+        void removeMediaFromFavorites(MediaBasic item);
 
         DiscoverActivity.QueryType getQueryType();
 

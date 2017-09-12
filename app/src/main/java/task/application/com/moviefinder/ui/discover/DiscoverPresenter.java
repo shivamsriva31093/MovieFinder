@@ -12,7 +12,10 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
+import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.util.TmdbApi;
 
 /**
@@ -28,12 +31,14 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
     private String region;
     private CompositeDisposable disposables = new CompositeDisposable();
     private MediaInfoResponseListener listener;
+    private Realm realm;
 
     public DiscoverPresenter(DiscoverContract.View view, String ID) {
         this.view = view;
         this.viewID = ID;
         view.setPresenter(this);
         this.listener = this;
+        realm = Realm.getDefaultInstance();
     }
 
 
@@ -210,6 +215,48 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
     @Override
     public String getViewID() {
         return viewID;
+    }
+
+    @Override
+    public void addMediaToFavorites(MediaBasic item) {
+        BasicMovieInfo mv = (BasicMovieInfo) item;
+        try {
+            addToRealm(mv.getId(), MediaType.MOVIES, mv.getTitle(), mv.getPosterPath(), mv.getImdbRating());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addToRealm(int tmdbId, MediaType mediaType, String title, String backDrop, String imdbRating) {
+        realm.executeTransactionAsync(realm1 -> {
+                    realm1.copyToRealm(new MediaItem(
+                            String.valueOf(tmdbId),
+                            mediaType,
+                            title,
+                            backDrop,
+                            imdbRating));
+                }, () -> view.showTestToast("Added to favorites!"),
+                error -> {
+                    view.showTestToast("Error in adding to favorites. Please try again later.");
+                    error.printStackTrace();
+                });
+    }
+
+    @Override
+    public void removeMediaFromFavorites(MediaBasic item) {
+        final RealmResults<MediaItem> res = realm.where(MediaItem.class).equalTo("tmdbId", String.valueOf(item.getId()))
+                .findAll();
+        if (res.isValid() && !res.isEmpty()) {
+            realm.executeTransaction((realm1 -> {
+                try {
+                    res.deleteAllFromRealm();
+                    view.showTestToast("Removed from favorites");
+                } catch (IllegalStateException ex) {
+                    ex.printStackTrace();
+                }
+            }));
+        }
+
     }
 }
 
