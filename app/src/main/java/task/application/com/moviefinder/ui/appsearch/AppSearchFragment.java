@@ -23,6 +23,7 @@ import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
 import com.androidtmdbwrapper.model.people.PeopleBasic;
 import com.androidtmdbwrapper.model.tv.BasicTVInfo;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -427,7 +428,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             private CircleImageView imageView;
             private TextView imdbRating;
             private ProgressBar progressBar;
-            private ProgressBar footerProgressBar;
+            private AVLoadingIndicatorView footerProgressBar;
             private ViewType HOLDER_ID;
 
             public ViewHolder(View itemView, int viewType) {
@@ -449,7 +450,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
                         HOLDER_ID = ViewType.TYPE_HEADER;
                         break;
                     case TYPE_FOOTER:
-                        footerProgressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+                        footerProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.progressBar);
                         HOLDER_ID = ViewType.TYPE_FOOTER;
                         break;
                 }

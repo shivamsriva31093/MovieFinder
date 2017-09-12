@@ -547,7 +547,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             private ImageView poster;
             private GeneralTextView title;
             private CircleImageView trailerButton;
-            private ProgressBar footerProgressBar;
+            private AVLoadingIndicatorView footerProgressBar;
             private GeneralTextView headerTitle;
             private ImageView favorite;
             private FrameLayout favoriteParent;
@@ -584,7 +584,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         HOLDER_ID = holderType;
                         break;
                     case TYPE_FOOTER:
-                        footerProgressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+                        footerProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.progressBar);
                         HOLDER_ID = holderType;
                         break;
 
