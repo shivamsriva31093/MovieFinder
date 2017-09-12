@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
@@ -132,13 +131,14 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     };
 
     private void toggleFavorite(ImageView button, int position, Object tag, Context context, MediaBasic item) {
-        if (tag != null && (int) tag == R.drawable.ic_favorite_border_black_24dp) {
+        if (tag != null && (int) tag == R.drawable.heart_outline) {
+            button.setColorFilter(null);
             button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
             button.setTag(R.drawable.favorite);
             presenter.addMediaToFavorites(item);
         } else {
-            button.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, null));
-            button.setTag(R.drawable.ic_favorite_border_black_24dp);
+            button.setImageDrawable(context.getResources().getDrawable(R.drawable.heart_outline, null));
+            button.setTag(R.drawable.heart_outline);
             presenter.removeMediaFromFavorites(item);
         }
     }
@@ -192,6 +192,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                 ViewType holderType = ViewType.values()[rvAdapter.getItemViewType(position)];
                 switch (holderType) {
                     case TYPE_HEADER:
+                    case TYPE_FOOTER:
                         return 2;
                     default:
                         return 1;
@@ -489,6 +490,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         private void setFavorite(ViewHolder holder, boolean status, int position) {
             if (status) {
+                holder.favorite.setColorFilter(null);
                 holder.favorite.setImageDrawable(ApplicationClass.getInstance()
                         .getResources().getDrawable(R.drawable.favorite));
                 holder.favorite.setTag(R.drawable.favorite);

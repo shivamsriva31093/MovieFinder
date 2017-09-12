@@ -147,17 +147,15 @@
             android:layout_height="48dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/transparent"
             android:id="@+id/favorite_parent">
 
             <ImageView
                 android:id="@+id/favorite"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:tint="@color/white"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="end"
                 card_view:srcCompat="@drawable/heart_outline" />
         </FrameLayout>
 
