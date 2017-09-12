@@ -152,9 +152,9 @@
 
             <ImageView
                 android:id="@+id/favorite"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="5dp"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_margin="7dp"
                 android:layout_gravity="end"
                 card_view:srcCompat="@drawable/heart_outline" />
         </FrameLayout>
