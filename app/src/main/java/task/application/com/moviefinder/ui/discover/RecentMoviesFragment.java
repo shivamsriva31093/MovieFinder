@@ -27,6 +27,7 @@ import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +62,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private RecyclerView recyclerView;
     private RVAdapter rvAdapter;
     private DiscoverContract.Presenter presenter;
-    private ProgressBar progressBar;
+    private AVLoadingIndicatorView progressBar;
     private List<? extends MediaBasic> savedList = Collections.EMPTY_LIST;
     private DiscoverActivity.QueryType queryType;
     private int totalPages;
@@ -164,7 +165,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     }
 
     private void initViews(View rootView, Bundle savedInstanceState) {
-        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+        progressBar = (AVLoadingIndicatorView) rootView.findViewById(R.id.ratingProgressBar);
         progressBar.setVisibility(View.GONE);
         setUpRecView(rootView, savedInstanceState);
     }
@@ -551,7 +552,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             private ImageView favorite;
             private FrameLayout favoriteParent;
             private GeneralTextView imdbRating;
-            private ProgressBar ratingProgressBar;
+            private AVLoadingIndicatorView ratingProgressBar;
 
             private ViewType HOLDER_ID;
 
@@ -568,7 +569,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         title = (GeneralTextView) itemView.findViewById(R.id.title);
                         trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
                         imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
-                        ratingProgressBar = (ProgressBar) itemView.findViewById(R.id.ratingProgressBar);
+                        ratingProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.ratingProgressBar);
                         favorite = (ImageView) itemView.findViewById(R.id.favorite);
                         favoriteParent = (FrameLayout) itemView.findViewById(R.id.favorite_parent);
                         poster.setOnClickListener(view ->

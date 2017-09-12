@@ -119,6 +119,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_item_detail, container, false);
         syncProgress = (NumberProgressBar) rootView.findViewById(R.id.progress_sync);
+
         float scale = getContext().getResources().getDisplayMetrics().density;
         syncProgress.setProgress(0);
         syncProgress.setProgressTextSize(scale * 12);
@@ -126,7 +127,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         syncProgress.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress.setUnreachedBarHeight(scale * 4);
         syncProgress.setUnreachedBarColor(Color.parseColor("#dfe0e2"));
-        syncProgress.setReachedBarColor(Color.parseColor("#babdbe"));
+        syncProgress.setReachedBarColor(Color.parseColor("#d23041"));
 
 
         syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
@@ -136,7 +137,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         syncProgress1.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress1.setUnreachedBarHeight(scale * 4);
         syncProgress1.setUnreachedBarColor(Color.parseColor("#dfe0e2"));
-        syncProgress1.setReachedBarColor(Color.parseColor("#babdbe"));
+        syncProgress1.setReachedBarColor(Color.parseColor("#fd403c"));
         initialiseViewChildren(rootView);
         return rootView;
     }

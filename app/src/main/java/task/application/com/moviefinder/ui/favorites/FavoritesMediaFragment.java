@@ -185,23 +185,26 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
     };
 
     private void animateSearchBar(final int direction, final int visibility, final int position) {
-        if (searchBarContainer == null) return;
-        searchBarContainer.animate()
-                .setDuration(200)
-                .translationY(direction * searchBarContainer.getHeight())
-                .setInterpolator(new AccelerateInterpolator())
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        searchBarContainer.setVisibility(visibility);
-                        searchBarContainer.animate().setListener(null);
-                        actionMode = getActivity().startActionMode(actionCallback);
-                        adapter.notifyDataSetChanged();
-                        toggleSelection(position);
-                        animateBotNavChanges(1, View.GONE, true, 0);
-                    }
-                });
+//        if (searchBarContainer == null) return;
+//        searchBarContainer.animate()
+//                .setDuration(200)
+//                .translationY(direction * searchBarContainer.getHeight())
+//                .setInterpolator(new AccelerateInterpolator())
+//                .setListener(new AnimatorListenerAdapter() {
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        super.onAnimationEnd(animation);
+//                        searchBarContainer.setVisibility(visibility);
+//                        searchBarContainer.animate().setListener(null);
+//                        actionMode = getActivity().startActionMode(actionCallback);
+//                        adapter.notifyDataSetChanged();
+//                        toggleSelection(position);
+//                        animateBotNavChanges(1, View.GONE, true, 0);
+//                    }
+//                });
+        actionMode = getActivity().startActionMode(actionCallback);
+        adapter.notifyDataSetChanged();
+        toggleSelection(position);
     }
 
     private void animateBotNavChanges(final int direction, final int visibility, boolean add, final int margin) {
@@ -272,8 +275,8 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
-            searchBarContainer.setTranslationY(0);
-            searchBarContainer.setVisibility(View.VISIBLE);
+//            searchBarContainer.setTranslationY(0);
+//            searchBarContainer.setVisibility(View.VISIBLE);
             isMultiSelect = false;
             adapter.clearSelections();
             animateBotNavChanges(0, View.VISIBLE, false, PARENT_BOTTOM_MARGIN);
@@ -427,7 +430,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         public void onBindViewHolder(ViewHolder holder, int position) {
             switch (holder.HOLDER_ID) {
                 case TYPE_HEADER:
-                    holder.headerTitle.setText("Your Favorite " + FILTER);
+                    holder.headerTitle.setText("My Favorite " + FILTER);
                     holder.subHeaderTitle.setVisibility(View.GONE);
                     break;
                 case TYPE_ITEM:
@@ -505,6 +508,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 switch (holderType) {
                     case TYPE_HEADER:
                         headerTitle = (GeneralTextView) itemView.findViewById(R.id.title_view);
+                        headerTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
                         subHeaderTitle = (GeneralTextView) itemView.findViewById(R.id.title_view_subheader);
                         HOLDER_ID = holderType;
                         break;

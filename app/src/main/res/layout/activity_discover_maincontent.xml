@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
-    android:background="#f7fafb"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout

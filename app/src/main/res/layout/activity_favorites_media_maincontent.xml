@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:fitsSystemWindows="false">
 
     <android.support.v4.widget.NestedScrollView
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         app:elevation="8dp"
         app:itemIconTint="@drawable/bottomnavbar_color"
         app:itemTextColor="@drawable/bottomnavbar_color"
@@ -86,7 +87,8 @@
         app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        >
         <!--#01a2b9#ecf0f1-->
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

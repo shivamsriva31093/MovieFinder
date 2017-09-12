@@ -78,7 +78,6 @@
             android:layout_marginTop="3dp"
             android:gravity="center_horizontal|center"
             android:padding="5dp"
-            android:text="TextView"
             android:textColor="@color/body_text_1"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -99,14 +98,15 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline15"
             app:layout_constraintLeft_toLeftOf="parent">
 
-            <ProgressBar
+
+            <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/ratingProgressBar"
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:visibility="gone"
                 android:layout_gravity="center"
-                android:indeterminateTint="@color/colorPrimary" />
+                app:indicatorColor="@color/white"
+                app:indicatorName="BallPulseIndicator" />
 
             <task.application.com.moviefinder.ui.utility.GeneralTextView
                 android:id="@+id/imdb_rating"
