@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
@@ -49,6 +49,7 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.base.PresenterCache;
 import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.utility.CollapsibleTextView;
+import task.application.com.moviefinder.ui.utility.GeneralTextView;
 import task.application.com.moviefinder.util.Util;
 
 /**
@@ -79,18 +80,20 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private ImageButton trailerButton;
     private FloatingActionButton favorite;
     private AppCompatButton share;
-    private TextView genres;
+    private GeneralTextView genres;
     private NumberProgressBar syncProgress;
     private NumberProgressBar syncProgress1;
-    private TextView title;
-    private TextView lang;
-    private TextView runtime;
+    private GeneralTextView title;
+    private GeneralTextView lang;
+    private GeneralTextView runtime;
     private CollapsibleTextView synopsis;
     private String trailerKey;
-    private TextView rtRating;
-    private TextView imdbRating;
+    private GeneralTextView rtRating;
+    private GeneralTextView imdbRating;
     private ProgressBar ratingsLoader;
     private View snackBarView;
+    private RelativeLayout emptyDataHandlerView;
+    private ConstraintLayout contentHolder;
 
     public FragmentPrime() {
     }
@@ -108,10 +111,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             itemType = (MediaType) getArguments().getSerializable("filtering_type");
             clickedItem = (BaseMediaData) getArguments().getParcelable(CLICKED_ITEM);
         }
-        fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.container);
-        progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
-        backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
-        trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
     }
 
     @Nullable
@@ -151,6 +150,10 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             clickedItem = savedInstanceState.getParcelable(CLICKED_ITEM);
             presenter = presenterCache.getPresenter(TAG, factory);
         }
+        fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.container);
+        progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
+        backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
+        trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
         favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
         favorite.setOnClickListener(this);
         favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
@@ -164,23 +167,22 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private void initialiseViewChildren(View rootView) {
 
         detailView = (FrameLayout) rootView.findViewById(R.id.fragment_content_parent);
-        title = (TextView) detailView.findViewById(R.id.title);
-
+        title = (GeneralTextView) detailView.findViewById(R.id.title);
+        emptyDataHandlerView = (RelativeLayout) detailView.findViewById(R.id.empty_data_handler);
+        contentHolder = (ConstraintLayout) rootView.findViewById(R.id.item_detail);
         favorite = (FloatingActionButton) rootView.findViewById(R.id.favorite);
         basicDetails = (RelativeLayout) detailView.findViewById(R.id.basic_details);
-        genres = (TextView) basicDetails.findViewById(R.id.genres);
-        lang = (TextView) basicDetails.findViewById(R.id.lang);
-        runtime = (TextView) basicDetails.findViewById(R.id.runtime_date);
+        genres = (GeneralTextView) basicDetails.findViewById(R.id.genres);
+        lang = (GeneralTextView) basicDetails.findViewById(R.id.lang);
+        runtime = (GeneralTextView) basicDetails.findViewById(R.id.runtime_date);
         ratingsView = (RelativeLayout) detailView.findViewById(R.id.ratingsView);
         ratingsLoader = (ProgressBar) ratingsView.findViewById(R.id.ratings_load);
         ratingsLoader.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
-        rtRating = (TextView) ratingsView.findViewById(R.id.rt_rating);
-        imdbRating = (TextView) ratingsView.findViewById(R.id.imdb_rating);
+        rtRating = (GeneralTextView) ratingsView.findViewById(R.id.rt_rating);
+        imdbRating = (GeneralTextView) ratingsView.findViewById(R.id.imdb_rating);
         synopsis = (CollapsibleTextView) detailView.findViewById(R.id.plot);
         share = (AppCompatButton) detailView.findViewById(R.id.imageButton5);
         addCastCrewImageSliders();
-        trailerButton.setOnClickListener(this);
-
         share.setOnClickListener(this);
     }
 
@@ -188,6 +190,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     public void onResume() {
         super.onResume();
         isDestroyedBySystem = false;
+        trailerButton.setOnClickListener(this);
     }
 
     private void addCastCrewImageSliders() {
@@ -247,6 +250,12 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     private void setUpTvDetails(TvInfo data) {
         retrievedItem = data;
+        if ((data.getCredits().getCast().isEmpty() || data.getCredits().getCrew().isEmpty())
+                || (data.getOverview().isEmpty() || data.getOverview().length() <= 10)
+                || (data.getName().isEmpty())) {
+            handleEmptyData();
+            return;
+        }
         Picasso picasso = Picasso.with(getActivity());
         picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
                 .error(R.drawable.imgfound).into(backDropImage);
@@ -265,8 +274,22 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
     }
 
+    private void handleEmptyData() {
+        contentHolder.setVisibility(View.GONE);
+        emptyDataHandlerView.setVisibility(View.VISIBLE);
+        emptyDataHandlerView.setOnClickListener(view -> {
+            presenter.getMovieDetails(clickedItem);
+        });
+    }
+
     private void setUpMovieDetails(MovieInfo data) {
         retrievedItem = (MediaBasic) data;
+        if ((data.getCredits().getCast().isEmpty() || data.getCredits().getCrew().isEmpty())
+                || (data.getOverview().isEmpty() || data.getOverview().length() <= 10)
+                || (data.getTitle().isEmpty())) {
+            handleEmptyData();
+            return;
+        }
         Picasso picasso = Picasso.with(getActivity());
         picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
                 .error(R.drawable.imgfound).into(backDropImage);
