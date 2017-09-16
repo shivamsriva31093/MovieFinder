@@ -18,13 +18,15 @@ public interface SearchService {
     @GET("search/movie")
     Observable<SearchResult<BasicMovieInfo>> searchMovies(
             @Query("query") String query,
-            @Query("page") Integer page
+            @Query("page") Integer page,
+            @Query("include_adult") Boolean adult
             );
 
     @GET("search/tv")
     Observable<SearchResult<BasicTVInfo>> searchTv(
             @Query("query") String query,
-            @Query("page") Integer page
+            @Query("page") Integer page,
+            @Query("include_adult") Boolean adult
     );
 
     @GET("search/person")
