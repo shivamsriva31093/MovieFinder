@@ -27,6 +27,8 @@ public interface DiscoverContract {
         void setImdbRatings(String rating, int pos);
 
         void showTestToast(String msg);
+
+        void showNetworkError();
     }
 
     public interface Presenter extends BasePresenter {

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -146,6 +147,16 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     @Override
     public void showTestToast(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showNetworkError() {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        builder.setTitle("Delete entry")
+                .setMessage("The connection is lost/slow.")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 

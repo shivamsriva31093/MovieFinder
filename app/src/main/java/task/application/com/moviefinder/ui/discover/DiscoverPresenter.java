@@ -1,5 +1,7 @@
 package task.application.com.moviefinder.ui.discover;
 
+import android.util.Log;
+
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -7,6 +9,8 @@ import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
 import com.androidtmdbwrapper.model.movies.MiscellaneousResults;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.ExternalIds;
+
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,6 +28,8 @@ import task.application.com.moviefinder.util.TmdbApi;
 
 public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoResponseListener {
 
+    private static final int COUNTER_START = 1;
+    private static final int ATTEMPTS = 1;
     private final DiscoverContract.View view;
     private DiscoverActivity.QueryType queryType;
     private final String viewID;
@@ -98,10 +104,16 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
 
     private void getResults(Observable<MiscellaneousResults<BasicMovieInfo>> observable) {
         observable.subscribeOn(Schedulers.io())
+                .retryWhen(errors -> {
+                    view.showNetworkError();
+                    Log.d("test_net", "retry when");
+                    return errors.zipWith(
+                            Observable.range(COUNTER_START, ATTEMPTS), (n, i) -> i)
+                            .flatMap(retryCount -> Observable.timer((long) Math.pow(1, retryCount), TimeUnit.SECONDS));
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(basicMovieInfos -> {
                     view.showResultList(basicMovieInfos.getResults(), basicMovieInfos.getTotalPages(), basicMovieInfos.getTotalResults());
-
                     view.showLoadingIndicator(false);
                 }, throwable -> {
                     throwable.printStackTrace();
@@ -112,6 +124,12 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
 
     private void getNextItems(Observable<MiscellaneousResults<BasicMovieInfo>> observable) {
         observable.subscribeOn(Schedulers.io())
+                .retryWhen(errors -> {
+                    view.showNetworkError();
+                    return errors.zipWith(
+                            Observable.range(COUNTER_START, ATTEMPTS), (n, i) -> i)
+                            .flatMap(retryCount -> Observable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS));
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(basicMovieInfos -> {
                     view.updateNewItems(basicMovieInfos.getResults());
