@@ -15,18 +15,19 @@ import task.application.com.moviefinder.util.TmdbApi;
  * Created by sHIVAM on 7/22/2017.
  */
 
-public class AppSearchPresenter implements AppSearchContract.Presenter {
+public class AppSearchPresenter2 implements AppSearchContract.Presenter {
 
     private static final int COUNTER_START = 1;
     private static final int ATTEMPTS = 3;
     private static final int ORIGINAL_DELAY_IN_SECONDS = 10;
+
     private final String TAG;
     private MediaType queryType;
     private String query;
     private AppSearchContract.View view;
 
 
-    public AppSearchPresenter(AppSearchContract.View view, String tag) {
+    public AppSearchPresenter2(AppSearchContract.View view, String tag) {
         this.view = view;
         this.view.setPresenter(this);
         TAG = tag;
@@ -61,9 +62,6 @@ public class AppSearchPresenter implements AppSearchContract.Presenter {
                 break;
             case TV:
                 tmdb.searchService().searchTv(keyword, null, false)
-                        .retryWhen(errors -> errors.zipWith(
-                                Observable.range(COUNTER_START, ATTEMPTS), (n, i) -> i)
-                                .flatMap(retryCount -> Observable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
@@ -78,9 +76,6 @@ public class AppSearchPresenter implements AppSearchContract.Presenter {
                 break;
             case PEOPLE:
                 tmdb.searchService().searchPeople(keyword, null)
-                        .retryWhen(errors -> errors.zipWith(
-                                Observable.range(COUNTER_START, ATTEMPTS), (n, i) -> i)
-                                .flatMap(retryCount -> Observable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
@@ -98,6 +93,7 @@ public class AppSearchPresenter implements AppSearchContract.Presenter {
                 view.showLoadingIndicator(false);
                 break;
         }
+
     }
 
     @Override

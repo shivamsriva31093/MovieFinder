@@ -38,7 +38,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         switch (getFilteringType()) {
             case MOVIES:
-                tmdb.searchService().searchMovies(keyword, null)
+                tmdb.searchService().searchMovies(keyword, null, false)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
@@ -51,7 +51,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         });
                 break;
             case TV:
-                tmdb.searchService().searchTv(keyword, null)
+                tmdb.searchService().searchTv(keyword, null, false)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
@@ -77,7 +77,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         switch (getFilteringType()) {
             case MOVIES:
-                tmdb.searchService().searchMovies(keyword, page)
+                tmdb.searchService().searchMovies(keyword, page, false)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
@@ -88,7 +88,7 @@ public class SearchListPresenter implements SearchListContract.Presenter, MediaI
                         });
                 break;
             case TV:
-                tmdb.searchService().searchTv(keyword, page)
+                tmdb.searchService().searchTv(keyword, page, false)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(searchRes -> {
