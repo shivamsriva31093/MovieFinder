@@ -384,10 +384,6 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 });
     }
 
-    @Override
-    public void showSearchListUi(ArrayList<? extends MediaBasic> mediaData) {
-
-    }
 
     private class RecViewAdapter extends RealmRecViewAdapter<MediaItem, RecViewAdapter.ViewHolder> {
 

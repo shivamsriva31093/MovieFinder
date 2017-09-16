@@ -1,8 +1,5 @@
 package task.application.com.moviefinder.ui.favorites;
 
-import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.OrderedRealmCollectionSnapshot;
@@ -22,8 +19,6 @@ public interface FavoritesMediaContract {
         void showItemDetailsUI(MediaItem item);
 
         void showLoadingIndicator(boolean b);
-
-        void showSearchListUi(ArrayList<? extends MediaBasic> mediaData);
     }
 
     interface Presenter extends BasePresenter {
@@ -34,7 +29,5 @@ public interface FavoritesMediaContract {
         void showMediaDetails(MediaItem item);
 
         void deleteDataFromRealm(List<Integer> items, OrderedRealmCollectionSnapshot<MediaItem> snapshot);
-
-        void searchByKeyword(String keyword);
     }
 }
