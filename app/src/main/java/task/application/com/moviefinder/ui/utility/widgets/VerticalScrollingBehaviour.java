@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.ui.utility;
+package task.application.com.moviefinder.ui.utility.widgets;
 
 import android.content.Context;
 import android.os.Parcelable;

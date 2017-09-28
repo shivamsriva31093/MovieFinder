@@ -1,4 +1,4 @@
-package task.application.com.moviefinder.ui.utility;
+package task.application.com.moviefinder.ui.utility.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -25,7 +25,6 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
 
     public GeneralTextView(Context context) {
         this(context, null);
-
     }
 
     public GeneralTextView(Context context, AttributeSet attrs) {
