@@ -68,7 +68,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline15"
             app:layout_constraintVertical_bias="0.593" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                 app:indicatorColor="@color/white"
                 app:indicatorName="BallPulseIndicator" />
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imdb_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

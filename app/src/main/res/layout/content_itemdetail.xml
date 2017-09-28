@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         android:layout_marginTop="8dp">
 
-        <task.application.com.moviefinder.ui.utility.CollapsibleTextView
+        <task.application.com.moviefinder.ui.utility.widgets.CollapsibleTextView
             android:id="@+id/plot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             app:trimLength="150"
             android:textAlignment="viewStart" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/synopsis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:textColor="@color/black"
             />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/cast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:layout_margin="5dp"
             android:layout_row="3" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/crew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
     </GridLayout>
 
 
-    <task.application.com.moviefinder.ui.utility.GeneralTextView
+    <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/title">
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -196,7 +196,7 @@
             android:textSize="14sp"
             android:typeface="normal" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/genres_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -209,7 +209,7 @@
             android:textSize="14sp"
             android:typeface="normal" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/lang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -223,7 +223,7 @@
             android:typeface="normal"
             app:font="Nunito" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/runtime_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
             android:textSize="14sp"
             android:typeface="normal" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/lang_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
             android:typeface="normal"
             app:font="Nunito" />
 
-        <task.application.com.moviefinder.ui.utility.GeneralTextView
+        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/runtime_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -326,7 +326,7 @@
             tools:layout_editor_absoluteY="0dp">
 
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                 android:id="@+id/rt_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -386,7 +386,7 @@
                 tools:progress_text_visibility="invisible"
                 tools:progress_unreached_bar_height="2dp" />
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                 android:id="@+id/ratings_title"
                 style="@style/TextHeaderSub"
                 android:layout_width="wrap_content"
@@ -401,7 +401,7 @@
                 android:textStyle="bold"
                 app:font="Nunito" />
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imdb_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"

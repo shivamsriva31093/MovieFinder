@@ -11,7 +11,7 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
 import task.application.com.moviefinder.ui.appsearch.AppSearchActivity;
 import task.application.com.moviefinder.ui.base.BaseActivity;
-import task.application.com.moviefinder.ui.utility.BottomNavigationBehaviour;
+import task.application.com.moviefinder.ui.utility.widgets.BottomNavigationBehaviour;
 import task.application.com.moviefinder.util.ActivityUtils;
 import task.application.com.moviefinder.util.Util;
 

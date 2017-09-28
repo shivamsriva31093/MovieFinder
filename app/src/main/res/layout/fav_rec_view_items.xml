@@ -79,7 +79,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/guideline15"
                 app:layout_constraintLeft_toLeftOf="parent">
 
-                <task.application.com.moviefinder.ui.utility.GeneralTextView
+                <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                     android:id="@+id/imdb_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/backdrop" />
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

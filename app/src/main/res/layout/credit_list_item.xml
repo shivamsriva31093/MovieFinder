@@ -24,7 +24,7 @@
         android:background="@android:color/transparent"
         android:padding="1dp">
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/credit_title"
             android:layout_width="110dp"
             android:layout_height="25dp"
@@ -63,7 +63,7 @@
                 android:src="@drawable/creditplaceholder" />
         </FrameLayout>
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/credit_design"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

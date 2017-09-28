@@ -22,7 +22,7 @@
             tools:layout_editor_absoluteY="0dp"
             tools:layout_editor_absoluteX="0dp">
 
-            <task.application.com.moviefinder.ui.utility.GeneralTextView
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"

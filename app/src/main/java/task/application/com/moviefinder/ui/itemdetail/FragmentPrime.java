@@ -48,8 +48,8 @@ import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.ui.base.PresenterCache;
 import task.application.com.moviefinder.ui.base.PresenterFactory;
-import task.application.com.moviefinder.ui.utility.CollapsibleTextView;
-import task.application.com.moviefinder.ui.utility.GeneralTextView;
+import task.application.com.moviefinder.ui.utility.widgets.CollapsibleTextView;
+import task.application.com.moviefinder.ui.utility.widgets.GeneralTextView;
 import task.application.com.moviefinder.util.Util;
 
 /**

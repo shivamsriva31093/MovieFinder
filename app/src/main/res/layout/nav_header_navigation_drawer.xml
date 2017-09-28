@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:theme="@style/ThemeOverlay.AppCompat">
 
-    <task.application.com.moviefinder.ui.utility.GeneralTextView
+    <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Movie Go"
@@ -22,7 +22,8 @@
         app:font="OpenSans"
         android:textStyle="bold"
         android:textSize="18sp" />
-    <task.application.com.moviefinder.ui.utility.GeneralTextView
+
+    <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:id="@+id/title_view_subheader"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
