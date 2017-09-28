@@ -6,6 +6,8 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import task.application.com.moviefinder.remote.tmdb.NetworkMonitor;
+import task.application.com.moviefinder.remote.tmdb.NoNetworkException;
 
 /**
  * Created by sHIVAM on 2/19/2017.
@@ -13,14 +15,18 @@ import okhttp3.Response;
 
 public class CustomInterceptor implements Interceptor {
     private TmdbApi tmdb;
+    private NetworkMonitor networkMonitor;
 
-    public CustomInterceptor(TmdbApi tmdb) {
+    public CustomInterceptor(TmdbApi tmdb, NetworkMonitor networkMonitor) {
         this.tmdb = tmdb;
+        this.networkMonitor = networkMonitor;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        return handleIntercept(chain, tmdb.getApiKey());
+        if (networkMonitor.isConnected())
+            return handleIntercept(chain, tmdb.getApiKey());
+        throw new NoNetworkException();
     }
 
     public static Response handleIntercept(Chain chain, String apiKey) throws IOException {

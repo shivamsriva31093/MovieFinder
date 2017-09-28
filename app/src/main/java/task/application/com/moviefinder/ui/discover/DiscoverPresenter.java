@@ -1,6 +1,7 @@
 package task.application.com.moviefinder.ui.discover;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.OmdbMovieDetails;
@@ -14,12 +15,12 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
+import task.application.com.moviefinder.remote.tmdb.NoNetworkException;
 import task.application.com.moviefinder.util.TmdbApi;
 
 /**
@@ -29,13 +30,12 @@ import task.application.com.moviefinder.util.TmdbApi;
 public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoResponseListener {
 
     private static final int COUNTER_START = 1;
-    private static final int ATTEMPTS = 1;
+    private static final int ATTEMPTS = 4;
     private final DiscoverContract.View view;
     private DiscoverActivity.QueryType queryType;
     private final String viewID;
     private String lang;
     private String region;
-    private CompositeDisposable disposables = new CompositeDisposable();
     private MediaInfoResponseListener listener;
     private Realm realm;
 
@@ -103,38 +103,41 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
     }
 
     private void getResults(Observable<MiscellaneousResults<BasicMovieInfo>> observable) {
-        observable.subscribeOn(Schedulers.io())
-                .retryWhen(errors -> {
-                    view.showNetworkError();
-                    Log.d("test_net", "retry when");
-                    return errors.zipWith(
-                            Observable.range(COUNTER_START, ATTEMPTS), (n, i) -> i)
-                            .flatMap(retryCount -> Observable.timer((long) Math.pow(1, retryCount), TimeUnit.SECONDS));
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(basicMovieInfos -> {
-                    view.showResultList(basicMovieInfos.getResults(), basicMovieInfos.getTotalPages(), basicMovieInfos.getTotalResults());
-                    view.showLoadingIndicator(false);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    view.showLoadingIndicator(false);
-                    view.showNoResults();
-                });
+        observable.subscribeOn(Schedulers.io());
+        observable.observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(basicMovieInfos -> {
+            view.showResultList(basicMovieInfos.getResults(), basicMovieInfos.getTotalPages(), basicMovieInfos.getTotalResults());
+            view.showLoadingIndicator(false);
+        }, throwable -> {
+            if (throwable instanceof NoNetworkException) {
+                view.showNetworkError();
+            } else {
+                view.showNoResults();
+            }
+            view.showLoadingIndicator(false);
+        });
     }
 
     private void getNextItems(Observable<MiscellaneousResults<BasicMovieInfo>> observable) {
         observable.subscribeOn(Schedulers.io())
+                .doOnError(throwable -> {
+                    if (throwable instanceof NoNetworkException)
+                        view.showNetworkError();
+                })
                 .retryWhen(errors -> {
-                    view.showNetworkError();
                     return errors.zipWith(
-                            Observable.range(COUNTER_START, ATTEMPTS), (n, i) -> i)
-                            .flatMap(retryCount -> Observable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS));
+                            Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
+                            .flatMap(pair -> Observable.timer((long) Math.pow(2, pair.second / 2), TimeUnit.SECONDS));
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(basicMovieInfos -> {
                     view.updateNewItems(basicMovieInfos.getResults());
                 }, throwable -> {
-                    throwable.printStackTrace();
+                    if (throwable instanceof NoNetworkException) {
+                        view.showNetworkError();
+                    } else {
+                        throwable.printStackTrace();
+                    }
                     view.setEndlessScrollLoading(false);
                 });
     }
@@ -147,7 +150,19 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         return tmdb.moviesService().getNowPlaying(ISO639_1_language, page, ISO3166_1_region)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwableObservable ->
+                                throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
+                                        .flatMap(throwableIntegerPair -> {
+//                            throwableIntegerPair.first.printStackTrace();
+                                            Log.d("test", throwableIntegerPair.second + " outside");
+                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                                Log.d("test", throwableIntegerPair.second + "");
+                                                return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
+                                            }
+                                            return throwableObservable;
+                                        })
+                );
     }
 
     private Observable<MiscellaneousResults<BasicMovieInfo>> getUpcomingObservable(String ISO639_1_language,
@@ -156,7 +171,19 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         return tmdb.moviesService().getUpcoming(ISO639_1_language, page, ISO3166_1_region)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwableObservable ->
+                                throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
+                                        .flatMap(throwableIntegerPair -> {
+//                            throwableIntegerPair.first.printStackTrace();
+                                            Log.d("test", throwableIntegerPair.second + " outside");
+                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                                Log.d("test", throwableIntegerPair.second + "");
+                                                return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
+                                            }
+                                            return throwableObservable;
+                                        })
+                );
     }
 
     private Observable<MiscellaneousResults<BasicMovieInfo>> getTopRatedObservable(String ISO639_1_language,
@@ -165,7 +192,19 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         return tmdb.moviesService().getTopRated(ISO639_1_language, page, ISO3166_1_region)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwableObservable ->
+                                throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
+                                        .flatMap(throwableIntegerPair -> {
+//                            throwableIntegerPair.first.printStackTrace();
+                                            Log.d("test", throwableIntegerPair.second + " outside");
+                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                                Log.d("test", throwableIntegerPair.second + "");
+                                                return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
+                                            }
+                                            return throwableObservable;
+                                        })
+                );
     }
 
     private Observable<MiscellaneousResults<BasicMovieInfo>> getPopularObservable(
@@ -175,7 +214,19 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
         TmdbApi tmdb = TmdbApi.getApiClient(ApplicationClass.API_KEY);
         return tmdb.moviesService().getPopular(ISO639_1_language, page, ISO3166_1_region)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen(throwableObservable ->
+                                throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
+                                        .flatMap(throwableIntegerPair -> {
+//                            throwableIntegerPair.first.printStackTrace();
+                                            Log.d("test", throwableIntegerPair.second + " outside");
+                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                                Log.d("test", throwableIntegerPair.second + "");
+                                                return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
+                                            }
+                                            return throwableObservable;
+                                        })
+                );
     }
 
     @Override

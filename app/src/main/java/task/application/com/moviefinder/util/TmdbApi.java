@@ -3,6 +3,9 @@ package task.application.com.moviefinder.util;
 import com.androidtmdbwrapper.Tmdb;
 
 import okhttp3.OkHttpClient;
+import task.application.com.moviefinder.ApplicationClass;
+import task.application.com.moviefinder.remote.tmdb.LiveNetworkMonitor;
+import task.application.com.moviefinder.remote.tmdb.NetworkMonitor;
 
 /**
  * Created by sHIVAM on 2/20/2017.
@@ -14,10 +17,12 @@ public class TmdbApi extends Tmdb {
     private static TmdbApi instance;
     public static final String API_KEY = "api_key";
     private final String apiKey;
+    private NetworkMonitor networkMonitor;
 
-    private TmdbApi(String apiKey) {
+    private TmdbApi(String apiKey, NetworkMonitor networkMonitor) {
         super(apiKey);
         this.apiKey = apiKey;
+        this.networkMonitor = networkMonitor;
     }
 
     String getApiKey() {
@@ -26,7 +31,14 @@ public class TmdbApi extends Tmdb {
 
     @Override
     protected void configOkHttpClient(OkHttpClient.Builder builder) {
-        builder.addInterceptor(new CustomInterceptor(this));
+        builder.addInterceptor(new CustomInterceptor(this, networkMonitor));
+//        builder.addInterceptor(chain -> {
+//            if(networkMonitor.isConnected()) {
+//                return chain.proceed(chain.request());
+//            } else {
+//                throw new NoNetworkException();
+//            }
+//        });
     }
 
     @Override
@@ -40,7 +52,7 @@ public class TmdbApi extends Tmdb {
 
     public static TmdbApi getApiClient(String apiKey) {
         if (instance == null)
-            instance = new TmdbApi(apiKey);
+            instance = new TmdbApi(apiKey, new LiveNetworkMonitor(ApplicationClass.getInstance()));
         return instance;
     }
 }

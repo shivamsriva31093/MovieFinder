@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,7 +41,7 @@ import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.base.PresenterCache;
 import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
-import task.application.com.moviefinder.ui.utility.GeneralTextView;
+import task.application.com.moviefinder.ui.utility.widgets.GeneralTextView;
 import task.application.com.moviefinder.util.EndlessScrollListener;
 import task.application.com.moviefinder.util.GridLayoutItemDecoration;
 import task.application.com.moviefinder.util.Util;
@@ -151,12 +150,10 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
     @Override
     public void showNetworkError() {
-        AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
-        builder.setTitle("Delete entry")
-                .setMessage("The connection is lost/slow.")
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+//        AlertDialog.Builder builder;
+//        builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+//        builder.setMessage("The connection is lost/slow.").create().show();
+        showTestToast("No network connection.Retrying..");
     }
 
 
