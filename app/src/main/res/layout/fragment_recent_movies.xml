@@ -20,13 +20,13 @@
             <!--tools:visibility="gone" />-->
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/ratingProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:visibility="gone"
             android:layout_marginTop="160dp"
             android:layout_centerHorizontal="true"
             app:indicatorColor="@color/colorPrimary"
-            app:indicatorName="BallZigZagIndicator" />
+            app:indicatorName="BallPulseIndicator" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/media_list"

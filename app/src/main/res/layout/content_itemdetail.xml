@@ -207,7 +207,7 @@
             android:text="Genres:"
             app:font="Nunito"
             android:textAlignment="viewStart"
-            android:textColor="@color/colorPrimaryMid"
+            android:textColor="#ef5350"
             android:textSize="14sp"
             android:typeface="normal" />
 
@@ -250,7 +250,7 @@
             android:layout_marginTop="3dp"
             android:text="Language:"
             android:textAlignment="viewStart"
-            android:textColor="@color/colorPrimaryMid"
+            android:textColor="#cf3f3c"
             android:textSize="14sp"
             android:typeface="normal"
            />

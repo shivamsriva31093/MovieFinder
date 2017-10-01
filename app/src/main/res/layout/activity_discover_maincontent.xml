@@ -33,7 +33,6 @@
                 android:textSize="22sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="30dp"
-                app:textStyle="@integer/semiBold"
                 app:font="OpenSans"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -48,8 +47,8 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="10dp"
                 android:text="Browse Movies and TV Shows"
-                android:textColor="@color/body_text_2"
-                android:textSize="13sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
                 android:textStyle="normal"
                 app:font="PermanentMarker"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
@@ -137,7 +136,7 @@
             app:tabGravity="center"
             app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabIndicatorColor="@color/white"
             app:tabTextColor="@color/body_text_1" />
     </android.support.design.widget.AppBarLayout>
 

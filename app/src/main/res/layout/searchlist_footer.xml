@@ -9,8 +9,8 @@
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/progressBar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
         android:visibility="gone"
         app:indicatorColor="@color/colorPrimary"
