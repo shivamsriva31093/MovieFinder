@@ -176,8 +176,8 @@
         android:layout_width="0dp"
         android:layout_height="110dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="190dp"
         android:gravity="center_horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
@@ -194,6 +194,7 @@
             android:layout_toRightOf="@+id/genres_title"
             android:textColor="@color/body_text_2"
             android:textSize="14sp"
+            app:font="Nunito"
             android:typeface="normal" />
 
         <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
@@ -204,8 +205,9 @@
             android:layout_marginLeft="1dp"
             android:layout_marginTop="3dp"
             android:text="Genres:"
+            app:font="Nunito"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryMid"
             android:textSize="14sp"
             android:typeface="normal" />
 
@@ -230,6 +232,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="1dp"
+            app:font="Nunito"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/runtime_title"
             android:textColor="@color/body_text_2"
@@ -240,16 +243,17 @@
             android:id="@+id/lang_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:font="Nunito"
             android:layout_below="@+id/runtime_date"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:layout_marginTop="3dp"
             android:text="Language:"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryMid"
             android:textSize="14sp"
             android:typeface="normal"
-            app:font="Nunito" />
+           />
 
         <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/runtime_title"
@@ -260,8 +264,9 @@
             android:layout_marginRight="1dp"
             android:layout_marginTop="10dp"
             android:text="Runtime:"
+            app:font="Nunito"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryMid"
             android:textSize="14sp"
             android:typeface="normal" />
 

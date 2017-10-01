@@ -14,13 +14,12 @@
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movie Go"
+        android:text="CINEFY"
         android:layout_marginTop="53dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/white"
         android:layout_marginLeft="55dp"
         app:font="OpenSans"
-        android:textStyle="bold"
         android:textSize="18sp" />
 
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
@@ -33,5 +32,5 @@
         android:textColor="@color/white"
         android:textSize="13sp"
         android:textStyle="normal"
-        app:font="OpenSans" />
+        app:font="PermanentMarker" />
 </LinearLayout>

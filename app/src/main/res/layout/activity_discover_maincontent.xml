@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="0dp"
+            android:layout_marginBottom="20dp"
             app:layout_scrollFlags="scroll|enterAlways|snap|scroll|enterAlways|snap"
             tools:layout_editor_absoluteY="0dp"
             tools:layout_editor_absoluteX="0dp">
@@ -25,19 +26,36 @@
             <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:gravity="left"
-                android:text="Movie Go"
+                android:text="CINEFY"
                 android:textColor="@color/black"
                 android:textSize="22sp"
-                android:layout_marginLeft="8dp"
-                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                app:textStyle="@integer/semiBold"
                 app:font="OpenSans"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginRight="0dp"
+                android:layout_marginRight="100dp"
                 android:layout_marginBottom="28dp"
-                app:layout_constraintRight_toLeftOf="@+id/guideline5" />
+                app:layout_constraintLeft_toRightOf="parent" />
+
+            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+                android:id="@+id/title_view_subheader"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="10dp"
+                android:text="Browse Movies and TV Shows"
+                android:textColor="@color/body_text_2"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                app:font="PermanentMarker"
+                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="100dp"
+                app:layout_constraintLeft_toRightOf="parent"/>
 
             <ImageView
                 android:id="@+id/nav_button"
@@ -65,8 +83,6 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
-                app:civ_fill_color="@color/body_text_2_inverse"
-                android:src="#f5f7f7"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

@@ -577,7 +577,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         poster = (ImageView) itemView.findViewById(R.id.poster);
                         poster.setClickable(true);
                         title = (GeneralTextView) itemView.findViewById(R.id.title);
-                        trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
+                        //trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
                         imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
                         ratingProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.ratingProgressBar);
                         favorite = (ImageView) itemView.findViewById(R.id.favorite);
