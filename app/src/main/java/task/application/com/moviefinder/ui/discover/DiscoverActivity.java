@@ -4,14 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import java.io.Serializable;
 
@@ -23,7 +28,9 @@ import task.application.com.moviefinder.util.ActivityUtils;
 import task.application.com.moviefinder.util.CustomSpannableStringBuilder;
 import task.application.com.moviefinder.util.CustomTabLayout;
 
-public class DiscoverActivity extends BaseActivity {
+
+public class DiscoverActivity extends BaseActivity implements
+        RecentMoviesFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -42,7 +49,6 @@ public class DiscoverActivity extends BaseActivity {
     private ViewPager mViewPager;
 
     private CustomTabLayout tabLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +58,12 @@ public class DiscoverActivity extends BaseActivity {
         initViews();
     }
 
+    @Override
+    public void onDataLoad(boolean status) {
+    }
+
     private void initViews() {
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -78,6 +89,11 @@ public class DiscoverActivity extends BaseActivity {
         tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
         tabLayout.setupWithViewPager(mViewPager);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -116,6 +132,8 @@ public class DiscoverActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     /**
      * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
