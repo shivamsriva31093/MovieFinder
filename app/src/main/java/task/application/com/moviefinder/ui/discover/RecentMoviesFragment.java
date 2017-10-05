@@ -68,11 +68,11 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private int totalResults;
     private EndlessScrollListener rvScrollListener;
     private RecyclerView.LayoutManager layoutManager;
-    private PresenterCache<DiscoverPresenter> presenterCache =
-            PresenterCache.getInstance();
+    private PresenterCache<DiscoverPresenter> presenterCache = PresenterCache.getInstance();
     private boolean isDestroyedBySystem;
     private String TAG = RecentMoviesFragment.class.getSimpleName();
     private LayoutManagerType mCurrentLayoutManagerType;
+    private OnFragmentInteractionListener onDataLoadListener;
 
     public enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
@@ -343,6 +343,13 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        try {
+            onDataLoadListener = (OnFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            Log.e("error", "Activity DiscoverActivity must implement "
+                    +OnFragmentInteractionListener.class.getSimpleName());
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -360,6 +367,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         this.totalPages = totalPages;
         this.totalResults = totalResults;
         rvAdapter.updateData(result);
+        onDataLoadListener.onDataLoad(true);
     }
 
     @Override
@@ -622,6 +630,10 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         void onItemClick(View view, int position, MediaBasic item);
 
         void onFavoriteButtonClick(View view, int position, MediaBasic data);
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onDataLoad(boolean status);
     }
 
     private PresenterFactory<DiscoverPresenter> factory = () -> new DiscoverPresenter(RecentMoviesFragment.this, TAG);
