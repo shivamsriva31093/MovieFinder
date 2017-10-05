@@ -156,7 +156,7 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                                         .flatMap(throwableIntegerPair -> {
 //                            throwableIntegerPair.first.printStackTrace();
                                             Log.d("test", throwableIntegerPair.second + " outside");
-                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                            if (throwableIntegerPair.second < ATTEMPTS) {
                                                 Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }
@@ -177,7 +177,7 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                                         .flatMap(throwableIntegerPair -> {
 //                            throwableIntegerPair.first.printStackTrace();
                                             Log.d("test", throwableIntegerPair.second + " outside");
-                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                            if (throwableIntegerPair.second < ATTEMPTS) {
                                                 Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }
@@ -198,7 +198,7 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                                         .flatMap(throwableIntegerPair -> {
 //                            throwableIntegerPair.first.printStackTrace();
                                             Log.d("test", throwableIntegerPair.second + " outside");
-                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                            if (throwableIntegerPair.second < ATTEMPTS) {
                                                 Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }
@@ -220,7 +220,7 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                                         .flatMap(throwableIntegerPair -> {
 //                            throwableIntegerPair.first.printStackTrace();
                                             Log.d("test", throwableIntegerPair.second + " outside");
-                                            if (throwableIntegerPair.second <= ATTEMPTS) {
+                                            if (throwableIntegerPair.second < ATTEMPTS) {
                                                 Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }

@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import task.application.com.moviefinder.R;
+
 public class CustomTabLayout extends TabLayout {
     private Typeface mCustomTypeFace;
 
@@ -18,13 +20,11 @@ public class CustomTabLayout extends TabLayout {
     }
 
     public CustomTabLayout(Context context) {
-        super(context);
-        initialise();
+        this(context, null);
     }
 
     public CustomTabLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initialise();
+        this(context, attrs, 0);
     }
 
     private void initialise() {
@@ -34,14 +34,18 @@ public class CustomTabLayout extends TabLayout {
     }
 
     @Override
-    public void addTab(@NonNull Tab tab, boolean setSelected) {
-        super.addTab(tab, setSelected);
-        setTabTypeFace(tab);
+    public void addTab(@NonNull Tab tab, int position, boolean setSelected) {
+        super.addTab(tab, position, setSelected);
+        setCustomTabView(tab, position);
     }
 
     @Override
-    public void addTab(@NonNull Tab tab, int position, boolean setSelected) {
-        super.addTab(tab, position, setSelected);
+    public void addOnTabSelectedListener(@NonNull OnTabSelectedListener listener) {
+        super.addOnTabSelectedListener(listener);
+    }
+
+    private void setCustomTabView(@NonNull Tab tab, int position) {
+        tab.setCustomView(R.layout.custom_tabview);
         setTabTypeFace(tab);
     }
 
