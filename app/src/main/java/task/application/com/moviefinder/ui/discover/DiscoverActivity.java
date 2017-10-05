@@ -89,6 +89,7 @@ public class DiscoverActivity extends BaseActivity implements
         tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
         tabLayout.setupWithViewPager(mViewPager);
 
+
     }
 
     @Override

@@ -68,8 +68,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private int totalResults;
     private EndlessScrollListener rvScrollListener;
     private RecyclerView.LayoutManager layoutManager;
-    private PresenterCache<DiscoverPresenter> presenterCache =
-            PresenterCache.getInstance();
+    private PresenterCache<DiscoverPresenter> presenterCache = PresenterCache.getInstance();
     private boolean isDestroyedBySystem;
     private String TAG = RecentMoviesFragment.class.getSimpleName();
     private LayoutManagerType mCurrentLayoutManagerType;
