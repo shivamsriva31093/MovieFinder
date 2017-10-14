@@ -135,10 +135,12 @@
             app:tabPaddingEnd="8dp"
             app:tabPaddingStart="8dp"
             app:tabGravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
             app:tabSelectedTextColor="@color/colorPrimaryMid"
             app:tabIndicatorColor="@color/white"
-            app:tabTextColor="@color/body_text_1" />
+            app:tabTextColor="@color/colorPrimaryMid" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

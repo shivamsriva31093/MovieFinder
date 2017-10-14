@@ -59,6 +59,7 @@ public class CustomTabLayout extends TabLayout {
             if (tabViewChild instanceof TextView) {
                 TextView tabTextView = (TextView) tabViewChild;
                 // Set the TextView's font
+                tabTextView.setTextColor(getResources().getColor(R.color.white));
                 tabTextView.setTypeface(mCustomTypeFace, Typeface.NORMAL);
             }
         }
