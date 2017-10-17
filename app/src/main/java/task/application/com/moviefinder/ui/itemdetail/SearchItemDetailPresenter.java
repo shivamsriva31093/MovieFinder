@@ -2,6 +2,7 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.androidtmdbwrapper.enums.AppendToResponseItem;
 import com.androidtmdbwrapper.enums.MediaType;
@@ -59,6 +60,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
                     .subscribe((movieInfo -> {
+                        Log.d("test_d", movieInfo.getTagline() + "");
                         view.showUi(movieInfo);
                         view.showLoadingIndicator(false);
                         view.showRatingsViewLoadingIndicator(true);

@@ -1,7 +1,9 @@
 package task.application.com.moviefinder.util;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
@@ -13,10 +15,13 @@ import task.application.com.moviefinder.R;
 
 public class CustomTabLayout extends TabLayout {
     private Typeface mCustomTypeFace;
+    private
+    @LayoutRes
+    Integer customTabLayout;
 
     public CustomTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initialise();
+        initialise(context, attrs, defStyleAttr);
     }
 
     public CustomTabLayout(Context context) {
@@ -27,10 +32,17 @@ public class CustomTabLayout extends TabLayout {
         this(context, attrs, 0);
     }
 
-    private void initialise() {
+    private void initialise(Context context, AttributeSet attrs, int defStyleAttr) {
         // Note: Rename "EdgeCaps.tff" to whatever your font file is named.
         // Note that the font file needs to be in the assets/fonts/ folder.
-        mCustomTypeFace = FontCache.getTypeface("Nunito-SemiBold.ttf", getContext());
+        TypedArray attrib = context.obtainStyledAttributes(attrs, R.styleable.CustomTabLayout);
+        try {
+            String fontName = attrib.getString(R.styleable.CustomTabLayout_tabFont);
+            customTabLayout = attrib.getResourceId(R.styleable.CustomTabLayout_tabLayout, R.layout.custom_tabview);
+            mCustomTypeFace = FontCache.getTypeface(fontName + ".ttf", getContext());
+        } finally {
+            attrib.recycle();
+        }
     }
 
     @Override
@@ -45,7 +57,7 @@ public class CustomTabLayout extends TabLayout {
     }
 
     private void setCustomTabView(@NonNull Tab tab, int position) {
-        tab.setCustomView(R.layout.custom_tabview);
+        tab.setCustomView(customTabLayout);
         setTabTypeFace(tab);
     }
 

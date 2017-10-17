@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -121,6 +120,8 @@ public class AppSearchActivity extends BaseActivity
     private void setUpTabLayout() {
         tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
+        float scale = getResources().getDisplayMetrics().density;
+        tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -214,65 +215,6 @@ public class AppSearchActivity extends BaseActivity
         return super.dispatchTouchEvent(ev);
     }
 
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            AppSearchFragment fragment;
-            MediaType queryType;
-            Bundle bundle = new Bundle();
-            switch (position) {
-                case 0:
-                    queryType = MediaType.MOVIES;
-                    bundle.putSerializable("queryType", queryType);
-                    break;
-                case 1:
-                    queryType = MediaType.TV;
-                    bundle.putSerializable("queryType", queryType);
-                    break;
-                case 2:
-                    queryType = MediaType.PEOPLE;
-                    bundle.putSerializable("queryType", queryType);
-                    break;
-                default:
-                    return null;
-            }
-            bundle.putString("query", searchQuery);
-            fragment = AppSearchFragment.newInstance(bundle);
-            new AppSearchPresenter(fragment, AppSearchFragment.class.getSimpleName() + queryType);
-            return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            // Show 4 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "MOVIES";
-                case 1:
-                    return "TV SHOWS";
-                case 2:
-                    return "PEOPLE";
-            }
-            return null;
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-    }
-
     public static class MyPagerAdapter extends CustomFragmentStatePagerAdapter<AppSearchFragment> {
 
         private static int NUM_ITEMS = 3;
@@ -325,11 +267,11 @@ public class AppSearchActivity extends BaseActivity
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "MOVIES";
+                    return "Movies";
                 case 1:
-                    return "TV SHOWS";
+                    return "Tv Shows";
                 case 2:
-                    return "PEOPLE";
+                    return "People";
             }
             return null;
         }

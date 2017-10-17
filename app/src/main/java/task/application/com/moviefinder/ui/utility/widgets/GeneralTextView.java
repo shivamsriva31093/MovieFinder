@@ -38,13 +38,18 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
 
     private void applyCustomFont(Context context, AttributeSet attrs, int defStyle) {
         TypedArray attribArray = context.obtainStyledAttributes(attrs, R.styleable.GeneralTextView);
-        String fontName = attribArray.getString(R.styleable.GeneralTextView_font);
-        int textStyle = attrs.getAttributeIntValue(R.styleable.GeneralTextView_textStyle, 0);
-        if (textStyle == 0)
-            textStyle = attrs.getAttributeIntValue(ANDROID_SCHEMA, "textStyle", Typeface.NORMAL);
-        Typeface customFont = selectTypeface(context, fontName, textStyle);
-        setTypeface(customFont);
-        attribArray.recycle();
+        try {
+            String fontName = attribArray.getString(R.styleable.GeneralTextView_font);
+//        int textStyle = attrs.getAttributeIntValue(R.styleable.GeneralTextView_textStyle, 0);
+            int textStyle = attribArray.getInt(R.styleable.GeneralTextView_textStyle, 0);
+            if (textStyle == 0)
+                textStyle = attrs.getAttributeIntValue(ANDROID_SCHEMA, "textStyle", Typeface.NORMAL);
+            Typeface customFont = selectTypeface(context, fontName, textStyle);
+            setTypeface(customFont);
+        } finally {
+            attribArray.recycle();
+        }
+
     }
 
     private Typeface selectTypeface(Context context, String fontName, int textStyle) {

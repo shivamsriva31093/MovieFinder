@@ -160,6 +160,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         snackBarView = getActivity().findViewById(R.id.activity_detail_coord_layout);
         presenter.setFilteringType(itemType);
         if (clickedItem != null) {
+            Log.d("test_d", clickedItem.getId() + "");
             presenter.getMovieDetails(clickedItem);
         }
     }
@@ -242,6 +243,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void showUi(MediaBasic data) {
         presenter.checkMediaInDB(data);
+        Log.d("test_d", data.getImdbRating() + " " + presenter.getFilteringType().toString());
         if (presenter.getFilteringType().equals(MediaType.MOVIES))
             setUpMovieDetails((MovieInfo) data);
         else if (presenter.getFilteringType().equals(MediaType.TV))

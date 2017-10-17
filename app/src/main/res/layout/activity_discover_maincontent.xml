@@ -135,6 +135,8 @@
             app:tabPaddingEnd="8dp"
             app:tabPaddingStart="8dp"
             app:tabGravity="center"
+            app:tabLayout="@layout/custom_tabview"
+            app:tabFont="Nunito-SemiBold"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             app:tabTextAppearance="@style/AppSearchTabLayoutStyle"

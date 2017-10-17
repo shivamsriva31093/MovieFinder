@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
         <include layout="@layout/app_searchbar" />
 
@@ -22,11 +23,21 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="5dp"
+            app:tabGravity="center"
+            app:tabFont="Nunito-SemiBold"
+            app:tabLayout="@layout/custom_tabview"
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable"
             app:tabPaddingEnd="8dp"
             app:tabPaddingStart="8dp"
+            app:tabSelectedTextColor="@color/colorPrimaryMid"
             app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
-            app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabIndicatorColor="@color/colorPrimary" />
+            app:tabTextColor="@color/body_text_1">
+
+
+        </task.application.com.moviefinder.util.CustomTabLayout>
 
     </android.support.design.widget.AppBarLayout>
 

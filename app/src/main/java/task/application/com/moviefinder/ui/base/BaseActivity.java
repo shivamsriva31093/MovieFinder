@@ -28,76 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
         AppNavigationViewAsDrawerImpl.NavigationDrawerStateListener {
 
     private static final String TAG = makeLogTag(BaseActivity.class);
-    private AppNavigationViewAsDrawerImpl mAppNavigationViewAsDrawer;
-
     private static final int MAIN_CONTENT_FADEIN_DURATION = 250;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-
-    /**
-     * Returns the navigation drawer item that corresponds to this Activity. Subclasses of
-     * BaseActivity override this to indicate what nav drawer item corresponds to them Return
-     * NAVDRAWER_ITEM_INVALID to mean that this Activity should not have a Nav Drawer.
-     */
-    protected NavigationItemEnum getSelfNavDrawerItem() {
-        return NavigationItemEnum.INVALID;
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        getToolbar();
-    }
-
-    @Override
-    public void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
-        // Nothing to do
-    }
-
-    @Override
-    public void onNavDrawerSlide(float offset) {
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mAppNavigationViewAsDrawer.isNavDrawerOpen()) {
-            mAppNavigationViewAsDrawer.closeNavDrawer();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mAppNavigationViewAsDrawer = new AppNavigationViewAsDrawerImpl(this);
-        mAppNavigationViewAsDrawer.activityReady(this, getSelfNavDrawerItem());
-
-        if (getSelfNavDrawerItem() != NavigationItemEnum.INVALID) {
-            setToolbarForNavigation();
-        }
-
-        View mainContent = findViewById(R.id.main_content);
-        if (mainContent != null) {
-            mainContent.setAlpha(0);
-            mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
-        } else {
-            LOGW(TAG, "No view with ID main_content to fade in.");
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
+    private AppNavigationViewAsDrawerImpl mAppNavigationViewAsDrawer;
 
     /**
      * This utility method handles Up navigation intents by searching for a parent activity and
@@ -151,22 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity implements
         }
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        View mainContent = findViewById(R.id.main_content);
-        if (mainContent != null) {
-            mainContent.setAlpha(0);
-            mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     /**
      * Converts an intent into a {@link Bundle} suitable for use as fragment arguments.
      */
@@ -189,6 +105,87 @@ public abstract class BaseActivity extends AppCompatActivity implements
         return arguments;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * Returns the navigation drawer item that corresponds to this Activity. Subclasses of
+     * BaseActivity override this to indicate what nav drawer item corresponds to them Return
+     * NAVDRAWER_ITEM_INVALID to mean that this Activity should not have a Nav Drawer.
+     */
+    protected NavigationItemEnum getSelfNavDrawerItem() {
+        return NavigationItemEnum.INVALID;
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        getToolbar();
+    }
+
+    @Override
+    public void onNavDrawerStateChanged(boolean isOpen, boolean isAnimating) {
+        // Nothing to do
+    }
+
+    @Override
+    public void onNavDrawerSlide(float offset) {
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mAppNavigationViewAsDrawer.isNavDrawerOpen()) {
+            mAppNavigationViewAsDrawer.closeNavDrawer();
+
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mAppNavigationViewAsDrawer = new AppNavigationViewAsDrawerImpl(this);
+        mAppNavigationViewAsDrawer.activityReady(this, getSelfNavDrawerItem());
+
+        if (getSelfNavDrawerItem() != NavigationItemEnum.INVALID) {
+            setToolbarForNavigation();
+        }
+
+        View mainContent = findViewById(R.id.main_content);
+        if (mainContent != null) {
+            mainContent.setAlpha(0);
+            mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        } else {
+            LOGW(TAG, "No view with ID main_content to fade in.");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View mainContent = findViewById(R.id.main_content);
+        if (mainContent != null) {
+            mainContent.setAlpha(0);
+            mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     public Toolbar getToolbar() {
         return null;
     }
@@ -196,8 +193,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     private void setToolbarForNavigation() {
     }
 
-    public
-    void openNavDrawer() {
+    public void openNavDrawer() {
         mAppNavigationViewAsDrawer.showNavigation();
     }
 
