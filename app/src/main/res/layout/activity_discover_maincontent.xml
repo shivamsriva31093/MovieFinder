@@ -134,15 +134,13 @@
             app:tabMode="scrollable"
             app:tabPaddingEnd="8dp"
             app:tabPaddingStart="8dp"
-            app:tabGravity="center"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
             app:tabLayout="@layout/custom_tabview"
             app:tabFont="Nunito-SemiBold"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
-            app:tabSelectedTextColor="@color/colorPrimaryMid"
             app:tabIndicatorColor="@color/white"
-            app:tabTextColor="@color/colorPrimaryMid" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

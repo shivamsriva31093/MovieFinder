@@ -4,19 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import java.io.Serializable;
 
@@ -85,11 +80,11 @@ public class DiscoverActivity extends BaseActivity implements
     private void setUpTabLayout() {
         tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
-        float scale = getResources().getDisplayMetrics().density;
-        tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
+//        float scale = getResources().getDisplayMetrics().density;
+//        tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
+        tabLayout.setSelectedTabIndicatorHeight(0);
+        tabLayout.setCustomTabColors(null, R.color.white);
         tabLayout.setupWithViewPager(mViewPager);
-
-
     }
 
     @Override

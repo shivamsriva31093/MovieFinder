@@ -1,12 +1,14 @@
 package task.application.com.moviefinder.ui.appsearch;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -120,8 +122,23 @@ public class AppSearchActivity extends BaseActivity
     private void setUpTabLayout() {
         tabLayout = (CustomTabLayout) findViewById(R.id.tabs);
         tabLayout.setFillViewport(true);
-        float scale = getResources().getDisplayMetrics().density;
-        tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
+//        float scale = getResources().getDisplayMetrics().density;
+//        tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
+        tabLayout.setSelectedTabIndicatorHeight(0);
+        tabLayout.setCustomTabColors(new ColorStateList(
+                new int[][]{
+                        new int[]{android.R.attr.state_selected},
+                        new int[]{android.R.attr.state_focused},
+                        new int[]{android.R.attr.state_pressed},
+                        new int[]{}
+                },
+                new int[]{
+                        ContextCompat.getColor(this, R.color.white),
+                        ContextCompat.getColor(this, R.color.white),
+                        ContextCompat.getColor(this, R.color.white),
+                        ContextCompat.getColor(this, R.color.body_text_1)
+                }
+        ), R.color.body_text_1);
         tabLayout.setupWithViewPager(mViewPager);
     }
 

@@ -167,7 +167,11 @@
     <style name="customTabStyle">
         <item name="android:background">@drawable/custom_tab_selector</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/colorPrimaryMid</item>
+    </style>
+
+    <style name="customTabStyle2">
+        <item name="android:background">@drawable/custom_tab_selector2</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

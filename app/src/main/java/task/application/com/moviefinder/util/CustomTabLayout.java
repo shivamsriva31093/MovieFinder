@@ -1,15 +1,21 @@
 package task.application.com.moviefinder.util;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import task.application.com.moviefinder.R;
 
@@ -18,6 +24,9 @@ public class CustomTabLayout extends TabLayout {
     private
     @LayoutRes
     Integer customTabLayout;
+    private final ArrayList<Tab> mTabs = new ArrayList<>();
+    private ColorStateList mTabColors;
+    private int mDefaultColor = R.color.body_text_1;
 
     public CustomTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -48,7 +57,26 @@ public class CustomTabLayout extends TabLayout {
     @Override
     public void addTab(@NonNull Tab tab, int position, boolean setSelected) {
         super.addTab(tab, position, setSelected);
+        mTabs.add(position, tab);
         setCustomTabView(tab, position);
+    }
+
+    @Override
+    public void removeTab(Tab tab) {
+        super.removeTab(tab);
+        mTabs.remove(tab);
+    }
+
+    @Override
+    public void removeTabAt(int position) {
+        super.removeTabAt(position);
+        mTabs.remove(position);
+    }
+
+    @Override
+    public void removeAllTabs() {
+        super.removeAllTabs();
+        mTabs.clear();
     }
 
     @Override
@@ -70,10 +98,17 @@ public class CustomTabLayout extends TabLayout {
             // Find the TextView in the tab
             if (tabViewChild instanceof TextView) {
                 TextView tabTextView = (TextView) tabViewChild;
-                // Set the TextView's font
-                tabTextView.setTextColor(getResources().getColor(R.color.white));
+                if (mTabColors == null)
+                    tabTextView.setTextColor(ContextCompat.getColor(getContext(), mDefaultColor));
+                else
+                    tabTextView.setTextColor(mTabColors);
                 tabTextView.setTypeface(mCustomTypeFace, Typeface.NORMAL);
             }
         }
+    }
+
+    public void setCustomTabColors(@Nullable ColorStateList tabColors, @ColorRes int defaultColor) {
+        mTabColors = tabColors;
+        mDefaultColor = defaultColor;
     }
 }

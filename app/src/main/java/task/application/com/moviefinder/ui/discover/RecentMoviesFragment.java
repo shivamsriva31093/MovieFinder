@@ -500,8 +500,9 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             final RealmResults<MediaItem> res = realm.where(MediaItem.class)
                     .equalTo("tmdbId", String.valueOf(data.get(position - 1).getId()))
                     .findAll();
-            if (!res.isEmpty() && res.isValid())
+            if (!res.isEmpty() && res.isValid()) {
                 setFavorite(holder, true, position);
+            }
         }
 
         private void setFavorite(ViewHolder holder, boolean status, int position) {

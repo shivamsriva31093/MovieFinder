@@ -28,4 +28,7 @@
         <attr name="trimLength" format="integer" />
     </declare-styleable>
 
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+
 </resources>

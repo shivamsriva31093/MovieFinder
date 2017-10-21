@@ -27,14 +27,11 @@
             android:padding="5dp"
             app:tabGravity="center"
             app:tabFont="Nunito-SemiBold"
-            app:tabLayout="@layout/custom_tabview"
             app:tabIndicatorColor="@color/white"
+            app:tabLayout="@layout/appsearch_custom_tabview"
             app:tabMode="scrollable"
             app:tabPaddingEnd="8dp"
-            app:tabPaddingStart="8dp"
-            app:tabSelectedTextColor="@color/colorPrimaryMid"
-            app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
-            app:tabTextColor="@color/body_text_1">
+            app:tabPaddingStart="8dp">
 
 
         </task.application.com.moviefinder.util.CustomTabLayout>
