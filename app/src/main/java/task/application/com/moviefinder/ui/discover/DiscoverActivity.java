@@ -1,6 +1,7 @@
 package task.application.com.moviefinder.ui.discover;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,7 +85,20 @@ public class DiscoverActivity extends BaseActivity implements
 //        float scale = getResources().getDisplayMetrics().density;
 //        tabLayout.setSelectedTabIndicatorHeight((int) (scale * 1.5f));
         tabLayout.setSelectedTabIndicatorHeight(0);
-        tabLayout.setCustomTabColors(null, R.color.white);
+        tabLayout.setCustomTabColors(new ColorStateList(
+        new int[][]{
+                new int[]{android.R.attr.state_selected},
+                new int[]{android.R.attr.state_focused},
+                new int[]{android.R.attr.state_pressed},
+                new int[]{}
+        },
+                new int[]{
+                        ContextCompat.getColor(this, R.color.white),
+                        ContextCompat.getColor(this, R.color.white),
+                        ContextCompat.getColor(this, R.color.colorPrimaryMid),
+                        ContextCompat.getColor(this, R.color.body_text_1)
+                }
+        ), R.color.black);
         tabLayout.setupWithViewPager(mViewPager);
     }
 

@@ -426,7 +426,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
         public void onBindViewHolder(ViewHolder holder, int position) {
             switch (holder.HOLDER_ID) {
                 case TYPE_HEADER:
-                    holder.headerTitle.setText("My Favorite " + FILTER);
+                    holder.headerTitle.setText("Your Handpicked " + FILTER);
                     holder.subHeaderTitle.setVisibility(View.GONE);
                     break;
                 case TYPE_ITEM:
@@ -504,7 +504,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 switch (holderType) {
                     case TYPE_HEADER:
                         headerTitle = (GeneralTextView) itemView.findViewById(R.id.title_view);
-                        headerTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        headerTitle.setTextColor(getResources().getColor(R.color.colorPrimaryMid));
                         subHeaderTitle = (GeneralTextView) itemView.findViewById(R.id.title_view_subheader);
                         HOLDER_ID = holderType;
                         break;

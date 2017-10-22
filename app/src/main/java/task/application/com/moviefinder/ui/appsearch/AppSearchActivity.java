@@ -135,7 +135,7 @@ public class AppSearchActivity extends BaseActivity
                 new int[]{
                         ContextCompat.getColor(this, R.color.white),
                         ContextCompat.getColor(this, R.color.white),
-                        ContextCompat.getColor(this, R.color.white),
+                        ContextCompat.getColor(this, R.color.body_text_1),
                         ContextCompat.getColor(this, R.color.body_text_1)
                 }
         ), R.color.body_text_1);

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.like.LikeButton;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -125,19 +126,21 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         @Override
         public void onFavoriteButtonClick(View view, int position, MediaBasic data) {
-            ImageView button = (ImageView) view;
+            LikeButton button = (LikeButton) view;
             toggleFavorite(button, position, button.getTag(), ApplicationClass.getInstance(), data);
         }
     };
 
-    private void toggleFavorite(ImageView button, int position, Object tag, Context context, MediaBasic item) {
+    private void toggleFavorite(LikeButton button, int position, Object tag, Context context, MediaBasic item) {
         if (tag != null && (int) tag == R.drawable.heart_outline) {
-            button.setColorFilter(null);
-            button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
+//            button.setColorFilter(null);
+//            button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
+            button.setLiked(true);
             button.setTag(R.drawable.favorite);
             presenter.addMediaToFavorites(item);
         } else {
-            button.setImageDrawable(context.getResources().getDrawable(R.drawable.heart_outline, null));
+//            button.setImageDrawable(context.getResources().getDrawable(R.drawable.heart_outline, null));
+            button.setLiked(false);
             button.setTag(R.drawable.heart_outline);
             presenter.removeMediaFromFavorites(item);
         }
@@ -507,9 +510,9 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         private void setFavorite(ViewHolder holder, boolean status, int position) {
             if (status) {
-                holder.favorite.setColorFilter(null);
-                holder.favorite.setImageDrawable(ApplicationClass.getInstance()
-                        .getResources().getDrawable(R.drawable.favorite));
+//                holder.favorite.setColorFilter(null);
+//                holder.favorite.setImageDrawable(ApplicationClass.getInstance()
+//                        .getResources().getDrawable(R.drawable.favorite));
                 holder.favorite.setTag(R.drawable.favorite);
             }
         }
@@ -568,7 +571,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             private CircleImageView trailerButton;
             private AVLoadingIndicatorView footerProgressBar;
             private GeneralTextView headerTitle;
-            private ImageView favorite;
+            private LikeButton favorite;
             private FrameLayout favoriteParent;
             private GeneralTextView imdbRating;
             private AVLoadingIndicatorView ratingProgressBar;
@@ -589,7 +592,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         //trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
                         imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
                         ratingProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.ratingProgressBar);
-                        favorite = (ImageView) itemView.findViewById(R.id.favorite);
+                        favorite = (LikeButton) itemView.findViewById(R.id.favorite);
                         favoriteParent = (FrameLayout) itemView.findViewById(R.id.favorite_parent);
                         poster.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));

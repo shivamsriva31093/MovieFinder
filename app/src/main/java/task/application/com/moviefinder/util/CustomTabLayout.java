@@ -102,7 +102,7 @@ public class CustomTabLayout extends TabLayout {
                     tabTextView.setTextColor(ContextCompat.getColor(getContext(), mDefaultColor));
                 else
                     tabTextView.setTextColor(mTabColors);
-                tabTextView.setTypeface(mCustomTypeFace, Typeface.NORMAL);
+               // tabTextView.setTypeface(mCustomTypeFace, Typeface.NORMAL);
             }
         }
     }

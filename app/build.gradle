@@ -70,6 +70,7 @@ dependencies {
     compile 'com.victor:lib:1.0.4'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    compile 'com.github.jd-alexander:LikeButton:0.2.3'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'

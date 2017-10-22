@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="top"
     android:paddingTop="20dp"
-    android:background="@drawable/selector"
+    android:background="@drawable/selector_nav"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -16,12 +16,12 @@
         android:layout_height="30dp"
         android:id="@+id/icon"
         android:layout_marginTop="50dp"
-        android:src="@drawable/balloon"/>
+       />
 
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CINEFY"
+        android:text="Colette"
         android:layout_marginTop="40dp"
         android:layout_toRightOf="@+id/icon"
         android:layout_marginBottom="10dp"
