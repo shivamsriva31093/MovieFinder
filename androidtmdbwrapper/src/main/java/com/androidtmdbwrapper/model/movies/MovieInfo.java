@@ -34,7 +34,7 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
     @JsonProperty("production_countries")
     private List<ProductionCountry> productionCountries = Collections.EMPTY_LIST;
     @JsonProperty("revenue")
-    private int revenue;
+    private Long revenue;
     @JsonProperty("runtime")
     private int runtime;
     @JsonProperty("spoken_languages")
@@ -59,7 +59,7 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
         imdbId = in.readString();
         productionCompanies = in.createTypedArrayList(ProductionCompany.CREATOR);
         productionCountries = in.createTypedArrayList(ProductionCountry.CREATOR);
-        revenue = in.readInt();
+        revenue = in.readLong();
         runtime = in.readInt();
         spokenLanguage = in.createTypedArrayList(Language.CREATOR);
         tagline = in.readString();
@@ -77,7 +77,7 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
         dest.writeString(imdbId);
         dest.writeTypedList(productionCompanies);
         dest.writeTypedList(productionCountries);
-        dest.writeInt(revenue);
+        dest.writeLong(revenue);
         dest.writeInt(runtime);
         dest.writeTypedList(spokenLanguage);
         dest.writeString(tagline);
@@ -168,11 +168,11 @@ public class MovieInfo extends BasicMovieInfo implements Parcelable {
         this.productionCountries = productionCountries;
     }
 
-    public int getRevenue() {
+    public long getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(int revenue) {
+    public void setRevenue(Long revenue) {
         this.revenue = revenue;
     }
 
