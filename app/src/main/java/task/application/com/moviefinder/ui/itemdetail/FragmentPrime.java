@@ -136,7 +136,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         syncProgress1.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
         syncProgress1.setUnreachedBarHeight(scale * 4);
         syncProgress1.setUnreachedBarColor(Color.parseColor("#dfe0e2"));
-        syncProgress1.setReachedBarColor(Color.parseColor("#fd403c"));
+        syncProgress1.setReachedBarColor(Color.parseColor("#d23041"));
         initialiseViewChildren(rootView);
         return rootView;
     }
