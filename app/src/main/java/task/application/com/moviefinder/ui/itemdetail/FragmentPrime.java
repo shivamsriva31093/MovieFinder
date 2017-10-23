@@ -94,6 +94,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private View snackBarView;
     private RelativeLayout emptyDataHandlerView;
     private ConstraintLayout contentHolder;
+    private GeneralTextView castTitle;
+    private GeneralTextView crewTitle;
+    private GeneralTextView synopsisTitle;
 
     public FragmentPrime() {
     }
@@ -185,6 +188,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         share = (AppCompatButton) detailView.findViewById(R.id.imageButton5);
         addCastCrewImageSliders();
         share.setOnClickListener(this);
+        castTitle = (GeneralTextView) contentHolder.findViewById(R.id.cast);
+        crewTitle = (GeneralTextView) contentHolder.findViewById(R.id.crew);
+        synopsisTitle = (GeneralTextView) contentHolder.findViewById(R.id.synopsis);
     }
 
     @Override
@@ -252,12 +258,23 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     private void setUpTvDetails(TvInfo data) {
         retrievedItem = data;
-        if ((data.getCredits().getCast().isEmpty() || data.getCredits().getCrew().isEmpty())
-                || (data.getOverview().isEmpty() || data.getOverview().length() <= 10)
-                || (data.getName().isEmpty())) {
+        if ((data.getCredits().getCast().isEmpty()) || data.getCredits().getCrew().isEmpty()
+                && (data.getOverview().isEmpty() && data.getOverview().length() <= 10)
+                && data.getName().isEmpty()) {
             handleEmptyData();
             return;
         }
+        if (data.getCredits().getCast().isEmpty()) {
+            castTitle.setVisibility(View.GONE);
+        }
+        if (data.getCredits().getCrew().isEmpty()) {
+            crewTitle.setVisibility(View.GONE);
+        }
+        if (data.getOverview().isEmpty()) {
+            synopsis.setVisibility(View.GONE);
+        }
+
+
         Picasso picasso = Picasso.with(getActivity());
         picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
                 .error(R.drawable.imgfound).into(backDropImage);
@@ -269,10 +286,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         runtime.setText(String.valueOf(data.getEpisodeRunTime()) + "min");
         synopsis.setText(data.getOverview());
         String trailer = getVideoUrl(data);
-        if (trailer.isEmpty())
-            trailerButton.setVisibility(View.GONE);
-        else
-            trailerKey = trailer;
+        if (trailer.isEmpty()) trailerButton.setVisibility(View.GONE);
+        else trailerKey = trailer;
         listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
     }
 
@@ -286,11 +301,20 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     private void setUpMovieDetails(MovieInfo data) {
         retrievedItem = (MediaBasic) data;
-        if ((data.getCredits().getCast().isEmpty() || data.getCredits().getCrew().isEmpty())
-                || (data.getOverview().isEmpty() || data.getOverview().length() <= 10)
-                || (data.getTitle().isEmpty())) {
+        if ((data.getCredits().getCast().isEmpty()) || data.getCredits().getCrew().isEmpty()
+                && (data.getOverview().isEmpty() && data.getOverview().length() <= 10)
+                && (data.getTitle().isEmpty() || data.getOriginalTitle().isEmpty())) {
             handleEmptyData();
             return;
+        }
+        if (data.getCredits().getCast().isEmpty()) {
+            castTitle.setVisibility(View.GONE);
+        }
+        if (data.getCredits().getCrew().isEmpty()) {
+            crewTitle.setVisibility(View.GONE);
+        }
+        if (data.getOverview().isEmpty()) {
+            synopsis.setVisibility(View.GONE);
         }
         Picasso picasso = Picasso.with(getActivity());
         picasso.load("https://image.tmdb.org/t/p/original" + data.getBackdropPath()).fit()
