@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -36,13 +35,13 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.ui.base.PresenterCache;
 import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.itemdetail.SearchItemDetailActivity;
 import task.application.com.moviefinder.ui.utility.widgets.GeneralTextView;
+import task.application.com.moviefinder.util.ActivityUtils;
 import task.application.com.moviefinder.util.EndlessScrollListener;
 import task.application.com.moviefinder.util.GridLayoutItemDecoration;
 import task.application.com.moviefinder.util.Util;
@@ -126,29 +125,28 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         @Override
         public void onFavoriteButtonClick(View view, int position, MediaBasic data) {
-            LikeButton button = (LikeButton) view;
-            toggleFavorite(button, position, button.getTag(), ApplicationClass.getInstance(), data);
+            toggleFavorite((LikeButton) view, data);
         }
     };
 
-    private void toggleFavorite(LikeButton button, int position, Object tag, Context context, MediaBasic item) {
-        if (tag != null && (int) tag == R.drawable.heart_outline) {
-//            button.setColorFilter(null);
-//            button.setImageDrawable(context.getResources().getDrawable(R.drawable.favorite, null));
-            button.setLiked(true);
-            button.setTag(R.drawable.favorite);
-            presenter.addMediaToFavorites(item);
-        } else {
-//            button.setImageDrawable(context.getResources().getDrawable(R.drawable.heart_outline, null));
+    private void toggleFavorite(LikeButton button, MediaBasic item) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmResults<MediaItem> res = realm.where(MediaItem.class)
+                .equalTo("tmdbId", String.valueOf(item.getId()))
+                .findAll();
+        if (!res.isEmpty() && res.isValid()) {
             button.setLiked(false);
-            button.setTag(R.drawable.heart_outline);
             presenter.removeMediaFromFavorites(item);
+        } else {
+            button.setLiked(true);
+            presenter.addMediaToFavorites(item);
         }
     }
 
     @Override
     public void showTestToast(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        ActivityUtils.showBottomSheetMessage(msg, getActivity());
     }
 
     @Override
@@ -494,27 +492,20 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         .into(holder.poster);
                 holder.title.setText(row.getTitle());
                 holder.imdbRating.setVisibility(View.GONE);
-                checkFavMediaInDB(holder, position);
+                if (checkFavMediaInDB(row)) {
+                    holder.favorite.setLiked(true);
+                } else {
+                    holder.favorite.setLiked(false);
+                }
             }
         }
 
-        private void checkFavMediaInDB(ViewHolder holder, int position) {
+        private boolean checkFavMediaInDB(MediaBasic item) {
             Realm realm = Realm.getDefaultInstance();
             final RealmResults<MediaItem> res = realm.where(MediaItem.class)
-                    .equalTo("tmdbId", String.valueOf(data.get(position - 1).getId()))
+                    .equalTo("tmdbId", String.valueOf(item.getId()))
                     .findAll();
-            if (!res.isEmpty() && res.isValid()) {
-                setFavorite(holder, true, position);
-            }
-        }
-
-        private void setFavorite(ViewHolder holder, boolean status, int position) {
-            if (status) {
-//                holder.favorite.setColorFilter(null);
-//                holder.favorite.setImageDrawable(ApplicationClass.getInstance()
-//                        .getResources().getDrawable(R.drawable.favorite));
-                holder.favorite.setTag(R.drawable.favorite);
-            }
+            return res != null && !res.isEmpty() && res.isValid();
         }
 
         @Override
@@ -598,7 +589,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                                 itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
                         itemView.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
-                        favoriteParent.setOnClickListener(view -> {
+                        favorite.setOnClickListener(view -> {
                             MediaBasic item = data.get(getAdapterPosition() - 1);
                             item.setImdbRating(imdbRating.getText().toString());
                             itemTouchListener.onFavoriteButtonClick(favorite, getAdapterPosition() - 1, item);

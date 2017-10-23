@@ -148,6 +148,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@color/transparent"
+            android:clickable="true"
             android:id="@+id/favorite_parent">
 
             <com.like.LikeButton
@@ -158,12 +159,12 @@
                 app:dots_primary_color="@color/colorPrimaryMid"
                 app:dots_secondary_color="@color/colorPrimary"
                 app:circle_end_color="@color/colorPrimaryMid"
-                app:icon_size="21dp"
+                app:icon_size="20dp"
                 android:id="@+id/favorite"
                 app:liked="false"
                 app:anim_scale_factor="2"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_margin="7dp"
                 android:layout_gravity="end"
                 app:is_enabled="true"
