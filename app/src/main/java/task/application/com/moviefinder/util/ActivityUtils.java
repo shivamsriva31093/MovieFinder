@@ -15,8 +15,17 @@
 package task.application.com.moviefinder.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.TaskStackBuilder;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+
+import task.application.com.moviefinder.R;
+import task.application.com.moviefinder.ui.utility.widgets.GeneralTextView;
 
 /**
  * Utility methods for activities management.
@@ -37,6 +46,19 @@ public class ActivityUtils {
 
     public static void startNewActivity(Activity activity, Intent intent) {
         activity.startActivity(intent);
+    }
+
+    public static void showBottomSheetMessage(String message, Context context) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View sheet = LayoutInflater.from(context).inflate(R.layout.bottomsheet_layout, null);
+        bottomSheetDialog.setContentView(sheet);
+
+        GeneralTextView msgView = (GeneralTextView) sheet.findViewById(R.id.msg);
+        ImageView msgLogo = (ImageView) sheet.findViewById(R.id.msg_logo);
+
+        msgView.setText(message);
+        bottomSheetDialog.show();
+        new Handler().postDelayed(bottomSheetDialog::dismiss, 1100);
     }
 
 }
