@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#e1e0e0"
+    app:cardBackgroundColor="#fafafa"
     android:padding="10dp"
     style="@style/CreditMoviesCardViewTheme1"
     app:cardUseCompatPadding="false">
@@ -75,7 +75,7 @@
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Notification.Info"
             android:textColor="@color/colorPrimary"
-                android:textSize="9sp"
+                android:textSize="12sp"
             android:typeface="sans"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
