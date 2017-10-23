@@ -1,6 +1,7 @@
 package task.application.com.moviefinder.ui.appsearch;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.core.BaseMediaData;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
@@ -329,6 +331,8 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             holder.title.setText(person.getName());
             String url = person.getProfilePath();
             if (url == null) {
+                TextDrawable drawable1 = TextDrawable.builder()
+                        .buildRoundRect("A", Color.RED, 10);
                 holder.imageView.setImageResource(R.drawable.creditplaceholder);
             } else {
                 Picasso.with(getActivity())

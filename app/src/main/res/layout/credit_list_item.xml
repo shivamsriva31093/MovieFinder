@@ -1,87 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/CreditMoviesCardViewTheme1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#fafafa"
     android:padding="10dp"
-    style="@style/CreditMoviesCardViewTheme1"
+    app:cardBackgroundColor="#fafafa"
     app:cardUseCompatPadding="false">
 
     <android.support.v7.widget.CardView
+        style="@style/CreditMoviesCardViewTheme2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        app:cardBackgroundColor="#fafafa"
         android:padding="10dp"
-        style="@style/CreditMoviesCardViewTheme2"
+        app:cardBackgroundColor="#fafafa"
         app:cardUseCompatPadding="false">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-        android:layout_margin="2dp"
-        android:background="@android:color/transparent"
-        android:padding="1dp">
+            android:layout_margin="2dp"
+            android:background="@android:color/transparent"
+            android:padding="1dp">
 
             <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
-            android:id="@+id/credit_title"
-            android:layout_width="110dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:padding="2dp"
-                app:font="Nunito"
-            android:text="Stephen Amell"
+                android:id="@+id/credit_title"
+                android:layout_width="110dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Stephen Amell"
                 android:textColor="@color/body_text_2"
                 android:textSize="13sp"
-            android:typeface="sans"
-            app:layout_constraintHorizontal_bias="0.47"
-            app:layout_constraintLeft_toLeftOf="@+id/frameLayout2"
-            app:layout_constraintRight_toRightOf="@+id/frameLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
+                android:typeface="sans"
+                app:font="Nunito"
+                app:layout_constraintHorizontal_bias="0.47"
+                app:layout_constraintLeft_toLeftOf="@+id/frameLayout2"
+                app:layout_constraintRight_toRightOf="@+id/frameLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
 
-        <FrameLayout
-            android:id="@+id/frameLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <FrameLayout
+                android:id="@+id/frameLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/credit_image"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:padding="2dp"
-                android:src="@drawable/creditplaceholder" />
-        </FrameLayout>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/credit_image"
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:padding="2dp"
+                    android:src="@drawable/creditplaceholder" />
+            </FrameLayout>
 
             <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
-            android:id="@+id/credit_design"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="TextView"
+                android:id="@+id/credit_design"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Notification.Info"
+                android:textColor="@color/colorPrimary"
+                android:textSize="11sp"
+                android:typeface="sans"
                 app:font="Nunito"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Notification.Info"
-            android:textColor="@color/colorPrimary"
-                android:textSize="12sp"
-            android:typeface="sans"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/credit_title"
-            app:layout_constraintVertical_bias="0.0" />
-    </android.support.constraint.ConstraintLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/credit_title"
+                app:layout_constraintVertical_bias="0.0" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.v7.widget.CardView>

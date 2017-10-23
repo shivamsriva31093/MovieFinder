@@ -1,5 +1,6 @@
 package task.application.com.moviefinder.ui.utility;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.androidtmdbwrapper.model.credits.MediaCredit;
 import com.androidtmdbwrapper.model.credits.MediaCreditCast;
 import com.androidtmdbwrapper.model.credits.MediaCreditCrew;
@@ -98,10 +100,13 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Picasso picasso = Picasso.with(getActivity());
+            TextDrawable drawable1 = TextDrawable.builder()
+                    .buildRoundRect("A", Color.RED, 30);
+
             picasso.load("https://image.tmdb.org/t/p/w500"
                     + credits.get(position).getProfilePath())
-                    .placeholder(R.drawable.creditplaceholder)
-                    .error(R.drawable.creditplaceholder)
+                    .placeholder(R.drawable.credit1)
+                    .error(R.drawable.credit1)
                     .into(holder.creditImage);
 
             holder.creditTitle.setText(credits.get(position).getName());
