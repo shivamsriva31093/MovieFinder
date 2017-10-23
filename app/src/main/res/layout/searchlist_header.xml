@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<task.application.com.moviefinder.ui.utility.widgets.GeneralTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header"
     android:background="@color/colorAccent"
     android:gravity="left"
     android:layout_height="35dp"
-    android:text="hgss"
+    android:textColor="@color/body_text_1"
     android:paddingTop="7dp"
+    app:font="OpenSans"
     android:paddingLeft="15dp"
-    android:textSize="16dp">
-</TextView>
+    android:textSize="15dp">
+</task.application.com.moviefinder.ui.utility.widgets.GeneralTextView>
+

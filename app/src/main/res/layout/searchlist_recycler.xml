@@ -32,19 +32,20 @@
                     app:civ_border_color="@android:color/darker_gray"
                     app:civ_border_width="0.25dp" />
 
-                <TextView
+                <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                     android:id="@+id/title"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="75dp"
                     android:layout_marginTop="10dp"
-                    android:text="ARRIVAL"
-                    android:textSize="18sp"
-                    android:textColor="@color/body_text_2"
+                    android:textSize="16sp"
+                    android:textColor="@color/body_text_1"
                     style="@style/TextHeader"
+                    app:font="OpenSans"
+                    app:textStyle="semiBold"
                     android:typeface="normal" />
 
-                <TextView
+                <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +53,8 @@
                     android:layout_marginLeft="75dp"
                     android:layout_marginTop="2dp"
                     android:text="2016"
-                    android:textColor="@color/body_text_2"
+                    app:font="OpenSans"
+                    android:textColor="@color/body_text_1"
                     android:textSize="14sp"
                     android:typeface="normal" />
 
@@ -70,7 +72,7 @@
                 <!--android:typeface="normal" />-->
 
 
-                <TextView
+                <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                     android:id="@+id/details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,8 +81,9 @@
                     android:layout_marginLeft="75dp"
                     android:layout_marginTop="4dp"
                     android:text="Click to view details"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/body_text_2"
                     android:textSize="13sp"
+                    app:font="Nunito"
                     android:typeface="normal" />
 
                 <!--<View-->
@@ -163,7 +166,7 @@
                         android:src="@drawable/imdb_bar_icon"
                         android:visibility="gone" />
 
-                    <TextView
+                    <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
                         android:id="@+id/imdb_rating"
                         style="@style/TextBody"
                         android:layout_width="wrap_content"

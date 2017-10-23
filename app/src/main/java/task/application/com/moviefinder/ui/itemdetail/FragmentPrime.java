@@ -90,7 +90,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private String trailerKey;
     private GeneralTextView rtRating;
     private GeneralTextView imdbRating;
-    private ProgressBar ratingsLoader;
     private View snackBarView;
     private RelativeLayout emptyDataHandlerView;
     private ConstraintLayout contentHolder;
@@ -180,8 +179,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         lang = (GeneralTextView) basicDetails.findViewById(R.id.lang);
         runtime = (GeneralTextView) basicDetails.findViewById(R.id.runtime_date);
         ratingsView = (RelativeLayout) detailView.findViewById(R.id.ratingsView);
-        ratingsLoader = (ProgressBar) ratingsView.findViewById(R.id.ratings_load);
-        ratingsLoader.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
         rtRating = (GeneralTextView) ratingsView.findViewById(R.id.rt_rating);
         imdbRating = (GeneralTextView) ratingsView.findViewById(R.id.imdb_rating);
         synopsis = (CollapsibleTextView) detailView.findViewById(R.id.plot);
@@ -224,13 +221,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void showRatingsViewLoadingIndicator(boolean show) {
-
-        if (show) {
-            ratingsLoader.setVisibility(View.VISIBLE);
-        } else {
-            ratingsLoader.setVisibility(View.GONE);
-        }
-
     }
 
     @Override

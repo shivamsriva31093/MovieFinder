@@ -333,7 +333,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             if (url == null) {
                 TextDrawable drawable1 = TextDrawable.builder()
                         .buildRoundRect("A", Color.RED, 10);
-                holder.imageView.setImageResource(R.drawable.creditplaceholder);
+                holder.imageView.setImageResource(R.drawable.credit1);
             } else {
                 Picasso.with(getActivity())
                         .load("https://image.tmdb.org/t/p/w500" + url)

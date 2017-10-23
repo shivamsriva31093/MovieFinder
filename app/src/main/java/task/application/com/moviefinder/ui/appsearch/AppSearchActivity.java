@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.androidtmdbwrapper.enums.MediaType;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
@@ -41,7 +42,7 @@ public class AppSearchActivity extends BaseActivity
 
     private TextInputLayout searchInputTextLayout;
     private ClearableEditText searchInput;
-    private ProgressBar progressBar;
+    private AVLoadingIndicatorView progressBar;
     private ImageView backButton;
     private String searchQuery = "";
 
@@ -76,7 +77,7 @@ public class AppSearchActivity extends BaseActivity
         searchInputTextLayout = (TextInputLayout) findViewById(R.id.searchInputTextLayout);
         searchInput = (ClearableEditText) findViewById(R.id.searchInput);
         backButton = (ImageView) findViewById(R.id.backButton);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (AVLoadingIndicatorView) findViewById(R.id.progressBar);
         searchInput.setOnTouchListener((v, event) -> {
             searchInput.setFocusableInTouchMode(true);
             searchInput.requestFocus();
