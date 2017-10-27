@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!--<item android:drawable="@drawable/custom_tab_pressed" android:state_pressed="true" />-->
     <!--<item android:drawable="@drawable/custom_tab_unpressed" android:state_pressed="false" />-->
-    <item android:drawable="@drawable/custom_tab_pressed" android:state_selected="true" />
+    <item android:drawable="@drawable/button_default_search" android:state_selected="true" />
     <item android:drawable="@drawable/custom_outline" android:state_selected="false" />
 </selector>
