@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
+    android:background="#f6f6f7"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="#f6f6f7"
         android:elevation="0dp"
         app:elevation="0dp">
         <!--#01a2b9#ecf0f1-->
@@ -51,7 +52,7 @@
                 android:text="Browse movies and TV Shows"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="normal"
+                app:textStyle="normal"
                 app:font="OpenSans"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
@@ -141,18 +142,16 @@
             app:tabPaddingStart="8dp"
             app:tabSelectedTextColor="@color/colorPrimaryMid"
             app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
+            app:tabLayout="@layout/custom_tabview"
+            app:tabFont="Nunito-SemiBold"
             app:tabTextColor="@color/colorPrimaryMid" />
-        app:tabGravity="fill"
-        app:tabMaxWidth="0dp"
-        app:tabLayout="@layout/custom_tabview"
-        app:tabFont="Nunito-SemiBold"
-        app:tabIndicatorColor="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" />
+
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
+        android:background="#f6f6f7"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

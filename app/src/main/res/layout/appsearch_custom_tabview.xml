@@ -2,7 +2,7 @@
 <android.support.v7.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     style="@style/customTabStyle2"
-    android:layout_width="150dp"
+    android:layout_width="285dp"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:layout_gravity="center"
@@ -15,5 +15,5 @@
     android:text="Movies"
     android:textColor="@color/body_text_1"
     android:textAllCaps="false"
-    android:textSize="14sp"
+    android:textSize="15sp"
     android:textStyle="normal" />
