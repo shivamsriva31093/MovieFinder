@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="160dp"
+    android:background="@drawable/activity_background"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <android.support.constraint.ConstraintLayout
@@ -26,7 +27,8 @@
             app:layout_constraintRight_toRightOf="@+id/msg"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3"
-            app:srcCompat="@drawable/tick" />
+            app:srcCompat="@drawable/favorite"
+            android:backgroundTint="@color/white"/>
 
         <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
             android:id="@+id/msg"
@@ -37,6 +39,7 @@
             android:layout_marginTop="0dp"
             android:gravity="center"
             app:font="Nunito"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

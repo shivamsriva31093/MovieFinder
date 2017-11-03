@@ -16,7 +16,6 @@ public interface SearchItemDetailContract {
     interface View extends BaseView<Presenter> {
         void showLoadingIndicator(boolean show);
         void showLoadingError();
-
         void showUi(MediaBasic item);
 
         void setFavorite(boolean status);

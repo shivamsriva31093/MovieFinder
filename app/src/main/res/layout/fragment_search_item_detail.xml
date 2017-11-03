@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:layout_marginTop="20dp"
-    android:id="@+id/fragment_content_parent">
-
-
-    <include
-        layout="@layout/content_itemdetail"
         android:layout_height="match_parent"
-        android:layout_width="match_parent" />
-
-    <RelativeLayout
-        android:id="@+id/empty_data_handler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@drawable/no_results">
+        android:layout_marginTop="20dp"
+        android:id="@+id/fragment_content_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tap To Retry"
-            android:textAlignment="center"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:gravity="top|center" />
-    </RelativeLayout>
 
-</FrameLayout>
+        <include
+            layout="@layout/content_itemdetail"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/empty_data_handler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@drawable/no_results">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap To Retry"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:gravity="top|center" />
+        </RelativeLayout>
+
+    </FrameLayout>

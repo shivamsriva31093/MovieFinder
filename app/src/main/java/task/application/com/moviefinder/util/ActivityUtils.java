@@ -18,8 +18,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,14 +50,14 @@ public class ActivityUtils {
         activity.startActivity(intent);
     }
 
-    public static void showBottomSheetMessage(String message, Context context) {
+    public static void showBottomSheetMessage(String message, Context context, @DrawableRes int imgSrc) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View sheet = LayoutInflater.from(context).inflate(R.layout.bottomsheet_layout, null);
         bottomSheetDialog.setContentView(sheet);
 
         GeneralTextView msgView = (GeneralTextView) sheet.findViewById(R.id.msg);
         ImageView msgLogo = (ImageView) sheet.findViewById(R.id.msg_logo);
-
+        if(imgSrc != -1)    msgLogo.setImageDrawable(ContextCompat.getDrawable(context, imgSrc));
         msgView.setText(message);
         bottomSheetDialog.show();
         new Handler().postDelayed(bottomSheetDialog::dismiss, 1100);

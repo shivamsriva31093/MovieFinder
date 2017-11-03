@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import retrofit2.HttpException;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.util.TmdbApi;
@@ -66,7 +67,12 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                         view.showRatingsViewLoadingIndicator(true);
                         listener.onImdbIdReceived(api, movieInfo.getImdbId());
                     }), (throwable -> {
+                        if(throwable instanceof HttpException) {
+                            HttpException ex = (HttpException) throwable;
+                            if(ex.code() == 429)    view.showTestToast("Issue in connectivity. Please swipe refresh to reload.");
+                        }
                         view.showLoadingError();
+                        throwable.printStackTrace();
                         view.showLoadingIndicator(false);
                     }));
         } else if (filter.equals(MediaType.TV)) {

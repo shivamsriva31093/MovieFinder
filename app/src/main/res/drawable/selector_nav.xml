@@ -4,7 +4,7 @@
     android:startColor="#ef5350"
     android:centerColor="#cf3f3c"
     android:endColor="#ca0a5f"
-    android:angle="180" />
+    android:angle="135" />
     <!--<gradient-->
         <!--android:startColor="@color/colorPrimaryMid"-->
         <!--android:endColor="#f5246a"-->

@@ -1,7 +1,13 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageButton;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.androidtmdbwrapper.model.credits.MediaCreditCast;
 import com.androidtmdbwrapper.model.credits.MediaCreditCrew;
@@ -23,15 +29,21 @@ public class SearchItemDetailActivity extends BaseActivity implements
     private SearchItemDetailPresenter presenter;
     private AppCompatImageButton menuButton;
     private FragmentPrime fragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
         setContentView(R.layout.activity_itemdetail);
+
         Bundle bundle = new Bundle();
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
         }
+
 
         menuButton = (AppCompatImageButton) findViewById(R.id.menu_button);
         menuButton.setOnClickListener(v -> onBackPressed());

@@ -11,6 +11,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +52,7 @@ import task.application.com.moviefinder.ui.base.PresenterCache;
 import task.application.com.moviefinder.ui.base.PresenterFactory;
 import task.application.com.moviefinder.ui.utility.widgets.CollapsibleTextView;
 import task.application.com.moviefinder.ui.utility.widgets.GeneralTextView;
+import task.application.com.moviefinder.util.ActivityUtils;
 import task.application.com.moviefinder.util.Util;
 
 /**
@@ -96,6 +99,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private GeneralTextView castTitle;
     private GeneralTextView crewTitle;
     private GeneralTextView synopsisTitle;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public FragmentPrime() {
     }
@@ -160,9 +165,19 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         favorite.setOnClickListener(this);
         favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
         snackBarView = getActivity().findViewById(R.id.activity_detail_coord_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            if(presenter != null) {
+                presenter.getMovieDetails(clickedItem);
+            }
+        });
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(), R.color.colorPrimaryMid),
+                ContextCompat.getColor(getActivity(), R.color.status_bar_light_grey)
+        );
         presenter.setFilteringType(itemType);
         if (clickedItem != null) {
-            Log.d("test_d", clickedItem.getId() + "");
             presenter.getMovieDetails(clickedItem);
         }
     }
@@ -213,6 +228,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             progressView.setVisibility(View.VISIBLE);
             progressView.show();
         } else {
+            if(swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
             progressView.hide();
             progressView.setVisibility(View.GONE);
             detailView.setVisibility(View.VISIBLE);
@@ -225,7 +243,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void showTestToast(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.ic_error_outline_white_24px);
     }
 
     @Override
@@ -261,7 +280,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             crewTitle.setVisibility(View.GONE);
         }
         if (data.getOverview().isEmpty()) {
-            synopsis.setVisibility(View.GONE);
+            synopsisTitle.setVisibility(View.GONE);
         }
 
 

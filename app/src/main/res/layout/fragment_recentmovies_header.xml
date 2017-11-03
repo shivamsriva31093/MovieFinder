@@ -23,7 +23,7 @@
         android:text="Now Playing in Theatres"
         android:textColor="@color/black"
         android:textSize="17sp"
-        app:textStyle="semiBold"
+        app:textStyle="normal"
         app:font="OpenSans" />
 
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView

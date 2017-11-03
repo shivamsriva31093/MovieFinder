@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/selector" />
-    <!--<item>-->
-        <!--<bitmap-->
-            <!--android:gravity="center"-->
-            <!--android:mipMap="true"-->
-            <!--android:src="@drawable/ic_filmstrip_white_18dp"-->
-            <!--android:tint="@color/white"-->
-            <!--/>-->
-    <!--</item>-->
-</layer-list>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners android:radius="10dp" />
+    <gradient
+        android:startColor="#fd403c"
+        android:centerColor="#d23041"
+        android:endColor="#ca0a5f"
+        android:angle="135" />
+</shape>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item android:drawable="@drawable/selector" />-->
+    <!--&lt;!&ndash;<item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<bitmap&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:mipMap="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:src="@drawable/ic_filmstrip_white_18dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:tint="@color/white"&ndash;&gt;-->
+            <!--&lt;!&ndash;/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</item>&ndash;&gt;-->
+<!--</layer-list>-->

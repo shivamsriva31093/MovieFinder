@@ -150,7 +150,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     @Override
     public void showTestToast(String msg) {
 //        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        ActivityUtils.showBottomSheetMessage(msg, getActivity());
+        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.heart_outline);
     }
 
     @Override
@@ -532,7 +532,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             }
             item.setImdbRating(rating[0]);
             posArray.put(pos + 1, true);
-            getActivity().runOnUiThread(() -> notifyItemChanged(pos + 1, rating[0]));
+            if(isAdded())   getActivity().runOnUiThread(() -> notifyItemChanged(pos + 1, rating[0]));
         }
 
         public void updateData(List<? extends MediaBasic> list) {
