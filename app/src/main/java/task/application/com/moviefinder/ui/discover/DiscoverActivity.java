@@ -15,12 +15,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.WeakHashMap;
 
 import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.navigation.NavigationModel;
 import task.application.com.moviefinder.ui.appsearch.AppSearchActivity;
 import task.application.com.moviefinder.ui.base.BaseActivity;
+import task.application.com.moviefinder.ui.utility.SplashDataHelper;
 import task.application.com.moviefinder.util.ActivityUtils;
 import task.application.com.moviefinder.util.CustomSpannableStringBuilder;
 import task.application.com.moviefinder.util.CustomTabLayout;
@@ -39,19 +44,25 @@ public class DiscoverActivity extends BaseActivity implements
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DiscoverPresenter presenter;
-
+    private WeakHashMap<DiscoverActivity.QueryType, ArrayList<? extends MediaBasic>> data;
+    private WeakHashMap<DiscoverActivity.QueryType, int[]> pages;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
 
     private CustomTabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.setElevation(0);
+        if (SplashDataHelper.getData() != null && !SplashDataHelper.getData().isEmpty()) {
+            data = SplashDataHelper.getData();
+            pages = SplashDataHelper.getDataPages();
+        }
         initViews();
     }
 
@@ -170,15 +181,27 @@ public class DiscoverActivity extends BaseActivity implements
             switch (position) {
                 case 0:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.NOW_PLAYING);
+                    bundle.putParcelableArrayList("data", data.get(QueryType.NOW_PLAYING));
+                    bundle.putInt("totalPages", pages.get(QueryType.NOW_PLAYING)[0]);
+                    bundle.putInt("totalResults", pages.get(QueryType.NOW_PLAYING)[1]);
                     break;
                 case 1:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.UPCOMING);
+                    bundle.putParcelableArrayList("data", data.get(QueryType.UPCOMING));
+                    bundle.putInt("totalPages", pages.get(QueryType.UPCOMING)[0]);
+                    bundle.putInt("totalResults", pages.get(QueryType.UPCOMING)[1]);
                     break;
                 case 2:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.POPULAR);
+                    bundle.putParcelableArrayList("data", data.get(QueryType.POPULAR));
+                    bundle.putInt("totalPages", pages.get(QueryType.POPULAR)[0]);
+                    bundle.putInt("totalResults", pages.get(QueryType.POPULAR)[1]);
                     break;
                 case 3:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.TOP_RATED);
+                    bundle.putParcelableArrayList("data", data.get(QueryType.TOP_RATED));
+                    bundle.putInt("totalPages", pages.get(QueryType.TOP_RATED)[0]);
+                    bundle.putInt("totalResults", pages.get(QueryType.TOP_RATED)[1]);
                     break;
             }
             fragment = RecentMoviesFragment.newInstance(bundle);

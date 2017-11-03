@@ -63,6 +63,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private DiscoverContract.Presenter presenter;
     private AVLoadingIndicatorView progressBar;
     private List<? extends MediaBasic> savedList = Collections.EMPTY_LIST;
+    private ArrayList<? extends MediaBasic> initData;
     private DiscoverActivity.QueryType queryType;
     private int totalPages;
     private int totalResults;
@@ -95,6 +96,9 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         if (getArguments() != null && !getArguments().isEmpty()) {
             queryType = (DiscoverActivity.QueryType) getArguments().getSerializable(QUERY_TYPE);
+            initData = getArguments().getParcelableArrayList("data");
+            totalPages = getArguments().getInt("totalPages");
+            totalResults = getArguments().getInt("totalResults");
             TAG += queryType;
         }
     }
@@ -170,7 +174,11 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             presenter = presenterCache.getPresenter(TAG, factory);
         }
         presenter.setQueryType(queryType);
-        presenter.makeQuery("en", 1, null);
+        if (initData != null && !initData.isEmpty()) {
+            rvAdapter.updateData(initData);
+        } else {
+            presenter.makeQuery("en", 1, null);
+        }
     }
 
     private void initViews(View rootView, Bundle savedInstanceState) {
