@@ -220,6 +220,12 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                     view.showRatingsUi(omdbMovieDetails);
                 }), (throwable -> {
                     view.showRatingsViewLoadingIndicator(false);
+                    if (throwable instanceof HttpException) {
+                        if (((HttpException) throwable).code() == 403) {
+                            view.showRatingsUi(null);
+                        }
+                    }
+
                 }));
     }
 
