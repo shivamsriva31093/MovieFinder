@@ -24,7 +24,9 @@ import android.widget.ImageView;
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.like.IconType;
 import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -129,7 +131,9 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         @Override
         public void onFavoriteButtonClick(View view, int position, MediaBasic data) {
-            toggleFavorite((LikeButton) view, data);
+            LikeButton likeButton = (LikeButton)view.findViewById(R.id.favorite);
+            likeButton.setEnabled(true);
+            toggleFavorite(likeButton, data);
         }
     };
 
@@ -142,7 +146,14 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             button.setLiked(false);
             presenter.removeMediaFromFavorites(item);
         } else {
+            Log.d("liking","true");
+            button.setEnabled(true);
+            button.setExplodingDotColorsRes(R.color.colorPrimary,R.color.colorPrimaryMid);
+
+
             button.setLiked(true);
+            button.animate();
+
             presenter.addMediaToFavorites(item);
         }
     }
@@ -592,6 +603,8 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
                         ratingProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.ratingProgressBar);
                         favorite = (LikeButton) itemView.findViewById(R.id.favorite);
+                        favorite.setEnabled(true);
+
                         favoriteParent = (FrameLayout) itemView.findViewById(R.id.favorite_parent);
                         poster.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
@@ -602,6 +615,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                             item.setImdbRating(imdbRating.getText().toString());
                             itemTouchListener.onFavoriteButtonClick(favorite, getAdapterPosition() - 1, item);
                         });
+
                         HOLDER_ID = holderType;
                         break;
                     case TYPE_FOOTER:
