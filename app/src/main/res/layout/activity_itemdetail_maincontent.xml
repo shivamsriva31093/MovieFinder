@@ -67,6 +67,7 @@
                                 android:layout_gravity="center_vertical|center_horizontal"
                                 android:adjustViewBounds="true"
                                 android:background="@null"
+                                android:visibility="gone"
                                 android:baselineAlignBottom="false"
                                 android:foregroundGravity="center"
                                 android:scaleType="centerCrop"
