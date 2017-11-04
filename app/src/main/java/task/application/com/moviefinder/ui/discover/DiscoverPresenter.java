@@ -18,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import retrofit2.HttpException;
 import task.application.com.moviefinder.ApplicationClass;
 import task.application.com.moviefinder.model.local.realm.datamodels.MediaItem;
 import task.application.com.moviefinder.remote.tmdb.NoNetworkException;
@@ -276,8 +277,14 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                     String imdbRating = omdbMovieDetails.getImdbRating();
                     view.setImdbRatings(imdbRating, pos);
                 }), throwable -> {
-                    throwable.printStackTrace();
-                    view.setImdbRatings("Unrated", pos);
+                    if (throwable instanceof HttpException) {
+                        HttpException msg = (HttpException) throwable;
+                        if (msg.code() == 403) {
+                            view.setImdbRatings("-", pos);
+                        }
+                    } else {
+                        view.setImdbRatings("Unrated", pos);
+                    }
                 });
     }
 

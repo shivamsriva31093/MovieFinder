@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -486,8 +487,13 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         private void updateRowItems(ViewHolder holder, int position) {
             holder.ratingProgressBar.setVisibility(View.GONE);
-            holder.imdbRating.setText(data.get(position - 1).getImdbRating());
-            holder.imdbRating.setVisibility(View.VISIBLE);
+            if (data.get(position - 1).getImdbRating().equals("IMDb -") ||
+                    data.get(position - 1).getImdbRating().equals("Unrated")) {
+                holder.ratingParent.setVisibility(View.GONE);
+            } else {
+                holder.imdbRating.setText(data.get(position - 1).getImdbRating());
+                holder.imdbRating.setVisibility(View.VISIBLE);
+            }
         }
 
         private void loadMediaData(ViewHolder holder, int position) {
@@ -574,6 +580,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
             private FrameLayout favoriteParent;
             private GeneralTextView imdbRating;
             private AVLoadingIndicatorView ratingProgressBar;
+            private CardView ratingParent;
 
             private ViewType HOLDER_ID;
 
@@ -593,6 +600,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         ratingProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.ratingProgressBar);
                         favorite = (LikeButton) itemView.findViewById(R.id.favorite);
                         favoriteParent = (FrameLayout) itemView.findViewById(R.id.favorite_parent);
+                        ratingParent = (CardView) itemView.findViewById(R.id.rating_parent);
                         poster.setOnClickListener(view ->
                                 itemTouchListener.onItemClick(view, getAdapterPosition() - 1, data.get(getAdapterPosition() - 1)));
                         itemView.setOnClickListener(view ->
