@@ -293,8 +293,14 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         runtime.setText(String.valueOf(data.getEpisodeRunTime()) + "min");
         synopsis.setText(data.getOverview());
         String trailer = getVideoUrl(data);
-        if (trailer.isEmpty()) trailerButton.setVisibility(View.GONE);
-        else trailerKey = trailer;
+        if (trailer.isEmpty()) {
+            trailerButton.setVisibility(View.GONE);
+            share.setVisibility(View.GONE);
+        }
+        else {
+            trailerButton.setVisibility(View.GONE);
+            trailerKey = trailer;
+        }
         listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
     }
 
@@ -333,10 +339,14 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         runtime.setText(String.valueOf(data.getRuntime()) + "min");
         synopsis.setText(data.getOverview());
         String trailer = getVideoUrl(data);
-        if (trailer.isEmpty())
+        if (trailer.isEmpty()) {
             trailerButton.setVisibility(View.GONE);
-        else
+            share.setVisibility(View.GONE);
+        }
+        else {
             trailerKey = trailer;
+            trailerButton.setVisibility(View.GONE);
+        }
         listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
     }
 
@@ -433,15 +443,29 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         }
 
         if (v instanceof AppCompatButton && v.getId() == R.id.imageButton5) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this trailer: "
-                    + ((presenter.getFilteringType().equals(MediaType.MOVIES)) ? ((MovieInfo) retrievedItem).getTitle() : ((TvInfo) retrievedItem).getOriginalName()) + "! "
-                    + "www.youtube.com/watch?v=" + trailerKey
-                    + " sent via: " + getResources().getString(R.string.app_name));
-            sendIntent.setType("text/plain");
-            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getActivity().startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+//            Intent sendIntent = new Intent();
+//            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this trailer: "
+//                    + ((presenter.getFilteringType().equals(MediaType.MOVIES)) ? ((MovieInfo) retrievedItem).getTitle() : ((TvInfo) retrievedItem).getOriginalName()) + "! "
+//                    + "www.youtube.com/watch?v=" + trailerKey
+//                    + " sent via: " + getResources().getString(R.string.app_name));
+//            sendIntent.setType("text/plain");
+//            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            getActivity().startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+            if (trailerKey != null && !trailerKey.isEmpty()) {
+                if (YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS))
+                    getActivity().startActivity(
+                            YouTubeStandalonePlayer.createVideoIntent(
+                                    getActivity(),
+                                    YOUTUBE_API_KEY,
+                                    trailerKey
+                            )
+                    );
+                else
+                    showTestToast("No youtube service found");
+            } else {
+                Toast.makeText(context, "No trailer available.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -20,7 +20,7 @@
         <!--android:title="IMDb Top 250" />-->
     </group>
 
-    <item android:title="Contact Us">
+    <item android:title="Feedback">
         <menu>
             <item
                 android:id="@+id/nav_share"

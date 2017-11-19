@@ -153,23 +153,23 @@
             android:id="@+id/favorite_parent">
 
             <com.like.LikeButton
-                app:icon_type="Heart"
+                android:id="@+id/favorite"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="end"
+                android:layout_margin="7dp"
+                android:visibility="visible"
+                app:anim_scale_factor="2"
+                app:circle_end_color="@color/colorPrimaryMid"
                 app:circle_start_color="@color/colorPrimary"
-                app:like_drawable="@drawable/favorite"
-                app:unlike_drawable="@drawable/heart_outline"
                 app:dots_primary_color="@color/colorPrimaryMid"
                 app:dots_secondary_color="@color/colorPrimary"
-                app:circle_end_color="@color/colorPrimaryMid"
                 app:icon_size="20dp"
-                android:id="@+id/favorite"
-                app:liked="false"
-                app:anim_scale_factor="2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="7dp"
-                android:layout_gravity="end"
+                app:icon_type="Heart"
                 app:is_enabled="true"
-                />
+                app:like_drawable="@drawable/favorite"
+                app:liked="false"
+                app:unlike_drawable="@drawable/heart_outline" />
         </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>

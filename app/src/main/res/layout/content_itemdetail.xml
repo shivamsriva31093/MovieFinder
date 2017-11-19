@@ -163,7 +163,7 @@
         android:layout_marginTop="140dp"
         android:elevation="0dp"
         android:shadowColor="@color/white"
-        android:text="Share Trailer"
+        android:text="View Trailer"
         android:textColor="@color/white"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@+id/title"

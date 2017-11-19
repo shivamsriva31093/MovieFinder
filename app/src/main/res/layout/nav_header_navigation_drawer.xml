@@ -21,16 +21,16 @@
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Colette"
+        android:text="COLETTE"
         android:layout_marginTop="40dp"
         android:layout_toRightOf="@+id/icon"
         android:layout_marginBottom="10dp"
         android:textColor="@color/white"
         android:layout_marginLeft="26dp"
         android:id="@+id/title"
-        android:textStyle="bold"
+        app:textStyle="semiBold"
         app:font="OpenSans"
-        android:textSize="18sp" />
+        android:textSize="17sp" />
 
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:id="@+id/title_view_subheader"
@@ -41,9 +41,9 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/icon"
-        android:text="For the love of movies"
+        android:text="@string/credits"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textStyle="normal"
         app:font="Nunito" />
 </RelativeLayout>
