@@ -41,7 +41,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/body_text_1"
                     style="@style/TextHeader"
-                    app:font="OpenSans"
+                    app:fontName="OpenSans"
                     app:textStyle="semiBold"
                     android:typeface="normal" />
 
@@ -53,7 +53,7 @@
                     android:layout_marginLeft="75dp"
                     android:layout_marginTop="2dp"
                     android:text="2016"
-                    app:font="OpenSans"
+                    app:fontName="OpenSans"
                     android:textColor="@color/body_text_1"
                     android:textSize="14sp"
                     android:typeface="normal" />
@@ -83,7 +83,7 @@
                     android:text="Click to view details"
                     android:textColor="@color/body_text_2"
                     android:textSize="13sp"
-                    app:font="Nunito"
+                    app:fontName="Nunito"
                     android:typeface="normal" />
 
                 <!--<View-->

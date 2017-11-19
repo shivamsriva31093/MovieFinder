@@ -1,6 +1,5 @@
 package task.application.com.moviefinder.ui.discover;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.androidtmdbwrapper.enums.MediaType;
@@ -10,6 +9,7 @@ import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
 import com.androidtmdbwrapper.model.movies.MiscellaneousResults;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.ExternalIds;
+import com.google.common.base.Throwables;
 
 import java.util.concurrent.TimeUnit;
 
@@ -104,6 +104,7 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
     }
 
     private void getResults(Observable<MiscellaneousResults<BasicMovieInfo>> observable) {
+
         observable.subscribeOn(Schedulers.io());
         observable.observeOn(AndroidSchedulers.mainThread());
         observable.subscribe(basicMovieInfos -> {
@@ -155,13 +156,10 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                 .retryWhen(throwableObservable ->
                                 throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
                                         .flatMap(throwableIntegerPair -> {
-//                            throwableIntegerPair.first.printStackTrace();
-                                            Log.d("test", throwableIntegerPair.second + " outside");
                                             if (throwableIntegerPair.second < ATTEMPTS) {
-                                                Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }
-                                            return throwableObservable;
+                                            throw Throwables.propagate(throwableIntegerPair.first);
                                         })
                 );
     }
@@ -176,13 +174,10 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                 .retryWhen(throwableObservable ->
                                 throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
                                         .flatMap(throwableIntegerPair -> {
-//                            throwableIntegerPair.first.printStackTrace();
-                                            Log.d("test", throwableIntegerPair.second + " outside");
                                             if (throwableIntegerPair.second < ATTEMPTS) {
-                                                Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }
-                                            return throwableObservable;
+                                            throw Throwables.propagate(throwableIntegerPair.first);
                                         })
                 );
     }
@@ -197,13 +192,10 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                 .retryWhen(throwableObservable ->
                                 throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
                                         .flatMap(throwableIntegerPair -> {
-//                            throwableIntegerPair.first.printStackTrace();
-                                            Log.d("test", throwableIntegerPair.second + " outside");
                                             if (throwableIntegerPair.second < ATTEMPTS) {
-                                                Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }
-                                            return throwableObservable;
+                                            throw Throwables.propagate(throwableIntegerPair.first);
                                         })
                 );
     }
@@ -219,13 +211,10 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
                 .retryWhen(throwableObservable ->
                                 throwableObservable.zipWith(Observable.range(COUNTER_START, ATTEMPTS), Pair::new)
                                         .flatMap(throwableIntegerPair -> {
-//                            throwableIntegerPair.first.printStackTrace();
-                                            Log.d("test", throwableIntegerPair.second + " outside");
                                             if (throwableIntegerPair.second < ATTEMPTS) {
-                                                Log.d("test", throwableIntegerPair.second + "");
                                                 return Observable.timer((long) Math.pow(2, throwableIntegerPair.second), TimeUnit.SECONDS);
                                             }
-                                            return throwableObservable;
+                                            throw Throwables.propagate(throwableIntegerPair.first);
                                         })
                 );
     }

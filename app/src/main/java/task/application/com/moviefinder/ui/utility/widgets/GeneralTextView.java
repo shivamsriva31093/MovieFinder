@@ -9,7 +9,7 @@ import task.application.com.moviefinder.R;
 import task.application.com.moviefinder.util.FontCache;
 
 /**
- * GeneralTextView is a custom textview that supports custom font. To use just set app:font="Font name".
+ * GeneralTextView is a custom textview that supports custom font. To use just set app:fontName="Font name".
  * Font name is like "Robota" or "Righteous" for Robota.tff/Righteous.tff
  * For great experience please use a font that supports different textstyles.
  * Otherwise on not finding the intended style
@@ -39,7 +39,7 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
     private void applyCustomFont(Context context, AttributeSet attrs, int defStyle) {
         TypedArray attribArray = context.obtainStyledAttributes(attrs, R.styleable.GeneralTextView);
         try {
-            String fontName = attribArray.getString(R.styleable.GeneralTextView_font);
+            String fontName = attribArray.getString(R.styleable.GeneralTextView_fontName);
 //        int textStyle = attrs.getAttributeIntValue(R.styleable.GeneralTextView_textStyle, 0);
             int textStyle = attribArray.getInt(R.styleable.GeneralTextView_textStyle, 0);
             if (textStyle == 0)

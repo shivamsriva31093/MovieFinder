@@ -111,7 +111,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:textStyle="semiBold"
-                app:font="OpenSans"
+                app:fontName="OpenSans"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways" />
@@ -127,7 +127,7 @@
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="normal"
-                app:font="OpenSans"
+                app:fontName="OpenSans"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways" />

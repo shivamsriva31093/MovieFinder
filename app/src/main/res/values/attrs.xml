@@ -7,7 +7,7 @@
     <!--</declare-styleable>-->
 
     <declare-styleable name="GeneralTextView">
-        <attr name="font" format="string" />
+        <attr name="fontName" format="string" />
         <attr name="textStyle" format="enum">
             <enum name="normal" value="0" />
             <enum name="bold" value="1" />

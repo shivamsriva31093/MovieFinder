@@ -8,7 +8,7 @@
     android:layout_height="35dp"
     android:textColor="@color/body_text_1"
     android:paddingTop="7dp"
-    app:font="OpenSans"
+    app:fontName="OpenSans"
     android:paddingLeft="15dp"
     android:textSize="15dp">
 </task.application.com.moviefinder.ui.utility.widgets.GeneralTextView>

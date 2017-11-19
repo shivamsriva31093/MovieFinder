@@ -2,6 +2,7 @@ package task.application.com.moviefinder.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,7 +26,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_splash);
+        getWindow().setContentView(R.layout.activity_splash);
         setPresenter(new SplashPresenter(this));
         presenter.getInitialData("en", 1, null);
     }
@@ -44,10 +45,11 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     @Override
     public void stopSplash() {
         final Intent intent = new Intent(SplashActivity.this, DiscoverActivity.class);
-        startActivity(intent);
-        finish();
-//        new Handler().postDelayed(() -> {
-//
-//        }, 500);
+
+        new Handler().postDelayed(() -> {
+            startActivity(intent);
+            finish();
+        }, 500);
     }
+
 }

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 
@@ -36,6 +37,8 @@ import task.application.com.moviefinder.util.CustomTabLayout;
 public class DiscoverActivity extends BaseActivity implements
         RecentMoviesFragment.OnFragmentInteractionListener {
 
+    private int fragNetworkErrorCount = 0;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -46,14 +49,17 @@ public class DiscoverActivity extends BaseActivity implements
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DiscoverPresenter presenter;
-    private WeakHashMap<DiscoverActivity.QueryType, ArrayList<? extends MediaBasic>> data;
-    private WeakHashMap<DiscoverActivity.QueryType, int[]> pages;
+    private WeakHashMap<DiscoverActivity.QueryType, ArrayList<? extends MediaBasic>> data
+            = new WeakHashMap<>();
+    private WeakHashMap<DiscoverActivity.QueryType, int[]> pages
+            = new WeakHashMap<>();
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
 
     private CustomTabLayout tabLayout;
+    private DiscoverPresenter[] presenterList = new DiscoverPresenter[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,27 @@ public class DiscoverActivity extends BaseActivity implements
 
     @Override
     public void onDataLoad(boolean status) {
+    }
+
+
+    @Override
+    public void onNoNetworkError(boolean isNetworkAvailable) {
+        if (!isNetworkAvailable) {
+            fragNetworkErrorCount += 1;
+            Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
+        }
+        if (fragNetworkErrorCount == 4) {
+            fragNetworkErrorCount = 0;
+            ActivityUtils.showBottomSheetMessage(
+                    "No Network. Click to retry",
+                    this,
+                    R.drawable.ic_error_outline_white_24px,
+                    -1,
+                    (dialogInterface) -> {
+                        for (DiscoverContract.Presenter presenter : presenterList)
+                            presenter.makeQuery("en", 1, null);
+                    });
+        }
     }
 
     private void initViews() {
@@ -189,30 +216,30 @@ public class DiscoverActivity extends BaseActivity implements
                 case 0:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.NOW_PLAYING);
                     bundle.putParcelableArrayList("data", data.get(QueryType.NOW_PLAYING));
-                    bundle.putInt("totalPages", pages.get(QueryType.NOW_PLAYING)[0]);
-                    bundle.putInt("totalResults", pages.get(QueryType.NOW_PLAYING)[1]);
+                    bundle.putInt("totalPages", pages.get(QueryType.NOW_PLAYING) == null ? 0 : pages.get(QueryType.NOW_PLAYING)[0]);
+                    bundle.putInt("totalResults", pages.get(QueryType.NOW_PLAYING) == null ? 0 : pages.get(QueryType.NOW_PLAYING)[1]);
                     break;
                 case 1:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.UPCOMING);
                     bundle.putParcelableArrayList("data", data.get(QueryType.UPCOMING));
-                    bundle.putInt("totalPages", pages.get(QueryType.UPCOMING)[0]);
-                    bundle.putInt("totalResults", pages.get(QueryType.UPCOMING)[1]);
+                    bundle.putInt("totalPages", pages.get(QueryType.UPCOMING) == null ? 0 : pages.get(QueryType.UPCOMING)[0]);
+                    bundle.putInt("totalResults", pages.get(QueryType.UPCOMING) == null ? 0 : pages.get(QueryType.UPCOMING)[1]);
                     break;
                 case 2:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.POPULAR);
                     bundle.putParcelableArrayList("data", data.get(QueryType.POPULAR));
-                    bundle.putInt("totalPages", pages.get(QueryType.POPULAR)[0]);
-                    bundle.putInt("totalResults", pages.get(QueryType.POPULAR)[1]);
+                    bundle.putInt("totalPages", pages.get(QueryType.POPULAR) == null ? 0 : pages.get(QueryType.POPULAR)[0]);
+                    bundle.putInt("totalResults", pages.get(QueryType.POPULAR) == null ? 0 : pages.get(QueryType.POPULAR)[1]);
                     break;
                 case 3:
                     bundle.putSerializable(RecentMoviesFragment.QUERY_TYPE, QueryType.TOP_RATED);
                     bundle.putParcelableArrayList("data", data.get(QueryType.TOP_RATED));
-                    bundle.putInt("totalPages", pages.get(QueryType.TOP_RATED)[0]);
-                    bundle.putInt("totalResults", pages.get(QueryType.TOP_RATED)[1]);
+                    bundle.putInt("totalPages", pages.get(QueryType.TOP_RATED) == null ? 0 : pages.get(QueryType.TOP_RATED)[1]);
+                    bundle.putInt("totalResults", pages.get(QueryType.TOP_RATED) == null ? 0 : pages.get(QueryType.TOP_RATED)[1]);
                     break;
             }
             fragment = RecentMoviesFragment.newInstance(bundle);
-            presenter = new DiscoverPresenter(fragment, position + "");
+            presenterList[position] = new DiscoverPresenter(fragment, position + "");
             return fragment;
         }
 

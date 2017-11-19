@@ -1,7 +1,6 @@
 package task.application.com.moviefinder.ui.itemdetail;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -242,7 +241,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void showTestToast(String msg) {
 //        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.ic_error_outline_white_24px);
+        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.ic_error_outline_white_24px, 1125, null);
     }
 
     @Override
@@ -256,7 +255,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void showUi(MediaBasic data) {
         presenter.checkMediaInDB(data);
-        Log.d("test_d", data.getImdbRating() + " " + presenter.getFilteringType().toString());
+//        Log.d("test_d", data.getImdbRating() + " " + presenter.getFilteringType().toString());
         if (presenter.getFilteringType().equals(MediaType.MOVIES))
             setUpMovieDetails((MovieInfo) data);
         else if (presenter.getFilteringType().equals(MediaType.TV))
@@ -352,14 +351,13 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
     @Override
     public void showRatingsUi(OmdbMovieDetails data) {
-        if (data == null ||
-                data.getRatings().isEmpty()) {
+        if (data == null) {
 //            imdbRating.setText("-");
 //            rtRating.setText("-");
             ratingsView.setVisibility(View.GONE);
         } else {
             if (data.getRatings().get(0).getValue().equals("N/A"))
-                imdbRating.setText("-");
+                imdbRating.setText("N/A");
             else {
                 String imdbString = data.getRatings().get(0).getValue().substring(0, 3);
                 imdbRating.setText(imdbString+" "+"stars");
@@ -369,7 +367,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             if (data.getRatings().size() > 1) {
                 if (data.getRatings().get(1).getSource().equals("Rotten Tomatoes") &&
                         data.getRatings().get(1).getValue().equals("N/A"))
-                    rtRating.setText("-");
+                    rtRating.setText("N/A");
                 else {
                     int length = data.getRatings().get(1).getValue().length();
                     String rtString = data.getRatings().get(1).getValue().substring(0, length - 1);

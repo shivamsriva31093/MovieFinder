@@ -21,16 +21,16 @@
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="COLETTE"
+        android:text="Colette"
         android:layout_marginTop="40dp"
         android:layout_toRightOf="@+id/icon"
         android:layout_marginBottom="10dp"
         android:textColor="@color/white"
         android:layout_marginLeft="26dp"
         android:id="@+id/title"
-        app:textStyle="semiBold"
-        app:font="OpenSans"
-        android:textSize="17sp" />
+        android:textStyle="bold"
+        app:fontName="OpenSans"
+        android:textSize="18sp" />
 
     <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
         android:id="@+id/title_view_subheader"
@@ -45,5 +45,5 @@
         android:textColor="@color/white"
         android:textSize="12sp"
         android:textStyle="normal"
-        app:font="Nunito" />
+        app:fontName="Nunito" />
 </RelativeLayout>

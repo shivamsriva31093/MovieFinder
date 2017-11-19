@@ -25,9 +25,7 @@ import android.widget.ImageView;
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
-import com.like.IconType;
 import com.like.LikeButton;
-import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -66,7 +64,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private DiscoverContract.Presenter presenter;
     private AVLoadingIndicatorView progressBar;
     private List<? extends MediaBasic> savedList = Collections.EMPTY_LIST;
-    private ArrayList<? extends MediaBasic> initData;
+    private ArrayList<? extends MediaBasic> initData = new ArrayList<>();
     private DiscoverActivity.QueryType queryType;
     private int totalPages;
     private int totalResults;
@@ -99,8 +97,10 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         if (getArguments() != null && !getArguments().isEmpty()) {
             queryType = (DiscoverActivity.QueryType) getArguments().getSerializable(QUERY_TYPE);
-            initData = getArguments().getParcelableArrayList("data");
-            totalPages = getArguments().getInt("totalPages");
+            if (getArguments().getParcelableArrayList("data") != null)
+                initData = getArguments().getParcelableArrayList("data");
+            if (getArguments().getInt("totalPages") != 0)
+                totalPages = getArguments().getInt("totalPages");
             totalResults = getArguments().getInt("totalResults");
             TAG += queryType;
         }
@@ -162,7 +162,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     @Override
     public void showTestToast(String msg) {
 //        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.heart_outline);
+        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.heart_outline, 1125, null);
     }
 
     @Override
@@ -170,7 +170,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 //        AlertDialog.Builder builder;
 //        builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
 //        builder.setMessage("The connection is lost/slow.").create().show();
-        showTestToast("No network connection.Retrying..");
+        onDataLoadListener.onNoNetworkError(false);
     }
 
 
@@ -659,6 +659,8 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
     public interface OnFragmentInteractionListener {
         void onDataLoad(boolean status);
+
+        void onNoNetworkError(boolean isNetworkAvailable);
     }
 
     private PresenterFactory<DiscoverPresenter> factory = () -> new DiscoverPresenter(RecentMoviesFragment.this, TAG);

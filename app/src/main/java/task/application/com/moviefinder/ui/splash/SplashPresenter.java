@@ -74,6 +74,7 @@ public class SplashPresenter implements SplashContract.Presenter {
             throwable.printStackTrace();
             if (throwable instanceof NoNetworkException) {
                 //To-Do
+                view.stopSplash();
             } else {
                 //To-Do
             }

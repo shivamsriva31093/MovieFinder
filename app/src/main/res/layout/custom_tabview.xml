@@ -10,7 +10,7 @@
     android:elevation="0dp"
     android:gravity="center"
     android:paddingBottom="10dp"
-    app:font="OpenSans"
+    app:fontName="OpenSans"
     android:paddingEnd="50dp"
     android:paddingStart="50dp"
     android:paddingTop="10dp"

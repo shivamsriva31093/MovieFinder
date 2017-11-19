@@ -16,6 +16,7 @@ package task.application.com.moviefinder.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
@@ -50,7 +51,7 @@ public class ActivityUtils {
         activity.startActivity(intent);
     }
 
-    public static void showBottomSheetMessage(String message, Context context, @DrawableRes int imgSrc) {
+    public static void showBottomSheetMessage(String message, Context context, @DrawableRes int imgSrc, long delay, DialogInterface.OnDismissListener listener) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View sheet = LayoutInflater.from(context).inflate(R.layout.bottomsheet_layout, null);
         bottomSheetDialog.setContentView(sheet);
@@ -59,8 +60,14 @@ public class ActivityUtils {
         ImageView msgLogo = (ImageView) sheet.findViewById(R.id.msg_logo);
         if(imgSrc != -1)    msgLogo.setImageDrawable(ContextCompat.getDrawable(context, imgSrc));
         msgView.setText(message);
+        if (listener != null) {
+//            bottomSheetDialog.setCanceledOnTouchOutside(true);
+            bottomSheetDialog.setOnDismissListener(listener);
+        }
         bottomSheetDialog.show();
-        new Handler().postDelayed(bottomSheetDialog::dismiss, 1100);
+        if (delay > 0) {
+            new Handler().postDelayed(bottomSheetDialog::dismiss, delay);
+        }
     }
 
 }
