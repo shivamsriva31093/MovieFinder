@@ -30,7 +30,7 @@
             app:srcCompat="@drawable/favorite"
             android:backgroundTint="@color/white"/>
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/msg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

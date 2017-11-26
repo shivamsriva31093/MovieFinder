@@ -6,7 +6,7 @@
     android:background="@drawable/splash_background"
     android:layout_height="match_parent">
 
-    <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+    <task.application.com.colette.ui.utility.widgets.GeneralTextView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="50dp"

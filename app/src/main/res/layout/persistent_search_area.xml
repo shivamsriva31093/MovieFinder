@@ -69,7 +69,7 @@
                 card_view:hintEnabled="false"
                 card_view:hintTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
 
-                <task.application.com.moviefinder.ui.utility.widgets.ClearableEditText
+                <task.application.com.colette.ui.utility.widgets.ClearableEditText
 
                     android:id="@+id/searchInput"
                     android:layout_width="match_parent"

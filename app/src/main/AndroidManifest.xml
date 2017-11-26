@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="task.application.com.moviefinder">
+    package="task.application.com.colette">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name=".ApplicationClass"
+        android:name="task.application.com.colette.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.advancedsearch.search.SearchActivity"
-            android:parentActivityName=".ui.discover.DiscoverActivity"
+            android:name="task.application.com.colette.ui.advancedsearch.search.SearchActivity"
+            android:parentActivityName="task.application.com.colette.ui.discover.DiscoverActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.discover.DiscoverActivity" />
+                android:value="task.application.com.colette.ui.discover.DiscoverActivity" />
         </activity>
         <activity
-            android:name=".ui.advancedsearch.searchlist.SearchListActivity"
+            android:name="task.application.com.colette.ui.advancedsearch.searchlist.SearchListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
-            android:parentActivityName=".ui.advancedsearch.search.SearchActivity"
+            android:parentActivityName="task.application.com.colette.ui.advancedsearch.search.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.advancedsearch.search.SearchActivity" />
+                android:value="task.application.com.colette.ui.advancedsearch.search.SearchActivity" />
         </activity>
         <activity
-            android:name=".ui.itemdetail.SearchItemDetailActivity"
+            android:name="task.application.com.colette.ui.itemdetail.SearchItemDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:label="@string/title_activity_search_item_detail"
             android:screenOrientation="portrait"
@@ -41,19 +41,19 @@
 
             <!-- <meta-data -->
             <!-- android:name="android.support.PARENT_ACTIVITY" -->
-            <!-- android:value="task.application.com.moviefinder.ui.advancedsearch.searchlist.SearchListActivity" /> -->
+            <!-- android:valSearchListActivityvity" /> -->
         </activity>
         <activity
-            android:name=".ui.favorites.FavoritesMediaActivity"
+            android:name="task.application.com.colette.ui.favorites.FavoritesMediaActivity"
             android:label="@string/title_activity_favorites_media"
             android:screenOrientation="portrait"
             android:theme="@style/TransparentStatusNav" />
         <activity
-            android:name=".ui.discover.MainActivity"
+            android:name="task.application.com.colette.ui.discover.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.discover.DiscoverActivity"
+            android:name="task.application.com.colette.ui.discover.DiscoverActivity"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -63,13 +63,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.appsearch.AppSearchActivity"
+            android:name="task.application.com.colette.ui.appsearch.AppSearchActivity"
             android:label="@string/title_activity_app_search"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="task.application.com.colette.ui.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

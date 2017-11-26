@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/recView_parent"
-    tools:context="task.application.com.moviefinder.ui.appsearch.AppSearchFragment">
+    tools:context="task.application.com.colette.task.application.com.colette.ui.appsearch.AppSearchFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recView"

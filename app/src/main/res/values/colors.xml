@@ -34,7 +34,7 @@
     <color name="divider_col">#F0F0F0</color>
     <color name="pressed_color">#e7e7e7</color>
     <color name="black">#000000</color>
-    <color name="light_gray_inactive_icon">#BEBEBE</color>
+    <color name="light_gray_inactive_icon">#2acdcdcd</color>
     <color name="gray_active_icon">#787878</color>
     <color name="white">@android:color/white</color>
     <color name="hintGrey">#fc4f4f4e</color>

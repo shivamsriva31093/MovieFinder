@@ -33,7 +33,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endbar">
 
-        <task.application.com.moviefinder.ui.utility.widgets.CollapsibleTextView
+        <task.application.com.colette.ui.utility.widgets.CollapsibleTextView
             android:id="@+id/plot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             app:fontName="Nunito"
             app:trimLength="150" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/synopsis"
             style="@style/TextHeaderSub"
             android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
             android:textStyle="bold"
             app:fontName="Nunito" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/cast"
             style="@style/TextHeaderSub"
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
             android:layout_margin="5dp"
             android:layout_row="3" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/crew"
             style="@style/TextHeaderSub"
             android:layout_width="wrap_content"
@@ -118,24 +118,6 @@
     </GridLayout>
 
 
-    <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:fontName="OpenSans"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <!--<ImageButton-->
     <!--android:id="@+id/imageButton5"-->
     <!--android:layout_width="wrap_content"-->
@@ -151,6 +133,25 @@
     <!--android:layout_marginTop="8dp"-->
     <!--app:layout_constraintBottom_toBottomOf="@+id/basic_details"-->
     <!--android:layout_marginBottom="8dp" />-->
+
+    <task.application.com.colette.ui.utility.widgets.GeneralTextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:fontName="OpenSans"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/imageButton5"
@@ -176,7 +177,7 @@
         android:id="@+id/basic_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
         android:paddingBottom="5dp"
@@ -185,7 +186,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageButton5">
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -198,7 +199,7 @@
             android:typeface="normal"
             app:fontName="OpenSans" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/genres_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -212,7 +213,7 @@
             android:typeface="normal"
             app:fontName="Nunito" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/lang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -226,7 +227,7 @@
             android:typeface="normal"
             app:fontName="OpennSans" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/runtime_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -240,7 +241,7 @@
             android:typeface="normal"
             app:fontName="OpenSans" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/lang_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -255,7 +256,7 @@
             android:typeface="normal"
             app:fontName="Nunito" />
 
-        <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/runtime_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -330,15 +331,15 @@
             tools:layout_editor_absoluteY="0dp">
 
 
-            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+            <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/rt_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageView12"
+                android:layout_alignBottom="@+id/progress_sync1"
                 android:layout_below="@+id/imdb_rating"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/progress_sync1"
                 android:textColor="@color/body_text_1"
                 android:textSize="13sp"
@@ -351,6 +352,7 @@
                 android:layout_below="@+id/imageView10"
                 android:cropToPadding="true"
                 android:padding="5dp"
+                android:layout_marginTop="5dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/rt" />
 
@@ -361,7 +363,7 @@
                 android:layout_below="@+id/imageView10"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="17dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="14dp"
                 android:layout_toRightOf="@+id/imageView12"
                 tools:progress_current="80"
                 tools:progress_max="100"
@@ -380,7 +382,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="3dp"
-                android:layout_toRightOf="@+id/imageView12"
+                android:layout_toRightOf="@+id/imageView10"
                 tools:progress_current="80"
                 tools:progress_max="100"
                 tools:progress_reached_bar_height="3dp"
@@ -390,7 +392,7 @@
                 tools:progress_text_visibility="invisible"
                 tools:progress_unreached_bar_height="2dp" />
 
-            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+            <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/ratings_title"
                 style="@style/TextHeaderSub"
                 android:layout_width="wrap_content"
@@ -405,12 +407,12 @@
                 android:textStyle="bold"
                 app:fontName="Nunito" />
 
-            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+            <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imdb_rating"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
+                android:layout_height="18dp"
                 android:layout_above="@+id/imageView12"
-                android:layout_alignBottom="@+id/imageView10"
+                android:layout_alignBottom="@+id/progress_sync"
                 android:layout_below="@+id/ratings_title"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
@@ -424,7 +426,7 @@
                 android:layout_width="24dp"
                 android:layout_height="15dp"
                 android:layout_below="@+id/ratings_title"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="5dp"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
                 android:padding="0dp"

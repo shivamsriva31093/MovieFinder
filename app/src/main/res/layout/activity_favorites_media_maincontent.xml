@@ -98,7 +98,7 @@
             tools:layout_editor_absoluteY="0dp"
             tools:layout_editor_absoluteX="0dp">
 
-            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+            <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="30dp"
                 android:gravity="left"
                 android:text="COLETTE"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimaryMid"
                 android:textSize="20sp"
                 app:textStyle="semiBold"
                 app:fontName="OpenSans"
@@ -116,7 +116,7 @@
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways" />
 
-            <task.application.com.moviefinder.ui.utility.widgets.GeneralTextView
+            <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/title_view_subheader"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"

@@ -8,4 +8,23 @@
     android:background="#f9f9f9"
     android:fitsSystemWindows="true"
     app:headerLayout="@layout/nav_header_navigation_drawer"
-    app:menu="@menu/activity_navigation_drawer_drawer" />
+    app:menu="@menu/activity_navigation_drawer_drawer">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:background="@color/light_gray_inactive_icon">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="100dip"
+            android:layout_height="60dip"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_powered_by_rectangle_blue" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.NavigationView>

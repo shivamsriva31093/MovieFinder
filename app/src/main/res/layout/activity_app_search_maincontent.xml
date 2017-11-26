@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="task.application.com.moviefinder.ui.appsearch.AppSearchActivity">
+    tools:context="task.application.com.colette.task.application.com.colette.ui.appsearch.AppSearchActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -19,7 +19,7 @@
 
         <include layout="@layout/app_searchbar" />
 
-        <task.application.com.moviefinder.util.CustomTabLayout
+        <task.application.com.colette.util.CustomTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             app:tabPaddingStart="8dp">
 
 
-        </task.application.com.moviefinder.util.CustomTabLayout>
+        </task.application.com.colette.util.CustomTabLayout>
 
     </android.support.design.widget.AppBarLayout>
 

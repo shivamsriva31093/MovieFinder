@@ -14,7 +14,7 @@
         android:layout_marginTop="135dp"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="task.application.com.moviefinder.view.SearchListActivity">
+        tools:context="task.application.com.colette.view.SearchListActivity">
 
         <ImageView
             android:id="@+id/no_results"
