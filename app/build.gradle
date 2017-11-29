@@ -4,10 +4,10 @@ apply plugin: 'realm-android'
 android {
     signingConfigs {
         config {
-            keyAlias 'release_key'
-            keyPassword 'Shivam118'
+            keyAlias 'moviefinder'
+            keyPassword 'shivam118'
             storeFile file('C:/Users/sHIVAM/Documents/GitHub/forked apps/MovieFinder/keystore1.jks')
-            storePassword 'Shivam118'
+            storePassword 'shivam118'
         }
     }
     compileSdkVersion 26
@@ -20,8 +20,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 23
         multiDexEnabled true
-        versionCode 9
-        versionName "1.0.4"
+        versionCode 10
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        jackOptions {
 //            enabled true
