@@ -1,5 +1,6 @@
 package task.application.com.colette.ui.utility;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import task.application.com.colette.ui.itemdetail.CastDetailPopupActivity;
 import task.application.com.colette.R;
 
 public class ImageSlider<T extends MediaCredit> extends Fragment {
@@ -137,6 +139,12 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
                 creditImage = (CircleImageView) itemView.findViewById(R.id.credit_image);
                 creditTitle = (TextView) itemView.findViewById(R.id.credit_title);
                 creditDesignation = (TextView) itemView.findViewById(R.id.credit_design);
+
+                itemView.setOnClickListener(v -> {
+                    final Intent intent = new Intent(ImageSlider.this.getActivity(), CastDetailPopupActivity.class);
+                    intent.putExtra("castData", credits.get(getAdapterPosition()));
+                    startActivity(intent);
+                });
             }
         }
     }

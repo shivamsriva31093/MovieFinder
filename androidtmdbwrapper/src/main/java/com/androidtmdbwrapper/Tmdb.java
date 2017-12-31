@@ -2,6 +2,7 @@ package com.androidtmdbwrapper;
 
 import com.androidtmdbwrapper.apiservices.MoviesService;
 import com.androidtmdbwrapper.apiservices.OmdbApiService;
+import com.androidtmdbwrapper.apiservices.PeoplesService;
 import com.androidtmdbwrapper.apiservices.SearchService;
 import com.androidtmdbwrapper.apiservices.TmdbApiService;
 import com.androidtmdbwrapper.apiservices.TvService;
@@ -82,6 +83,10 @@ public class Tmdb {
 
     public TmdbApiService apiService() {
         return getRetrofit().create(TmdbApiService.class);
+    }
+
+    public PeoplesService peoplesService() {
+        return getRetrofit().create(PeoplesService.class);
     }
 
     public SearchService searchService() {

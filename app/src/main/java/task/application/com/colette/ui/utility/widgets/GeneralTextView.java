@@ -22,6 +22,7 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
     private static final int SEMI_BOLD = 5;
     private static final int EXTRA_BOLD = 6;
     private static final int EXTRA_BOLD_ITALICS = 7;
+    private static final int LIGHT = 8;
 
     public GeneralTextView(Context context) {
         this(context, null);
@@ -67,6 +68,8 @@ public class GeneralTextView extends android.support.v7.widget.AppCompatTextView
                 return FontCache.getTypeface(fontName + "-ExtraBold.ttf", context);
             case EXTRA_BOLD_ITALICS:
                 return FontCache.getTypeface(fontName + "-ExtraBoldItalic.ttf", context);
+            case LIGHT:
+                return FontCache.getTypeface(fontName + "-Light.ttf", context);
             case Typeface.NORMAL:
             default:
                 return FontCache.getTypeface(fontName + "-Regular.ttf", context);

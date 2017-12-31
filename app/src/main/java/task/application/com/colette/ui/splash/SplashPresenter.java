@@ -77,6 +77,7 @@ public class SplashPresenter implements SplashContract.Presenter {
                 view.stopSplash();
             } else {
                 //To-Do
+                view.stopSplash();
             }
         });
     }

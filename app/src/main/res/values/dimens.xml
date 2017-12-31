@@ -32,4 +32,5 @@
     <dimen name="button_padding">12dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="search_view_inset">2dp</dimen>
+    <dimen name="cardview_popup_radius">10dp</dimen>
 </resources>

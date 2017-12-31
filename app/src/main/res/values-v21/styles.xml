@@ -55,4 +55,17 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
+    <style name="Theme.FloatingWindow.Popup" parent="Theme.AppCompat.Light.Dialog">
+
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">stateUnchanged</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+
+    </style>
+
 </resources>
