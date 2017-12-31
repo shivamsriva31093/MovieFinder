@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'moviefinder'
             keyPassword 'shivam118'
-            storeFile file('C:/Users/sHIVAM/Documents/GitHub/forked apps/MovieFinder/keystore1.jks')
+            storeFile file('../keystore.jks')
             storePassword 'shivam118'
         }
     }

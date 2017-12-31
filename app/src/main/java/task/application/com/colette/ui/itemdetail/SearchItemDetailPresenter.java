@@ -148,7 +148,7 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                             title,
                             backDrop,
                             imdbRating));
-                }, () -> view.showTestToast("Added to favorites!"),
+                }, () -> view.showTestToast("Added to favorites"),
                 error -> {
                     view.showTestToast("Error in adding to favorites. Please try again later.");
                     error.printStackTrace();

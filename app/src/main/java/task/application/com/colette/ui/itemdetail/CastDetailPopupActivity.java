@@ -103,7 +103,7 @@ public class CastDetailPopupActivity extends Activity {
                 return true;
             }
         };
-        popularMovies.setItemViewCacheSize(20);
+        popularMovies.setItemViewCacheSize(50);
         popularMovies.setDrawingCacheEnabled(true);
         popularMovies.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         popularMovies.setLayoutManager(layoutManager);
@@ -178,7 +178,7 @@ public class CastDetailPopupActivity extends Activity {
         int height = size.y;
 
         if (height > width) {
-            getWindow().setLayout((int) (width * .9), (int) (height * .6));
+            getWindow().setLayout((int) (width * .9), (int) (height * .7));
         } else {
             getWindow().setLayout((int) (width * .7), (int) (height * .9));
         }
@@ -234,9 +234,10 @@ public class CastDetailPopupActivity extends Activity {
                 CardView childCard = parentCard.findViewById(R.id.child_cardview);
                 ConstraintLayout constraintLayout = childCard.findViewById(R.id.parent_cl);
 
-                parentCard.setCardBackgroundColor(ContextCompat.getColor(CastDetailPopupActivity.this, R.color.white));
-                childCard.setCardBackgroundColor(ContextCompat.getColor(CastDetailPopupActivity.this, R.color.white));
-                constraintLayout.setBackgroundColor(ContextCompat.getColor(CastDetailPopupActivity.this, R.color.white));
+                childCard.setElevation(0);
+                parentCard.setCardBackgroundColor(ContextCompat.getColor(CastDetailPopupActivity.this, R.color.transparent));
+                childCard.setCardBackgroundColor(ContextCompat.getColor(CastDetailPopupActivity.this, R.color.transparent));
+                constraintLayout.setBackgroundColor(ContextCompat.getColor(CastDetailPopupActivity.this, R.color.transparent));
 
                 creditImage = (CircleImageView) constraintLayout.findViewById(R.id.credit_image);
                 creditTitle = (TextView) constraintLayout.findViewById(R.id.credit_title);
