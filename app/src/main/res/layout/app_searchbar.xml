@@ -27,7 +27,7 @@
             android:background="@drawable/ripple_effect_button"
             android:scaleType="center"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            android:tint="@android:color/darker_gray"
+            android:tint="@color/body_text_1"
             android:visibility="visible" />
 
 

@@ -50,7 +50,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="90dp"
                 android:text="Browse movies and TV Shows"
-                android:textColor="#83888c"
+                android:textColor="@color/body_text_1"
                 android:textSize="12sp"
                 app:textStyle="normal"
                 app:fontName="OpenSans"

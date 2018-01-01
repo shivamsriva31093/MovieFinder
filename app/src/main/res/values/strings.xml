@@ -46,7 +46,7 @@
     <string name="title_movies">Movies</string>
     <string name="selected_count">%d selected</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="search_for_movies_or_tv">Search for movies or tv shows</string>
+    <string name="search_for_movies_or_tv">Search movies, TV shows or people</string>
     <string name="favorites">Favorites</string>
     <string name="advanced_search">Advanced Search</string>
     <string name="recent_movies">Discover Movies</string>

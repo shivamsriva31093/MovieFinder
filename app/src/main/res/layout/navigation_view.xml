@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:fitsSystemWindows="true"
-    android:background="#eefefefe"
+    android:background="#f2fefefe"
     app:headerLayout="@layout/nav_header_navigation_drawer"
     app:menu="@menu/activity_navigation_drawer_drawer">
 

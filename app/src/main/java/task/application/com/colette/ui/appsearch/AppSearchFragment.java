@@ -334,7 +334,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             String url = person.getProfilePath();
             if (url == null) {
                 TextDrawable drawable1 = TextDrawable.builder()
-                        .buildRoundRect("A", Color.RED, 10);
+                        .buildRoundRect("A", Color.RED, 20);
                 holder.imageView.setImageResource(R.drawable.credit1);
             } else {
                 Picasso.with(getActivity())
