@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 android {
     signingConfigs {
         config {
-            keyAlias 'release_key'
-            keyPassword 'Shivam118'
-            storeFile file('C:/Users/sHIVAM/Documents/GitHub/forked apps/MovieFinder/keystore1.jks')
-            storePassword 'Shivam118'
+            keyAlias 'moviefinder'
+            keyPassword 'shivam118'
+            storeFile file('C:/Users/sHIVAM/Documents/GitHub/forked apps/MovieFinder/keystore.jks')
+            storePassword 'shivam118'
         }
     }
     compileSdkVersion 26
@@ -53,5 +53,6 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.6'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+
     testCompile 'junit:junit:4.12'
 }

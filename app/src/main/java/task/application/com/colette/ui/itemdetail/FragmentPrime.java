@@ -101,6 +101,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private GeneralTextView castTitle;
     private GeneralTextView crewTitle;
     private GeneralTextView synopsisTitle;
+    private GeneralTextView releaseTitle;
+    private GeneralTextView releaseDate;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -211,6 +213,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         castTitle = (GeneralTextView) contentHolder.findViewById(R.id.cast);
         crewTitle = (GeneralTextView) contentHolder.findViewById(R.id.crew);
         synopsisTitle = (GeneralTextView) contentHolder.findViewById(R.id.synopsis);
+        releaseDate = (GeneralTextView) basicDetails.findViewById(R.id.release_date);
+        releaseTitle = (GeneralTextView) basicDetails.findViewById(R.id.release_date_tv);
         castTitle.setVisibility(View.GONE);
         imdbImage.setVisibility(View.GONE);
         rtImage.setVisibility(View.GONE);
@@ -220,7 +224,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         genresTitle.setVisibility(View.GONE);
         langTitle.setVisibility(View.GONE);
         runtimeTitle.setVisibility(View.GONE);
-
+        releaseTitle.setVisibility(View.GONE);
 
     }
 
@@ -300,7 +304,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         genresTitle.setVisibility(View.VISIBLE);
         langTitle.setVisibility(View.VISIBLE);
         runtimeTitle.setVisibility(View.VISIBLE);
-
+        releaseTitle.setVisibility(View.VISIBLE);
 
         if (data.getCredits().getCast().isEmpty()) {
             castTitle.setVisibility(View.GONE);
@@ -322,6 +326,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
         //setRatings(data);
         runtime.setText(String.valueOf(data.getEpisodeRunTime()) + "min");
+        releaseDate.setText(data.getFirstAirDate());
         synopsis.setText(data.getOverview());
         String trailer = getVideoUrl(data);
         if (trailer.isEmpty()) {
@@ -360,7 +365,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         genresTitle.setVisibility(View.VISIBLE);
         langTitle.setVisibility(View.VISIBLE);
         runtimeTitle.setVisibility(View.VISIBLE);
-
+        releaseTitle.setVisibility(View.VISIBLE);
         if (data.getCredits().getCast().isEmpty()) {
             castTitle.setVisibility(View.GONE);
         }
@@ -381,6 +386,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         lang.setText(data.getOriginalLanguage().toUpperCase(Locale.ENGLISH));
         //setRatings(data);
         runtime.setText(String.valueOf(data.getRuntime()) + "min");
+        releaseDate.setText(data.getReleaseDate());
         synopsis.setText(data.getOverview());
         String trailer = getVideoUrl(data);
         if (trailer.isEmpty()) {

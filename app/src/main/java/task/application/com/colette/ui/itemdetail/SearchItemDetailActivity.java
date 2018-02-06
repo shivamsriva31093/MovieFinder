@@ -19,7 +19,7 @@ import task.application.com.colette.util.Util;
 public class SearchItemDetailActivity extends BaseActivity implements
         FragmentPrime.FragmentInteractionListener {
 
-    private static final String SEARCH_ITEM = "searchItem";
+    public static final String SEARCH_ITEM = "searchItem";
     private static final String SEARCH_ITEM_DETAIL = "detail_frag";
 
     private SearchItemDetailPresenter presenter;

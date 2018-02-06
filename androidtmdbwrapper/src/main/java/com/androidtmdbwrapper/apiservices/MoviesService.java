@@ -18,7 +18,7 @@ public interface MoviesService {
 
     @GET("movie/{id}")
     Observable<MovieInfo> summary(
-            @Path("id") int tmdbId,
+            @Path("id") Integer tmdbId,
             @Query("append_to_response") AppendToResponse appendToResponse
     );
 

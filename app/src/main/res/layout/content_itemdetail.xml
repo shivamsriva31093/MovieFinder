@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endbar">
@@ -179,7 +179,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:gravity="center_horizontal"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
@@ -232,7 +232,7 @@
             android:id="@+id/runtime_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/release_date_tv"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="1dp"
             android:layout_marginTop="10dp"
@@ -261,7 +261,7 @@
             android:id="@+id/runtime_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/release_date_tv"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:layout_marginTop="10dp"
@@ -271,6 +271,33 @@
             android:textSize="14sp"
             android:typeface="normal"
             app:fontName="Nunito" />
+
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
+            android:id="@+id/release_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="10dp"
+            android:text="Release Date"
+            android:textAlignment="viewStart"
+            android:textColor="#d23041"
+            android:textSize="14sp"
+            android:typeface="normal"
+            app:fontName="Nunito" />
+
+        <task.application.com.colette.ui.utility.widgets.GeneralTextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/release_date_tv"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:typeface="normal"
+            app:fontName="OpenSans" />
 
     </RelativeLayout>
 

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "140171744249",
+    "firebase_url": "https://moviefinder-162723.firebaseio.com",
+    "project_id": "moviefinder-162723",
+    "storage_bucket": "moviefinder-162723.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140171744249:android:818bc1ef4cab23b2",
+        "android_client_info": {
+          "package_name": "task.application.com.colette"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140171744249-gnf5ibcv58nqkiqgtdm27p3jc5q1j4h9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-EHP5wtjBReEpyWpz0j0FDv6Y76yajwk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
