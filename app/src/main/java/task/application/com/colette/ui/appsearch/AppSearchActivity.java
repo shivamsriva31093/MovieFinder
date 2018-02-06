@@ -293,7 +293,7 @@ public class AppSearchActivity extends BaseActivity
                 case 0:
                     return "Movies";
                 case 1:
-                    return "Tv Shows";
+                    return "TV Shows";
                 case 2:
                     return "People";
             }

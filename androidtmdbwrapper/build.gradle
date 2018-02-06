@@ -4,26 +4,25 @@ android {
         config {
             keyAlias 'moviefinder'
             keyPassword 'shivam118'
-            storeFile file('C:/Users/sHIVAM/Documents/GitHub/forked apps/MovieFinder/keystore.jks')
+            storeFile file('../keystore.jks')
             storePassword 'shivam118'
         }
     }
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            minSdkVersion 21
+            targetSdkVersion 23
+            versionCode 1
+            versionName "1.0.5"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         }
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.config
+            }
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'

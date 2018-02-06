@@ -5,8 +5,8 @@
     android:layout_width="290dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="#f9f9f9"
     android:fitsSystemWindows="true"
+    android:background="#f2fefefe"
     app:headerLayout="@layout/nav_header_navigation_drawer"
     app:menu="@menu/activity_navigation_drawer_drawer">
 
@@ -19,8 +19,9 @@
             android:id="@+id/imageView4"
             android:layout_width="100dip"
             android:layout_height="60dip"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="70dp"
             android:layout_marginTop="8dp"
+            android:tint="@color/body_text_3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

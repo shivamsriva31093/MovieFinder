@@ -86,6 +86,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.itemdetail.CastDetailPopupActivity"
+            android:theme="@style/Theme.FloatingWindow.Popup"/>
 
         <service android:name=".messaging.FirebaseNotificationService">
             <intent-filter>

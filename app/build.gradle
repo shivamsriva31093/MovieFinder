@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 android {
@@ -7,7 +6,7 @@ android {
         config {
             keyAlias 'moviefinder'
             keyPassword 'shivam118'
-            storeFile file('C:/Users/sHIVAM/Documents/GitHub/forked apps/MovieFinder/keystore.jks')
+            storeFile file('../keystore.jks')
             storePassword 'shivam118'
         }
     }
