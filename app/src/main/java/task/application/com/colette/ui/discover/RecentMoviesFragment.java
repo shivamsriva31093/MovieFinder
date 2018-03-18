@@ -482,19 +482,21 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         }
 
         private void showRowItems(ViewHolder holder, int position) {
-            if (!imdbRating.get(position, false)) {
-                holder.ratingProgressBar.setVisibility(View.VISIBLE);
-                imdbRating.put(holder.getAdapterPosition(), true);
-                posArray.put(holder.getAdapterPosition(), false);
-                loadMediaData(holder, holder.getAdapterPosition());
-                presenter.getRatings(MediaType.MOVIES, data.get(position - 1), holder.getAdapterPosition() - 1);
-
-            } else {
-                if (posArray.get(position)) {
-                    loadMediaData(holder, position);
-                    updateRowItems(holder, position);
-                }
-            }
+//            if (!imdbRating.get(position, false)) {
+//                holder.ratingProgressBar.setVisibility(View.VISIBLE);
+//                imdbRating.put(holder.getAdapterPosition(), true);
+//                posArray.put(holder.getAdapterPosition(), false);
+//                loadMediaData(holder, holder.getAdapterPosition());
+//                presenter.getRatings(MediaType.MOVIES, data.get(position - 1), holder.getAdapterPosition() - 1);
+//
+//            } else {
+//                if (posArray.get(position)) {
+//                    loadMediaData(holder, position);
+//                    updateRowItems(holder, position);
+//                }
+//            }
+            holder.ratingProgressBar.setVisibility(View.GONE);
+            loadMediaData(holder, holder.getAdapterPosition());
         }
 
         private void updateRowItems(ViewHolder holder, int position) {

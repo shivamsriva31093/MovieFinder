@@ -42,7 +42,7 @@ public class CollapsibleTextView extends GeneralTextView {
         setOnClickListener(view -> {
             trim = !trim;
             setText();
-            requestFocusFromTouch();
+//            if(!trim)   requestFocusFromTouch();
         });
     }
 

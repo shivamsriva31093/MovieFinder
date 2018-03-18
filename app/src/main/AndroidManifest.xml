@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="task.application.com.colette.ApplicationClass"
@@ -22,6 +23,10 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="popularMovies" />
 
         <activity
             android:name="task.application.com.colette.ui.advancedsearch.search.SearchActivity"
@@ -89,17 +94,26 @@
         <activity android:name=".ui.itemdetail.CastDetailPopupActivity"
             android:theme="@style/Theme.FloatingWindow.Popup"/>
 
-        <service android:name=".messaging.FirebaseNotificationService">
+        <service
+            android:name=".messaging.FirebaseNotificationService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".messaging.MyFirebaseInstanceIDService">
+        <service
+            android:name=".MyFirebaseInstanceIdService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".messaging.MyJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

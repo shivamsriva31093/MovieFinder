@@ -32,10 +32,13 @@ import task.application.com.colette.util.ActivityUtils;
 import task.application.com.colette.util.CustomSpannableStringBuilder;
 import task.application.com.colette.util.CustomTabLayout;
 
+import static task.application.com.colette.util.LogUtils.makeLogTag;
+
 
 public class DiscoverActivity extends BaseActivity implements
         RecentMoviesFragment.OnFragmentInteractionListener {
 
+    private static final String TAG = makeLogTag(DiscoverActivity.class);
     private int fragNetworkErrorCount = 0;
 
     /**
@@ -63,11 +66,8 @@ public class DiscoverActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
         setContentView(R.layout.activity_discover);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.setElevation(0);
@@ -88,6 +88,7 @@ public class DiscoverActivity extends BaseActivity implements
         if (!isNetworkAvailable) {
             fragNetworkErrorCount += 1;
             //Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
+
         }
         if (fragNetworkErrorCount == 4) {
             fragNetworkErrorCount = 0;

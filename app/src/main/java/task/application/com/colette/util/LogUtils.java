@@ -1,13 +1,35 @@
-package task.application.com.colette.util;
+package task.application.com.colette.util;/*
+ * Copyright 2014 Google Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 
 import android.util.Log;
 
+import task.application.com.colette.BuildConfig;
+
+
 public class LogUtils {
-    private static final String LOG_PREFIX = "moviefinder_";
+    private static final String LOG_PREFIX = "colette_";
     private static final int LOG_PREFIX_LENGTH = LOG_PREFIX.length();
     private static final int MAX_LOG_TAG_LENGTH = 23;
 
-    public static boolean LOGGING_ENABLED = true;
+    public static boolean LOGGING_ENABLED = !BuildConfig.BUILD_TYPE.equalsIgnoreCase("release");
+
+    // Since logging is disabled for release, we can set our logging level to DEBUG.
+    public static int LOG_LEVEL = android.util.Log.DEBUG;
 
     public static String makeLogTag(String str) {
         if (str.length() > MAX_LOG_TAG_LENGTH - LOG_PREFIX_LENGTH) {
@@ -26,7 +48,7 @@ public class LogUtils {
 
     public static void LOGD(final String tag, String message) {
         if (LOGGING_ENABLED) {
-            if (Log.isLoggable(tag, Log.DEBUG)) {
+            if (LOG_LEVEL <= Log.DEBUG) {
                 Log.d(tag, message);
             }
         }
@@ -34,7 +56,7 @@ public class LogUtils {
 
     public static void LOGD(final String tag, String message, Throwable cause) {
         if (LOGGING_ENABLED) {
-            if (Log.isLoggable(tag, Log.DEBUG)) {
+            if (LOG_LEVEL <= Log.DEBUG) {
                 Log.d(tag, message, cause);
             }
         }
@@ -42,7 +64,7 @@ public class LogUtils {
 
     public static void LOGV(final String tag, String message) {
         if (LOGGING_ENABLED) {
-            if (Log.isLoggable(tag, Log.VERBOSE)) {
+            if (LOG_LEVEL <= Log.VERBOSE) {
                 Log.v(tag, message);
             }
         }
@@ -50,7 +72,7 @@ public class LogUtils {
 
     public static void LOGV(final String tag, String message, Throwable cause) {
         if (LOGGING_ENABLED) {
-            if (Log.isLoggable(tag, Log.VERBOSE)) {
+            if (LOG_LEVEL <= Log.VERBOSE) {
                 Log.v(tag, message, cause);
             }
         }

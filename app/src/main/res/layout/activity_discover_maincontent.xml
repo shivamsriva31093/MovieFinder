@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:background="#f6f6f7"
@@ -15,116 +14,8 @@
         android:elevation="0dp"
         app:elevation="0dp">
         <!--#01a2b9#ecf0f1-->
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:padding="0dp"
-            app:layout_scrollFlags="scroll|enterAlways|snap|scroll|enterAlways|snap"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp">
 
-            <task.application.com.colette.ui.utility.widgets.GeneralTextView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="28dp"
-                android:layout_marginLeft="130dp"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="44dp"
-                android:gravity="center"
-                android:text="COLETTE"
-                android:textColor="@color/colorPrimaryMid"
-                android:textSize="19sp"
-                app:textStyle="semiBold"
-                app:fontName="OpenSans"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways" />
-
-            <task.application.com.colette.ui.utility.widgets.GeneralTextView
-                android:id="@+id/title_view_subheader"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="90dp"
-                android:text="Browse movies and TV Shows"
-                android:textColor="@color/body_text_1"
-                android:textSize="12sp"
-                app:textStyle="normal"
-                app:fontName="OpenSans"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways" />
-
-            <ImageView
-                android:id="@+id/nav_button"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="262dp"
-                android:layout_marginTop="11dp"
-                android:background="@drawable/ripple_effect_button"
-                android:clickable="true"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/endbar"
-                app:layout_constraintRight_toLeftOf="@+id/endbar"
-                app:layout_constraintTop_toTopOf="@+id/endbar"
-                app:layout_constraintVertical_bias="0.363"
-                app:srcCompat="@drawable/menu" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/endbar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="80dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/search"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="6dp"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/ripple_effect_button"
-                android:clickable="true"
-                android:padding="5dp"
-                android:scaleType="centerCrop"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/endbar"
-                app:layout_constraintLeft_toLeftOf="@+id/endbar"
-                app:layout_constraintRight_toRightOf="@+id/endbar"
-                app:layout_constraintTop_toTopOf="@+id/endbar"
-                app:srcCompat="@drawable/magnify" />
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="113dp" />
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="304dp" />
-
-
-        </android.support.constraint.ConstraintLayout>
+        <include layout="@layout/main_app_header" />
 
         <task.application.com.colette.util.CustomTabLayout
             android:id="@+id/tabs"

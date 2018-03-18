@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
+apply plugin: 'kotlin-android'
 android {
     signingConfigs {
         config {
@@ -10,8 +11,8 @@ android {
             storePassword 'shivam118'
         }
     }
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
     dataBinding {
         enabled true
     }
@@ -20,13 +21,15 @@ android {
         minSdkVersion 21
         targetSdkVersion 23
         multiDexEnabled true
-        versionCode 10
-        versionName "1.0.5"
+        versionCode=Integer.valueOf(""+appVersionCode).intValue()
+        versionName "${appVersionName}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        jackOptions {
 //            enabled true
 //        }
 
+        buildConfigField("String", "FCM_API_KEY", "\"${fcm_api_key}\"")
+        buildConfigField("String", "FCM_DB_URL", "\"${fcm_db_url}\"")
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,42 +53,48 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile project(path: ':androidtmdbwrapper')
-    compile files('libs/YouTubeAndroidPlayerApi.jar')
-    //    compile 'com.github.arimorty:floatingsearchview:2.1.1'
-    compile 'info.movito:themoviedbapi:1.4'
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.android.support:support-v4:26.1.0'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.android.support:cardview-v7:26.1.0'
-    compile 'com.github.clans:fab:1.6.4'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.wang.avi:library:2.1.3'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    compile 'com.victor:lib:1.0.4'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    compile 'com.github.jd-alexander:LikeButton:0.2.3'
-    compile 'com.google.firebase:firebase-messaging:11.8.0'
-    compile 'com.firebase:firebase-jobdispatcher:0.8.5'
-    compile 'com.daimajia.numberprogressbar:library:1.4@aar'
-    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-}
-
-apply plugin: 'com.google.gms.google-services'
 repositories {
     mavenCentral()
 }
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation project(path: ':androidtmdbwrapper')
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    //    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    implementation 'info.movito:themoviedbapi:1.4'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:support-compat:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.0'
+    implementation 'com.github.clans:fab:1.6.4'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.wang.avi:library:2.1.3'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.1.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    implementation 'com.victor:lib:1.0.4'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation 'com.google.firebase:firebase-database:11.8.0'
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+}
+
+apply plugin: 'com.google.gms.google-services'
+

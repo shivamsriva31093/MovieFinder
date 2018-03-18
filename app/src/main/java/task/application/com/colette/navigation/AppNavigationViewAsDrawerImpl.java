@@ -204,6 +204,7 @@ public class AppNavigationViewAsDrawerImpl extends AppNavigationViewAbstractImpl
     private void onNavDrawerItemClicked(final NavigationModel.NavigationItemEnum item) {
         if (item == mSelfItem) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
+            setSelectedNavDrawerItem(item);
             return;
         }
 

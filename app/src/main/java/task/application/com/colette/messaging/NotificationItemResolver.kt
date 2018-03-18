@@ -3,9 +3,11 @@ package task.application.com.colette.messaging
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic
+import com.androidtmdbwrapper.model.movies.MovieInfo
 import task.application.com.colette.R
+import task.application.com.colette.messaging.notifications.LatestTrailer
+import task.application.com.colette.messaging.notifications.MovieOfTheDay
 import task.application.com.colette.messaging.notifications.PopularThisWeek
 import task.application.com.colette.ui.splash.SplashActivity
 
@@ -19,9 +21,11 @@ internal interface NotificationItemResolver {
 
 internal class PushNotificationItemResolver : NotificationItemResolver {
     override fun resolve(context: Context, data: Map<String, String>?, mediaInfo: MediaBasic): PushNotificationItem {
-        Log.d("test", "channel is " + data?.get("id"))
+
         return when (data?.get("id")) {
             "popularMovies" -> PopularThisWeek(context, mediaInfo)
+            "dailyMovie" -> MovieOfTheDay(context, mediaInfo)
+            "latestTrailer" -> LatestTrailer(context, mediaInfo as MovieInfo)
             else -> object : PushNotificationItem {
                 override fun channel(): PushNotificationChannel = PushNotificationChannel.Empty()
 

@@ -15,7 +15,7 @@ import task.application.com.colette.ui.itemdetail.SearchItemDetailActivity
  * Created by sHIVAM on 1/28/2018.
  */
 
-internal class PopularThisWeek(private val context: Context, private val content: MediaBasic) : PushNotificationItem {
+internal class MovieOfTheDay(private val context: Context, private val content: MediaBasic) : PushNotificationItem {
     override fun data(): MediaBasic {
         return content
     }
@@ -24,9 +24,9 @@ internal class PopularThisWeek(private val context: Context, private val content
 
     override fun smallIcon(): Int = R.mipmap.ic_launcher
 
-    override fun title(): String = "Popular this week"
+    override fun title(): String = "Movie for the day!"
 
-    override fun message(): String = "Don't miss it this weekend."
+    override fun message(): String = "Don't forget to watch today."
 
     override fun pendingIntent(): PendingIntent {
         val resultIntent = Intent(context, SearchItemDetailActivity::class.java)
@@ -42,6 +42,6 @@ internal class PopularThisWeek(private val context: Context, private val content
     }
 
     companion object {
-        const val KEY_NOTIFICATION_GROUP = "weekend_popular"
+        const val KEY_NOTIFICATION_GROUP = "daily_popular"
     }
 }

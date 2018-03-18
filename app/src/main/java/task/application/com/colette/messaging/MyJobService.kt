@@ -1,20 +1,67 @@
 package task.application.com.colette.messaging
 
-import com.firebase.jobdispatcher.JobParameters
-import com.firebase.jobdispatcher.JobService
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.support.v4.app.JobIntentService
+import com.androidtmdbwrapper.enums.AppendToResponseItem
+import com.androidtmdbwrapper.model.core.AppendToResponse
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import task.application.com.colette.ApplicationClass
+import task.application.com.colette.util.LogUtils.LOGI
+import task.application.com.colette.util.LogUtils.makeLogTag
+import task.application.com.colette.util.TmdbApi
 
 
 /**
  * Created by sHIVAM on 2/3/2018.
  */
 
-class MyJobService : JobService() {
+class MyJobService : JobIntentService() {
 
-    override fun onStopJob(job: JobParameters?): Boolean = false
+    private lateinit var pushNotification: PushNotification
 
-    override fun onStartJob(job: JobParameters?): Boolean {
+    companion object {
+        val TAG = makeLogTag(MyJobService::class.java)
+        val JOB_ID = 3589
+        const val WORK_ACTION = ".DOWNLOAD_IMAGE"
 
 
-        return false
+        fun enqueue(context: Context, work: Intent) {
+            LOGI(TAG, "start notification building")
+//            android.os.Debug.waitForDebugger()
+
+            enqueueWork(context, MyJobService::class.java, JOB_ID, work)
+        }
     }
+
+    override fun onHandleWork(intent: Intent) {
+        LOGI(TAG, "start notification building")
+        pushNotification = PushNotification(
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager,
+                PushNotificationItemResolver(),
+                DefaultNotificationBuilder()
+        )
+        val movieId = intent.getStringExtra("value")
+        val notificationType = intent.getStringExtra("id")
+        val data: MutableMap<String, String> = hashMapOf(Pair("id", notificationType), Pair("value", movieId!!))
+        val api = TmdbApi.getApiClient(ApplicationClass.API_KEY)
+        var atr: AppendToResponse? = null;
+        if (data["id"] != null && data["id"] == "latestTrailer") {
+            atr = AppendToResponse(AppendToResponseItem.CREDITS,
+                    AppendToResponseItem.VIDEOS)
+        }
+        api.moviesService().summary(data["value"]?.toInt(), atr)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .doOnError({ t ->
+                    t.printStackTrace()
+                })
+                .subscribe { movieInfo ->
+                    pushNotification.show(applicationContext, data, movieInfo)
+                }
+    }
+
+
 }
