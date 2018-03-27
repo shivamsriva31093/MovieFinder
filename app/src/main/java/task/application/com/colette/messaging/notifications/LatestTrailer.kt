@@ -23,7 +23,7 @@ internal class LatestTrailer(private val context: Context, private val content: 
         return content
     }
 
-    override fun channel() = PushNotificationChannel.PopularMoviesNotification()
+    override fun channel() = PushNotificationChannel.LatestTrailerNotification()
 
     override fun smallIcon(): Int = R.drawable.play
 

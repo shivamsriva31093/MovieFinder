@@ -64,4 +64,8 @@
     <string name="credits">Content by TMDb and OMDb</string>
     <string name="popularMoviesNotifications">Popular this week</string>
     <string name="genericNotifications">New notification</string>
+    <string name="update_notification">A new update is available</string>
+    <string name="latest_trailer_notification">Featured Trailer!</string>
+    <string name="featured_today_notification">Movie of the day</string>
+    <string name="app_link">http://play.google.com/store/apps/details?id=task.application.com.colette</string>
 </resources>

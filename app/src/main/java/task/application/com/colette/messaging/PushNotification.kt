@@ -27,6 +27,15 @@ internal class PushNotification constructor(private val notificationManager: Not
         }).start()
     }
 
+    fun show(context: Context, data: Map<String, String>?) {
+        val id = data?.get("id")?.hashCode() ?: 0
+        val notification = resolver.resolve(context, data)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannel(context, notification.channel())
+        }
+        notificationBuilder?.build(context, notificationManager, notification, id)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel(context: Context, channel: PushNotificationChannel) {
         val channelTitle = context.getString(channel.titleRes)

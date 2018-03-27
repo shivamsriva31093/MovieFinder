@@ -20,7 +20,7 @@ internal class MovieOfTheDay(private val context: Context, private val content: 
         return content
     }
 
-    override fun channel() = PushNotificationChannel.PopularMoviesNotification()
+    override fun channel() = PushNotificationChannel.DailyMovieNotification()
 
     override fun smallIcon(): Int = R.mipmap.ic_launcher
 

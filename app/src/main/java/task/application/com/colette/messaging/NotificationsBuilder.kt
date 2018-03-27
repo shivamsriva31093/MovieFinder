@@ -8,11 +8,14 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.support.v4.app.NotificationCompat
+import android.support.v4.content.ContextCompat
 import com.androidtmdbwrapper.model.movies.MovieInfo
 import com.squareup.picasso.Picasso
+import task.application.com.colette.R
 import task.application.com.colette.messaging.notifications.LatestTrailer
 import task.application.com.colette.messaging.notifications.MovieOfTheDay
 import task.application.com.colette.messaging.notifications.PopularThisWeek
+import task.application.com.colette.messaging.notifications.UpdateAvailable
 
 /**
  * Created by sHIVAM on 1/28/2018.
@@ -24,6 +27,33 @@ internal interface NotificationBuilder {
 internal class DefaultNotificationBuilder : NotificationBuilder {
 
     override fun build(context: Context, manager: NotificationManager, item: PushNotificationItem, id: Int): Notification? {
+        return when (item.channel()) {
+            is PushNotificationChannel.PopularMoviesNotification -> handleMediaNotifications(context, manager, item, id)
+            is PushNotificationChannel.DailyMovieNotification -> handleMediaNotifications(context, manager, item, id)
+            is PushNotificationChannel.LatestTrailerNotification -> handleMediaNotifications(context, manager, item, id)
+            is PushNotificationChannel.UpdateAvailableNotification -> handleGenericNotifications(context, manager, item, id)
+            is PushNotificationChannel.Empty -> null
+        }
+    }
+
+    private fun handleGenericNotifications(context: Context, manager: NotificationManager, item: PushNotificationItem, id: Int): Notification? {
+        val builder = NotificationCompat.Builder(context, item.channel().channelId)
+                .setSmallIcon(item.smallIcon())
+                .setContentTitle(item.title())
+                .setLargeIcon(ContextCompat.getDrawable(context, R.mipmap.ic_launcher)?.toBitmap())
+                .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentIntent(item.pendingIntent())
+                .setStyle(NotificationCompat.BigTextStyle().bigText(item.message()))
+        when (item) {
+            is UpdateAvailable -> builder.setGroupSummary(true).setGroup(UpdateAvailable.KEY_NOTIFICATION_GROUP)
+        }
+        manager.notify(id, builder.build())
+        return builder.build()
+
+    }
+
+    private fun handleMediaNotifications(context: Context, manager: NotificationManager, item: PushNotificationItem, id: Int): Notification? {
         var movieData: MovieInfo = MovieInfo()
         if (item is PopularThisWeek || item is MovieOfTheDay || item is LatestTrailer) {
             movieData = item.data() as MovieInfo
@@ -37,21 +67,27 @@ internal class DefaultNotificationBuilder : NotificationBuilder {
         val builder = NotificationCompat.Builder(context, item.channel().channelId)
                 .setSmallIcon(item.smallIcon())
                 .setContentTitle(item.title())
-                .setContentText(item.message())
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
+                .setContentText(movieData.title)
                 .setContentIntent(item.pendingIntent())
 
         try {
+            builder.setLargeIcon(
+                    Picasso.with(context)
+                            .load("https://image.tmdb.org/t/p/original" + movieData.backdropPath)
+                            .get()
+            )
             builder.setStyle(
                     NotificationCompat
                             .BigPictureStyle()
 //                            .bigPicture(AppCompatResources.getDrawable(context, R.drawable.the_post)?.toBitmap())
                             .bigPicture(
                                     Picasso.with(context)
-                                            .load("https://image.tmdb.org/t/p/original" + movieData.backdropPath)
+                                            .load("https://image.tmdb.org/t/p/original" + movieData.posterPath)
                                             .get()
                             )
+                            .bigLargeIcon(null)
             )
             when (item) {
                 is PopularThisWeek -> builder.setGroupSummary(true).setGroup(PopularThisWeek.KEY_NOTIFICATION_GROUP)

@@ -30,7 +30,7 @@ class MyJobService : JobIntentService() {
 
         fun enqueue(context: Context, work: Intent) {
             LOGI(TAG, "start notification building")
-//            android.os.Debug.waitForDebugger()
+//
 
             enqueueWork(context, MyJobService::class.java, JOB_ID, work)
         }
@@ -38,6 +38,7 @@ class MyJobService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
         LOGI(TAG, "start notification building")
+//        android.os.Debug.waitForDebugger()
         pushNotification = PushNotification(
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager,
                 PushNotificationItemResolver(),
@@ -46,21 +47,30 @@ class MyJobService : JobIntentService() {
         val movieId = intent.getStringExtra("value")
         val notificationType = intent.getStringExtra("id")
         val data: MutableMap<String, String> = hashMapOf(Pair("id", notificationType), Pair("value", movieId!!))
+
+        if (notificationType == "updateAvailable") {
+            pushNotification.show(applicationContext, data)
+        } else {
+            buildMediaNotification(movieId, notificationType, data)
+        }
+    }
+
+    private fun buildMediaNotification(movieId: String?, notificationType: String?, data: MutableMap<String, String>) {
         val api = TmdbApi.getApiClient(ApplicationClass.API_KEY)
         var atr: AppendToResponse? = null;
-        if (data["id"] != null && data["id"] == "latestTrailer") {
+        if (notificationType != null && notificationType == "latestTrailer") {
             atr = AppendToResponse(AppendToResponseItem.CREDITS,
                     AppendToResponseItem.VIDEOS)
         }
-        api.moviesService().summary(data["value"]?.toInt(), atr)
+        api.moviesService().summary(movieId?.toInt(), atr)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
-                .doOnError({ t ->
-                    t.printStackTrace()
-                })
-                .subscribe { movieInfo ->
+                .subscribe({ movieInfo ->
                     pushNotification.show(applicationContext, data, movieInfo)
+                }, { error ->
+                    error.printStackTrace()
                 }
+                )
     }
 
 
