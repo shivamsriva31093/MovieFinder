@@ -61,7 +61,7 @@
     <string name="action_tv">TV</string>
     <string name="title_activity_app_search">AppSearchActivity</string>
     <string name="app_title">Colette</string>
-    <string name="credits">Content by TMDb and OMDb</string>
+    <string name="credits">Browse unlimited movies</string>
     <string name="popularMoviesNotifications">Popular this week</string>
     <string name="genericNotifications">New notification</string>
     <string name="update_notification">A new update is available</string>

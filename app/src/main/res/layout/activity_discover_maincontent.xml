@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:background="#f6f6f7"
@@ -14,8 +15,106 @@
         android:elevation="0dp"
         app:elevation="0dp">
         <!--#01a2b9#ecf0f1-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:padding="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap|scroll|enterAlways|snap"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
-        <include layout="@layout/main_app_header" />
+            <task.application.com.colette.ui.utility.widgets.GeneralTextView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:padding="2dp"
+                android:text="Explore movies"
+                android:textColor="@color/body_text_2"
+                android:textSize="18sp"
+                app:fontName="OpenSans"
+                app:layout_constraintStart_toStartOf="@+id/nav_button"
+                app:layout_constraintTop_toBottomOf="@+id/nav_button"
+                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
+                app:textStyle="semiBold" />
+
+            <task.application.com.colette.ui.utility.widgets.GeneralTextView
+                android:id="@+id/title_view_subheader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="Explore Movies"
+                android:textColor="#83888c"
+                android:textSize="17sp"
+                android:visibility="gone"
+                app:fontName="OpenSans"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/search"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/nav_button"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
+                app:textStyle="semiBold" />
+            <View
+                android:id="@+id/endbar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@+id/tomato_bar"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/activity_background" />
+            <!--<View-->
+                <!--android:id="@+id/endbar1"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="4dp"-->
+                <!--android:layout_below="@+id/tomato_bar"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/endbar"-->
+                <!--android:background="#d23041" />-->
+            <!--<View-->
+                <!--android:id="@+id/endbar2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="4dp"-->
+                <!--android:layout_below="@+id/tomato_bar"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/endbar1"-->
+                <!--android:background="#fd403c" />-->
+
+            <ImageView
+                android:id="@+id/nav_button"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/ripple_effect_button"
+                android:clickable="true"
+                android:padding="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/menu" />
+
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/ripple_effect_button"
+                android:clickable="true"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:tint="#fd403c"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/magnify" />
+
+
+        </android.support.constraint.ConstraintLayout>
 
         <task.application.com.colette.util.CustomTabLayout
             android:id="@+id/tabs"
@@ -25,7 +124,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabMaxWidth="0dp"
             app:tabMode="scrollable"
             app:tabPaddingEnd="8dp"
@@ -33,7 +132,7 @@
             app:tabSelectedTextColor="@color/colorPrimaryMid"
             app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
             app:tabLayout="@layout/custom_tabview"
-            app:tabFont="Nunito-SemiBold"
+            app:tabFont="OpenSans-SemiBold"
             app:tabTextColor="@color/colorPrimaryMid" />
 
 

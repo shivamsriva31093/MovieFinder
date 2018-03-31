@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--<color name="colorPrimary">#00b8d4#01a2b9</color>-->
-    <color name="colorPrimary">#e45585</color>
+    <!--<color name="colorPrimary">#e45585</color>-->
+    <color name="colorPrimary">#d23041</color>
     <!--<color name="colorPrimary">#cf3f3c</color>-->
     <color name="colorPrimaryMid">#ca0a5f</color>
     <color name="colorPrimaryDark">#000000</color>
+    <color name="colorSecondary">#f9606061</color>
+
     //#01a1b9
     <!--<color name="colorPrimary">#ecf0f1</color>-->
     <!--<color name="colorPrimaryDark">#2879ae</color>-->
@@ -14,6 +17,23 @@
     <color name="colorAccentTranslucent">#36fdfdfd</color>
     <color name="colorAccentSelected1">#ffcdd0</color>
     <color name="colorAccentSelected">#f9f9f9</color>
+
+    <color name="colorPrimaryDark1">#d23041</color>
+    <!--<color name="colorPrimary">#cf3f3c</color>-->
+    <color name="colorPrimaryMidDark">#ca0a5f</color>
+    <color name="colorSecondaryDark">#f9ffffff</color>
+
+    //#01a1b9
+    <!--<color name="colorPrimary">#ecf0f1</color>-->
+    <!--<color name="colorPrimaryDark">#2879ae</color>-->
+    <color name="colorbackgroundPrimary">#212121</color>
+    <color name="colorbackgroundMid">#303030</color>
+    <color name="colorbackgroundDark">#424242</color>
+    <color name="colorbackground">#baedf0f2</color>
+    <color name="colorAccentTranslucentDark">#36fdfdfd</color>
+    <color name="colorAccentSelectedDark">#ffcdd0</color>
+    <color name="colorAccentSelectedDark1">#f9f9f9</color>
+
     <color name="colorYellow">#babdbe</color>
     <color name="colorGreen">#98f23f</color>
     <color name="colorTransparent">@android:color/transparent</color>
@@ -22,8 +42,14 @@
     <color name="searchColor">#45565e</color>
     <color name="theme_final_signin_pressed">#4caf50</color>
     <color name="theme_final_signin">#ff7043</color>
+    <!--<color name="body_text_1">#a4ffffff</color>-->
+    <!--<color name="body_text_2">#95ffffff</color>-->
+
     <color name="body_text_1">#de000000</color>
     <color name="body_text_2">#93000000</color>
+
+    <color name="text_dark">#616161</color>
+    <color name="text_dark_light">#8fffffff</color>
     <color name="body_text_3">#60000000</color>
     <color name="body_text_disabled">#44000000</color>
     <color name="body_text_1_inverse">#deffffff</color>
@@ -34,7 +60,7 @@
     <color name="divider_col">#F0F0F0</color>
     <color name="pressed_color">#e7e7e7</color>
     <color name="black">#000000</color>
-    <color name="light_gray_inactive_icon">#2acdcdcd</color>
+    <color name="light_gray_inactive_icon">#dcdbdb</color>
     <color name="gray_active_icon">#787878</color>
     <color name="white">@android:color/white</color>
     <color name="hintGrey">#fc4f4f4e</color>

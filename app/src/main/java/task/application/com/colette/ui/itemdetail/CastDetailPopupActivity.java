@@ -16,6 +16,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ScrollView;
@@ -28,6 +29,7 @@ import com.androidtmdbwrapper.model.core.BaseMediaData;
 import com.androidtmdbwrapper.model.credits.MediaCredit;
 import com.androidtmdbwrapper.model.people.Cast;
 import com.androidtmdbwrapper.model.people.PeopleDetails;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -59,6 +61,7 @@ public class CastDetailPopupActivity extends Activity {
     private CollapsibleTextView description;
     private RecyclerView popularMovies;
     private MediaCredit creditData;
+    private GeneralTextView filmography;
     private PeopleDetails peopleDetails;
     private CompositeDisposable disposables = new CompositeDisposable();
     private RVAdapter rvAdapter;
@@ -80,12 +83,39 @@ public class CastDetailPopupActivity extends Activity {
                     .load("https://image.tmdb.org/t/p/w500" + creditData.getProfilePath())
                     .placeholder(R.drawable.credit1)
                     .error(R.drawable.credit1)
-                    .into(castImage);
+                    .into(castImage,
+                    new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            // Call the "scheduleStartPostponedTransition()" method
+                            // below when you know for certain that the shared element is
+                            // ready for the transition to begin.
+                            scheduleStartPostponedTransition(castImage);
+                        }
+
+                        @Override
+                        public void onError() {
+                            // ...
+                        }
+            });
+
             description.setText(peopleDetails.getBiography());
             if (cast != null && !cast.isEmpty()) {
                 rvAdapter.updateData(cast);
             }
         }
+    }
+
+    private void scheduleStartPostponedTransition(final View sharedElement) {
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        startPostponedEnterTransition();
+                        return true;
+                    }
+                });
     }
 
     private void initUiComponents() {
@@ -95,6 +125,7 @@ public class CastDetailPopupActivity extends Activity {
         description = mainContent.findViewById(R.id.desc);
         popularMovies = mainContent.findViewById(R.id.recView);
         progressItem = findViewById(R.id.progress);
+        filmography = findViewById(R.id.discography);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false) {
@@ -116,7 +147,7 @@ public class CastDetailPopupActivity extends Activity {
         super.onResume();
         if (getIntent().hasExtra("castData") && creditData == null && peopleDetails == null) {
             creditData = (MediaCredit) getIntent().getParcelableExtra("castData");
-            showLoading(true);
+            //showLoading(true);
             Observable<PeopleDetails> people = TmdbApi.getApiClient(ApplicationClass.API_KEY)
                     .peoplesService().getPeople(creditData.getId(), "en-US")
                     .subscribeOn(Schedulers.newThread())
@@ -130,7 +161,7 @@ public class CastDetailPopupActivity extends Activity {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(peopleMovieCredits -> {
                             showUi(peopleMovieCredits.getCast());
-                            showLoading(false);
+                            //showLoading(false);
                         });
             }, throwable -> {
                 throwable.printStackTrace();
@@ -214,7 +245,10 @@ public class CastDetailPopupActivity extends Activity {
         }
 
         @Override
-        public int getItemCount() {
+        public int getItemCount()
+        {
+            if(credits.size() > 0)
+                filmography.setText("Filmography");
             return credits.size();
         }
 

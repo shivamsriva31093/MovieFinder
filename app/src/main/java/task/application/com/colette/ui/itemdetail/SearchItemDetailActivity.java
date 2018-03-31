@@ -1,7 +1,9 @@
 package task.application.com.colette.ui.itemdetail;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -33,8 +35,12 @@ public class SearchItemDetailActivity extends BaseActivity implements
 
 
 
-        setContentView(R.layout.activity_itemdetail);
 
+        setContentView(R.layout.activity_itemdetail);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setTitle("sdfsfsdfdsfdfhdfhdfhdfgdfgdfgfdg dsfsf fgfgd");
         Bundle bundle = new Bundle();
         if (getIntent().hasExtra(SEARCH_ITEM)) {
             bundle = getIntent().getBundleExtra(SEARCH_ITEM);
@@ -44,6 +50,7 @@ public class SearchItemDetailActivity extends BaseActivity implements
         menuButton = (AppCompatImageButton) findViewById(R.id.menu_button);
         menuButton.setOnClickListener(v -> onBackPressed());
 
+
         fragment = (FragmentPrime)
                 getSupportFragmentManager().findFragmentByTag(SEARCH_ITEM_DETAIL);
         if (fragment == null) {
@@ -52,6 +59,14 @@ public class SearchItemDetailActivity extends BaseActivity implements
                     R.id.container, SEARCH_ITEM_DETAIL);
         }
         this.presenter = new SearchItemDetailPresenter(fragment);
+    }
+
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

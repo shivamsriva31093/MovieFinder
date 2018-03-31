@@ -1,7 +1,9 @@
 package task.application.com.colette.ui.itemdetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +13,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +38,7 @@ import com.androidtmdbwrapper.model.mediadetails.Video;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.TvInfo;
 import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.github.florent37.picassopalette.PicassoPalette;
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -43,8 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import task.application.com.colette.ApplicationClass;
 import task.application.com.colette.R;
 import task.application.com.colette.ui.base.PresenterCache;
@@ -63,56 +68,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private static final String TAG = FragmentPrime.class.getName();
     private static final String CLICKED_ITEM = "clickedItem";
     private static final String YOUTUBE_API_KEY = "AIzaSyC9iXjkY03gWbADszp0x9zX2yRvRMYjaxo";
-    @BindView(R.id.fragment_content_parent)
-    FrameLayout detailView;
-    @BindView(R.id.basic_details)
-    RelativeLayout basicDetails;
-    @BindView(R.id.ratingsView)
-    RelativeLayout ratingsView;
-    FloatingActionButton favorite;
-    @BindView(R.id.imageButton5)
-    AppCompatButton share;
-    @BindView(R.id.genres)
-    GeneralTextView genres;
-    @BindView(R.id.genres_title)
-    GeneralTextView genresTitle;
-    @BindView(R.id.lang_title)
-    GeneralTextView langTitle;
-    @BindView(R.id.runtime_title)
-    GeneralTextView runtimeTitle;
-    @BindView(R.id.title)
-    GeneralTextView title;
-    @BindView(R.id.lang)
-    GeneralTextView lang;
-    @BindView(R.id.runtime_date)
-    GeneralTextView runtime;
-    @BindView(R.id.plot)
-    CollapsibleTextView synopsis;
-    @BindView(R.id.rt_rating)
-    GeneralTextView rtRating;
-    @BindView(R.id.imdb_rating)
-    GeneralTextView imdbRating;
-    @BindView(R.id.imageView10)
-    ImageView imdbImage;
-    @BindView(R.id.imageView12)
-    ImageView rtImage;
-    @BindView(R.id.empty_data_handler)
-    RelativeLayout emptyDataHandlerView;
-    @BindView(R.id.item_detail)
-    ConstraintLayout contentHolder;
-    @BindView(R.id.cast)
-    GeneralTextView castTitle;
-    @BindView(R.id.crew)
-    GeneralTextView crewTitle;
-    @BindView(R.id.synopsis)
-    GeneralTextView synopsisTitle;
-    @BindView(R.id.release_date_tv)
-    GeneralTextView releaseTitle;
-    @BindView(R.id.release_date)
-    GeneralTextView releaseDate;
+
     private boolean isDestroyedBySystem;
     private PresenterCache<SearchItemDetailPresenter> presenterCache
             = PresenterCache.getInstance();
+
     private SearchItemDetailContract.Presenter presenter;
     private FragmentInteractionListener listener;
     private BaseMediaData clickedItem;
@@ -121,13 +81,40 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private FrameLayout fragmentContainer;
     private ImageView backDropImage;
     private AVLoadingIndicatorView progressView;
+    private FrameLayout detailView;
+    private RelativeLayout basicDetails;
+    private RelativeLayout ratingsView;
     private ImageButton trailerButton;
+    private CircleImageView circleImageView;
+    private FloatingActionButton favorite;
+    private AppCompatButton share;
+    private GeneralTextView genres;
+    private GeneralTextView genresTitle;
+    private GeneralTextView langTitle;
+    private GeneralTextView runtimeTitle;
     private NumberProgressBar syncProgress;
     private NumberProgressBar syncProgress1;
+    private GeneralTextView title;
+    private GeneralTextView lang;
+    private GeneralTextView runtime;
+    private CollapsibleTextView synopsis;
     private String trailerKey;
+    private GeneralTextView rtRating;
+    private GeneralTextView imdbRating;
+    private ImageView imdbImage;
+    private ImageView rtImage;
     private View snackBarView;
+    private RelativeLayout emptyDataHandlerView;
+    private ConstraintLayout contentHolder;
+    private GeneralTextView castTitle;
+    private GeneralTextView crewTitle;
+    private GeneralTextView synopsisTitle;
+    private SwipeRefreshLayout layout;
+    private GeneralTextView releaseTitle;
+    private GeneralTextView releaseDate;
+    private AppCompatImageButton shareView;
+
     private SwipeRefreshLayout swipeRefreshLayout;
-    private PresenterFactory<SearchItemDetailPresenter> factory = () -> new SearchItemDetailPresenter(FragmentPrime.this);
 
     public FragmentPrime() {
     }
@@ -136,21 +123,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         FragmentPrime fragment = new FragmentPrime();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void initialiseViewChildren(View rootView) {
-        addCastCrewImageSliders();
-        share.setOnClickListener(this);
-        castTitle.setVisibility(View.GONE);
-        imdbImage.setVisibility(View.GONE);
-        rtImage.setVisibility(View.GONE);
-        ratingsView.setVisibility(View.GONE);
-        crewTitle.setVisibility(View.GONE);
-        synopsisTitle.setVisibility(View.GONE);
-        genresTitle.setVisibility(View.GONE);
-        langTitle.setVisibility(View.GONE);
-        runtimeTitle.setVisibility(View.GONE);
-        releaseTitle.setVisibility(View.GONE);
     }
 
     @Override
@@ -166,16 +138,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_item_detail, container, false);
-        ButterKnife.bind(this, rootView);
         syncProgress = (NumberProgressBar) rootView.findViewById(R.id.progress_sync);
-        syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
-        initSyncProgress(syncProgress);
-        initSyncProgress(syncProgress1);
-        initialiseViewChildren(rootView);
-        return rootView;
-    }
-
-    private void initSyncProgress(NumberProgressBar syncProgress) {
         float scale = getContext().getResources().getDisplayMetrics().density;
         syncProgress.setProgress(0);
         syncProgress.setProgressTextSize(scale * 12);
@@ -185,7 +148,20 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         syncProgress.setUnreachedBarColor(Color.parseColor("#dfe0e2"));
         syncProgress.setReachedBarColor(Color.parseColor("#d23041"));
         syncProgress.setVisibility(View.GONE);
+
+        syncProgress1 = (NumberProgressBar) rootView.findViewById(R.id.progress_sync1);
+        syncProgress1.setProgress(0);
+        syncProgress1.setProgressTextSize(scale * 12);
+        syncProgress1.setReachedBarHeight(scale * 4);
+        syncProgress1.setProgressTextVisibility(com.daimajia.numberprogressbar.NumberProgressBar.ProgressTextVisibility.Invisible);
+        syncProgress1.setUnreachedBarHeight(scale * 4);
+        syncProgress1.setUnreachedBarColor(Color.parseColor("#dfe0e2"));
+        syncProgress1.setReachedBarColor(Color.parseColor("#d23041"));
+        syncProgress1.setVisibility(View.GONE);
+        initialiseViewChildren(rootView);
+        return rootView;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -198,17 +174,23 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.container);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
-        trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton);
+        shareView = (AppCompatImageButton) getActivity().findViewById(R.id.shareButton);
+        trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton1);
+        circleImageView = (CircleImageView)getActivity().findViewById(R.id.trailerBackground);
         favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
         favorite.setOnClickListener(this);
+        shareView.setOnClickListener(this);
+        layout =(SwipeRefreshLayout)getActivity().findViewById(R.id.swipe_refresh);
         favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
         snackBarView = getActivity().findViewById(R.id.activity_detail_coord_layout);
         swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            if (presenter != null) {
+            if(presenter != null) {
                 presenter.getMovieDetails(clickedItem);
             }
         });
+
+
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(getActivity(), R.color.colorPrimary),
                 ContextCompat.getColor(getActivity(), R.color.colorPrimaryMid),
@@ -218,6 +200,50 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (clickedItem != null) {
             presenter.getMovieDetails(clickedItem);
         }
+    }
+
+    private void initialiseViewChildren(View rootView) {
+
+        detailView = (FrameLayout) rootView.findViewById(R.id.fragment_content_parent);
+        title = (GeneralTextView) detailView.findViewById(R.id.title);
+
+        emptyDataHandlerView = (RelativeLayout) detailView.findViewById(R.id.empty_data_handler);
+        contentHolder = (ConstraintLayout) rootView.findViewById(R.id.item_detail);
+        favorite = (FloatingActionButton) rootView.findViewById(R.id.favorite);
+        basicDetails = (RelativeLayout) detailView.findViewById(R.id.basic_details);
+        genres = (GeneralTextView) basicDetails.findViewById(R.id.genres);
+        lang = (GeneralTextView) basicDetails.findViewById(R.id.lang);
+        runtime = (GeneralTextView) basicDetails.findViewById(R.id.runtime_date);
+        genresTitle = (GeneralTextView) basicDetails.findViewById(R.id.genres_title);
+        langTitle = (GeneralTextView) basicDetails.findViewById(R.id.lang_title);
+        runtimeTitle = (GeneralTextView) basicDetails.findViewById(R.id.runtime_title);
+        ratingsView = (RelativeLayout) detailView.findViewById(R.id.ratingsView);
+        rtRating = (GeneralTextView) ratingsView.findViewById(R.id.rt_rating);
+        imdbImage = (ImageView) ratingsView.findViewById(R.id.imageView10);
+        rtImage = (ImageView) ratingsView.findViewById(R.id.imageView12);
+        imdbRating = (GeneralTextView) ratingsView.findViewById(R.id.imdb_rating);
+        synopsis = (CollapsibleTextView) detailView.findViewById(R.id.plot);
+        share = (AppCompatButton) detailView.findViewById(R.id.imageButton5);
+        share.setVisibility(View.GONE);
+
+        addCastCrewImageSliders();
+        share.setOnClickListener(this);
+        castTitle = (GeneralTextView) contentHolder.findViewById(R.id.cast);
+        crewTitle = (GeneralTextView) contentHolder.findViewById(R.id.crew);
+        synopsisTitle = (GeneralTextView) contentHolder.findViewById(R.id.synopsis);
+        releaseDate = (GeneralTextView) basicDetails.findViewById(R.id.release_date);
+        releaseTitle = (GeneralTextView) basicDetails.findViewById(R.id.release_date_tv);
+        castTitle.setVisibility(View.GONE);
+        imdbImage.setVisibility(View.GONE);
+        rtImage.setVisibility(View.GONE);
+        ratingsView.setVisibility(View.GONE);
+        crewTitle.setVisibility(View.GONE);
+        synopsisTitle.setVisibility(View.GONE);
+        genresTitle.setVisibility(View.GONE);
+        langTitle.setVisibility(View.GONE);
+        runtimeTitle.setVisibility(View.GONE);
+        releaseTitle.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -243,7 +269,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             progressView.setVisibility(View.VISIBLE);
             progressView.show();
         } else {
-            if (swipeRefreshLayout.isRefreshing()) {
+            if(swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
             progressView.hide();
@@ -259,7 +285,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void showTestToast(String msg) {
 //        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.ic_error_outline_white_24px, 1800, null);
+        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.ic_error_outline_white_24px, 1125, null);
     }
 
     @Override
@@ -324,8 +350,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (trailer.isEmpty()) {
             trailerButton.setVisibility(View.GONE);
             share.setVisibility(View.GONE);
-        } else {
-            trailerButton.setVisibility(View.GONE);
+            circleImageView.setVisibility(View.GONE);
+        }
+        else {
             trailerKey = trailer;
         }
         listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
@@ -366,6 +393,18 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         if (data.getOverview().isEmpty()) {
             synopsis.setVisibility(View.GONE);
         }
+//        Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/original" + data.getBackdropPath())
+//                .error(R.drawable.imgfound)
+//                .into(backDropImage,
+//                        PicassoPalette.with("https://image.tmdb.org/t/p/original" + data.getBackdropPath(), backDropImage)
+////                                .use(PicassoPalette.Profile.MUTED_DARK)
+////                                .intoBackground(textView)
+////                                .intoTextColor(textView)
+//                                .use(PicassoPalette.Profile.VIBRANT)
+//                                .intoBackground(contentHolder, PicassoPalette.Swatch.RGB)
+//
+//                );
+        //swipeRefreshLayout.setBackgroundColor(Color.BLACK);
 
 
         Picasso picasso = Picasso.with(getActivity());
@@ -382,10 +421,11 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         String trailer = getVideoUrl(data);
         if (trailer.isEmpty()) {
             trailerButton.setVisibility(View.GONE);
+            circleImageView.setVisibility(View.GONE);
             share.setVisibility(View.GONE);
-        } else {
+        }
+        else {
             trailerKey = trailer;
-            trailerButton.setVisibility(View.GONE);
         }
         listener.updateImageSliders(data.getCredits().getCast(), data.getCredits().getCrew());
     }
@@ -402,7 +442,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             else {
                 ratingsView.setVisibility(View.VISIBLE);
                 String imdbString = data.getRatings().get(0).getValue().substring(0, 3);
-                imdbRating.setText(imdbString + " " + "stars");
+                imdbRating.setText(imdbString+" "+"stars");
                 Log.d("imdb", imdbString);
                 imdbImage.setVisibility(View.VISIBLE);
                 syncProgress.setVisibility(View.VISIBLE);
@@ -482,7 +522,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void onClick(View v) {
         Context context = ApplicationClass.getInstance();
-        if (v instanceof ImageButton && v.getId() == R.id.imageButton) {
+        if (v instanceof ImageButton && v.getId() == R.id.imageButton1) {
             if (trailerKey != null && !trailerKey.isEmpty()) {
                 if (YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS))
                     getActivity().startActivity(
@@ -502,6 +542,18 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             FloatingActionButton button = (FloatingActionButton) v;
             int tag = (int) button.getTag();
             toggleFavorite(button, tag, context);
+        }
+        if (v instanceof AppCompatImageButton && v.getId() == R.id.shareButton) {
+            AppCompatImageButton button = (AppCompatImageButton) v;
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this trailer: "
+                    + ((presenter.getFilteringType().equals(MediaType.MOVIES)) ? ((MovieInfo) retrievedItem).getTitle() : ((TvInfo) retrievedItem).getOriginalName()) + "! "
+                    + "www.youtube.com/watch?v=" + trailerKey
+                    + " sent via: " + getResources().getString(R.string.app_name));
+            sendIntent.setType("text/plain");
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getActivity().startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
         }
 
         if (v instanceof AppCompatButton && v.getId() == R.id.imageButton5) {
@@ -579,12 +631,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         super.onSaveInstanceState(outState);
     }
 
-    public interface FragmentInteractionListener {
-        void addCreditImageSlider();
-
-        void updateImageSliders(List<MediaCreditCast> cast, List<MediaCreditCrew> crew);
-    }
-
     private class ErrorHandlerClickListener implements View.OnClickListener {
 
         @Override
@@ -594,4 +640,12 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             }
         }
     }
+
+    public interface FragmentInteractionListener {
+        void addCreditImageSlider();
+
+        void updateImageSliders(List<MediaCreditCast> cast, List<MediaCreditCrew> crew);
+    }
+
+    private PresenterFactory<SearchItemDetailPresenter> factory = () -> new SearchItemDetailPresenter(FragmentPrime.this);
 }

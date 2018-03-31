@@ -4,11 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="top"
-    android:paddingTop="20dp"
-    android:background="@drawable/selector_nav"
+
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:theme="@style/ThemeOverlay.AppCompat">
 
     <android.support.v7.widget.AppCompatImageView
@@ -18,14 +15,38 @@
         android:layout_marginTop="50dp"
        />
 
+    <View
+        android:id="@+id/endbar"
+        android:layout_width="15dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tomato_bar"
+        android:background="#fd403c" />
+
+    <View
+        android:id="@+id/endbar1"
+        android:layout_width="15dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/endbar"
+        android:background="#d23041" />
+    <View
+        android:id="@+id/endbar2"
+        android:layout_width="15dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/endbar1"
+        android:background="#ca0a4a" />
+
+
     <task.application.com.colette.ui.utility.widgets.GeneralTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="COLETTE"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_toRightOf="@+id/icon"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimary"
         android:layout_marginLeft="26dp"
         android:id="@+id/title"
         app:textStyle="semiBold"
@@ -37,13 +58,13 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginStart="27dp"
+        android:layout_marginStart="26dp"
         android:layout_below="@+id/title"
         android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/icon"
         android:text="@string/credits"
-        android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textColor="@color/body_text_2"
+        android:textSize="13sp"
         android:textStyle="normal"
         app:fontName="Nunito" />
 </RelativeLayout>

@@ -6,6 +6,8 @@ import com.androidtmdbwrapper.apiservices.PeoplesService;
 import com.androidtmdbwrapper.apiservices.SearchService;
 import com.androidtmdbwrapper.apiservices.TmdbApiService;
 import com.androidtmdbwrapper.apiservices.TvService;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -52,10 +54,11 @@ public class Tmdb {
     }
 
     private Retrofit.Builder retrofitBuilder() {
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(JacksonConverterFactory.create());
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper));
         OkHttpClient.Builder clientBuilder = okHttpClient().newBuilder();
         configOkHttpClient(clientBuilder);
         return builder.client(clientBuilder.build());

@@ -62,7 +62,7 @@
             android:name="task.application.com.colette.ui.favorites.FavoritesMediaActivity"
             android:label="@string/title_activity_favorites_media"
             android:screenOrientation="portrait"
-            android:theme="@style/TransparentStatusNav" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="task.application.com.colette.ui.discover.MainActivity"
             android:label="@string/title_activity_main"

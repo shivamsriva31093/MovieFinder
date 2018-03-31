@@ -1,5 +1,6 @@
 package task.application.com.colette.ui.utility;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -143,7 +144,11 @@ public class ImageSlider<T extends MediaCredit> extends Fragment {
                 itemView.setOnClickListener(v -> {
                     final Intent intent = new Intent(ImageSlider.this.getActivity(), CastDetailPopupActivity.class);
                     intent.putExtra("castData", credits.get(getAdapterPosition()));
-                    startActivity(intent);
+                    ActivityOptions options = ActivityOptions
+                            .makeSceneTransitionAnimation(getActivity(), creditImage, "spiral");
+                    // start the new activity
+                    startActivity(intent, options.toBundle());
+
                 });
             }
         }

@@ -3,36 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_detail"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#fafafa"
-    android:layout_height="match_parent">
+    tools:layout_editor_absoluteY="81dp">
 
 
     <View
         android:id="@+id/endbar"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/body_text_3"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingsView" />
+        android:layout_marginTop="40dp"
+        android:background="#bdbebe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button2"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:background="@null"
+        android:fontFamily="sans-serif"
+        android:text="SHARE"
+        android:textColor="#636363"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/endbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/button3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:src="@drawable/share_variant"
+        app:layout_constraintBottom_toTopOf="@+id/endbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="204dp" />
 
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endbar">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingsView">
 
         <task.application.com.colette.ui.utility.widgets.CollapsibleTextView
             android:id="@+id/plot"
@@ -44,7 +68,8 @@
             android:clickable="false"
             android:padding="10dp"
             android:textAlignment="viewStart"
-            android:textSize="14sp"
+            android:textColor="@color/body_text_2"
+            android:textSize="16sp"
             android:textStyle="normal"
             app:fontName="Nunito"
             app:trimLength="150" />
@@ -61,10 +86,11 @@
             android:layout_row="0"
             android:gravity="center_vertical|center_horizontal"
             android:text="Synopsis"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontName="Nunito" />
+            android:textAllCaps="true"
+            android:textColor="@color/colorSecondary"
+            android:textSize="16sp"
+            app:fontName="OpenSans"
+            app:textStyle="semiBold" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/cast"
@@ -78,10 +104,11 @@
             android:layout_row="2"
             android:gravity="center_vertical|center_horizontal"
             android:text="Cast"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontName="Nunito" />
+            android:textAllCaps="true"
+            android:textColor="@color/colorSecondary"
+            android:textSize="16sp"
+            app:fontName="OpenSans"
+            app:textStyle="semiBold" />
 
         <FrameLayout
             android:id="@+id/cast_image_slider"
@@ -103,10 +130,11 @@
             android:layout_row="4"
             android:gravity="center_vertical|center_horizontal"
             android:text="Crew"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontName="Nunito" />
+            android:textAllCaps="true"
+            android:textColor="@color/colorSecondary"
+            android:textSize="16sp"
+            app:fontName="OpenSans"
+            app:textStyle="semiBold" />
 
         <FrameLayout
             android:id="@+id/crew_image_slider"
@@ -139,52 +167,48 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="@color/body_text_1"
+        android:textSize="20sp"
         app:fontName="OpenSans"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/endbar"
+        app:textStyle="semiBold" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/imageButton5"
         style="@style/RoundButton"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="24dp"
         android:elevation="0dp"
         android:shadowColor="@color/white"
         android:text="View Trailer"
         android:textColor="@color/white"
         android:textStyle="normal"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/basic_details"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <RelativeLayout
         android:id="@+id/basic_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:gravity="center_horizontal"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/ratingsView"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton5">
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
@@ -192,13 +216,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lang"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="3dp"
             android:layout_toRightOf="@+id/genres_title"
-            android:textColor="@color/black"
+            android:textColor="@color/body_text_3"
             android:textSize="14sp"
             android:typeface="normal"
-            app:fontName="OpenSans" />
+            app:fontName="OpenSans"
+            app:textStyle="semiBold" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/genres_title"
@@ -209,132 +234,119 @@
             android:layout_marginTop="3dp"
             android:text="Genres:"
             android:textAlignment="viewStart"
+            android:textAllCaps="true"
             android:textColor="#d23041"
             android:textSize="14sp"
             android:typeface="normal"
-            app:fontName="Nunito" />
+            app:fontName="Nunito"
+            app:textStyle="bold" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/lang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/runtime_date"
-            android:layout_marginLeft="8dp"
+            android:layout_below="@+id/runtime_title"
+            android:layout_marginLeft="6dp"
             android:layout_marginRight="1dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="4dp"
             android:layout_toRightOf="@+id/lang_title"
-            android:textColor="@color/black"
+            android:textColor="@color/body_text_3"
             android:textSize="14sp"
             android:typeface="normal"
-            app:fontName="OpennSans" />
+            app:fontName="OpenSans"
+            app:textStyle="semiBold" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/runtime_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/release_date_tv"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginRight="1dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:layout_toRightOf="@+id/runtime_title"
-            android:textColor="@color/black"
+            android:textColor="@color/body_text_3"
             android:textSize="14sp"
             android:typeface="normal"
-            app:fontName="OpenSans" />
+            app:fontName="OpenSans"
+            app:textStyle="semiBold" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/lang_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/runtime_date"
+            android:layout_below="@+id/runtime_title"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="4dp"
             android:text="Language:"
             android:textAlignment="viewStart"
+            android:textAllCaps="true"
             android:textColor="#d23041"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:typeface="normal"
-            app:fontName="Nunito" />
+            app:fontName="Nunito"
+            app:textStyle="bold" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/runtime_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/release_date_tv"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignBaseline="@+id/runtime_date"
+            android:layout_alignBottom="@+id/runtime_date"
+            android:layout_alignStart="@+id/lang_title"
+            android:layout_marginTop="1dp"
             android:text="Runtime:"
             android:textAlignment="viewStart"
+            android:textAllCaps="true"
             android:textColor="#d23041"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:typeface="normal"
-            app:fontName="Nunito" />
+            app:fontName="Nunito"
+            app:textStyle="bold"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="427dp" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/release_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="10dp"
-            android:text="Release Date"
+            android:text="Release Date:"
             android:textAlignment="viewStart"
+            android:textAllCaps="true"
             android:textColor="#d23041"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:typeface="normal"
-            app:fontName="Nunito" />
+            app:fontName="Nunito"
+            app:textStyle="bold"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="8dp" />
 
         <task.application.com.colette.ui.utility.widgets.GeneralTextView
             android:id="@+id/release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="7dp"
             android:layout_toRightOf="@+id/release_date_tv"
-            android:textColor="@color/black"
+            android:textColor="@color/body_text_3"
             android:textSize="14sp"
             android:typeface="normal"
-            app:fontName="OpenSans" />
+            app:fontName="OpenSans"
+            app:textStyle="semiBold" />
 
     </RelativeLayout>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="344dp"
-        tools:layout_editor_absoluteX="344dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="443dp" />
 
     <RelativeLayout
         android:id="@+id/ratingsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/endbar"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/basic_details">
 
         <ProgressBar
@@ -378,9 +390,9 @@
                 android:layout_width="29dp"
                 android:layout_height="29dp"
                 android:layout_below="@+id/imageView10"
+                android:layout_marginTop="5dp"
                 android:cropToPadding="true"
                 android:padding="5dp"
-                android:layout_marginTop="5dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/rt" />
 
@@ -430,10 +442,11 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="Ratings Meter"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:fontName="Nunito" />
+                android:textAllCaps="true"
+                android:textColor="@color/colorSecondary"
+                android:textSize="16sp"
+                app:fontName="OpenSans"
+                app:textStyle="semiBold" />
 
             <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imdb_rating"
@@ -465,18 +478,6 @@
 
     </RelativeLayout>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="110dp" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="206dp" />
 
 </android.support.constraint.ConstraintLayout>

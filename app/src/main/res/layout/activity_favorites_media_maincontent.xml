@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+
     android:fitsSystemWindows="false">
 
     <android.support.v4.widget.NestedScrollView
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="@drawable/activity_background"
         app:elevation="8dp"
         app:itemIconTint="@drawable/bottomnavbar_color"
         app:itemTextColor="@drawable/bottomnavbar_color"
@@ -85,9 +85,9 @@
         android:id="@+id/appbar"
         android:elevation="0dp"
         app:elevation="0dp"
+        android:background="@color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         >
         <!--#01a2b9#ecf0f1-->
         <android.support.constraint.ConstraintLayout
@@ -101,89 +101,93 @@
             <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="28dp"
-                android:layout_marginLeft="130dp"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="44dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
                 android:gravity="center"
-                android:text="COLETTE"
-                android:textColor="@color/colorPrimaryMid"
+                android:layout_marginTop="18dp"
+                android:padding="2dp"
+                android:text="Favourites Collection"
+                android:textColor="#c7c7c7"
                 android:textSize="19sp"
-                app:textStyle="semiBold"
                 app:fontName="OpenSans"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways" />
+                app:layout_constraintStart_toStartOf="@+id/nav_button"
+                app:layout_constraintTop_toBottomOf="@+id/nav_button"
+                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
+                app:textStyle="semiBold" />
 
             <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/title_view_subheader"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="10dp"
                 android:gravity="center"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="90dp"
-                android:text="Browse movies and TV Shows"
-                android:textColor="#83888c"
-                android:textSize="12sp"
-                app:textStyle="normal"
+                android:text="Favourites Collection"
+                android:textColor="#969595"
+                android:textSize="17sp"
+                android:visibility="gone"
                 app:fontName="OpenSans"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/search"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintLeft_toRightOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways" />
+                app:layout_constraintStart_toStartOf="@+id/nav_button"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_scrollFlags="scroll|enterAlways|scroll|enterAlways"
+                app:textStyle="semiBold" />
+            <View
+                android:id="@+id/endbar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@+id/tomato_bar"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/activity_background" />
+            <!--<View-->
+            <!--android:id="@+id/endbar1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="4dp"-->
+            <!--android:layout_below="@+id/tomato_bar"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/endbar"-->
+            <!--android:background="#d23041" />-->
+            <!--<View-->
+            <!--android:id="@+id/endbar2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="4dp"-->
+            <!--android:layout_below="@+id/tomato_bar"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/endbar1"-->
+            <!--android:background="#fd403c" />-->
 
             <ImageView
                 android:id="@+id/nav_button"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="262dp"
-                android:layout_marginTop="11dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="14dp"
                 android:background="@drawable/ripple_effect_button"
                 android:clickable="true"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/endbar"
-                app:layout_constraintRight_toLeftOf="@+id/endbar"
-                app:layout_constraintTop_toTopOf="@+id/endbar"
-                app:layout_constraintVertical_bias="0.363"
-                app:srcCompat="@drawable/menu" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/endbar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="80dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                app:civ_fill_color="@color/white"
-                android:src="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                android:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                android:layout_marginLeft="8dp" />
+                app:srcCompat="@drawable/menu" />
 
             <ImageView
                 android:id="@+id/search"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="6dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/ripple_effect_button"
                 android:clickable="true"
-                android:padding="5dp"
+                android:padding="6dp"
                 android:scaleType="centerCrop"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/endbar"
-                app:layout_constraintLeft_toLeftOf="@+id/endbar"
-                app:layout_constraintRight_toRightOf="@+id/endbar"
-                app:layout_constraintTop_toTopOf="@+id/endbar"
+                android:tint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/magnify" />
+
 
             <android.support.constraint.Guideline
                 android:layout_width="wrap_content"

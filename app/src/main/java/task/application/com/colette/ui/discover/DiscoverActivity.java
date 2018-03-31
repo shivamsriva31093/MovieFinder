@@ -140,10 +140,10 @@ public class DiscoverActivity extends BaseActivity implements
                 new int[]{
                         ContextCompat.getColor(this, R.color.white),
                         ContextCompat.getColor(this, R.color.white),
-                        ContextCompat.getColor(this, R.color.colorPrimaryMid),
-                        ContextCompat.getColor(this, R.color.body_text_1)
+                        ContextCompat.getColor(this, R.color.body_text_2),
+                        ContextCompat.getColor(this, R.color.body_text_2)
                 }
-        ), R.color.black);
+        ), R.color.text_dark);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -278,11 +278,11 @@ public class DiscoverActivity extends BaseActivity implements
         public String getQuery() {
             switch (this) {
                 case NOW_PLAYING:
-                    return "Now Playing";
+                    return "Now playing";
                 case POPULAR:
                     return "Popular";
                 case TOP_RATED:
-                    return "Top Rated";
+                    return "Top rated";
                 case UPCOMING:
                     return "Upcoming";
                 default:

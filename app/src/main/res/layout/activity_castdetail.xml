@@ -48,7 +48,6 @@
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
                 android:padding="10dp"
-                android:text="Mark"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -60,15 +59,15 @@
                 android:id="@+id/circleImageView"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
+                android:transitionName="spiral"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
-                android:src="@drawable/credit1"
                 app:civ_border_overlay="true"
                 android:layout_centerHorizontal="true"
-                app:srcCompat="@drawable/credit1" />
+                 />
 
             <task.application.com.colette.ui.utility.widgets.CollapsibleTextView
                 android:id="@+id/desc"
@@ -84,7 +83,6 @@
                 android:textSize="12sp"
                 app:fontName="Nunito"
                 android:layout_centerHorizontal="true"
-                android:text="Desc"
                 android:layout_below="@+id/cast_name"
                 app:textStyle="light"
                 app:trimLength="200" />
@@ -113,7 +111,7 @@
                     android:layout_marginLeft="15dp"
                     app:textStyle="semiBold"
                     android:textColor="@color/body_text_2"
-                    android:text="FILMOGRAPHY"/>
+                    />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recView"

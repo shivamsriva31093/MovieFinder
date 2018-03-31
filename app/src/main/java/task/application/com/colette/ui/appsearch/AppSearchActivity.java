@@ -142,10 +142,10 @@ public class AppSearchActivity extends BaseActivity
                 new int[]{
                         ContextCompat.getColor(this, R.color.white),
                         ContextCompat.getColor(this, R.color.white),
-                        ContextCompat.getColor(this, R.color.body_text_1),
-                        ContextCompat.getColor(this, R.color.body_text_1)
+                        ContextCompat.getColor(this, R.color.colorPrimary),
+                        ContextCompat.getColor(this, R.color.colorPrimary)
                 }
-        ), R.color.body_text_1);
+        ), R.color.text_dark);
         tabLayout.setupWithViewPager(mViewPager);
     }
 

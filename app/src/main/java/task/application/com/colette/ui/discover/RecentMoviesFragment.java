@@ -1,7 +1,11 @@
 package task.application.com.colette.ui.discover;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -9,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,14 +24,19 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;
+import com.github.florent37.picassopalette.PicassoPalette;
 import com.like.LikeButton;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
@@ -482,21 +492,20 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         }
 
         private void showRowItems(ViewHolder holder, int position) {
-//            if (!imdbRating.get(position, false)) {
-//                holder.ratingProgressBar.setVisibility(View.VISIBLE);
-//                imdbRating.put(holder.getAdapterPosition(), true);
-//                posArray.put(holder.getAdapterPosition(), false);
-//                loadMediaData(holder, holder.getAdapterPosition());
-//                presenter.getRatings(MediaType.MOVIES, data.get(position - 1), holder.getAdapterPosition() - 1);
-//
-//            } else {
-//                if (posArray.get(position)) {
-//                    loadMediaData(holder, position);
-//                    updateRowItems(holder, position);
-//                }
-//            }
-            holder.ratingProgressBar.setVisibility(View.GONE);
-            loadMediaData(holder, holder.getAdapterPosition());
+            /*if (!imdbRating.get(position, false)) {
+                holder.ratingProgressBar.setVisibility(View.VISIBLE);
+                imdbRating.put(holder.getAdapterPosition(), true);
+                posArray.put(holder.getAdapterPosition(), false);
+                loadMediaData(holder, holder.getAdapterPosition());
+                presenter.getRatings(MediaType.MOVIES, data.get(position - 1), holder.getAdapterPosition() - 1);
+
+            } else {
+                if (posArray.get(position)) {
+                    loadMediaData(holder, position);
+                    updateRowItems(holder, position);
+                }
+            }*/
+            loadMediaData(holder, position);
         }
 
         private void updateRowItems(ViewHolder holder, int position) {
@@ -513,18 +522,81 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
         private void loadMediaData(ViewHolder holder, int position) {
             if (data != null && !data.isEmpty()) {
                 BasicMovieInfo row = (BasicMovieInfo) data.get(position - 1);
-                Picasso.with(getActivity()).load(
-                        "https://image.tmdb.org/t/p/w500" + row.getPosterPath())
-                        .error(R.drawable.imgfound)
-                        .placeholder(R.color.light_gray_inactive_icon)
-                        .into(holder.poster);
                 holder.title.setText(row.getTitle());
+                holder.title.setTextColor(Color.WHITE);
+                //holder.posterCard.setBackgroundResource(R.color.light_gray_inactive_icon);
                 holder.imdbRating.setVisibility(View.GONE);
                 if (checkFavMediaInDB(row)) {
                     holder.favorite.setLiked(true);
                 } else {
                     holder.favorite.setLiked(false);
                 }
+//                Picasso.with(getActivity()).load(
+//                        "https://image.tmdb.org/t/p/w500" + row.getPosterPath())
+//                        .error(R.drawable.imgfound)
+//                        .placeholder(R.color.light_gray_inactive_icon)
+//                        .into(holder.poster);
+
+
+                Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + row.getPosterPath())
+                        .error(R.drawable.imgfound)
+                        .into(holder.poster,
+                        PicassoPalette.with("https://image.tmdb.org/t/p/w500" + row.getPosterPath(), holder.poster)
+//                                .use(PicassoPalette.Profile.MUTED_DARK)
+//                                .intoBackground(textView)
+//                                .intoTextColor(textView)
+                                .use(PicassoPalette.Profile.VIBRANT)
+                                .intoBackground(holder.posterCard, PicassoPalette.Swatch.RGB)
+
+                        );
+
+
+
+
+
+                //holder.poster.setImageResource(R.color.light_gray_inactive_icon);
+                //holder.title.setText(row.getTitle());
+
+
+//                Picasso.with(getActivity())
+//                        .load("https://image.tmdb.org/t/p/w500" + row.getPosterPath())
+//                        .resize(400,400)
+//                        .centerCrop()
+//                        .into(new Target() {
+//                            @Override
+//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                               // holder.poster.setImageBitmap(bitmap);
+//                                Palette.from(bitmap)
+//                                        .generate(new Palette.PaletteAsyncListener() {
+//                                            @Override
+//                                            public void onGenerated(Palette palette) {
+//                                                Palette.Swatch textSwatch = palette.getVibrantSwatch();
+//                                                if (textSwatch == null) {
+//                                                    holder.title.setTextColor(Color.WHITE);
+//                                                    holder.posterCard.setBackgroundColor(Color.BLACK);
+//                                                    return;
+//                                                }
+//
+//                                                //holder.headerTitle.setBackgroundColor(textSwatch.getBodyTextColor());
+//                                            }
+//                                        });
+//                            }
+//
+//                            @Override
+//                            public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                                Log.d("scroll","fail");
+////                                holder.title.setText(row.getTitle());
+//                                holder.title.setTextColor(Color.WHITE);
+//                                holder.posterCard.setBackgroundColor(Color.BLACK);
+//
+//                            }
+//
+//                            @Override
+//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                            }
+//                        });
             }
         }
 
@@ -586,6 +658,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
 
         class ViewHolder extends RecyclerView.ViewHolder {
             private ImageView poster;
+            private CardView posterCard;
             private GeneralTextView title;
             private GeneralTextView headerSubTitle;
             private CircleImageView trailerButton;
@@ -611,6 +684,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
                         poster = (ImageView) itemView.findViewById(R.id.poster);
                         poster.setClickable(true);
                         title = (GeneralTextView) itemView.findViewById(R.id.title);
+                        posterCard = (CardView)itemView.findViewById(R.id.poster_card);
                         //trailerButton = (CircleImageView) itemView.findViewById(R.id.trailer_button);
                         imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
                         ratingProgressBar = (AVLoadingIndicatorView) itemView.findViewById(R.id.ratingProgressBar);
@@ -644,11 +718,11 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     private CharSequence getRelevantHeaderTitleText() {
         switch (queryType) {
             case NOW_PLAYING:
-                return queryType.getQuery() + " in Theatres";
+                return queryType.getQuery() + " in theatres";
             case POPULAR:
-                return queryType.getQuery() + " among Audience";
+                return queryType.getQuery() + " among audience";
             case TOP_RATED:
-                return queryType.getQuery() + " by Movie goers";
+                return queryType.getQuery() + " of all time";
             case UPCOMING:
                 return queryType.getQuery() + " next week";
             default:

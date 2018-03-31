@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.mediadetails.MediaBasic;
+import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -442,12 +443,35 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             if (data == null) return;
             holder.checkBox.setVisibility(isMultiSelect ? View.VISIBLE : View.GONE);
             toggleCheckBoxState(isMultiSelect && selectedItems.get(position, false), position, holder);
+//            Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position - 1).getBackDrop())
+//                    .error(R.drawable.trailer1)
+//                    .placeholder(R.drawable.trailer1)
+//                    .into(holder.backdrop);
+             holder.title.setText(getData().get(position - 1).getTitle());
+//            holder.imdbRating.setText(getData().get(position - 1).getImdbRating());
+            //holder.title.setText(row.getTitle());
+            holder.title.setTextColor(Color.WHITE);
+            //holder.posterCard.setBackgroundResource(R.color.light_gray_inactive_icon);
+            holder.imdbRating.setVisibility(View.GONE);
+
+//                Picasso.with(getActivity()).load(
+//                        "https://image.tmdb.org/t/p/w500" + row.getPosterPath())
+//                        .error(R.drawable.imgfound)
+//                        .placeholder(R.color.light_gray_inactive_icon)
+//                        .into(holder.poster);
+
+
             Picasso.with(getActivity()).load("https://image.tmdb.org/t/p/w500" + data.get(position - 1).getBackDrop())
-                    .error(R.drawable.trailer1)
-                    .placeholder(R.drawable.trailer1)
-                    .into(holder.backdrop);
-            holder.title.setText(getData().get(position - 1).getTitle());
-            holder.imdbRating.setText(getData().get(position - 1).getImdbRating());
+                    .error(R.drawable.imgfound)
+                    .into(holder.backdrop,
+                            PicassoPalette.with("https://image.tmdb.org/t/p/w500" + data.get(position - 1).getBackDrop(), holder.backdrop)
+//                                .use(PicassoPalette.Profile.MUTED_DARK)
+//                                .intoBackground(textView)
+//                                .intoTextColor(textView)
+                                    .use(PicassoPalette.Profile.VIBRANT)
+                                    .intoBackground(holder.cardView, PicassoPalette.Swatch.RGB)
+
+                    );
         }
 
         public void toggleSelection(int position) {
@@ -486,6 +510,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             private ImageView backdrop;
+            private CardView cardView;
             private TextView title;
             private CheckBox checkBox;
 
@@ -501,17 +526,17 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
                 switch (holderType) {
                     case TYPE_HEADER:
                         headerTitle = (GeneralTextView) itemView.findViewById(R.id.title_view);
-                        headerTitle.setTextColor(getResources().getColor(R.color.colorPrimaryMid));
                         subHeaderTitle = (GeneralTextView) itemView.findViewById(R.id.title_view_subheader);
                         HOLDER_ID = holderType;
                         break;
                     case TYPE_ITEM:
                         if (itemView instanceof CardView) {
-                            CardView cardView = (CardView) itemView.findViewById(R.id.card_view_child);
+
                             backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                             title = (TextView) itemView.findViewById(R.id.title);
                             checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
                             imdbRating = (GeneralTextView) itemView.findViewById(R.id.imdb_rating);
+                            cardView = (CardView)itemView.findViewById(R.id.card_view_child);
                             cardView.setOnClickListener(view ->
                                     listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition() - 1)));
                             cardView.setOnLongClickListener(view ->

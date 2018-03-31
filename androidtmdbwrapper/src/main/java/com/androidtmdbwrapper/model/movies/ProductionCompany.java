@@ -3,12 +3,15 @@ package com.androidtmdbwrapper.model.movies;
 import android.os.Parcel;
 
 import com.androidtmdbwrapper.model.core.AbstractNameId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by sHIVAM on 2/14/2017.
  */
 
 public class ProductionCompany extends AbstractNameId {
+
+
 
     public ProductionCompany() {
     }
