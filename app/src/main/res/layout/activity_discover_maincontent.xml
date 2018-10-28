@@ -123,6 +123,7 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            android:visibility="visible"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabMaxWidth="0dp"

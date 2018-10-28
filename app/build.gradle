@@ -30,6 +30,7 @@ android {
 
         buildConfigField("String", "FCM_API_KEY", "\"${fcm_api_key}\"")
         buildConfigField("String", "FCM_DB_URL", "\"${fcm_db_url}\"")
+        buildConfigField("String", "TMDB_API_KEY", "\"${tmdb_api_key}\"")
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

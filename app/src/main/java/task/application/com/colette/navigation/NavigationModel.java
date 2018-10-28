@@ -102,6 +102,7 @@ public class NavigationModel implements Model<NavigationModel.NavigationQueryEnu
 //                R.drawable.trophy_variant_outline, null),
         SHARE(R.id.nav_share, R.string.share, R.drawable.ic_menu_share, null),
         SEND(R.id.nav_send, R.string.send, R.drawable.ic_menu_send, null),
+        PRIVACY_POLICY(R.id.privacy_policy, R.string.privacy_policy, R.drawable.padlock, null),
         INVALID(),
         SEARCHLIST(),
         SEARCHDETAIL(), APPSEARCH();

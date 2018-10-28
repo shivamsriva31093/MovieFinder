@@ -68,4 +68,8 @@
     <string name="latest_trailer_notification">Featured Trailer!</string>
     <string name="featured_today_notification">Movie of the day</string>
     <string name="app_link">http://play.google.com/store/apps/details?id=task.application.com.colette</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_url">https://goo.gl/49ppqD</string>
+    <string name="dev_mail">moveupdev@gmail.com</string>
+    <string name="mail_title">Feedback:</string>
 </resources>

@@ -14,10 +14,9 @@ import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.ExternalIds;
 import com.androidtmdbwrapper.model.tv.TvInfo;
 
-import org.reactivestreams.Subscription;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -34,7 +33,6 @@ import task.application.com.colette.util.Util;
 public class SearchItemDetailPresenter implements SearchItemDetailContract.Presenter, MediaInfoResponseListener {
 
     private SearchItemDetailContract.View view;
-    private Subscription subscription;
     private MediaType filter = MediaType.MOVIES;
     private MediaInfoResponseListener listener;
     private Realm realm;
@@ -55,9 +53,8 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
     public void getMovieDetails(BaseMediaData clickedItem) {
         view.showLoadingIndicator(true);
         TmdbApi api = TmdbApi.getApiClient(ApplicationClass.API_KEY);
-
         if (filter.equals(MediaType.MOVIES)) {
-            getMovieInfoObservable(api, clickedItem)
+            Disposable test_d = getMovieInfoObservable(api, clickedItem)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
                     .subscribe((movieInfo -> {
@@ -67,9 +64,10 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                         view.showRatingsViewLoadingIndicator(true);
                         listener.onImdbIdReceived(api, movieInfo.getImdbId());
                     }), (throwable -> {
-                        if(throwable instanceof HttpException) {
+                        if (throwable instanceof HttpException) {
                             HttpException ex = (HttpException) throwable;
-                            if(ex.code() == 429)    view.showTestToast("Issue in connectivity. Please swipe refresh to reload.");
+                            if (ex.code() == 429)
+                                view.showTestToast("Issue in connectivity. Please swipe refresh to reload.");
                         }
                         view.showLoadingError();
                         throwable.printStackTrace();

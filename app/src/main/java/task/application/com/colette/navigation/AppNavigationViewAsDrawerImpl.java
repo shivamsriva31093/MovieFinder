@@ -182,6 +182,12 @@ public class AppNavigationViewAsDrawerImpl extends AppNavigationViewAbstractImpl
         if (mNavigationView != null &&
                 mNavigationView.getMenu().findItem(item.getId()) != null &&
                 item != NavigationModel.NavigationItemEnum.INVALID) {
+            for (NavigationModel.NavigationItemEnum menuItems : NavigationModel.NavigationItemEnum.values()) {
+                MenuItem curItem = mNavigationView.getMenu().findItem(menuItems.getId());
+                if (curItem != null && curItem.isChecked()) {
+                    mNavigationView.getMenu().findItem(menuItems.getId()).setChecked(false);
+                }
+            }
             mNavigationView.getMenu().findItem(item.getId()).setChecked(true);
         }
     }

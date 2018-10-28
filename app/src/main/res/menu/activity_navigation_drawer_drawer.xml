@@ -30,6 +30,10 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
+            <item
+                android:id="@+id/privacy_policy"
+                android:icon="@drawable/padlock"
+                android:title="Privacy Policy" />
         </menu>
     </item>
 

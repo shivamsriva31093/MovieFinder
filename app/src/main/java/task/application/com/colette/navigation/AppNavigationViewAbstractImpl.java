@@ -98,12 +98,17 @@ public abstract class AppNavigationViewAbstractImpl implements
 
             case SEND:
                 Intent sendIntent = createEmailIntent(
-                        "moveupdev@gmail.com",
-                        "Feedback:",
+                        mActivity.getString(R.string.dev_mail),
+                        mActivity.getString(R.string.mail_title),
                         ""
                 );
                 mActivity.startActivity(sendIntent);
                 break;
+
+            case PRIVACY_POLICY:
+                Intent i = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(mActivity.getString(R.string.privacy_policy_url)));
+                mActivity.startActivity(i);
 
             case FAVORITES:
                 if (item.getClassToLaunch() != null) {
