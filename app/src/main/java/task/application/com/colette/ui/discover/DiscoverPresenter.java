@@ -111,11 +111,13 @@ public class DiscoverPresenter implements DiscoverContract.Presenter, MediaInfoR
             view.showResultList(basicMovieInfos.getResults(), basicMovieInfos.getTotalPages(), basicMovieInfos.getTotalResults());
             view.showLoadingIndicator(false);
         }, throwable -> {
-            if (throwable instanceof NoNetworkException) {
+            throwable.printStackTrace();
+            view.showNetworkError();
+            /*if (throwable instanceof NoNetworkException) {
                 view.showNetworkError();
             } else {
                 view.showNoResults();
-            }
+            }*/
             view.showLoadingIndicator(false);
         });
     }

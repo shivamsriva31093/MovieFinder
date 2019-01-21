@@ -31,6 +31,7 @@ android {
         buildConfigField("String", "FCM_API_KEY", "\"${fcm_api_key}\"")
         buildConfigField("String", "FCM_DB_URL", "\"${fcm_db_url}\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${tmdb_api_key}\"")
+        buildConfigField("String", "OMDB_API_KEY", "\"${omdb_api_key}\"")
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,7 +42,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            proguardFile 'C:/Users/sHIVAM/Documents/GitHub/forked apps/MovieFinder/app/proguard-rules.pro'
+            proguardFile '/home/shivam/StudioProjects/MovieFinder/app/proguard-rules.pro'
         }
     }
     packagingOptions {

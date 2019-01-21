@@ -13,6 +13,7 @@ public class ApplicationClass extends Application {
 
     private static ApplicationClass instance;
     public static final String API_KEY = BuildConfig.TMDB_API_KEY;
+    public static final String OMDB_API_KEY = BuildConfig.OMDB_API_KEY;
 
     public ApplicationClass() {
         super();

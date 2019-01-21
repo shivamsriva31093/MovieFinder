@@ -20,7 +20,7 @@ public class TmdbApi extends Tmdb {
     private NetworkMonitor networkMonitor;
 
     private TmdbApi(String apiKey, NetworkMonitor networkMonitor) {
-        super(apiKey);
+        super(apiKey, ApplicationClass.OMDB_API_KEY);
         this.apiKey = apiKey;
         this.networkMonitor = networkMonitor;
     }

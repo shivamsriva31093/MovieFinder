@@ -20,12 +20,13 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/button2"
-        android:layout_width="50dp"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="14dp"
         android:background="@null"
         android:fontFamily="sans-serif"
-        android:text="SHARE"
+        android:textSize="12sp"
+        android:text="Share"
         android:textColor="#636363"
         android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/endbar"
@@ -33,19 +34,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/button3"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="19dp"
+        android:id="@+id/shareButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="19dp"
         android:background="@null"
+        android:padding="16dp"
         android:src="@drawable/share_variant"
         app:layout_constraintBottom_toTopOf="@+id/endbar"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="204dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -361,7 +362,7 @@
             android:progressTint="@android:color/holo_red_dark"
             android:visibility="gone" />
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/ratings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -373,38 +374,38 @@
 
             <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/rt_rating"
-                android:layout_width="wrap_content"
+                android:layout_width="98dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/progress_sync1"
-                android:layout_below="@+id/imdb_rating"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/progress_sync1"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@color/body_text_1"
                 android:textSize="13sp"
-                app:fontName="Cambay" />
+                app:fontName="Cambay"
+                app:layout_constraintBottom_toBottomOf="@+id/progress_sync1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/progress_sync1"
+                app:layout_constraintTop_toTopOf="@+id/progress_sync1" />
 
             <ImageView
                 android:id="@+id/imageView12"
                 android:layout_width="29dp"
                 android:layout_height="29dp"
-                android:layout_below="@+id/imageView10"
                 android:layout_marginTop="5dp"
                 android:cropToPadding="true"
                 android:padding="5dp"
                 android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView10"
                 app:srcCompat="@drawable/rt" />
 
             <com.daimajia.numberprogressbar.NumberProgressBar
                 android:id="@+id/progress_sync1"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView10"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="17dp"
-                android:layout_marginTop="14dp"
-                android:layout_toRightOf="@+id/imageView12"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageView12"
                 tools:progress_current="80"
                 tools:progress_max="100"
                 tools:progress_reached_bar_height="3dp"
@@ -419,10 +420,11 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ratings_title"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="17dp"
-                android:layout_marginTop="3dp"
-                android:layout_toRightOf="@+id/imageView10"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintLeft_toRightOf="@+id/imageView10"
+                app:layout_constraintTop_toBottomOf="@+id/ratings_title"
                 tools:progress_current="80"
                 tools:progress_max="100"
                 tools:progress_reached_bar_height="3dp"
@@ -438,43 +440,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginBottom="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="Ratings Meter"
                 android:textAllCaps="true"
                 android:textColor="@color/colorSecondary"
                 android:textSize="16sp"
                 app:fontName="OpenSans"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:textStyle="semiBold" />
 
             <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/imdb_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:layout_above="@+id/imageView12"
-                android:layout_alignBottom="@+id/progress_sync"
-                android:layout_below="@+id/ratings_title"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:layout_toRightOf="@+id/progress_sync"
+                android:layout_width="98dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@color/body_text_1"
                 android:textSize="13sp"
-                app:fontName="Cambay" />
+                app:fontName="Cambay"
+                app:layout_constraintBottom_toBottomOf="@+id/progress_sync"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/progress_sync"
+                app:layout_constraintStart_toEndOf="@+id/progress_sync"
+                app:layout_constraintTop_toTopOf="@+id/progress_sync" />
 
             <ImageView
                 android:id="@+id/imageView10"
                 android:layout_width="24dp"
                 android:layout_height="15dp"
-                android:layout_below="@+id/ratings_title"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="24dp"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
                 android:padding="0dp"
                 android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratings_title"
                 app:srcCompat="@drawable/imdb_icon" />
 
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
 
     </RelativeLayout>
 
