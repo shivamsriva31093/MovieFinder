@@ -30,15 +30,16 @@ public class Tmdb {
     public static final String API_URL = "https://" + API_BASE_URL + "/" + API_VERSION + "/";
 
     public static final String API_KEY = "api_key";
-    public static final String OMDB_API_KEY = "11ccb3f8";
+    public final String OMDB_API_KEY;
 
     private static Retrofit retrofit;
     private static OkHttpClient okHttpClient;
 
     private String apiKey;
 
-    public Tmdb(String apiKey) {
+    public Tmdb(String apiKey, String omdbApiKey) {
         this.apiKey = apiKey;
+        this.OMDB_API_KEY = omdbApiKey;
     }
 
     String getApiKey() {

@@ -1,1 +1,6 @@
 /build
+/google-services.json
+*.iml
+/gradle
+/release
+/.idea
