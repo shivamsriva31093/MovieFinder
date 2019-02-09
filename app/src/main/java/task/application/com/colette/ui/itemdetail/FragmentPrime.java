@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,6 +43,8 @@ import com.github.florent37.picassopalette.PicassoPalette;
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -86,8 +89,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private RelativeLayout ratingsView;
     private ImageButton trailerButton;
     private CircleImageView circleImageView;
-    private FloatingActionButton favorite;
-    private AppCompatButton share;
     private GeneralTextView genres;
     private GeneralTextView genresTitle;
     private GeneralTextView langTitle;
@@ -112,7 +113,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private SwipeRefreshLayout layout;
     private GeneralTextView releaseTitle;
     private GeneralTextView releaseDate;
-    private AppCompatImageButton shareView;
+
+    private AppCompatImageButton share;
+    private LikeButton favorite;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -174,14 +177,14 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         fragmentContainer = (FrameLayout) getActivity().findViewById(R.id.container);
         progressView = (AVLoadingIndicatorView) getActivity().findViewById(R.id.progressView);
         backDropImage = (ImageView) getActivity().findViewById(R.id.app_bar_image);
-        shareView = (AppCompatImageButton) getActivity().findViewById(R.id.shareButton);
+//        shareView = (AppCompatImageButton) getActivity().findViewById(R.id.shareButton);
         trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton1);
         circleImageView = (CircleImageView)getActivity().findViewById(R.id.trailerBackground);
-        favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
-        favorite.setOnClickListener(this);
-        shareView.setOnClickListener(this);
+//        favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
+//        favorite.setOnClickListener(this);
+//        shareView.setOnClickListener(this);
         layout =(SwipeRefreshLayout)getActivity().findViewById(R.id.swipe_refresh);
-        favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
+
         snackBarView = getActivity().findViewById(R.id.activity_detail_coord_layout);
         swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -209,7 +212,6 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 
         emptyDataHandlerView = (RelativeLayout) detailView.findViewById(R.id.empty_data_handler);
         contentHolder = (ConstraintLayout) rootView.findViewById(R.id.item_detail);
-        favorite = (FloatingActionButton) rootView.findViewById(R.id.favorite);
         basicDetails = (RelativeLayout) detailView.findViewById(R.id.basic_details);
         genres = (GeneralTextView) basicDetails.findViewById(R.id.genres);
         lang = (GeneralTextView) basicDetails.findViewById(R.id.lang);
@@ -223,11 +225,28 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         rtImage = (ImageView) ratingsView.findViewById(R.id.imageView12);
         imdbRating = (GeneralTextView) ratingsView.findViewById(R.id.imdb_rating);
         synopsis = (CollapsibleTextView) detailView.findViewById(R.id.plot);
-        share = (AppCompatButton) detailView.findViewById(R.id.imageButton5);
-        share.setVisibility(View.GONE);
+        share = (AppCompatImageButton) detailView.findViewById(R.id.share_button);
+        favorite = (LikeButton) detailView.findViewById(R.id.favorite_button);
 
+        favorite.setEnabled(true);
+        favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
         addCastCrewImageSliders();
         share.setOnClickListener(this);
+        favorite.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                MediaBasic item = (MediaBasic) retrievedItem;
+                item.setImdbRating(imdbRating.getText().toString());
+                presenter.addMediaToFavorites(item);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                MediaBasic item = (MediaBasic) retrievedItem;
+                item.setImdbRating(imdbRating.getText().toString());
+                presenter.removeMediaFromFavorites(item);
+            }
+        });
         castTitle = (GeneralTextView) contentHolder.findViewById(R.id.cast);
         crewTitle = (GeneralTextView) contentHolder.findViewById(R.id.crew);
         synopsisTitle = (GeneralTextView) contentHolder.findViewById(R.id.synopsis);
@@ -513,8 +532,10 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void setFavorite(boolean status) {
         if (status) {
-            favorite.setImageDrawable(ApplicationClass.getInstance()
-                    .getResources().getDrawable(R.drawable.favorite));
+//            favorite.setImageDrawable(ApplicationClass.getInstance()
+//                    .getResources().getDrawable(R.drawable.favorite));
+            favorite.setEnabled(true);
+            favorite.setLiked(true);
             favorite.setTag(R.drawable.favorite);
         }
     }
@@ -522,7 +543,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void onClick(View v) {
         Context context = ApplicationClass.getInstance();
-        if (v instanceof ImageButton && v.getId() == R.id.imageButton1) {
+        if (v instanceof ImageButton && v.getId() == R.id.imageButton1 || (v instanceof AppCompatButton && v.getId() == R.id.imageButton5)) {
             if (trailerKey != null && !trailerKey.isEmpty()) {
                 if (YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS))
                     getActivity().startActivity(
@@ -538,12 +559,14 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
                 Toast.makeText(context, "No trailer available.", Toast.LENGTH_SHORT).show();
             }
         }
-        if (v instanceof FloatingActionButton && v.getId() == R.id.favorite) {
-            FloatingActionButton button = (FloatingActionButton) v;
-            int tag = (int) button.getTag();
-            toggleFavorite(button, tag, context);
+        if (v instanceof LikeButton && v.getId() == R.id.favorite_button) {
+            LikeButton button = (LikeButton) v;
+            favorite.setEnabled(true);
+            favorite.callOnClick();
+//            int tag = (int) button.getTag();
+//            toggleFavorite(button, tag, context);
         }
-        if (v instanceof AppCompatImageButton && v.getId() == R.id.shareButton) {
+        if (v instanceof AppCompatImageButton && v.getId() == R.id.share_button) {
             AppCompatImageButton button = (AppCompatImageButton) v;
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
@@ -555,35 +578,9 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
             sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getActivity().startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
         }
-
-        if (v instanceof AppCompatButton && v.getId() == R.id.imageButton5) {
-//            Intent sendIntent = new Intent();
-//            sendIntent.setAction(Intent.ACTION_SEND);
-//            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out this trailer: "
-//                    + ((presenter.getFilteringType().equals(MediaType.MOVIES)) ? ((MovieInfo) retrievedItem).getTitle() : ((TvInfo) retrievedItem).getOriginalName()) + "! "
-//                    + "www.youtube.com/watch?v=" + trailerKey
-//                    + " sent via: " + getResources().getString(R.string.app_name));
-//            sendIntent.setType("text/plain");
-//            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            getActivity().startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
-            if (trailerKey != null && !trailerKey.isEmpty()) {
-                if (YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS))
-                    getActivity().startActivity(
-                            YouTubeStandalonePlayer.createVideoIntent(
-                                    getActivity(),
-                                    YOUTUBE_API_KEY,
-                                    trailerKey
-                            )
-                    );
-                else
-                    showTestToast("No youtube service found");
-            } else {
-                Toast.makeText(context, "No trailer available.", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
-    private void toggleFavorite(FloatingActionButton button, int tag, Context context) {
+    private void toggleFavorite(AppCompatImageButton button, int tag, Context context) {
         MediaBasic item = (MediaBasic) retrievedItem;
         item.setImdbRating(imdbRating.getText().toString());
         if (tag == R.drawable.ic_favorite_border_black_24dp) {
