@@ -12,9 +12,10 @@
     android:paddingBottom="10dp"
     app:fontName="OpenSans"
     android:paddingEnd="50dp"
+    android:textAllCaps="true"
     android:paddingStart="50dp"
     android:paddingTop="10dp"
     android:shadowColor="@null"
     android:textColor="@color/textBlack"
-    android:textSize="15sp"
-    android:textStyle="normal" />
+    android:textSize="13sp"
+    app:textStyle="semiBold" />

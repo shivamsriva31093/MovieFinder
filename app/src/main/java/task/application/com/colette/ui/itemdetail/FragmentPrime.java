@@ -304,7 +304,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     @Override
     public void showTestToast(String msg) {
 //        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.ic_error_outline_white_24px, 1125, null);
+        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.heart_white, 1125, null);
     }
 
     @Override

@@ -167,7 +167,7 @@ public class AppNavigationViewAsDrawerImpl extends AppNavigationViewAbstractImpl
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = FontCache.getTypeface("Nunito-SemiBold.ttf", mActivity);
+        Typeface font = FontCache.getTypeface("Montserrat-Medium.ttf", mActivity);
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);

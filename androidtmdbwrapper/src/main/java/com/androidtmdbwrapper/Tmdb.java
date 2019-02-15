@@ -1,5 +1,7 @@
 package com.androidtmdbwrapper;
 
+import android.util.Log;
+
 import com.androidtmdbwrapper.apiservices.MoviesService;
 import com.androidtmdbwrapper.apiservices.OmdbApiService;
 import com.androidtmdbwrapper.apiservices.PeoplesService;
@@ -133,6 +135,7 @@ public class Tmdb {
 
         private Response handleIntercept(Chain chain) throws IOException {
             Request request = chain.request();
+
             if (BASE_URL.equals(request.url().host())) {
                 return chain.proceed(request);
             }

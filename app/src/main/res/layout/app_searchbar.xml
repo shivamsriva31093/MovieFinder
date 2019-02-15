@@ -105,7 +105,8 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/hintGrey"
                 android:textSize="15sp"
-                android:typeface="sans" />
+                app:fontName="OpenSans"
+                 />
 
         </android.support.design.widget.TextInputLayout>
 

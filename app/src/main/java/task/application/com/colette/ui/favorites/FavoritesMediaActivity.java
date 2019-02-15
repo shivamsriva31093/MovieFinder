@@ -1,8 +1,10 @@
 package task.application.com.colette.ui.favorites;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +18,8 @@ import task.application.com.colette.ui.base.BaseActivity;
 import task.application.com.colette.ui.utility.widgets.BottomNavigationBehaviour;
 import task.application.com.colette.util.ActivityUtils;
 import task.application.com.colette.util.Util;
+
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
 
 public class FavoritesMediaActivity extends BaseActivity implements
         FavoritesMediaFragment.OnFragmentInteractionListener {
@@ -53,7 +57,11 @@ public class FavoritesMediaActivity extends BaseActivity implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams attributes = this.getWindow().getAttributes();
+            attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            this.getWindow().setAttributes(attributes);
+        }
         setContentView(R.layout.activity_favorites_media);
         setUpBottomNavigationView();
         findViewById(R.id.nav_button).setOnClickListener(view -> {
@@ -63,6 +71,9 @@ public class FavoritesMediaActivity extends BaseActivity implements
             Intent intent = new Intent(FavoritesMediaActivity.this, AppSearchActivity.class);
             ActivityUtils.startNewActivity(FavoritesMediaActivity.this, intent);
         });
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        appBarLayout.setElevation(0);
+        appBarLayout.setSystemUiVisibility(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
     @Override

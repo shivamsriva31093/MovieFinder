@@ -32,7 +32,7 @@
                 android:title="Send" />
             <item
                 android:id="@+id/privacy_policy"
-                android:icon="@drawable/padlock"
+                android:icon="@drawable/privacy"
                 android:title="Privacy Policy" />
         </menu>
     </item>

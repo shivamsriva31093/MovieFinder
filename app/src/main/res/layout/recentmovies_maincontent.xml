@@ -172,7 +172,7 @@
                     app:is_enabled="true"
                     app:like_drawable="@drawable/favorite"
                     app:liked="false"
-                    app:unlike_drawable="@drawable/heart_outline" />
+                    app:unlike_drawable="@drawable/heart_white" />
             </FrameLayout>
 
         </android.support.constraint.ConstraintLayout>

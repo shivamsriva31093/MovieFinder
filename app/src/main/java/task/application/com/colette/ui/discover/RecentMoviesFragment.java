@@ -172,7 +172,7 @@ public class RecentMoviesFragment extends Fragment implements DiscoverContract.V
     @Override
     public void showTestToast(String msg) {
 //        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.heart_outline, 1125, null);
+        ActivityUtils.showBottomSheetMessage(msg, getActivity(), R.drawable.heart_white, 1125, null);
     }
 
     @Override

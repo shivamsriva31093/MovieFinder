@@ -5,7 +5,6 @@
     android:layout_width="290dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:fitsSystemWindows="true"
     android:background="#f6fefefe"
     app:headerLayout="@layout/nav_header_navigation_drawer"
     app:menu="@menu/activity_navigation_drawer_drawer">
@@ -21,7 +20,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="8dp"
-            android:tint="@color/body_text_2"
+            android:tint="@color/body_text_3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

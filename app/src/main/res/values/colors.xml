@@ -5,7 +5,7 @@
     <color name="colorPrimary">#d23041</color>
     <!--<color name="colorPrimary">#cf3f3c</color>-->
     <color name="colorPrimaryMid">#ca0a5f</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryDark">@color/white</color>
     <color name="colorSecondary">#f9606061</color>
 
     //#01a1b9

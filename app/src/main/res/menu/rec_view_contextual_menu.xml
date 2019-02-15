@@ -6,6 +6,7 @@
         android:actionViewClass="android.widget.CheckBox"
         android:icon="@drawable/select_all_white_48x48"
         android:title=""
+        android:iconTint="@color/black"
         android:visible="false"
         app:showAsAction="always" />
     <item

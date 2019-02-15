@@ -79,10 +79,7 @@ public class CustomTabLayout extends TabLayout {
         mTabs.clear();
     }
 
-    @Override
-    public void addOnTabSelectedListener(@NonNull OnTabSelectedListener listener) {
-        super.addOnTabSelectedListener(listener);
-    }
+
 
     private void setCustomTabView(@NonNull Tab tab, int position) {
         tab.setCustomView(customTabLayout);

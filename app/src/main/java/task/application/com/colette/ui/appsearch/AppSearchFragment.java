@@ -297,7 +297,7 @@ public class AppSearchFragment extends Fragment implements AppSearchContract.Vie
             switch (holder.HOLDER_ID) {
                 case TYPE_HEADER:
                     holder.header.setText(
-                            init ? "Come on Hit!" : totalResults + " results returned"
+                            init ? "Start typing now.." : totalResults + " results returned"
                     );
                     break;
                 case TYPE_ITEM:

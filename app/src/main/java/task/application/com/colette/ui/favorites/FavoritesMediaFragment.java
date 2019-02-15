@@ -425,6 +425,7 @@ public class FavoritesMediaFragment extends Fragment implements FavoritesMediaCo
             switch (holder.HOLDER_ID) {
                 case TYPE_HEADER:
                     holder.headerTitle.setText("Your Handpicked " + FILTER);
+                    holder.headerTitle.setTextColor(getResources().getColor(android.R.color.darker_gray));
                     holder.subHeaderTitle.setVisibility(View.GONE);
                     break;
                 case TYPE_ITEM:

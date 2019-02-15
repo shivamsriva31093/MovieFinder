@@ -2,6 +2,7 @@ package task.application.com.colette.ui.discover;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -13,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,6 +34,7 @@ import task.application.com.colette.util.ActivityUtils;
 import task.application.com.colette.util.CustomSpannableStringBuilder;
 import task.application.com.colette.util.CustomTabLayout;
 
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
 import static task.application.com.colette.util.LogUtils.makeLogTag;
 
 
@@ -68,9 +71,17 @@ public class DiscoverActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams attributes = this.getWindow().getAttributes();
+            attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            this.getWindow().setAttributes(attributes);
+        }
         setContentView(R.layout.activity_discover);
+
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.setElevation(0);
+        appBarLayout.setSystemUiVisibility(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         if (SplashDataHelper.getData() != null && !SplashDataHelper.getData().isEmpty()) {
             data = SplashDataHelper.getData();
             pages = SplashDataHelper.getDataPages();

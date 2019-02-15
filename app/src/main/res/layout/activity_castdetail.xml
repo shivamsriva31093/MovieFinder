@@ -51,7 +51,7 @@
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:fontName="Nunito"
+                app:fontName="OpenSans"
                 android:layout_below="@+id/circleImageView"
                 app:textStyle="semiBold" />
 
@@ -81,10 +81,9 @@
                 android:textAlignment="viewStart"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:fontName="Nunito"
+                app:fontName="Montserrat"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/cast_name"
-                app:textStyle="light"
                 app:trimLength="200" />
 
             </RelativeLayout>

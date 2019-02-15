@@ -13,7 +13,7 @@ class Fcm {
     companion object {
         val TAG: String = makeLogTag("FcmUtils")
 
-        fun register(context: Context, deviceId: String) {
+        fun register( deviceId: String) {
             val fcmIdRef = FirebaseDatabase.getInstance().reference.child("fcmIds")
             fcmIdRef.updateChildren(
                     mapOf(Pair(UUID.randomUUID().toString(), deviceId)

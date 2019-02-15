@@ -25,7 +25,7 @@ class MyFirebaseInstanceIdService : FirebaseInstanceIdService() {
 
     private fun sendToServer(token: String) {
         LOGD(TAG, "Registering on the FCM server with FCM token: $token")
-        Fcm.register(this, token)
+        Fcm.register( token)
     }
 
     companion object {

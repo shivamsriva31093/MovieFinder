@@ -1,9 +1,11 @@
 package task.application.com.colette.ui.itemdetail;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -17,6 +19,8 @@ import task.application.com.colette.navigation.NavigationModel;
 import task.application.com.colette.ui.base.BaseActivity;
 import task.application.com.colette.ui.utility.ImageSlider;
 import task.application.com.colette.util.Util;
+
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
 
 public class SearchItemDetailActivity extends BaseActivity implements
         FragmentPrime.FragmentInteractionListener {
@@ -33,12 +37,17 @@ public class SearchItemDetailActivity extends BaseActivity implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams attributes = this.getWindow().getAttributes();
+            attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            this.getWindow().setAttributes(attributes);
+        }
 
         setContentView(R.layout.activity_itemdetail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setSystemUiVisibility(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setTitle("sdfsfsdfdsfdfhdfhdfhdfgdfgdfgfdg dsfsf fgfgd");
         Bundle bundle = new Bundle();

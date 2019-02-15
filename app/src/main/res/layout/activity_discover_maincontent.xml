@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:padding="0dp"
-            app:layout_scrollFlags="scroll|enterAlways|snap|scroll|enterAlways|snap"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
 
@@ -133,7 +133,6 @@
             app:tabSelectedTextColor="@color/colorPrimaryMid"
             app:tabTextAppearance="@style/AppSearchTabLayoutStyle"
             app:tabLayout="@layout/custom_tabview"
-            app:tabFont="OpenSans-SemiBold"
             app:tabTextColor="@color/colorPrimaryMid" />
 
 

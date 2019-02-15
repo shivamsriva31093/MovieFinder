@@ -17,6 +17,7 @@
             <enum name="extraBold" value="6" />
             <enum name="extraBoldItalics" value="7" />
             <enum name="light" value="8" />
+            <enum name="medium" value="9" />
         </attr>
     </declare-styleable>
 

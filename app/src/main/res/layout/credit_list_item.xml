@@ -34,7 +34,7 @@
             <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/credit_title"
                 android:layout_width="110dp"
-                android:layout_height="25dp"
+                android:layout_height="21dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -47,6 +47,7 @@
                 android:textColor="@color/body_text_2"
                 android:textSize="13sp"
                 android:typeface="sans"
+                app:trimLength="25"
                 app:fontName="Nunito"
                 app:layout_constraintHorizontal_bias="0.47"
                 app:layout_constraintLeft_toLeftOf="@+id/frameLayout2"
@@ -73,8 +74,8 @@
 
             <task.application.com.colette.ui.utility.widgets.GeneralTextView
                 android:id="@+id/credit_design"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="110dp"
+                android:layout_height="14dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
@@ -83,6 +84,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="11sp"
                 android:typeface="sans"
+                app:trimLength="25"
                 app:fontName="Nunito"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

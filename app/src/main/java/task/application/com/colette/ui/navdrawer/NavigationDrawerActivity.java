@@ -1,6 +1,7 @@
 package task.application.com.colette.ui.navdrawer;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
@@ -14,11 +15,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import task.application.com.colette.R;
 import task.application.com.colette.ui.favorites.FavoritesMediaActivity;
+
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NavigationDrawerItemListeners {
@@ -33,8 +37,17 @@ public class NavigationDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams attributes = this.getWindow().getAttributes();
+            attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            this.getWindow().setAttributes(attributes);
+        }
         setContentView(R.layout.activity_navigation_drawer);
         mainContent = (FrameLayout) findViewById(R.id.activity_content);
+        mainContent.setSystemUiVisibility(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         listener = this;
     }
 

@@ -2,7 +2,7 @@
 
     <style name="TransparentStatusNav.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="windowActionModeOverlay">true</item>
@@ -13,23 +13,26 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!--<item name="android:statusBarColor">@color/transparent</item>-->
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:actionModeBackground">@color/colorPrimary</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">
+            shortEdges <!-- default, shortEdges, never -->
+        </item>
     </style>
 
     <style name="TransparentStatusNav" parent="TransparentStatusNav.Base">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@color/transparent</item>
+        <!--<item name="android:statusBarColor">@color/transparent</item>-->
         <item name="windowActionModeOverlay">true</item>
         <item name="android:actionModeBackground">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar.RippleEffectCustom">
-        <item name="android:colorControlHighlight">@android:color/darker_gray</item>
+        <item name="android:colorControlHighlight">@android:color/transparent</item>
     </style>
 
     <style name="TabLayoutStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">

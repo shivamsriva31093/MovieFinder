@@ -23,6 +23,7 @@ import io.realm.RealmResults;
 import retrofit2.HttpException;
 import task.application.com.colette.ApplicationClass;
 import task.application.com.colette.model.local.realm.datamodels.MediaItem;
+import task.application.com.colette.util.ActivityUtils;
 import task.application.com.colette.util.TmdbApi;
 import task.application.com.colette.util.Util;
 
@@ -218,6 +219,8 @@ public class SearchItemDetailPresenter implements SearchItemDetailContract.Prese
                     view.showRatingsUi(omdbMovieDetails);
                 }), (throwable -> {
                     view.showRatingsViewLoadingIndicator(false);
+                    throwable.printStackTrace();
+                    //view.showTestToast("Not Received rating");
                     if (throwable instanceof HttpException) {
                         if (((HttpException) throwable).code() == 403) {
                             view.showRatingsUi(null);
