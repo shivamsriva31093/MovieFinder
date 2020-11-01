@@ -1,6 +1,6 @@
 package task.application.com.colette.ui.discover;
 
-import android.support.v4.util.SimpleArrayMap;
+import androidx.collection.SimpleArrayMap;
 import android.util.Log;
 
 /**

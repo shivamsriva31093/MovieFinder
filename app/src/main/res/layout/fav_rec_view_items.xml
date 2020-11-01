@@ -16,7 +16,7 @@
 
 <!--</FrameLayout>--><!--</android.support.v7.widget.CardView>--><!--</LinearLayout>-->
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -32,7 +32,7 @@
     app:layout_constraintTop_toTopOf="parent"
     card_view:cardElevation="0dp">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view_child"
         style="@style/RecentMoviesCardViewTheme"
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
         card_view:cardBackgroundColor="@color/black"
         card_view:cardElevation="0dp">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="0dp"
@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5" />
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 style="@style/RatingMoviesCardViewTheme2"
                 android:layout_width="70dp"
                 android:layout_height="23dp"
@@ -93,7 +93,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/guideline15" />
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <CheckBox
                 android:id="@+id/checkBox"
@@ -134,7 +134,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/backdrop" />
 
-            <android.support.constraint.Guideline
+            <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,13 +143,13 @@
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="225dp" />
 
-            <android.support.constraint.Guideline
+            <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="284dp" />
 
-        </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
-</android.support.v7.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>

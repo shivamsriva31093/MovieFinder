@@ -18,7 +18,7 @@ package task.application.com.colette.navigation;/*
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * An View is a UI class, often a {@link android.app.Fragment}, that provides a {@link

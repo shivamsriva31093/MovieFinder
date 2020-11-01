@@ -18,7 +18,7 @@
         app:fontName="OpenSans"
         />
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/imageButton5"
         style="@style/RoundButtonSplash"
         android:layout_width="300dp"

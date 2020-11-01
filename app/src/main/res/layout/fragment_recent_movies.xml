@@ -28,7 +28,7 @@
             app:indicatorColor="@color/colorPrimary"
             app:indicatorName="BallPulseIndicator" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/media_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 package task.application.com.colette.ui.advancedsearch.search;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.androidtmdbwrapper.enums.MediaType;
 import com.androidtmdbwrapper.model.movies.BasicMovieInfo;

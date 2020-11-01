@@ -1,6 +1,6 @@
 package task.application.com.colette.ui.base;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Created by sHIVAM on 9/8/2017.

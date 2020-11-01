@@ -1,11 +1,10 @@
 package task.application.com.colette.ui.itemdetail;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Window;
 import android.view.WindowManager;
 

@@ -1,6 +1,6 @@
 package task.application.com.colette.messaging
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import task.application.com.colette.R
 
 /**

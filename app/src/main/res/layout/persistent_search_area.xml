@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_query_area"
     android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:visibility="gone" />
 
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
 
                 android:id="@+id/search_bar_left_action"
                 android:layout_width="@dimen/button_icon_size"
@@ -59,7 +59,7 @@
             android:layout_toEndOf="@+id/search_bar_left_action_container">
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/searchInputTextLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,10 +98,10 @@
                     android:textCursorDrawable="@drawable/appsearch_cursor_drawable"
                     android:textSize="15sp"
                     android:typeface="sans" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </FrameLayout>
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

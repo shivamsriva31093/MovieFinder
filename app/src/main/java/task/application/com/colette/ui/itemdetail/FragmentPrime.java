@@ -3,25 +3,23 @@ package task.application.com.colette.ui.itemdetail;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.AppCompatImageView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,7 +37,6 @@ import com.androidtmdbwrapper.model.mediadetails.Video;
 import com.androidtmdbwrapper.model.movies.MovieInfo;
 import com.androidtmdbwrapper.model.tv.TvInfo;
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.github.florent37.picassopalette.PicassoPalette;
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -113,7 +110,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
     private SwipeRefreshLayout layout;
     private GeneralTextView releaseTitle;
     private GeneralTextView releaseDate;
-
+    private AppCompatButton trailerAppCompatButton;
     private AppCompatImageButton share;
     private LikeButton favorite;
 
@@ -180,6 +177,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
 //        shareView = (AppCompatImageButton) getActivity().findViewById(R.id.shareButton);
         trailerButton = (ImageButton) getActivity().findViewById(R.id.imageButton1);
         circleImageView = (CircleImageView)getActivity().findViewById(R.id.trailerBackground);
+        trailerAppCompatButton = (AppCompatButton)getActivity().findViewById(R.id.imageButton5);
 //        favorite = (FloatingActionButton) getActivity().findViewById(R.id.favorite);
 //        favorite.setOnClickListener(this);
 //        shareView.setOnClickListener(this);
@@ -270,6 +268,8 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         super.onResume();
         isDestroyedBySystem = false;
         trailerButton.setOnClickListener(this);
+        trailerAppCompatButton.setOnClickListener(this);
+
     }
 
     private void addCastCrewImageSliders() {
@@ -368,6 +368,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         String trailer = getVideoUrl(data);
         if (trailer.isEmpty()) {
             trailerButton.setVisibility(View.GONE);
+            trailerAppCompatButton.setVisibility(View.GONE);
             share.setVisibility(View.GONE);
             circleImageView.setVisibility(View.GONE);
         }
@@ -440,6 +441,7 @@ public class FragmentPrime extends Fragment implements SearchItemDetailContract.
         String trailer = getVideoUrl(data);
         if (trailer.isEmpty()) {
             trailerButton.setVisibility(View.GONE);
+            trailerAppCompatButton.setVisibility(View.GONE);
             circleImageView.setVisibility(View.GONE);
             share.setVisibility(View.GONE);
         }

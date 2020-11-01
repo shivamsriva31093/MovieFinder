@@ -16,7 +16,7 @@ package task.application.com.colette.navigation;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import task.application.com.colette.R;
 import task.application.com.colette.ui.discover.DiscoverActivity;

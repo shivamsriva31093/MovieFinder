@@ -1,7 +1,7 @@
 
 package task.application.com.colette.ui.itemdetail;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.androidtmdbwrapper.enums.AppendToResponseItem;
@@ -23,7 +23,6 @@ import io.realm.RealmResults;
 import retrofit2.HttpException;
 import task.application.com.colette.ApplicationClass;
 import task.application.com.colette.model.local.realm.datamodels.MediaItem;
-import task.application.com.colette.util.ActivityUtils;
 import task.application.com.colette.util.TmdbApi;
 import task.application.com.colette.util.Util;
 

@@ -1,7 +1,7 @@
 package task.application.com.colette.navigation;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import static task.application.com.colette.util.LogUtils.LOGE;
 import static task.application.com.colette.util.LogUtils.makeLogTag;

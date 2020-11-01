@@ -15,7 +15,7 @@ import task.application.com.colette.util.FontCache;
  * Otherwise on not finding the intended style
  * the system uses the default typeface.
  */
-public class GeneralTextView extends android.support.v7.widget.AppCompatTextView {
+public class GeneralTextView extends androidx.appcompat.widget.AppCompatTextView {
 
 
     private static final String ANDROID_SCHEMA = "http://schemas.android.com/apk/res/android";

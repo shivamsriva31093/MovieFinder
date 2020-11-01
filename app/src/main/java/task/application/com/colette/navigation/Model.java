@@ -17,7 +17,7 @@
 package task.application.com.colette.navigation;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * A Model is a class used to manipulate stored data, as well as provide getters for the data. It

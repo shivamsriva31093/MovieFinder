@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat">
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:id="@+id/icon"

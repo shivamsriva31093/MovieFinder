@@ -3,7 +3,7 @@ package task.application.com.colette.messaging
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.JobIntentService
+import androidx.core.app.JobIntentService
 import com.androidtmdbwrapper.enums.AppendToResponseItem
 import com.androidtmdbwrapper.model.core.AppendToResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
