@@ -34,6 +34,7 @@ android {
         buildConfigField("String", "OMDB_API_KEY", "\"${omdb_api_key}\"")
     }
     compileOptions {
+        incremental true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }

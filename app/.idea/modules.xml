@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../MovieFinder.iml" filepath="$PROJECT_DIR$/../MovieFinder.iml" group="MovieFinder" />
+      <module fileurl="file://$PROJECT_DIR$/MovieFinder-app.iml" filepath="$PROJECT_DIR$/MovieFinder-app.iml" group="MovieFinder/app" />
+      <module fileurl="file://$PROJECT_DIR$/../androidtmdbwrapper/androidtmdbwrapper.iml" filepath="$PROJECT_DIR$/../androidtmdbwrapper/androidtmdbwrapper.iml" group="MovieFinder/androidtmdbwrapper" />
       <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
     </modules>
   </component>

@@ -46,7 +46,7 @@ class MyJobService : JobIntentService() {
         )
         val movieId = intent.getStringExtra("value")
         val notificationType = intent.getStringExtra("id")
-        val data: MutableMap<String, String> = hashMapOf(Pair("id", notificationType), Pair("value", movieId!!))
+        val data: MutableMap<String, String> = hashMapOf(Pair("id", notificationType!!), Pair("value", movieId!!))
 
         if (notificationType == "updateAvailable") {
             pushNotification.show(applicationContext, data)
